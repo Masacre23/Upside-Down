@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 	public Vector3 camPosini;
 	public GameObject playerReference;
     public GameObject gravitySphere;
+	public GameObject model;
 
     //Guillem
     Rigidbody m_Rigidbody;
@@ -134,12 +135,31 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement;
+		Vector3 movement;
         movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
         movement = playerReference.transform.TransformDirection(movement);
 
         transform.Translate(movement * moveSpeed * Time.deltaTime);
+
+	/*	if (Input.GetKey("d")) {
+			/*Vector3 relativePos = Camera.main.transform.right;
+			Quaternion rotation = Quaternion.LookRotation(relativePos);
+			model.transform.rotation = rotation;*/
+		//	Vector3 myForward = Vector3.Cross (Camera.main.transform.right, -transform.forward);
+			// align character to the new myNormal while keeping the forward direction:
+	/*		Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
+			model.transform.rotation = Quaternion.Lerp (transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
+		}
+		if (Input.GetKey("a")) {
+			/*Vector3 relativePos = -Camera.main.transform.right;
+			Quaternion rotation = Quaternion.LookRotation(relativePos);
+			model.transform.rotation = rotation;*/
+		/*	Vector3 myForward = Vector3.Cross (-Camera.main.transform.right, myNormal);
+			// align character to the new myNormal while keeping the forward direction:
+			Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
+			model.transform.rotation = Quaternion.Lerp (transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
+		}*/
 
         if (m_Player.m_IsGrounded)
         {
