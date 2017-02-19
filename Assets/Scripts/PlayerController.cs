@@ -142,24 +142,28 @@ public class PlayerController : MonoBehaviour {
 
         transform.Translate(movement * moveSpeed * Time.deltaTime);
 
-	/*	if (Input.GetKey("d")) {
-			/*Vector3 relativePos = Camera.main.transform.right;
-			Quaternion rotation = Quaternion.LookRotation(relativePos);
-			model.transform.rotation = rotation;*/
-		//	Vector3 myForward = Vector3.Cross (Camera.main.transform.right, -transform.forward);
-			// align character to the new myNormal while keeping the forward direction:
-	/*		Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
-			model.transform.rotation = Quaternion.Lerp (transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
-		}
-		if (Input.GetKey("a")) {
-			/*Vector3 relativePos = -Camera.main.transform.right;
-			Quaternion rotation = Quaternion.LookRotation(relativePos);
-			model.transform.rotation = rotation;*/
-		/*	Vector3 myForward = Vector3.Cross (-Camera.main.transform.right, myNormal);
-			// align character to the new myNormal while keeping the forward direction:
+
+		if (Input.GetKey("d")) {
+			Vector3 myForward = Vector3.Cross (-Camera.main.transform.forward, myNormal);
 			Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
-			model.transform.rotation = Quaternion.Lerp (transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
-		}*/
+			model.transform.rotation = Quaternion.Lerp (model.transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
+		}
+
+		if (Input.GetKey("a")) {
+			Vector3 myForward = Vector3.Cross (Camera.main.transform.forward, myNormal);
+			Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
+			model.transform.rotation = Quaternion.Lerp (model.transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
+		}
+		if (Input.GetKey("w")) {
+			Vector3 myForward = Vector3.Cross (Camera.main.transform.right, myNormal);
+			Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
+			model.transform.rotation = Quaternion.Lerp (model.transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
+		}
+		if (Input.GetKey("s")) {
+			Vector3 myForward = Vector3.Cross (-Camera.main.transform.right, myNormal);
+			Quaternion targetRot = Quaternion.LookRotation (myForward, myNormal);
+			model.transform.rotation = Quaternion.Lerp (model.transform.rotation, targetRot, lerpSpeed * Time.deltaTime);
+		}
 
         if (m_Player.m_IsGrounded)
         {
