@@ -31,11 +31,14 @@ public class GravityOnGameObject : MonoBehaviour {
         m_RigidBody.AddForce(GravityStrength * m_RigidBody.mass * m_Gravity);
     }
 
-    private void OnCollisionStay(Collision col)
+    private void OnCollisionEnter(Collision col)
     {
-        if (col.collider.name == m_Attractor.collider.name)
+        if (m_Attractor.collider != null)
         {
-            m_Gravity = m_Attractor.normal;
+            if (col.collider.name == m_Attractor.collider.name)
+            {
+                m_Gravity = m_Attractor.normal;
+            }
         }
     }
 

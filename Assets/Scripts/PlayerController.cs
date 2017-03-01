@@ -220,6 +220,10 @@ public class PlayerController : MonoBehaviour {
                     GetComponent<Rigidbody>().isKinematic = false;
                     gravitySphere.SetActive(false);
                 }
+
+                //Prueba
+                m_GravityOnPlayer.m_Attractor = hit;
+                m_GravityOnPlayer.m_Gravity = (m_Player.transform.position - hit.point).normalized;
                 break;
             }
 
@@ -237,7 +241,7 @@ public class PlayerController : MonoBehaviour {
 
         for (float t = 0.0f; t < 1.0f;){
 			t += Time.deltaTime;
-			transform.position = Vector3.Lerp (orgPos, dstPos, t);
+			//transform.position = Vector3.Lerp (orgPos, dstPos, t);
 			transform.rotation = Quaternion.Slerp (orgRot, dstRot, t);
 
 			yield return null;
@@ -247,6 +251,13 @@ public class PlayerController : MonoBehaviour {
 		jumping = false;
         //m_GravityOnPlayer.m_Gravity = (m_Player.transform.position - target_wall.point).normalized;
         m_GravityOnPlayer.m_Gravity = myNormal;
+        gravitySphere.SetActive(false);
+
+
+        //Guillem
+        
+        jumping = false;
+        GetComponent<Rigidbody>().isKinematic = false;
         gravitySphere.SetActive(false);
     }
 
