@@ -6,11 +6,13 @@ public class CameraManager : MonoBehaviour {
     int numStaticCameras;
     int actualCamera = 0;
     GameObject staticCameras;
+    GameObject dinamicCameras;
     GameObject godModeCamera;
     GameObject player;
 
 	void Start () {
         staticCameras = this.gameObject.transform.GetChild(0).gameObject;
+        dinamicCameras = this.gameObject.transform.GetChild(1).gameObject;
         godModeCamera = this.gameObject.transform.GetChild(2).gameObject;
         numStaticCameras = staticCameras.transform.childCount;
     }
@@ -29,11 +31,19 @@ public class CameraManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             staticCameras.SetActive(true);
+            dinamicCameras.SetActive(false);
+            godModeCamera.SetActive(false);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            staticCameras.SetActive(false);
+            dinamicCameras.SetActive(true);
             godModeCamera.SetActive(false);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             staticCameras.SetActive(false);
+            dinamicCameras.SetActive(false);
             godModeCamera.SetActive(true);
         }
     }
