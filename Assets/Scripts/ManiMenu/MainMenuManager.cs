@@ -12,24 +12,9 @@ public class MainMenuManager : MonoBehaviour {
 		Application.LoadLevel(0);
 	}
 
-	public void PressHelpButton(){
-		m_mainMenuCanvas.gameObject.SetActive(false);
-		m_helpCanvas.gameObject.SetActive(true);
-	}
-
-	public void PressCreditsButton(){
-		m_mainMenuCanvas.gameObject.SetActive(false);
-		m_creditsCanvas.gameObject.SetActive(true);
-	}
-
 	public void PreesQuitButton(){
 		Debug.Log("Quit");
 		Application.Quit();
 	}
 
-	public void BackMainMenu(){
-		m_mainMenuCanvas.gameObject.SetActive(true);
-		m_helpCanvas.gameObject.SetActive(false);
-		m_creditsCanvas.gameObject.SetActive(false);
-	}
 }
