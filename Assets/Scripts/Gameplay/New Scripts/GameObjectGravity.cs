@@ -5,7 +5,6 @@ using UnityEngine;
 
 //This class should be added to any GameObject which gravity can be changed during the game.
 //It controls the current gravity of the object, and adds it to its rigid body.
-[RequireComponent(typeof(Rigidbody))]
 public class GameObjectGravity : MonoBehaviour {
 
     Rigidbody m_rigidBody;

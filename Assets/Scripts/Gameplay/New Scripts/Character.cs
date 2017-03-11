@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CapsuleCollider))]
-[RequireComponent(typeof(GameObjectGravity))]
 public class Character : MonoBehaviour {
 
     public float m_health = 100.0f;
-    public float m_moveSpeed = 6.0f;
+    public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
-    public float m_jumpForce = 20.0f;
+    public float m_jumpForce = 4.0f;
     public float m_lerpSpeed = 10.0f;
 
     protected GameObjectGravity m_gravityOnCharacter;

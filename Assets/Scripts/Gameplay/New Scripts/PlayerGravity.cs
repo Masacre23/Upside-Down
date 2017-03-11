@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //This class controls the gravity changes caused by the player, either on himself or into the surroundings.
-[RequireComponent(typeof(NewPlayer))]
 public class PlayerGravity : MonoBehaviour {
 
     [SerializeField] float m_gravityRange = 10.0f;
@@ -26,6 +25,7 @@ public class PlayerGravity : MonoBehaviour {
         m_rayLine.material = new Material(Shader.Find("Mobile/Particles/Additive"));
 	}
 
+    //We should implicitly destroy the material since it isn't destroyed by the garbage collection
     private void OnDestroy()
     {
         Destroy(m_rayLine.material);

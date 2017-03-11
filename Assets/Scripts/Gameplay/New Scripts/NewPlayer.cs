@@ -4,8 +4,6 @@ using UnityEngine;
 
 //This is the main class for the player. It will control the player input and character movement.
 //It inherits from Character.
-[RequireComponent(typeof(NewPlayerController))]
-[RequireComponent(typeof(PlayerGravity))]
 public class NewPlayer : Character {
 
     //State machine
