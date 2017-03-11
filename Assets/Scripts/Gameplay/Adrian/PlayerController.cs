@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
 	bool a = true;
 	bool g = false;
 
-    void Start(){
+    public void Start(){
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Capsule = GetComponent<CapsuleCollider>();
         m_GravityOnPlayer = GetComponent<GravityOnGameObject>();
