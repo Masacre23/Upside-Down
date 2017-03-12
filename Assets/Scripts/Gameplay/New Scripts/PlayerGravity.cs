@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerGravity : MonoBehaviour {
 
     [SerializeField] float m_gravityRange = 10.0f;
-    [SerializeField] float m_objectDetectionRadius = 0.5f;
+    [SerializeField] float m_objectDetectionRadius = 1.5f;
 
     NewPlayer m_player;
     GameObjectGravity m_playerGravity;
@@ -17,6 +17,10 @@ public class PlayerGravity : MonoBehaviour {
     {
         m_player = GetComponent<NewPlayer>();
         m_playerGravity = GetComponent<NewPlayer>().GetComponent<GameObjectGravity>();
+
+        GameObject gravSphere = GameObject.Find("GravSphere");
+        SphereCollider sphereCollider = gravSphere.GetComponent<SphereCollider>();
+        m_objectDetectionRadius = sphereCollider.radius * gravSphere.transform.localScale.x;
 
         m_rayLine = gameObject.AddComponent<LineRenderer>();
         m_rayLine.startWidth = 0.05f;

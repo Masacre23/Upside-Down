@@ -22,11 +22,13 @@ public class NewPlayer : Character {
     bool m_jumping;
     bool m_changeGravity;
     bool m_throwObject;
+    bool m_throwObjectLastInput;
 
     //Variables regarding player movement
     PlayerState m_state;
     Transform m_camTransform;
     Transform m_modelTransform;
+    [SerializeField] float m_onAirMovementLoss = 0.5f;
 
     //Variables regarding player's change of gravity
     GameObject m_gravitationSphere;
@@ -46,7 +48,9 @@ public class NewPlayer : Character {
         m_playerInput = GetComponent<NewPlayerController>();
         m_playerGravity = GetComponent<PlayerGravity>();
 
+        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
         m_gravitationSphere = GameObject.Find("GravSphere");
+        m_gravitationSphere.transform.localPosition = Vector3.zero + Vector3.up * capsuleCollider.height / 2;
         m_gravitationSphere.SetActive(false);
 
         m_camTransform = transform.FindChild("FreeLookCameraRig");
@@ -54,6 +58,7 @@ public class NewPlayer : Character {
 
         m_state = PlayerState.ONAIR;
 
+        m_throwObjectLastInput = false;
         m_timeFloating = 0.0f;
 
         base.Start();
@@ -76,6 +81,8 @@ public class NewPlayer : Character {
         switch (m_state)
         {
             case PlayerState.GROUNDED:
+                if (m_throwObject != m_throwObjectLastInput)
+                    m_gravitationSphere.SetActive(m_throwObject);
                 if (m_throwObject)
                     m_playerGravity.ChangeObjectGravity();
                 if (m_jumping)
@@ -101,6 +108,8 @@ public class NewPlayer : Character {
                 }
                 else
                 {
+                    if (m_throwObject != m_throwObjectLastInput)
+                        m_gravitationSphere.SetActive(m_throwObject);
                     if (m_throwObject)
                         m_playerGravity.ChangeObjectGravity();
                     OnAir();
@@ -167,6 +176,7 @@ public class NewPlayer : Character {
         m_axisVertical = 0.0f;
         m_jumping = false;
         m_changeGravity = false;
+        m_throwObjectLastInput = m_throwObject;
         m_throwObject = false;
     }
 
@@ -174,11 +184,15 @@ public class NewPlayer : Character {
     //TODO: Probably we will need to change this function when we have the character's animations.
     private void Move()
     {
+        float moveSpeed = m_moveSpeed;
+        if (m_state == PlayerState.ONAIR)
+            moveSpeed *= m_onAirMovementLoss;
+
         Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
         Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
         movement.Normalize();
 
-        transform.Translate(movement * m_moveSpeed * Time.fixedDeltaTime, Space.World);
+        transform.Translate(movement * moveSpeed * Time.fixedDeltaTime, Space.World);
 
         if (movement != Vector3.zero)
         {
