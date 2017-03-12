@@ -22,13 +22,13 @@ public class NewPlayer : Character {
     bool m_jumping;
     bool m_changeGravity;
     bool m_throwObject;
-    bool m_throwObjectLastInput;
 
     //Variables regarding player movement
     PlayerState m_state;
     Transform m_camTransform;
     Transform m_modelTransform;
     [SerializeField] float m_onAirMovementLoss = 0.5f;
+    bool m_lockCamera = false;
 
     //Variables regarding player's change of gravity
     GameObject m_gravitationSphere;
@@ -39,8 +39,10 @@ public class NewPlayer : Character {
     float m_maxTimeFloating = 2.0f;
     float m_maxTimeChanging = 1.0f;
     bool m_changeEnabled = true;
+    Quaternion m_cameraGlobalRotation;
 
     //Variables regarding object's change of gravity
+    bool m_throwObjectLastInput;
 
     // Use this for initialization
     public override void Start ()
@@ -78,6 +80,7 @@ public class NewPlayer : Character {
     // We also clean the input only after a FixedUpdate, so we are sure we have at least one FixedUpdate with the correct input recieved in Update
     public override void FixedUpdate ()
     {
+        m_cameraGlobalRotation = m_camTransform.rotation;
         switch (m_state)
         {
             case PlayerState.GROUNDED:
@@ -119,6 +122,7 @@ public class NewPlayer : Character {
                     {
                         m_state = PlayerState.GROUNDED;
                         m_changeEnabled = true;
+                        m_lockCamera = false;
                     }
                 }
                 break;
@@ -138,6 +142,7 @@ public class NewPlayer : Character {
                         if (m_playerGravity.ChangePlayerGravity())
                         {
                             m_state = PlayerState.CHANGING;
+                            m_lockCamera = true;
                             m_initialRotation = transform.rotation;
                             m_finalRotation = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.m_gravity) * transform.rotation;
                         }
@@ -178,6 +183,15 @@ public class NewPlayer : Character {
         m_changeGravity = false;
         m_throwObjectLastInput = m_throwObject;
         m_throwObject = false;
+    }
+
+    void LateUpdate()
+    {
+        if (m_lockCamera)
+        {
+            m_camTransform.rotation = m_cameraGlobalRotation;
+        }
+
     }
 
     //This functions controls the character movement and the model orientation.
