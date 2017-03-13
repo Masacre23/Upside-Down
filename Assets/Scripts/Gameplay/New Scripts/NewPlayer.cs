@@ -27,8 +27,7 @@ public class NewPlayer : Character {
     PlayerState m_state;
     Transform m_camTransform;
     Transform m_modelTransform;
-    [SerializeField] float m_onAirMovementLoss = 0.5f;
-    bool m_lockCamera = false;
+    bool m_freezeMovementOnAir;
 
     //Variables regarding player's change of gravity
     GameObject m_gravitationSphere;
@@ -59,6 +58,7 @@ public class NewPlayer : Character {
         m_modelTransform = transform.FindChild("Model");
 
         m_state = PlayerState.ONAIR;
+        m_freezeMovementOnAir = false;
 
         m_throwObjectLastInput = false;
         m_timeFloating = 0.0f;
@@ -117,12 +117,13 @@ public class NewPlayer : Character {
                         m_playerGravity.ChangeObjectGravity();
                     OnAir();
                     UpdateUp();
-                    Move();
+                    if (!m_freezeMovementOnAir)
+                        Move();
                     if (CheckGroundStatus())
                     {
                         m_state = PlayerState.GROUNDED;
                         m_changeEnabled = true;
-                        m_lockCamera = false;
+                        m_freezeMovementOnAir = false;
                     }
                 }
                 break;
@@ -142,7 +143,6 @@ public class NewPlayer : Character {
                         if (m_playerGravity.ChangePlayerGravity())
                         {
                             m_state = PlayerState.CHANGING;
-                            m_lockCamera = true;
                             m_initialRotation = transform.rotation;
                             m_finalRotation = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.m_gravity) * transform.rotation;
                         }
@@ -165,6 +165,7 @@ public class NewPlayer : Character {
                 {
                     m_rigidBody.isKinematic = false;
                     m_state = PlayerState.ONAIR;
+                    m_freezeMovementOnAir = true;
                     m_gravitationSphere.SetActive(false);
                     m_timeFloating = 0.0f;
                 }
@@ -185,28 +186,15 @@ public class NewPlayer : Character {
         m_throwObject = false;
     }
 
-    void LateUpdate()
-    {
-        if (m_lockCamera)
-        {
-            m_camTransform.rotation = m_cameraGlobalRotation;
-        }
-
-    }
-
     //This functions controls the character movement and the model orientation.
     //TODO: Probably we will need to change this function when we have the character's animations.
     private void Move()
     {
-        float moveSpeed = m_moveSpeed;
-        if (m_state == PlayerState.ONAIR)
-            moveSpeed *= m_onAirMovementLoss;
-
         Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
         Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
         movement.Normalize();
 
-        transform.Translate(movement * moveSpeed * Time.fixedDeltaTime, Space.World);
+        m_rigidBody.MovePosition(transform.position + movement * m_moveSpeed * Time.deltaTime);
 
         if (movement != Vector3.zero)
         {

@@ -37,7 +37,7 @@ public class PlayerGravity : MonoBehaviour {
 
     public void DrawRay()
     {
-        m_rayLine.SetPosition(0, m_player.transform.position + transform.up * m_player.m_capsuleHeight / 2);
+        m_rayLine.SetPosition(0, m_player.transform.position + transform.up * m_player.m_capsuleHeight);
         RaycastHit target_wall;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_gravityRange))
         {
@@ -92,20 +92,28 @@ public class PlayerGravity : MonoBehaviour {
     public void ChangeObjectGravity()
     {
         RaycastHit target_wall;
-        bool hit = false;
-        hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall);
-
-        if (hit)
+        bool hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall);
+        if (target_wall.transform.tag == "GravityAffected")
         {
-            Collider[] allobjects = Physics.OverlapSphere(m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2), m_objectDetectionRadius);
-            for (int i = 0; i < allobjects.Length; i++)
+            RaycastHit[] alltargets = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward, 1000.0f);
+            foreach (RaycastHit rayhit in alltargets)
             {
-                if (allobjects[i].transform.tag == "GravityAffected")
+                if (rayhit.transform.tag != "GravityAffected")
                 {
-                    GameObjectGravity gravity_object = allobjects[i].transform.GetComponent<GameObjectGravity>();
-                    gravity_object.m_attractor = target_wall;
-                    gravity_object.m_gravity = (allobjects[i].transform.position - target_wall.point).normalized;
+                    target_wall = rayhit;
+                    break;
                 }
+            }
+        }
+
+        Collider[] allobjects = Physics.OverlapSphere(m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2), m_objectDetectionRadius);
+        for (int i = 0; i < allobjects.Length; i++)
+        {
+            if (allobjects[i].transform.tag == "GravityAffected")
+            {
+                GameObjectGravity gravity_object = allobjects[i].transform.GetComponent<GameObjectGravity>();
+                gravity_object.m_attractor = target_wall;
+                gravity_object.m_gravity = (allobjects[i].transform.position - target_wall.point).normalized;
             }
         }
     }
