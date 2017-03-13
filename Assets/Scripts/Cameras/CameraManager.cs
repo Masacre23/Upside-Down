@@ -58,7 +58,8 @@ public class CameraManager : MonoBehaviour {
 
     private void OnDisable()
     {
-        player.SetActive(true);
+		if(player != null)
+			player.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
