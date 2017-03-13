@@ -143,10 +143,6 @@ public class NewPlayer : Character {
                         if (m_playerGravity.ChangePlayerGravity())
                         {
                             m_state = PlayerState.CHANGING;
-<<<<<<< HEAD:Assets/Scripts/Gameplay/New Scripts/NewPlayer.cs
-=======
-                           // m_lockCamera = true;
->>>>>>> bb5ecea725330083a19ab58117481f53648e97db:Assets/Scripts/Gameplay/Player/NewPlayer.cs
                             m_initialRotation = transform.rotation;
                             m_finalRotation = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.m_gravity) * transform.rotation;
                         }
