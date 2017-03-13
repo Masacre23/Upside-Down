@@ -22,6 +22,6 @@ public class SceneManager : MonoBehaviour {
 
 	public void BackToMenu()
 	{
-		Application.LoadLevel(1);
+		Application.LoadLevel(0);
 	}
 }

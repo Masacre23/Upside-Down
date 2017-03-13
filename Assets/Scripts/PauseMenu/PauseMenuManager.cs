@@ -34,6 +34,6 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void Quit()
     {
-        Application.LoadLevel(1);
+        Application.LoadLevel(0);
     }
 }

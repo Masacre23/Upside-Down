@@ -46,11 +46,13 @@ public class PlayerGravity : MonoBehaviour {
             {
                 m_rayLine.startColor = Color.green;
                 m_rayLine.endColor = Color.green;
+                m_rayLine.material.color = Color.green;
             }
             else
             {
                 m_rayLine.startColor = Color.red;
                 m_rayLine.endColor = Color.red;
+                m_rayLine.material.color = Color.red;
             }
             m_rayLine.enabled = true;
         }
@@ -61,6 +63,7 @@ public class PlayerGravity : MonoBehaviour {
                 m_rayLine.SetPosition(1, target_wall.point);
                 m_rayLine.startColor = Color.red;
                 m_rayLine.endColor = Color.red;
+                m_rayLine.material.color = Color.red;
                 m_rayLine.enabled = true;
             }
             else

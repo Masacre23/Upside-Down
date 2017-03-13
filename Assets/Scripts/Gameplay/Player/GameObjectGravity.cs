@@ -17,6 +17,7 @@ public class GameObjectGravity : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_rigidBody = GetComponent<Rigidbody>();
+        m_rigidBody.useGravity = false;
         m_gravity = Physics.gravity;
 
         //Find an attractor if possible (if not, its possible that the GameObject is not correctly positioned or oriented.
