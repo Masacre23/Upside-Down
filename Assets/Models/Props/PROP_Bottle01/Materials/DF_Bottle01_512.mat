@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: DF_Bottle01_512
-  m_Shader: {fileID: 4800000, guid: cce724d73496adb40b020829ecc357f9, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2535aaef03c3c014dbefaf8da4dacee5, type: 3}
   m_ShaderKeywords: _ISKAGE_NORMAL_ON
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -82,6 +82,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _Ramp
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _setKage
       second:
         m_Texture: {fileID: 0}
@@ -98,6 +104,9 @@ Material:
         name: _DetailNormalMapScale
       second: 1
     - first:
+        name: _DiffuseThreshold
+      second: 0.1
+    - first:
         name: _DstBlend
       second: 0
     - first:
@@ -109,6 +118,9 @@ Material:
     - first:
         name: _GlossyReflections
       second: 1
+    - first:
+        name: _LitOutlineThickness
+      second: 0.1
     - first:
         name: _Metallic
       second: 0
@@ -131,6 +143,9 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
+        name: _Shininess
+      second: 10
+    - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
@@ -142,6 +157,9 @@ Material:
     - first:
         name: _UVSec
       second: 0
+    - first:
+        name: _UnlitOutlineThickness
+      second: 0.4
     - first:
         name: _ZWrite
       second: 1
@@ -158,3 +176,12 @@ Material:
     - first:
         name: _Line_Color
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _OutlineColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _UnlitColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}

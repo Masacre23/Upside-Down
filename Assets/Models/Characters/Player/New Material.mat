@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: New Material
-  m_Shader: {fileID: 4800000, guid: cce724d73496adb40b020829ecc357f9, type: 3}
+  m_Shader: {fileID: 4800000, guid: 2535aaef03c3c014dbefaf8da4dacee5, type: 3}
   m_ShaderKeywords: _EMISSION _ISKAGE_NORMAL_ON
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -18,7 +18,7 @@ Material:
     - first:
         name: _BumpMap
       second:
-        m_Texture: {fileID: 2800000, guid: c82e8de7eb4fe8648b019aaf77141f39, type: 3}
+        m_Texture: {fileID: 2800000, guid: ded72a67e161e6d48b6e71276588e732, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -54,7 +54,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 5170610aa9a23694ebbd9648e0df8a43, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2905a3fa9c9801c409fab65355a16c70, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -79,6 +79,12 @@ Material:
         name: _ParallaxMap
       second:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Ramp
+      second:
+        m_Texture: {fileID: 2800000, guid: 4a056241e2722dc46a7262a8e7073fd9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -125,6 +131,9 @@ Material:
         name: _OcclusionStrength
       second: 1
     - first:
+        name: _Outline
+      second: 0.0403
+    - first:
         name: _Outline_Width
       second: 0.5
     - first:
@@ -157,4 +166,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _Line_Color
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _OutlineColor
       second: {r: 0, g: 0, b: 0, a: 1}
