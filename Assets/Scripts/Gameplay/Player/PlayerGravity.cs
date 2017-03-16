@@ -5,20 +5,18 @@ using UnityEngine;
 //This class controls the gravity changes caused by the player, either on himself or into the surroundings.
 public class PlayerGravity : MonoBehaviour {
 
-    [SerializeField] float m_gravityRange = 10.0f;
-    [SerializeField] float m_objectDetectionRadius = 1.5f;
-
-    NewPlayer m_player;
+    float m_objectDetectionRadius;
+     Player m_player;
     GameObjectGravity m_playerGravity;
     LineRenderer m_rayLine;
 
 	// Use this for initialization
 	void Start ()
     {
-        m_player = GetComponent<NewPlayer>();
-        m_playerGravity = GetComponent<NewPlayer>().GetComponent<GameObjectGravity>();
+        m_player = GetComponent<Player>();
+        m_playerGravity = GetComponent<Player>().GetComponent<GameObjectGravity>();
 
-        GameObject gravSphere = GameObject.Find("GravSphere");
+        GameObject gravSphere = m_player.m_gravitationSphere;
         SphereCollider sphereCollider = gravSphere.GetComponent<SphereCollider>();
         m_objectDetectionRadius = sphereCollider.radius * gravSphere.transform.localScale.x;
 
@@ -39,7 +37,7 @@ public class PlayerGravity : MonoBehaviour {
     {
         m_rayLine.SetPosition(0, m_player.transform.position + transform.up * m_player.m_capsuleHeight);
         RaycastHit target_wall;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_gravityRange))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_player.m_gravityRange))
         {
             m_rayLine.SetPosition(1, target_wall.point);
             if (target_wall.collider.tag == "GravityWall")
@@ -78,7 +76,7 @@ public class PlayerGravity : MonoBehaviour {
     {
         RaycastHit target_wall;
         bool ret = false;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_gravityRange))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_player.m_gravityRange))
         {
             if (target_wall.collider.tag == "GravityWall")
             {

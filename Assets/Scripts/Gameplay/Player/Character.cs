@@ -10,7 +10,7 @@ public class Character : MonoBehaviour {
     public float m_jumpForce = 4.0f;
     public float m_lerpSpeed = 10.0f;
 
-    protected GameObjectGravity m_gravityOnCharacter;
+    public GameObjectGravity m_gravityOnCharacter;
     protected Rigidbody m_rigidBody;
     CapsuleCollider m_capsule;
     public float m_capsuleHeight;
@@ -20,10 +20,15 @@ public class Character : MonoBehaviour {
 
     protected bool m_isGrounded;
 
+    public virtual void Awake()
+    {
+        if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
+            m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
+    }
+
     // Use this for initialization
     public virtual void Start ()
     {
-        m_gravityOnCharacter = GetComponent<GameObjectGravity>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_capsule = GetComponent<CapsuleCollider>();
         m_capsuleHeight = m_capsule.height;
@@ -65,7 +70,7 @@ public class Character : MonoBehaviour {
 
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    protected void Jump()
+    public void Jump()
     {
         m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
         m_isGrounded = false;
@@ -74,7 +79,7 @@ public class Character : MonoBehaviour {
 
     //This function should be called while character is on air.
     //It controls the detection of the floor. If the character is going up, the detection is small in order to avoid being unable to jump.
-    protected void OnAir()
+    public void OnAir()
     {
         m_groundCheckDistance = Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 ? m_defaultGroundCheckDistance : 0.01f;
     }
