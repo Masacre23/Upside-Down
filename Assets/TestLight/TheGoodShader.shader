@@ -37,6 +37,7 @@
 		ENDCG
 	SubShader{
 		Tags{ "RenderType" = "Opaque" }
+		LOD 200
 		CGPROGRAM
 		//#pragma surface surf Lambert
 		#pragma surface surf Ramp
@@ -82,5 +83,6 @@
 		ENDCG
 	}
 	}
-	Fallback "Difuse"
+	//Fallback "Difuse"
+	Fallback off
 }
