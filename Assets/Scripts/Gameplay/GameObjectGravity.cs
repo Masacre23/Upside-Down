@@ -23,7 +23,8 @@ public class GameObjectGravity : MonoBehaviour {
 
         //Find an attractor if possible (if not, its possible that the GameObject is not correctly positioned or oriented.
         //If found, set gravity as the normal of the hit;
-        RaycastHit[] allhits = Physics.RaycastAll(m_rigidBody.transform.position, -Vector3.up, 100.0f);
+        //RaycastHit[] allhits = Physics.RaycastAll(m_rigidBody.transform.position, -Vector3.up, 100.0f);
+        RaycastHit[] allhits = Physics.RaycastAll(m_rigidBody.transform.position, -transform.up, 100.0f);
         foreach (RaycastHit hit in allhits)
         {
             if (hit.transform.tag == "GravityWall")
