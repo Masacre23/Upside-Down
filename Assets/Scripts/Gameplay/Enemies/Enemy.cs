@@ -11,7 +11,7 @@ public class Enemy : Character {
 	public EnemyStates m_Following;
 
 	//General variables
-	public int m_speed = 4;
+	public int m_speed = 2;
 
 	public GameObject player;
 

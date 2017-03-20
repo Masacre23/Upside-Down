@@ -12,9 +12,8 @@ public class EnemyGravity : MonoBehaviour {
 		m_enemy = GetComponent<Enemy> ();
 		m_enemyGravity = GetComponent<GameObjectGravity> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+	void FixedUpdate () {
 		
 	}
 }

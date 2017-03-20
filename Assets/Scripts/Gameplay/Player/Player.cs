@@ -36,6 +36,9 @@ public class Player : Character
     public float m_maxTimeChanging = 1.0f;
     public bool m_changeEnabled = true;
 
+	//Pruebas
+	public Vector3 up;
+
     public override void Awake()
     {
         m_grounded = gameObject.AddComponent<PlayerGrounded>();
@@ -74,6 +77,7 @@ public class Player : Character
     // First, it should read input from PlayerController in Update, since we need input every frame
     public void Update()
     {
+		up = transform.up;
         m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical);
         m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject);
     }

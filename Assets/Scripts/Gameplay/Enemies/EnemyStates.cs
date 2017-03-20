@@ -6,10 +6,9 @@ public class EnemyStates : MonoBehaviour
 {
 	protected enum States
 	{
-		GROUNDED,
-		ONAIR,
 		IDLE,
-		FOLLOWING
+		FOLLOWING,
+		CHANGING
 	}
 
 	protected States m_type;
