@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: RampPrueba
-  m_Shader: {fileID: 4800000, guid: 1808f1850a037f145a7126f57da32c52, type: 3}
-  m_ShaderKeywords: _EMISSION
+  m_Shader: {fileID: 4800000, guid: 5eced5511fed2454c88a87ee75a29c6f, type: 3}
+  m_ShaderKeywords: _COLOR_ON _EMISSION _TEX_ON _VCOLOR_ON
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -19,6 +19,18 @@ Material:
         name: _BumpMap
       second:
         m_Texture: {fileID: 2800000, guid: ded72a67e161e6d48b6e71276588e732, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ClutTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ColorRamp
+      second:
+        m_Texture: {fileID: 2800000, guid: d440902fad11e807d00044888d76c639, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -112,6 +124,18 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _RgbDepthTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _RgbTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _SpecFar
       second:
         m_Texture: {fileID: 0}
@@ -132,13 +156,22 @@ Material:
     - first:
         name: _ToonShade
       second:
-        m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0b9d13ea39c6dab4ea935ed5e10a6798, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ZCurve
+      second:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BorderWidth
       second: 1.02
+    - first:
+        name: _Brightness
+      second: 1.54
     - first:
         name: _BumpScale
       second: 1
@@ -152,14 +185,23 @@ Material:
         name: _DetailNormalMapScale
       second: 1
     - first:
+        name: _DetailTex
+      second: 1
+    - first:
+        name: _DiffuseThreshold
+      second: 0.066
+    - first:
         name: _DstBlend
       second: 0
+    - first:
+        name: _EdgeWidth
+      second: 0.002
     - first:
         name: _GlossMapScale
       second: 1
     - first:
         name: _Glossiness
-      second: 0.5
+      second: 0.508
     - first:
         name: _GlossyReflections
       second: 1
@@ -173,6 +215,9 @@ Material:
         name: _Metallic
       second: 0
     - first:
+        name: _Middle
+      second: 0.424
+    - first:
         name: _Mode
       second: 0
     - first:
@@ -185,6 +230,9 @@ Material:
         name: _Outline
       second: 0.03
     - first:
+        name: _OutlineThickness
+      second: 0
+    - first:
         name: _Parallax
       second: 0.02
     - first:
@@ -192,7 +240,7 @@ Material:
       second: 6.02
     - first:
         name: _Shininess
-      second: 0.267
+      second: 0.5
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -206,8 +254,14 @@ Material:
         name: _SrcBlend
       second: 1
     - first:
+        name: _TintColor
+      second: 1
+    - first:
         name: _UVSec
       second: 0
+    - first:
+        name: _VertexColor
+      second: 1
     - first:
         name: _ZWrite
       second: 1
@@ -220,7 +274,19 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _Color
-      second: {r: 0.5441177, g: 0.5441177, b: 0.5441177, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _ColorBot
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _ColorMid
+      second: {r: 0.32352942, g: 0.32352942, b: 0.32352942, a: 1}
+    - first:
+        name: _ColorTop
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _EdgeColor
+      second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
@@ -239,3 +305,9 @@ Material:
     - first:
         name: _RimColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _UnlitColor
+      second: {r: 0.07352942, g: 0.07352942, b: 0.07352942, a: 1}
