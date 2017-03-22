@@ -7,8 +7,8 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: RampPrueba
-  m_Shader: {fileID: 4800000, guid: 5eced5511fed2454c88a87ee75a29c6f, type: 3}
-  m_ShaderKeywords: _COLOR_ON _EMISSION _TEX_ON _VCOLOR_ON
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _COLOR_ON _EMISSION _NORMALMAP _TEX_ON _VCOLOR_ON
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -72,7 +72,7 @@ Material:
     - first:
         name: _EmissionMap
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 666b5e0206972f84e914a0665d3ce003, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -142,6 +142,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _SpecNear
       second:
         m_Texture: {fileID: 0}
@@ -201,7 +207,7 @@ Material:
       second: 1
     - first:
         name: _Glossiness
-      second: 0.508
+      second: 0.635
     - first:
         name: _GlossyReflections
       second: 1
@@ -289,7 +295,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _EmissionColor
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 0, g: 1, b: 0.0896554, a: 1}
     - first:
         name: _EmissiveColor
       second: {r: 1, g: 1, b: 1, a: 1}

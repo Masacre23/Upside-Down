@@ -6,10 +6,10 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: New Material
-  m_Shader: {fileID: 4800000, guid: 2535aaef03c3c014dbefaf8da4dacee5, type: 3}
-  m_ShaderKeywords: _EMISSION _ISKAGE_NORMAL_ON
-  m_LightmapFlags: 1
+  m_Name: PlayerMaterial
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _EMISSION _NORMALMAP
+  m_LightmapFlags: 2
   m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
@@ -42,13 +42,7 @@ Material:
     - first:
         name: _EmissionMap
       second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _KageTexture
-      second:
-        m_Texture: {fileID: 2800000, guid: 04ee68c3982666944b8312d450c2427b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 666b5e0206972f84e914a0665d3ce003, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -70,25 +64,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
-        name: _Outline_sampler
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
         name: _ParallaxMap
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _Ramp
-      second:
-        m_Texture: {fileID: 2800000, guid: 4a056241e2722dc46a7262a8e7073fd9, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _setKage
       second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -111,7 +87,7 @@ Material:
       second: 1
     - first:
         name: _Glossiness
-      second: 0.5
+      second: 0.591
     - first:
         name: _GlossyReflections
       second: 1
@@ -119,23 +95,11 @@ Material:
         name: _Metallic
       second: 0
     - first:
-        name: _Mix_BaseTexture
-      second: 0.467
-    - first:
-        name: _Mix_KageTexture
-      second: 0.9
-    - first:
         name: _Mode
       second: 0
     - first:
         name: _OcclusionStrength
       second: 1
-    - first:
-        name: _Outline
-      second: 0.1
-    - first:
-        name: _Outline_Width
-      second: 0.5
     - first:
         name: _Parallax
       second: 0.02
@@ -154,19 +118,10 @@ Material:
     - first:
         name: _ZWrite
       second: 1
-    - first:
-        name: _isKage_Normal
-      second: 1
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.07586217, g: 1, b: 0, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
-      second: {r: 0, g: 0, b: 0, a: 1}
-    - first:
-        name: _Line_Color
-      second: {r: 0, g: 0, b: 0, a: 1}
-    - first:
-        name: _OutlineColor
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 0.3284134, g: 9.524, b: 0, a: 1}
