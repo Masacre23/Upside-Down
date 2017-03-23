@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Pruebas
-  m_Shader: {fileID: 4800000, guid: 3b8b1c27e1e7abb41853f8d2476c7bc1, type: 3}
+  m_Shader: {fileID: 4800000, guid: 1808f1850a037f145a7126f57da32c52, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -18,7 +18,13 @@ Material:
     - first:
         name: _BumpMap
       second:
-        m_Texture: {fileID: 2800000, guid: a2a017c7ac37e634ab27eefdde19c432, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7d07ed3aa986a70428c135dd30ae828c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ColorRamp
+      second:
+        m_Texture: {fileID: 2800000, guid: 272d35f05c464d1418eb0d090eca2d69, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -48,7 +54,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 1aed4f440f2fe3140a09b04070643c3d, type: 3}
+        m_Texture: {fileID: 2800000, guid: f795ba6907dfcb74a94974809d0a3c2c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -69,6 +75,24 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Ramp
+      second:
+        m_Texture: {fileID: 2800000, guid: 76dbca05778035b4ebbb7a740ccc3674, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _RampTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ToonShade
+      second:
+        m_Texture: {fileID: 8900000, guid: b995d4bd9d11078d11005b9844295342, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
@@ -81,7 +105,7 @@ Material:
       second: 1
     - first:
         name: _DiffuseThreshold
-      second: 0.036
+      second: 0.08
     - first:
         name: _DstBlend
       second: 0
@@ -95,8 +119,11 @@ Material:
         name: _GlossyReflections
       second: 1
     - first:
+        name: _LightCutoff
+      second: 5
+    - first:
         name: _LitOutlineThickness
-      second: 0
+      second: 1
     - first:
         name: _Metallic
       second: 0
@@ -106,6 +133,9 @@ Material:
     - first:
         name: _OcclusionStrength
       second: 1
+    - first:
+        name: _Outline
+      second: 0.002
     - first:
         name: _Parallax
       second: 0.02
@@ -133,16 +163,16 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 0.6838235, g: 0.6838235, b: 0.6838235, a: 1}
+      second: {r: 0.5661765, g: 0.5661765, b: 0.5661765, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _OutlineColor
-      second: {r: 0.6764706, g: 0.6764706, b: 0.6764706, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _SpecColor
-      second: {r: 0.5808823, g: 0.5808823, b: 0.5808823, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _UnlitColor
       second: {r: 0, g: 0, b: 0, a: 1}

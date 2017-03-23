@@ -46,6 +46,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _Illum
+      second:
+        m_Texture: {fileID: 2800000, guid: f35f4a99adb959c4ea81b603d355e660, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _MainTex
       second:
         m_Texture: {fileID: 2800000, guid: 1aed4f440f2fe3140a09b04070643c3d, type: 3}
@@ -69,7 +75,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
+    - first:
+        name: _BumpAmt
+      second: 10
     - first:
         name: _BumpScale
       second: 1
@@ -82,6 +97,9 @@ Material:
     - first:
         name: _DstBlend
       second: 0
+    - first:
+        name: _Emission
+      second: 3.73
     - first:
         name: _GlossMapScale
       second: 1
@@ -104,6 +122,9 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
+        name: _Shininess
+      second: 0.751
+    - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
@@ -124,4 +145,7 @@ Material:
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
-      second: {r: 12.196, g: 10.345573, b: 0, a: 1}
+      second: {r: 10, g: 8.482759, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 1, g: 1, b: 1, a: 1}

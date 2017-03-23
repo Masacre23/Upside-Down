@@ -76,7 +76,7 @@ Shader "Custom/ToonShading-DeferredShading" {
 			light.ndotl = 1;
 
 		half4 res = UNITY_BRDF_PBS(data.diffuseColor, data.specularColor, oneMinusReflectivity, data.smoothness, data.normalWorld, -eyeVec, light, ind);
-
+		
 		return res;
 	}
 
