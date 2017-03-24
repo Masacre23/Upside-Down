@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStates : MonoBehaviour
 {
-    protected enum States
+    public enum States
     {
         GROUNDED,
         ONAIR,
@@ -13,7 +13,7 @@ public class PlayerStates : MonoBehaviour
         CHANGING
     }
 
-    protected States m_type;
+    public States m_type;
     protected Player m_player;
     protected Rigidbody m_rigidBody;
     protected Transform m_modelTransform;

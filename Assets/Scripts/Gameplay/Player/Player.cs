@@ -53,17 +53,17 @@ public class Player : Character
         if (!(m_playerGravity = GetComponent<PlayerGravity>()))        
             m_playerGravity = gameObject.AddComponent<PlayerGravity>();
 
-        base.Awake();
-    }
-
-    // Use this for initialization
-    public override void Start ()
-    {
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
         m_gravitationSphere = GameObject.Find("GravSphere");
         m_gravitationSphere.transform.localPosition = Vector3.zero + Vector3.up * capsuleCollider.height / 2;
         m_gravitationSphere.SetActive(false);
 
+        base.Awake();
+    }
+
+    // Use this for initialization
+    public override void Start ()
+    { 
         m_camTransform = transform.FindChild("FreeLookCameraRig");
         m_modelTransform = transform.FindChild("Model");
 

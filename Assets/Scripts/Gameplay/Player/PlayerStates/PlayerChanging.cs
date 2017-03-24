@@ -12,7 +12,7 @@ public class PlayerChanging : PlayerStates
     {
         base.Start();
         m_timeChanging = 0.0f;
-        m_type = States.FLOATING;
+        m_type = States.CHANGING;
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
