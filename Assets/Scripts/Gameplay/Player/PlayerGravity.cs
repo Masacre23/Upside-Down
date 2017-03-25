@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerGravity : MonoBehaviour {
 
     float m_objectDetectionRadius;
-     Player m_player;
+    Player m_player;
     GameObjectGravity m_playerGravity;
     LineRenderer m_rayLine;
+    GameObject m_objectDetected = null;
 
 	// Use this for initialization
 	void Start ()
@@ -35,13 +36,17 @@ public class PlayerGravity : MonoBehaviour {
 
     public void DrawRay()
     {
+        HighlightObject(null);
         m_rayLine.SetPosition(0, m_player.transform.position + transform.up * m_player.m_capsuleHeight);
         RaycastHit target_wall;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_player.m_gravityRange))
         {
             m_rayLine.SetPosition(1, target_wall.point);
+            HUDManager.ChangeColorSight(target_wall.collider.tag == "GravityWall");
             if (target_wall.collider.tag == "GravityWall")
             {
+                if(m_player.m_currentState.m_type == PlayerStates.States.FLOATING)
+                    HighlightObject(target_wall.collider.gameObject);
                 m_rayLine.startColor = Color.green;
                 m_rayLine.endColor = Color.green;
                 m_rayLine.material.color = Color.green;
@@ -56,6 +61,7 @@ public class PlayerGravity : MonoBehaviour {
         }
         else
         {
+            HUDManager.ChangeColorSight(false);
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall))
             {
                 m_rayLine.SetPosition(1, target_wall.point);
@@ -67,6 +73,27 @@ public class PlayerGravity : MonoBehaviour {
             else
             {
                 m_rayLine.enabled = false;
+            }
+        }
+    }
+
+    private void HighlightObject(GameObject newObjectDetected)
+    {
+        if(m_objectDetected != null && m_objectDetected != newObjectDetected)
+        {
+            MeshRenderer mesh = m_objectDetected.GetComponent<MeshRenderer>();
+            if(mesh != null)
+            {
+                mesh.material.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+            }
+        }
+        m_objectDetected = newObjectDetected;
+        if(m_objectDetected != null)
+        {
+            MeshRenderer mesh = m_objectDetected.GetComponent<MeshRenderer>();
+            if (mesh != null)
+            {
+                mesh.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }
     }

@@ -17,6 +17,7 @@ public class PlayerFloating : PlayerStates
     public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool throwing, float timeStep)
     {
         bool ret = false;
+        HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_player.m_maxTimeFloating));
 
         if (m_timeFloating > m_player.m_maxTimeFloating)
         {
@@ -44,6 +45,7 @@ public class PlayerFloating : PlayerStates
         m_rigidBody.isKinematic = true;
         m_player.m_gravitationSphere.SetActive(true);
         m_player.m_changeEnabled = false;
+        HUDManager.ShowGravityPanel(true);
     }
 
     public override void OnExit()
@@ -51,5 +53,6 @@ public class PlayerFloating : PlayerStates
         m_rigidBody.isKinematic = false;
         m_player.m_gravitationSphere.SetActive(false);
         m_timeFloating = 0.0f;
+        HUDManager.ShowGravityPanel(false);
     }
 }
