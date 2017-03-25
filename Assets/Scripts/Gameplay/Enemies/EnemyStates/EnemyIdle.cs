@@ -25,14 +25,4 @@ public class EnemyIdle : EnemyStates {
 	{
 		
 	}
-
-	void OnTriggerEnter(Collider col)
-	{
-		if (col.tag == "Player") {
-			m_enemy.m_currentState = m_enemy.m_Following;
-			m_enemy.player = col.gameObject;
-			OnExit ();
-			m_enemy.m_currentState.OnEnter ();
-		}
-	}
 }

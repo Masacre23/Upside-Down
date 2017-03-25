@@ -9,6 +9,7 @@ public class Enemy : Character {
 	public EnemyStates m_currentState;
 	public EnemyStates m_Idle;
 	public EnemyStates m_Following;
+	public EnemyStates m_Changing;
 
 	//General variables
 	public int m_speed = 2;
@@ -19,6 +20,7 @@ public class Enemy : Character {
 	{
 		m_Idle = gameObject.AddComponent<EnemyIdle> ();
 		m_Following = gameObject.AddComponent<EnemyFollowing> ();
+		m_Changing = gameObject.AddComponent<EnemyChanging> ();
 
 		m_currentState = m_Idle;
 
@@ -35,5 +37,41 @@ public class Enemy : Character {
 	{
 		if (m_currentState.OnUpdate ())
 			m_currentState.OnEnter ();
+	}
+
+	void OnCollisionEnter(Collision col)
+	{
+		/*if (col.gameObject.tag == "EnemyWall") 
+		{
+			m_currentState.OnExit ();
+			m_currentState = m_Changing;
+			m_currentState.OnEnter ();
+		}*/
+		if (m_currentState == m_Changing) 
+		{
+			m_currentState.OnExit ();
+			m_currentState.OnEnter ();
+		}
+	}
+
+	void OnTriggerEnter(Collider col)
+	{
+		if (col.tag == "Player" && m_currentState != m_Changing) {
+			m_currentState.OnExit ();
+			m_currentState = m_Following;
+			player = col.gameObject;
+			m_currentState.OnEnter ();
+		}
+
+		if (col.tag == "EnemyWall") 
+		{
+			//m_Following.wallToChange = col.gameObject;
+			if (m_currentState == m_Following) 
+			{
+				m_currentState.OnExit ();
+				m_currentState = m_Changing;
+				m_currentState.OnEnter ();
+			}
+		}
 	}
 }

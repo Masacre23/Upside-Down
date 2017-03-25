@@ -5,15 +5,20 @@ using UnityEngine;
 public class EnemyFollowing : EnemyStates {
 	public GameObject player;
 	int speed;
-	public bool canChange;
-	GameObject wallToChange;
+	public bool canChange = true;
+	public GameObject wallToChange;
 	public Vector3 up;
+	float radiusCollider;
+	public bool x;
+	public bool y;
+	public bool z;
 
 	// Use this for initialization
 	public override void Start () {
 		base.Start ();
-		m_type = States.FOLLOWING;
-		m_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		x = false;
+		y = false;
+		z = false;
 	}
 	
 	// Update is called once per frame
@@ -36,29 +41,49 @@ public class EnemyFollowing : EnemyStates {
 
 	public override void OnEnter()
 	{
+		m_type = States.FOLLOWING;
+
 		player = m_enemy.player;
 		speed = m_enemy.m_speed;
 
-		m_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		//m_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		/*if (player.transform.up.x > 0.5f)
+			m_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX;
+		if (player.transform.up.y)
+			m_rigidBody.constraints |= RigidbodyConstraints.FreezeRotationY;
+		if (player.transform.up.z )
+			m_rigidBody.constraints |= RigidbodyConstraints.FreezeRotationZ;*/
+		if (player.transform.up.x > 0.5f || player.transform.up.x < -0.5f)
+			x = true;
+		if (player.transform.up.y > 0.5f || player.transform.up.y < -0.5f)
+			y = true;
+		if (player.transform.up.z > 0.5f || player.transform.up.z < -0.5f)
+			z = true;
+
+		radiusCollider = m_enemy.GetComponent<SphereCollider> ().radius;
+		m_enemy.GetComponent<SphereCollider> ().radius = 0;
 	}
 
 	public override void OnExit()
 	{
-
+		m_enemy.GetComponent<SphereCollider> ().radius = radiusCollider;
+		x = false;
+		y = false;
+		z = false;
 	}
 
 	public void Move()
 	{
 		Vector3 target = player.transform.position;
-		target.y = transform.position.y;
+		if (x)
+		  	target.x = transform.position.x;
+		if (y)
+			target.y = transform.position.y;
+		if (z)
+			target.z = transform.position.z;
 		transform.LookAt (target);
-
 		transform.position += transform.forward * speed * Time.deltaTime;
-	}
-
-	void OnTriggerEnter(Collider col)
-	{
-		if (col.tag == "EnemyWall")
-			wallToChange = col.gameObject;
+		//if (y)
+		//	transform.up = new Vector3(transform.up.x, transform.up.y, transform.up.z);
 	}
 }
