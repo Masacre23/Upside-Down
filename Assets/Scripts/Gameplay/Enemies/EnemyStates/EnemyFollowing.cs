@@ -13,6 +13,9 @@ public class EnemyFollowing : EnemyStates {
 	public bool y;
 	public bool z;
 	public Vector3 bUp; //a boolean vector
+	public float rotationX;
+	public float rotationY;
+	public float rotationZ;
 
 	// Use this for initialization
 	public override void Start () {
@@ -87,26 +90,66 @@ public class EnemyFollowing : EnemyStates {
 		//transform.LookAt (target);
 
 		Vector3 difference = target - transform.position;
-		if (x) 
+		/*if (x || z) 
 		{
 			float rotationX = Mathf.Atan2 (difference.y, difference.z) * Mathf.Rad2Deg;
-			if (transform.up.x < 0)
-				rotationX *= -1;
+			//if (transform.up.x < 0)
+			rotationX *= -1;
 			transform.rotation = Quaternion.Euler (rotationX , m_enemy.currentWall.transform.rotation.eulerAngles.y, m_enemy.currentWall.transform.rotation.eulerAngles.z);
 		}
-		else if (y) 
+		else if (y || z) 
 		{
 			float rotationY = Mathf.Atan2 (difference.x, difference.z) * Mathf.Rad2Deg;
 			transform.rotation = Quaternion.Euler (m_enemy.currentWall.transform.rotation.eulerAngles.x, rotationY, m_enemy.currentWall.transform.rotation.eulerAngles.z);
 		}
 		else if (z) 
 		{
-			float rotationZ = Mathf.Atan2 (difference.x, difference.z) * Mathf.Rad2Deg;
+			float rotationZ = Mathf.Atan2 (difference.y, difference.z) * Mathf.Rad2Deg;
+			//if (transform.up.x < 0)
+			//	rotationZ *= -1;
+			rotationZ *= -1;
 			transform.rotation = Quaternion.Euler (m_enemy.currentWall.transform.rotation.eulerAngles.x, m_enemy.currentWall.transform.rotation.eulerAngles.y, rotationZ);
+		}*/
+
+
+
+		/*rotationX = Mathf.Atan2 (difference.y, difference.z) * Mathf.Rad2Deg;
+		rotationY = Mathf.Atan2 (difference.x, difference.z) * Mathf.Rad2Deg;
+		rotationZ = Mathf.Atan2 (difference.x, difference.y) * Mathf.Rad2Deg;
+	
+		transform.rotation = Quaternion.Euler (rotationX * transform.up.x, 
+			rotationY *transform.up.y, 
+			rotationZ *transform.up.z);*/
+		
+		/*Vector3 lookPos = target - transform.position;
+		if (x) {
+			//lookPos.x = transform.position.x;
+			lookPos.x = 0;
+			//lookPos.z = transform.position.z;
+		} else if (y)
+			lookPos.y = 0;
+		else if (z)
+			lookPos.z = 0;
+		Quaternion rotation = Quaternion.LookRotation (lookPos);
+		transform.rotation = Quaternion.Slerp (transform.rotation, rotation, Time.deltaTime);*/
+
+		/*Vector3 targetPostition;
+		if (x) {
+			targetPostition = new Vector3 (this.transform.position.x, 
+				                          target.y, 
+				                          target.z);
+		} else {
+			targetPostition = new Vector3 (target.x, 
+				this.transform.position.y, 
+				target.z);
 		}
+		this.transform.LookAt( targetPostition ) ;*/
+
+		float distanceToPlane = Vector3.Dot(transform.up, target - transform.position);
+		Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
+
+		transform.LookAt(pointOnPlane, transform.up);
 
 		transform.position += transform.forward * speed * Time.deltaTime;
-		//if (y)
-		//	transform.up = new Vector3(transform.up.x, transform.up.y, transform.up.z);
 	}
 }
