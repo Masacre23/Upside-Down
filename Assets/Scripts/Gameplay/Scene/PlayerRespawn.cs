@@ -26,6 +26,8 @@ public class PlayerRespawn : MonoBehaviour {
 		player.transform.position = spawnPoints [0].transform.position;
 		player.transform.rotation = spawnPoints [0].transform.rotation;
 		player.transform.GetChild(0).transform.rotation = spawnPoints [0].transform.rotation;
+        player.GetComponent<Player>().Start();
+        player.GetComponent<Rigidbody>().ResetInertiaTensor();
 
 		for (float t = fadeTime; t > 0.0f;) 
 		{
