@@ -11,6 +11,8 @@ public class PlayerGravity : MonoBehaviour {
     LineRenderer m_rayLine;
     GameObject m_objectDetected = null;
 
+    Color m_preMaterialColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
 	// Use this for initialization
 	void Start ()
     {
@@ -79,12 +81,13 @@ public class PlayerGravity : MonoBehaviour {
 
     private void HighlightObject(GameObject newObjectDetected)
     {
+        
         if(m_objectDetected != null && m_objectDetected != newObjectDetected)
         {
             MeshRenderer mesh = m_objectDetected.GetComponent<MeshRenderer>();
             if(mesh != null)
             {
-                mesh.material.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+                mesh.material.color = m_preMaterialColor;
             }
         }
         m_objectDetected = newObjectDetected;
@@ -93,7 +96,8 @@ public class PlayerGravity : MonoBehaviour {
             MeshRenderer mesh = m_objectDetected.GetComponent<MeshRenderer>();
             if (mesh != null)
             {
-                mesh.material.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+                m_preMaterialColor = mesh.material.color;
+                mesh.material.color = new Color(0.0f, 1.0f, 0.0f, 1.0f);
             }
         }
     }
