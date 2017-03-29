@@ -32,7 +32,7 @@ public class Player : Character
     public float m_gravityRange = 10.0f;
     public GameObject m_gravitationSphere;
     public PlayerGravity m_playerGravity;
-    public float m_maxTimeFloating = 2.0f;
+    public float m_maxTimeFloating = 30.0f;
     public float m_maxTimeChanging = 1.0f;
     public bool m_changeEnabled = true;
 
@@ -45,6 +45,7 @@ public class Player : Character
         m_onAir = gameObject.AddComponent<PlayerOnAir>();
         m_floating = gameObject.AddComponent<PlayerFloating>();
         m_changing = gameObject.AddComponent<PlayerChanging>();
+        m_throwing = gameObject.AddComponent<PlayerThrowing>();
 
         m_currentState = m_onAir;
 
@@ -88,7 +89,7 @@ public class Player : Character
     public override void FixedUpdate ()
     {
         PlayerStates previousState = m_currentState;
-        if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwing, Time.fixedDeltaTime))
+        if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.fixedDeltaTime))
         {
             previousState.OnExit();
             m_currentState.OnEnter();

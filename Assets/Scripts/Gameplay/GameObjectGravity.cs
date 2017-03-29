@@ -8,6 +8,7 @@ using UnityEngine;
 public class GameObjectGravity : MonoBehaviour {
 
     Rigidbody m_rigidBody;
+    Vector3 m_oldGravity;
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
 
@@ -64,5 +65,28 @@ public class GameObjectGravity : MonoBehaviour {
             m_attractor = hit;
             m_gravity = hit.normal;
         }
+    }
+
+    //This function sets the GravityObject as a throwing object by the player. 
+    public void SetAsThrowingObject(GameObject player)
+    {
+        if(player != null)
+        {
+            this.transform.parent = player.transform;
+            this.transform.localEulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
+            this.transform.localPosition = new Vector3(0.0f, 1.0f, 1.0f);
+            this.m_oldGravity = this.m_gravity;
+            this.m_gravity = new Vector3(0.0f, 0.0f, 0.0f);
+            HingeJoint hingeJoint = this.gameObject.AddComponent<HingeJoint>();
+            hingeJoint.connectedBody = player.GetComponent<Rigidbody>();
+        }
+        else
+        {
+            HingeJoint hingeJoint = this.gameObject.GetComponent<HingeJoint>();
+            Destroy(hingeJoint);
+            this.transform.parent = null;
+            this.m_gravity = this.m_oldGravity;
+        }
+       
     }
 }
