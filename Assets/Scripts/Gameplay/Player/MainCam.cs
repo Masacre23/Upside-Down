@@ -6,6 +6,7 @@ using UnityStandardAssets.CrossPlatformInput;
 public class MainCam : MonoBehaviour {
 
     [SerializeField] private float m_moveSpeed = 1f;
+    [SerializeField] private float m_rotateSpeed = 1f;
     [Range(0f, 10f)] [SerializeField] private float m_turnSpeed = 1.5f;
     [SerializeField] private float m_maxReturnTime = 1f;
 
@@ -38,14 +39,18 @@ public class MainCam : MonoBehaviour {
 	
 	void Update ()
     {
-        FollowTarget();
+        FollowTarget(Time.deltaTime);
         CameraRotation();
     }
 
-    void FollowTarget()
+    void FollowTarget(float deltaTime)
     {
-        transform.position = Vector3.Lerp(transform.position, m_player.position, Time.deltaTime * m_moveSpeed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.rotation, Time.deltaTime * m_moveSpeed);
+        transform.position = Vector3.Lerp(transform.position, m_player.position, deltaTime * m_moveSpeed);
+    }
+
+    public void RotateOnTarget(float deltaTime)
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.rotation, deltaTime * m_rotateSpeed);
     }
 
     void CameraRotation()

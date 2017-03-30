@@ -27,6 +27,8 @@ public class Player : Character
     Transform m_camTransform;
     Transform m_modelTransform;
     public bool m_freezeMovementOnAir;
+    MainCam m_mainCam;
+    public bool m_rotationFollowPlayer;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -58,6 +60,11 @@ public class Player : Character
         m_gravitationSphere = GameObject.Find("GravSphere");
         m_gravitationSphere.transform.localPosition = Vector3.zero + Vector3.up * capsuleCollider.height / 2;
         m_gravitationSphere.SetActive(false);
+
+        GameObject cameraFree = GameObject.Find("MainCameraRig");
+        if (cameraFree)
+            m_mainCam = cameraFree.GetComponent<MainCam>();
+        m_rotationFollowPlayer = true;
 
         base.Awake();
     }
@@ -96,6 +103,9 @@ public class Player : Character
         }
 
         m_camTransform.position = transform.position;
+
+        if (m_mainCam && m_rotationFollowPlayer)
+            m_mainCam.RotateOnTarget(Time.fixedDeltaTime);
 
         m_playerGravity.DrawRay();
 

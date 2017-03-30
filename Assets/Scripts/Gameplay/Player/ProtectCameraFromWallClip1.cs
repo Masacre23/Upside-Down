@@ -43,8 +43,10 @@ namespace UnityStandardAssets.Cameras
             // initially set the target distance
             float targetDist = m_OriginalDist;
 
-            m_Ray.origin = m_Pivot.position + Vector3.up * m_originalPosition.y + m_Pivot.forward*sphereCastRadius;
+            m_Ray.origin = m_Pivot.position + m_Pivot.up * m_originalPosition.y + m_Pivot.forward*sphereCastRadius;
             m_Ray.direction = -m_Pivot.forward;
+            Debug.DrawRay(m_Ray.origin, m_Ray.direction, Color.cyan);
+
 
             // initial check to see if start of spherecast intersects anything
             var cols = Physics.OverlapSphere(m_Ray.origin, sphereCastRadius);
