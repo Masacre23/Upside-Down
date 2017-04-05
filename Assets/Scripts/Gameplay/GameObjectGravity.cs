@@ -11,7 +11,8 @@ public class GameObjectGravity : MonoBehaviour {
     Vector3 m_oldGravity;
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
-    public GameObject m_planet;
+    GameObject m_planetAttractor;
+    public bool m_planetGravityActive = false;
 
     //This should be the same for all gameobjects
     static float m_gravityStrength = -9.8f;
@@ -33,28 +34,24 @@ public class GameObjectGravity : MonoBehaviour {
             {
                 m_attractor = hit;
                 m_gravity = m_attractor.normal;
+                if (hit.transform.tag == "Planet")
+                    m_planetGravityActive = true;
             }
-            /*else if(hit.transform.tag == "Planet")
-            {
-                m_attractor = hit;
-                m_gravity = m_attractor.normal;
-                m_planet = hit.collider.gameObject;
-            }*/
         }
 	}
 	
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
-        if(m_planet == null)
+        if(m_planetAttractor == null || !m_planetGravityActive)
             m_rigidBody.AddForce(m_gravityStrength * m_rigidBody.mass * m_gravity);
         else
         {
-            Vector3 line = transform.position - m_planet.transform.position;
+            Vector3 line = transform.position - m_planetAttractor.transform.position;
             line.Normalize();
-            float distance = Vector3.Distance(transform.position, m_planet.gameObject.transform.position);
-            Vector3 planet_force = line * (m_gravityStrength / distance) * transform.GetComponent<Rigidbody>().mass;
-            m_rigidBody.AddForce((m_gravityStrength * m_rigidBody.mass * m_gravity) + planet_force);
+            float distance = Vector3.Distance(transform.position, m_planetAttractor.gameObject.transform.position);
+            Vector3 planet_force = line * (m_gravityStrength / distance) * m_planetAttractor.transform.GetComponent<Rigidbody>().mass;
+            m_rigidBody.AddForce(planet_force);
          }
     }
 
@@ -70,6 +67,8 @@ public class GameObjectGravity : MonoBehaviour {
                 m_gravity = m_attractor.normal;
             }
         }
+        if(col.collider.tag == "Planet")
+            m_planetAttractor = col.gameObject;
     }
 
     //This function sets the passed raycasthit as the current attractor for the game object
@@ -106,15 +105,11 @@ public class GameObjectGravity : MonoBehaviour {
        
     }
 
-    void OnTriggerStay(Collider col)
+    void OnTriggerEnter(Collider col)
     {
-        //if(col.tag == "Planet")
-       // {
-            m_planet = col.gameObject;
-            Vector3 line = transform.position - m_planet.transform.position;
-            line.Normalize();
-            float distance = Vector3.Distance(transform.position, m_planet.gameObject.transform.position);
-            m_rigidBody.AddForce(line * (m_gravityStrength / distance) * transform.GetComponent<Rigidbody>().mass);
-      //  }
+        if(col.tag == "Planet")
+        {
+            m_planetAttractor = col.gameObject;
+        }
     }
 }

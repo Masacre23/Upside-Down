@@ -35,6 +35,7 @@ public class PlayerChanging : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_gravityOnCharacter.m_planetGravityActive = false;
         m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
         m_player.m_gravitationSphere.SetActive(true);

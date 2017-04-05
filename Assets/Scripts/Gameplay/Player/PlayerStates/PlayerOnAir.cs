@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerOnAir : PlayerStates
 {
+    int counter; // Used to set the planet gravity
 
     public override void Start()
     {
@@ -15,6 +16,9 @@ public class PlayerOnAir : PlayerStates
     public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool throwing, float timeStep)
     {
         bool ret = false;
+        ++counter;
+        if(counter > 100)
+            m_player.m_gravityOnCharacter.m_planetGravityActive = true;
 
         if (changeGravity && m_player.m_changeEnabled)
         {
@@ -39,11 +43,12 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnEnter()
     {
-
+        
     }
 
     public override void OnExit()
     {
-
+        counter = 0;
+        m_player.m_gravityOnCharacter.m_planetGravityActive = false;
     }
 }
