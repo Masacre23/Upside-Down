@@ -11,6 +11,7 @@ public class GameObjectGravity : MonoBehaviour {
     Vector3 m_oldGravity;
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
+    public GameObject m_planet;
 
     //This should be the same for all gameobjects
     static float m_gravityStrength = -9.8f;
@@ -28,19 +29,34 @@ public class GameObjectGravity : MonoBehaviour {
         RaycastHit[] allhits = Physics.RaycastAll(m_rigidBody.transform.position, -transform.up, 100.0f);
         foreach (RaycastHit hit in allhits)
         {
-            if (hit.transform.tag == "GravityWall")
+            if (hit.transform.tag == "GravityWall" || hit.transform.tag == "Planet")
             {
                 m_attractor = hit;
                 m_gravity = m_attractor.normal;
             }
+            /*else if(hit.transform.tag == "Planet")
+            {
+                m_attractor = hit;
+                m_gravity = m_attractor.normal;
+                m_planet = hit.collider.gameObject;
+            }*/
         }
 	}
 	
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
-        m_rigidBody.AddForce(m_gravityStrength * m_rigidBody.mass * m_gravity);
-	}
+        if(m_planet == null)
+            m_rigidBody.AddForce(m_gravityStrength * m_rigidBody.mass * m_gravity);
+        else
+        {
+            Vector3 line = transform.position - m_planet.transform.position;
+            line.Normalize();
+            float distance = Vector3.Distance(transform.position, m_planet.gameObject.transform.position);
+            Vector3 planet_force = line * (m_gravityStrength / distance) * transform.GetComponent<Rigidbody>().mass;
+            m_rigidBody.AddForce((m_gravityStrength * m_rigidBody.mass * m_gravity) + planet_force);
+         }
+    }
 
     //This function is called automatically when this object colliders begins to touch another collider.
     //It's used so when the gameobject reaches it's attractor, it changes its current gravity for the attractor's normal.
@@ -60,7 +76,7 @@ public class GameObjectGravity : MonoBehaviour {
     //It's mainly to be used by characters in order update its attractor while they walk
     public void GravityOnFeet(RaycastHit hit)
     {
-        if (hit.collider.tag == "GravityWall")
+        if (hit.collider.tag == "GravityWall" || hit.collider.tag == "Planet")
         {
             m_attractor = hit;
             m_gravity = hit.normal;
@@ -88,5 +104,17 @@ public class GameObjectGravity : MonoBehaviour {
             this.m_gravity = this.m_oldGravity;
         }
        
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        //if(col.tag == "Planet")
+       // {
+            m_planet = col.gameObject;
+            Vector3 line = transform.position - m_planet.transform.position;
+            line.Normalize();
+            float distance = Vector3.Distance(transform.position, m_planet.gameObject.transform.position);
+            m_rigidBody.AddForce(line * (m_gravityStrength / distance) * transform.GetComponent<Rigidbody>().mass);
+      //  }
     }
 }
