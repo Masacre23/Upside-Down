@@ -11,7 +11,7 @@ public class GameObjectGravity : MonoBehaviour {
     Vector3 m_oldGravity;
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
-    GameObject m_planetAttractor;
+    public GameObject m_planetAttractor;
     public bool m_planetGravityActive = false;
 
     //This should be the same for all gameobjects
@@ -50,7 +50,7 @@ public class GameObjectGravity : MonoBehaviour {
             Vector3 line = transform.position - m_planetAttractor.transform.position;
             line.Normalize();
             float distance = Vector3.Distance(transform.position, m_planetAttractor.gameObject.transform.position);
-            Vector3 planet_force = line * (m_gravityStrength / distance) * m_planetAttractor.transform.GetComponent<Rigidbody>().mass;
+            Vector3 planet_force = line * (3 * m_gravityStrength / distance) * m_planetAttractor.transform.GetComponent<Rigidbody>().mass;
             m_rigidBody.AddForce(planet_force);
          }
     }

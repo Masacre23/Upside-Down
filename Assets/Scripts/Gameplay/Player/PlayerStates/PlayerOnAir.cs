@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerOnAir : PlayerStates
 {
     int counter; // Used to set the planet gravity
+    public int airTime = 100;
 
     public override void Start()
     {
@@ -17,8 +18,11 @@ public class PlayerOnAir : PlayerStates
     {
         bool ret = false;
         ++counter;
-        if(counter > 100)
+        if (counter > airTime)
+        {
             m_player.m_gravityOnCharacter.m_planetGravityActive = true;
+            m_player.CheckPlanetStatus();
+        }
 
         if (changeGravity && m_player.m_changeEnabled)
         {
