@@ -33,6 +33,7 @@ public class PlayerGrounded : PlayerStates {
             if (!m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_onAir;
+                m_player.m_gravityOnCharacter.m_planetGravity = true;
                 ret = true;
             }            
         }

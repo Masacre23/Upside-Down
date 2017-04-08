@@ -31,7 +31,10 @@ public class PlayerFloating : PlayerStates
             {
                 ret = true;
                 if (m_player.m_playerGravity.ChangePlayerGravity())
-                    m_player.m_currentState = m_player.m_changing;
+                {
+                    m_player.m_currentState = m_player.m_onAir;
+                    m_player.m_gravityOnCharacter.m_planetGravity = false;
+                }      
                 else
                     m_player.m_currentState = m_player.m_onAir;
             }
@@ -42,6 +45,7 @@ public class PlayerFloating : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
         m_player.m_gravitationSphere.SetActive(true);
         m_player.m_changeEnabled = false;

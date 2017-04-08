@@ -61,17 +61,6 @@ public class Character : MonoBehaviour {
         return m_isGrounded;
     }
 
-    // This function checks if the character is currently being attracted by a planet
-    public void CheckPlanetStatus()
-    {
-        RaycastHit hitInfo;
-        Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance*1000), Color.cyan);
-        if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance * 1000))
-        {
-            m_gravityOnCharacter.GravityOnFeet(hitInfo);
-        }
-    }
-
     //This function rotates the character so its Vector.up aligns with the direction of the attractor's gravity
     public void UpdateUp()
     {
@@ -86,6 +75,7 @@ public class Character : MonoBehaviour {
         m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
         m_isGrounded = false;
         m_groundCheckDistance = 0.1f;
+        m_gravityOnCharacter.m_planetGravity = true;
     }
 
     //This function should be called while character is on air.
