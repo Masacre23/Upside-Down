@@ -44,11 +44,16 @@ public class GameObjectGravity : MonoBehaviour {
         {
             foreach (Rigidbody planet in m_planets)
             {
-                m_gravity = transform.position - planet.transform.position;
-                float distance = m_gravity.magnitude;
-                m_gravity.Normalize();
+                Vector3 newGravity = transform.position - planet.transform.position;
+                float distance = newGravity.magnitude;
+                newGravity.Normalize();
 
-                strength = - planet.mass / (distance * distance);
+                float newStrength = - planet.mass / (distance * distance);
+                if (newStrength < strength)
+                {
+                    strength = newStrength;
+                    m_gravity = newGravity;
+                }     
             }           
         }
 
