@@ -34,9 +34,9 @@ public class GameObjectGravity : MonoBehaviour {
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
-        float strength = 0;
+		float strength = 0;
 
-        if (!m_planetGravity)
+		if (!m_planetGravity || m_planets.Count == 0)
         {
             strength = m_gravityStrength;
         }
