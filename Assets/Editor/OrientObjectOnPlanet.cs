@@ -11,18 +11,21 @@ public class OrientObjectOnPlanet : ScriptableWizard
     {
         foreach (GameObject child in Selection.gameObjects)
         {
-            Transform parentTransform = child.transform.parent;
-            if (parentTransform.tag == "Planet")
-            {
-                Vector3 localPosition = child.transform.localPosition;
+            //Transform parentTransform = child.transform.parent;
+            //if (parentTransform.tag == "Planet")
+            //{
+            //    Vector3 localPosition = child.transform.localPosition;
 
-                Vector3 radialPosition = child.transform.position - parentTransform.position;
-                Quaternion targetRotation = Quaternion.FromToRotation(child.transform.forward, radialPosition.normalized);
-                child.transform.rotation = targetRotation * child.transform.rotation;
+            //    Vector3 radialPosition = child.transform.position - parentTransform.position;
+            //    Quaternion targetRotation = Quaternion.FromToRotation(child.transform.forward, radialPosition.normalized);
+            //    child.transform.rotation = targetRotation * child.transform.rotation;
 
-                child.transform.localPosition = localPosition;
-            }
+            //    child.transform.localPosition = localPosition;
+            //}
+            PlanetGravity.AlignWithFather(child);
         }
     }
+
+   
 	
 }

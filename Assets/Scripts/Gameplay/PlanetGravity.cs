@@ -32,4 +32,19 @@ public class PlanetGravity : MonoBehaviour
         }
     }
 
+    public static void AlignWithFather(GameObject go)
+    {
+        Transform parentTransform = go.transform.parent;
+        if (parentTransform.tag == "Planet")
+        {
+            Vector3 localPosition = go.transform.localPosition;
+
+            Vector3 radialPosition = go.transform.position - parentTransform.position;
+            Quaternion targetRotation = Quaternion.FromToRotation(go.transform.forward, radialPosition.normalized);
+            go.transform.rotation = targetRotation * go.transform.rotation;
+
+            go.transform.localPosition = localPosition;
+        }
+    }
+
 }
