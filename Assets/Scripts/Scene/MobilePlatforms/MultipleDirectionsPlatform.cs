@@ -4,6 +4,7 @@ using UnityEngine;
 
 enum PlatformState
 {
+    STOP,
     WAIT,
     MOVE,
     ROTATE,
@@ -11,6 +12,7 @@ enum PlatformState
 }
 
 public class MultipleDirectionsPlatform : MonoBehaviour {
+    public bool m_startWithPlayer;
     public float m_speedMove;
     public float m_speedRotate;
     public float m_waitTime;
@@ -28,7 +30,8 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     private float m_angleRotated = 0.0f;
     private float m_timeWaited = 0.0f;
     private Vector3 m_speedLastUpdate;
-    private PlatformState m_state = PlatformState.WAIT;
+    private PlatformState m_state = PlatformState.STOP;
+    private bool m_playerDetected = false;
 
     // Use this for initialization
     void Start()
@@ -41,6 +44,21 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     {
         switch (m_state)
         {
+            case PlatformState.STOP:
+                if (!m_startWithPlayer)
+                    m_state = PlatformState.WAIT;
+                else
+                {
+                    if (m_playerDetected)
+                    {
+                        m_movementIndex++;
+                        if (m_movementIndex >= m_direction.Length)
+                            m_state = PlatformState.FINISH;
+                        else
+                            m_state = PlatformState.MOVE;
+                    }
+                }
+                break;
             case PlatformState.WAIT:
                 m_timeWaited += Time.deltaTime;
                 if (m_timeWaited >= m_waitTime)
@@ -114,6 +132,14 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     m_state = PlatformState.WAIT;
                 }
                 break;
+        }
+    }
+
+    void OnTriggerEnter(Collision col)
+    {
+        if (col.collider.gameObject.tag == "Player")
+        {
+            m_playerDetected = true;
         }
     }
 }
