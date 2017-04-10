@@ -135,11 +135,11 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collision col)
-    {
-        if (col.collider.gameObject.tag == "Player")
-        {
-            m_playerDetected = true;
-        }
-    }
+    //void OnTriggerEnter(Collision col)
+    //{
+    //    if (col.collider.gameObject.tag == "Player")
+    //    {
+    //        m_playerDetected = true;
+    //    }
+    //}
 }
