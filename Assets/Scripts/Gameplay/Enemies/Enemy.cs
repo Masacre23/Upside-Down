@@ -42,7 +42,7 @@ public class Enemy : Character {
 		UpdateUp ();
 	}
 
-	void OnCollisionEnter(Collision col)
+	/*void OnCollisionEnter(Collision col)
 	{
 		/*if (col.gameObject.tag == "EnemyWall") 
 		{
@@ -50,12 +50,12 @@ public class Enemy : Character {
 			m_currentState = m_Changing;
 			m_currentState.OnEnter ();
 		}*/
-		if (m_currentState == m_Changing) 
+		/*if (m_currentState == m_Changing) 
 		{
 			m_currentState.OnExit ();
 			m_currentState.OnEnter ();
-		}
-	}
+		}*/
+	//}
 
 	void OnTriggerEnter(Collider col)
 	{
