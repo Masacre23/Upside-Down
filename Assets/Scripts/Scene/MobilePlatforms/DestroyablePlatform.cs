@@ -40,6 +40,7 @@ public class DestroyablePlatform : MonoBehaviour {
                     m_state = PlatformDetroyableState.WAIT;
                 break;
             case PlatformDetroyableState.WAIT:
+                m_playerDetected = false;
                 m_timeWaited += Time.deltaTime;
                 if (m_timeWaited >= m_waitTime)
                 {
@@ -66,10 +67,9 @@ public class DestroyablePlatform : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision colInfo)
+    void OnTriggerEnter(Collider collider)
     {
-        Debug.Log(colInfo.collider.tag);
-        if (colInfo.collider.tag == "Player" )
+        if (collider.tag == "Player" )
             m_playerDetected = true;
     }
 }
