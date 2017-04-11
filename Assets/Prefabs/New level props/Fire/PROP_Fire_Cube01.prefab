@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 23454932004824624}
   - component: {fileID: 64690244948463432}
   - component: {fileID: 65405091916424910}
-  - component: {fileID: 114003756934734940}
   - component: {fileID: 114740742397261200}
+  - component: {fileID: 114003756934734940}
   m_Layer: 0
   m_Name: PROP_Fire_Cube01
   m_TagString: GravityWall
@@ -104,10 +104,10 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369381518244610}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.8613532, y: 3.8613534, z: 3.6560738}
+  m_Size: {x: 4.2474885, y: 4.2474885, z: 4.0216813}
   m_Center: {x: -0.000015258789, y: 0, z: 0}
 --- !u!114 &114003756934734940
 MonoBehaviour:
@@ -121,11 +121,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 3
-  m_distance: 100
+  m_distance: 60
   m_waitTime: 0.5
   m_direction: {x: 0, y: -1, z: 0}
-  m_boomerang: 1
-  m_waitForPlayer: 0
+  m_boomerang: 0
+  m_waitForPlayer: 1
 --- !u!114 &114740742397261200
 MonoBehaviour:
   m_ObjectHideFlags: 1

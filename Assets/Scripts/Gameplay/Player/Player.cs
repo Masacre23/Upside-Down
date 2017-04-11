@@ -92,6 +92,28 @@ public class Player : Character
 
         if (!m_changeGravity)
             m_changeButtonReleased = true;
+
+
+
+		m_playerStopped = false;
+
+		PlayerStates previousState = m_currentState;
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.fixedDeltaTime))
+		{
+			previousState.OnExit();
+			m_currentState.OnEnter();
+		}
+
+		if (m_mainCam && m_rotationFollowPlayer)
+			m_mainCam.RotateOnTarget(Time.fixedDeltaTime);
+
+		//m_playerGravity.DrawRay();
+
+		m_axisHorizontal = 0.0f;
+		m_axisVertical = 0.0f;
+		m_jumping = false;
+		m_changeGravity = false;
+		m_throwObject = false;
     }
 
     // Second, it should update player state regarding the current state & input
@@ -99,25 +121,7 @@ public class Player : Character
     // We also clean the input only after a FixedUpdate, so we are sure we have at least one FixedUpdate with the correct input recieved in Update
     public override void FixedUpdate ()
     {
-        m_playerStopped = false;
-
-        PlayerStates previousState = m_currentState;
-        if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.fixedDeltaTime))
-        {
-            previousState.OnExit();
-            m_currentState.OnEnter();
-        }
-
-        if (m_mainCam && m_rotationFollowPlayer)
-            m_mainCam.RotateOnTarget(Time.fixedDeltaTime);
-
-        //m_playerGravity.DrawRay();
-
-        m_axisHorizontal = 0.0f;
-        m_axisVertical = 0.0f;
-        m_jumping = false;
-        m_changeGravity = false;
-        m_throwObject = false;
+       
     }
 
     //This functions controls the character movement and the model orientation.
