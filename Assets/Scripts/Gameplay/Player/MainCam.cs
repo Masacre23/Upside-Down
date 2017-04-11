@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class MainCam : MonoBehaviour {
+public class MainCam : MonoBehaviour
+{
 
     [SerializeField] private float m_moveSpeed = 1f;
     [SerializeField] private float m_rotateSpeed = 1f;

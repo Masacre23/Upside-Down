@@ -5,78 +5,103 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class VariableCam : MonoBehaviour
 {
-    [SerializeField] private float m_moveSpeed = 1f;
-    [SerializeField] private float m_rotateSpeed = 1f;
-    [Range(0f, 10f)] [SerializeField] private float m_turnSpeed = 1.5f;
-    [SerializeField] private float m_maxReturnTime = 1f;
-    [SerializeField] private float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
-    [SerializeField] private float m_tiltMin = 45f;
+    public float m_moveSpeed = 1f;
+    public float m_rotateSpeed = 1f;
+    [Range(0f, 10f)] public float m_turnSpeed = 1.5f;
+    public float m_maxReturnTime = 1f;
+    public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMin = 45f;
 
-    float m_lookAngle;
-    float m_tiltAngle;
-    float m_returnTime;
+    Vector3 m_initialCamPosition;
+    [SerializeField] Vector3 m_aimingCamPosition;
+    public bool m_changeCamOnPosition = false;
+    public float m_timeBetweenChanges = 0.5f;
 
-    Transform m_player;
-    Transform m_pivot;
-    Vector3 m_pivotEulers;
-    Transform m_cam;
+    GameObject m_player;
+    public Player m_playerScript;
+    public Transform m_model;
+    public Transform m_pivot;
+    public Vector3 m_pivotEulers;
+    public Transform m_cam;
 
-    Quaternion m_playerRotation;
+    public CameraStates m_currentState;
+    public CameraStates m_onBack;
+    public CameraStates m_aiming;
+    public CameraStates m_transit;
+
+    public VariableCameraProtectFromWallClip m_cameraProtection;
 
     void Awake()
     {
-        m_player = GameObject.Find("Player").transform;
+        m_player = GameObject.Find("Player");
+        m_model = m_player.transform.FindChild("Model");
         m_pivot = transform.FindChild("Pivot");
         m_pivotEulers = m_pivot.localRotation.eulerAngles;
         m_cam = m_pivot.FindChild("Main Camera");
+
+        m_onBack = gameObject.AddComponent<CameraOnBack>();
+        m_aiming = gameObject.AddComponent<CameraAiming>();
+        m_transit = gameObject.AddComponent<CameraTransiting>();
+
+        m_currentState = m_onBack;
     }
 
     // Use this for initialization
     void Start()
     {
-        transform.position = m_player.position;
-        transform.rotation = m_player.rotation;
+        m_playerScript = m_player.GetComponent<Player>();
+        m_cameraProtection = GetComponent<VariableCameraProtectFromWallClip>();
+
+        m_initialCamPosition = m_cam.localPosition;
     }
 
     void Update()
     {
-        FollowTarget(Time.deltaTime);
-        m_cam.LookAt(m_player);
-        //CameraRotation();
+        float x = CrossPlatformInputManager.GetAxis("Mouse X");
+        float y = CrossPlatformInputManager.GetAxis("Mouse Y");
+
+        CameraStates previousState = m_currentState;
+        if (m_currentState.OnUpdate(x, y, Time.deltaTime))
+        {
+            previousState.OnExit();
+            m_currentState.OnEnter();
+        }
     }
 
-    void FollowTarget(float deltaTime)
+    public void FollowTarget(float deltaTime)
     {
-        //transform.position = Vector3.Lerp(transform.position, m_player.position, deltaTime * m_moveSpeed);
-        transform.position = m_player.position;
-        transform.rotation = m_player.rotation;
+        transform.position = Vector3.Lerp(transform.position, m_player.transform.position, deltaTime * m_moveSpeed);
     }
 
     public void RotateOnTarget(float deltaTime)
     {
-        //transform.rotation = Quaternion.Lerp(transform.rotation, m_player.rotation, deltaTime * m_rotateSpeed);
-    }
+        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_rotateSpeed);
+    } 
 
-    void CameraRotation()
+    public void SetCameraTransition(CameraStates.States finalState)
     {
-        float x = CrossPlatformInputManager.GetAxis("Mouse X");
-        float y = CrossPlatformInputManager.GetAxis("Mouse Y");
+        CameraTransiting transitingCam = (CameraTransiting)m_transit;
 
+        transitingCam.m_initialRotationCamera = m_cam.localRotation;
+        transitingCam.m_initialRotationPivot = m_pivot.localRotation;
+        transitingCam.m_initialPosition = m_cam.localPosition;
+        transitingCam.ResetTime();
 
+        switch (finalState)
+        {
+            case CameraStates.States.BACK:
+                transitingCam.m_finalPosition = m_initialCamPosition;
+                transitingCam.m_finalState = m_onBack;
+                m_changeCamOnPosition = true;
+                break;
+            case CameraStates.States.AIMING:
+                transitingCam.m_finalPosition = m_aimingCamPosition;
+                transitingCam.m_finalState = m_aiming;
+                m_changeCamOnPosition = true;
+                break;
+            default:
+                break;
+        }
     }
 
-    void CameraAiming()
-    {
-        float x = CrossPlatformInputManager.GetAxis("Mouse X");
-        float y = CrossPlatformInputManager.GetAxis("Mouse Y");
-
-        m_lookAngle += x * m_turnSpeed;
-        m_tiltAngle -= y * m_turnSpeed;
-        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_tiltMin, m_tiltMax);
-
-        Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
-        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_pivotEulers.y, m_pivotEulers.z);
-
-        m_pivot.localRotation = targetRotation * tiltRotation;
-    }
 }

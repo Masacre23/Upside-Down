@@ -94,7 +94,7 @@ class PlayerThrowing : PlayerStates
     {
         m_rigidBody.isKinematic = true;
         m_player.m_gravitationSphere.SetActive(true);
-        m_player.m_changeEnabled = false;
+        m_player.m_reachedGround = false;
         HUDManager.ShowGravityPanel(true);
     }
 

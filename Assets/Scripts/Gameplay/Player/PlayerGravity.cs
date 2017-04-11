@@ -79,6 +79,11 @@ public class PlayerGravity : MonoBehaviour {
         }
     }
 
+    public void DisableRay()
+    {
+        m_rayLine.enabled = false;
+    }
+
     private void HighlightObject(GameObject newObjectDetected)
     {
         

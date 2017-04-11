@@ -15,7 +15,12 @@ public class PlayerOnAir : PlayerStates
     {
         bool ret = false;
 
-        if (changeGravity && m_player.m_changeEnabled)
+        if (axisHorizontal == 0.0f && axisVertical == 0.0f)
+            m_player.m_playerStopped = true;
+        else
+            m_player.m_playerStopped = false;
+
+        if (changeGravity && m_player.m_reachedGround && m_player.m_changeButtonReleased)
         {
             m_player.m_currentState = m_player.m_floating;
             m_player.SetFloatingPoint(0.0f);

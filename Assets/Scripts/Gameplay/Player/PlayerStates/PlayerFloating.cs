@@ -23,7 +23,8 @@ public class PlayerFloating : PlayerStates
         HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_player.m_maxTimeFloating));
 
         float perc = m_timeFloating / m_player.m_maxTimeFloating;
-        m_player.transform.position = Vector3.Lerp(m_startingPosition, m_floatingPoint, perc);
+        perc = 2 * perc - perc * perc * perc;
+        m_player.transform.position = Vector3.Slerp(m_startingPosition, m_floatingPoint, perc);
 
         if (m_timeFloating > m_player.m_maxTimeFloating)
         {
@@ -38,7 +39,7 @@ public class PlayerFloating : PlayerStates
                 ret = true;
                 if (m_player.m_playerGravity.ChangePlayerGravity())
                 {
-                    m_player.m_currentState = m_player.m_changing;
+                    m_player.m_currentState = m_player.m_onAir;
                     m_player.m_gravityOnCharacter.m_planetGravity = false;
                 }      
                 else
@@ -52,16 +53,19 @@ public class PlayerFloating : PlayerStates
     public override void OnEnter()
     {
         m_startingPosition = m_player.transform.position;
+        m_player.m_mainCam.SetCameraTransition(CameraStates.States.AIMING);
         m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
         m_player.m_gravitationSphere.SetActive(true);
-        m_player.m_changeEnabled = false;
+        m_player.m_reachedGround = false;
+        m_player.m_changeButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
     }
 
     public override void OnExit()
     {
         m_rigidBody.isKinematic = false;
+        m_player.m_mainCam.SetCameraTransition(CameraStates.States.BACK);
         m_player.m_gravitationSphere.SetActive(false);
         m_timeFloating = 0.0f;
         HUDManager.ShowGravityPanel(false);

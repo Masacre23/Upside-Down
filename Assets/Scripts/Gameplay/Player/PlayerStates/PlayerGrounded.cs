@@ -15,7 +15,12 @@ public class PlayerGrounded : PlayerStates {
     {
         bool ret = false;
 
-        if (changeGravity)
+        if (axisHorizontal == 0.0f && axisVertical == 0.0f)
+            m_player.m_playerStopped = true;
+        else
+            m_player.m_playerStopped = false;
+
+        if (changeGravity && m_player.m_changeButtonReleased)
         {
             m_player.m_currentState = m_player.m_floating;
             m_player.SetFloatingPoint(m_player.m_floatingHeight);
@@ -50,7 +55,7 @@ public class PlayerGrounded : PlayerStates {
     public override void OnEnter()
     {
         m_player.m_rotationFollowPlayer = true;
-        m_player.m_changeEnabled = true;
+        m_player.m_reachedGround = true;
         m_player.m_freezeMovementOnAir = false;
     }
 

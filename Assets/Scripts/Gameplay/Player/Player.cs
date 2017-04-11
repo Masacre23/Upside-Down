@@ -24,10 +24,9 @@ public class Player : Character
     public PlayerStates m_changing;
 
     //Variables regarding player movement
-    Transform m_camTransform;
     Transform m_modelTransform;
     public bool m_freezeMovementOnAir;
-    MainCam m_mainCam;
+    public VariableCam m_mainCam;
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
 
@@ -37,7 +36,8 @@ public class Player : Character
     public PlayerGravity m_playerGravity;
     public float m_maxTimeFloating = 30.0f;
     public float m_maxTimeChanging = 1.0f;
-    public bool m_changeEnabled = true;
+    public bool m_reachedGround = true;
+    public bool m_changeButtonReleased = true;
     public float m_floatingHeight = 1.0f;
 
 	//Pruebas
@@ -65,7 +65,7 @@ public class Player : Character
 
         GameObject cameraFree = GameObject.Find("MainCameraRig");
         if (cameraFree)
-            m_mainCam = cameraFree.GetComponent<MainCam>();
+            m_mainCam = cameraFree.GetComponent<VariableCam>();
         m_rotationFollowPlayer = true;
 
         base.Awake();
@@ -74,7 +74,6 @@ public class Player : Character
     // Use this for initialization
     public override void Start ()
     { 
-        m_camTransform = transform.FindChild("FreeLookCameraRig");
         m_modelTransform = transform.FindChild("Model");
 
         m_freezeMovementOnAir = false;
@@ -87,14 +86,12 @@ public class Player : Character
     // First, it should read input from PlayerController in Update, since we need input every frame
     public void Update()
     {
-		up = transform.up;
+        up = transform.up;
         m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical);
         m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject);
 
-        if (m_axisHorizontal == 0.0f && m_axisVertical == 0.0f)
-            m_playerStopped = true;
-        else
-            m_playerStopped = false;
+        if (!m_changeGravity)
+            m_changeButtonReleased = true;
     }
 
     // Second, it should update player state regarding the current state & input
@@ -102,6 +99,8 @@ public class Player : Character
     // We also clean the input only after a FixedUpdate, so we are sure we have at least one FixedUpdate with the correct input recieved in Update
     public override void FixedUpdate ()
     {
+        m_playerStopped = false;
+
         PlayerStates previousState = m_currentState;
         if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.fixedDeltaTime))
         {
@@ -109,12 +108,10 @@ public class Player : Character
             m_currentState.OnEnter();
         }
 
-        m_camTransform.position = transform.position;
-
         if (m_mainCam && m_rotationFollowPlayer)
             m_mainCam.RotateOnTarget(Time.fixedDeltaTime);
 
-        m_playerGravity.DrawRay();
+        //m_playerGravity.DrawRay();
 
         m_axisHorizontal = 0.0f;
         m_axisVertical = 0.0f;
