@@ -38,6 +38,8 @@ public class Enemy : Character {
 	{
 		if (m_currentState.OnUpdate ())
 			m_currentState.OnEnter ();
+
+		UpdateUp ();
 	}
 
 	void OnCollisionEnter(Collision col)
