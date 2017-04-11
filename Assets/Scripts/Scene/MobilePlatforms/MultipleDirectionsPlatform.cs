@@ -94,7 +94,6 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     if (m_distanceTraveled >= m_distance[m_movementIndex])
                     {
                         m_distanceTraveled = 0;
-                        //m_sense = m_sense == 1 ? -1 : 1;
                         m_state = PlatformState.WAIT;
                     }
                     m_speedLastUpdate =  m_direction[m_movementIndex] * m_speedMove;
@@ -112,15 +111,12 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     if (m_speedRotate * Time.deltaTime <= angleToRotate)
                         angleToRotate = m_speedRotate * Time.deltaTime;
                     m_angleRotated += angleToRotate;
-                    //transform.Rotate(m_rotation[m_rotateIndex] * angleToRotate);
                     Transform parent = transform.parent;
                     transform.parent = m_center[m_rotateIndex].transform;
                     m_center[m_rotateIndex].transform.Rotate(m_rotation[m_rotateIndex] * angleToRotate);
-                    //transform.RotateAround(m_center[m_rotateIndex].transform.position, new Vector3(0, 0, 1.0f), angleToRotate);
                     if (m_angleRotated >= m_angle[m_rotateIndex])
                     {
                         m_angleRotated = 0;
-                        //m_sense = m_sense == 1 ? -1 : 1;
                         m_state = PlatformState.WAIT;
                     }
                     m_speedLastUpdate = m_direction[m_movementIndex] * m_speedRotate;
@@ -132,14 +128,14 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     m_state = PlatformState.WAIT;
                 }
                 break;
+            case PlatformState.FINISH:
+                break;
         }
     }
 
-    //void OnTriggerEnter(Collision col)
-    //{
-    //    if (col.collider.gameObject.tag == "Player")
-    //    {
-    //        m_playerDetected = true;
-    //    }
-    //}
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.tag == "Player")
+            m_playerDetected = true;
+    }
 }
