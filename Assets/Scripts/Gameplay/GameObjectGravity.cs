@@ -82,6 +82,7 @@ public class GameObjectGravity : MonoBehaviour {
         {
             m_attractor = hit;
             m_gravity = hit.normal;
+            m_planetGravity = false;
         }
     }
 

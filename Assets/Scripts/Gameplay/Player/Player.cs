@@ -29,6 +29,7 @@ public class Player : Character
     public bool m_freezeMovementOnAir;
     MainCam m_mainCam;
     public bool m_rotationFollowPlayer;
+    public bool m_playerStopped = false;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -37,6 +38,7 @@ public class Player : Character
     public float m_maxTimeFloating = 30.0f;
     public float m_maxTimeChanging = 1.0f;
     public bool m_changeEnabled = true;
+    public float m_floatingHeight = 1.0f;
 
 	//Pruebas
 	public Vector3 up;
@@ -88,6 +90,11 @@ public class Player : Character
 		up = transform.up;
         m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical);
         m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject);
+
+        if (m_axisHorizontal == 0.0f && m_axisVertical == 0.0f)
+            m_playerStopped = true;
+        else
+            m_playerStopped = false;
     }
 
     // Second, it should update player state regarding the current state & input
@@ -129,7 +136,31 @@ public class Player : Character
         if (movement != Vector3.zero)
         {
             Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-            m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+            m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
         }
     }
+
+    public void SetFloatingPoint(float height)
+    {
+        PlayerFloating floating = (PlayerFloating)m_floating;
+
+        floating.m_floatingPoint = transform.position + transform.up * height;
+
+        m_groundCheckDistance = 0.1f;
+    }
+
+    //public void Move(float timeStep)
+    //{
+    //    Vector3 forward = Camera.main.transform.up;
+    //    Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+    //    movement.Normalize();
+
+    //    m_rigidBody.MovePosition(transform.position + movement * m_moveSpeed * timeStep);
+
+    //    if (movement != Vector3.zero)
+    //    {
+    //        Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
+    //        m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+    //    }
+    //}
 }

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 //This class should yield with the player input. It returns the conclusions of the player input (jump, movement direction, etc), not the keys.
 //Input for debug mode should be dealt in DebugMode class. Input for menus should be dealt in LevelManager class.
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
 	// Use this for initialization
 	void Start () {
@@ -20,11 +22,11 @@ public class PlayerController : MonoBehaviour {
 
     public void GetButtons(ref bool jump, ref bool changeGravity, ref bool throwObjects)
     {
-        if (Input.GetButtonDown("Jump"))
+        if (CrossPlatformInputManager.GetButtonDown("Jump"))
             jump = true;
-        if (Input.GetButton("Fire2"))
+        if (CrossPlatformInputManager.GetButton("Fire2"))
             changeGravity = true;
-        if (Input.GetButton("Fire1"))
+        if (CrossPlatformInputManager.GetButton("Fire1"))
             throwObjects = true;
     }
 }

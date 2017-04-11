@@ -9,15 +9,15 @@ using UnityEngine;
 public class MovingWithPlatform : MonoBehaviour
 {
 
-    void OnCollisionEnter(Collision colInfo)
+    void OnTriggerEnter(Collider col)
     {
-        if (colInfo.collider.tag == "Player" || colInfo.collider.tag == "GravityAffected")
-            colInfo.transform.parent = transform;
+        if (col.tag == "Player" || col.tag == "GravityAffected")
+            col.transform.parent = transform;
     }
 
-    void OnCollisionExit(Collision colInfo)
+    void OnTriggerExit(Collider col)
     {
-        if (colInfo.collider.tag == "Player" || colInfo.collider.tag == "GravityAffected")
-            colInfo.transform.parent = null;
+        if (col.tag == "Player" || col.tag == "GravityAffected")
+            col.transform.parent = null;
     }
 }

@@ -15,17 +15,23 @@ public class PlayerGrounded : PlayerStates {
     {
         bool ret = false;
 
-        if (jumping)
+        if (changeGravity)
+        {
+            m_player.m_currentState = m_player.m_floating;
+            m_player.SetFloatingPoint(m_player.m_floatingHeight);
+            ret = true;
+        }
+        else if (jumping)
         {
             m_player.m_currentState = m_player.m_onAir;
             m_player.Jump();
             ret = true;
         }
-        else if(throwing)
-        {
-            m_player.m_currentState = m_player.m_throwing;
-            ret = true;
-        }
+        //else if (throwing)
+        //{
+        //    m_player.m_currentState = m_player.m_throwing;
+        //    ret = true;
+        //}
         else
         {
             m_player.UpdateUp();

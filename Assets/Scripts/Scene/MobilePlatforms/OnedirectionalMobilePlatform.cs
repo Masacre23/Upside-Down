@@ -9,47 +9,62 @@ public class OnedirectionalMobilePlatform : MonoBehaviour {
     public float m_waitTime = 0.5f;
     public Vector3 m_direction = new Vector3(1.0f, 0.0f, 0.0f);
     public bool m_boomerang = true;
+    public bool m_waitForPlayer = false;
 
     private float m_distanceTraveled = 0.0f;
     private float m_timeWaited = 0.0f;
     private int m_sense = 1;
     private bool m_waiting = false;
     private Vector3 m_speedLastUpdate;
+    private bool m_stop = false;
 	
     // Use this for initialization
 	void Start ()
     {
         m_speedLastUpdate = Vector3.zero;
+
+        m_stop = m_waitForPlayer;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (!m_waiting)
+        if (!m_stop)
         {
-            float distanceToMove = m_distance - m_distanceTraveled;
-            if (m_speed * Time.deltaTime <= distanceToMove)
-                distanceToMove = m_speed * Time.deltaTime;
-            m_distanceTraveled += distanceToMove;
-            transform.Translate(m_sense * m_direction * distanceToMove);
-            if (m_distanceTraveled >= m_distance && m_boomerang)
+            if (!m_waiting)
             {
-                m_distanceTraveled = 0;
-                m_sense = m_sense == 1 ? -1 : 1;
-                m_waiting = true;
+                float distanceToMove = m_distance - m_distanceTraveled;
+                if (m_speed * Time.deltaTime <= distanceToMove)
+                    distanceToMove = m_speed * Time.deltaTime;
+                m_distanceTraveled += distanceToMove;
+                transform.Translate(m_sense * m_direction * distanceToMove);
+                if (m_distanceTraveled >= m_distance && m_boomerang)
+                {
+                    m_distanceTraveled = 0;
+                    m_sense = m_sense == 1 ? -1 : 1;
+                    m_waiting = true;
+                }
+                m_speedLastUpdate = m_sense * m_direction * m_speed;
             }
-            m_speedLastUpdate = m_sense * m_direction * m_speed;
-        }
-        else
-        {
-            m_timeWaited += Time.deltaTime;
-            if (m_timeWaited >= m_waitTime)
+            else
             {
-                m_waiting = false;
-                m_timeWaited = 0.0f;
+                m_timeWaited += Time.deltaTime;
+                if (m_timeWaited >= m_waitTime)
+                {
+                    m_waiting = false;
+                    m_timeWaited = 0.0f;
+                }
+                m_speedLastUpdate = Vector3.zero;
             }
-            m_speedLastUpdate = Vector3.zero;
-        }    
+        }        
 	}
 
+    void OnCollisionEnter(Collision colInfo)
+    {
+        if (m_waitForPlayer && colInfo.collider.tag == "Player")
+        {
+            m_waitForPlayer = false;
+            m_stop = false;
+        }
+    }
 }

@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlayerFloating : PlayerStates
 {
     float m_timeFloating;
+    public Vector3 m_floatingPoint;
+    Vector3 m_startingPosition;
 
     public override void Start()
     {
         base.Start();
         m_timeFloating = 0.0f;
         m_type = States.FLOATING;
+        m_floatingPoint = Vector3.zero;
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -18,6 +21,9 @@ public class PlayerFloating : PlayerStates
     {
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_player.m_maxTimeFloating));
+
+        float perc = m_timeFloating / m_player.m_maxTimeFloating;
+        m_player.transform.position = Vector3.Lerp(m_startingPosition, m_floatingPoint, perc);
 
         if (m_timeFloating > m_player.m_maxTimeFloating)
         {
@@ -32,7 +38,7 @@ public class PlayerFloating : PlayerStates
                 ret = true;
                 if (m_player.m_playerGravity.ChangePlayerGravity())
                 {
-                    m_player.m_currentState = m_player.m_onAir;
+                    m_player.m_currentState = m_player.m_changing;
                     m_player.m_gravityOnCharacter.m_planetGravity = false;
                 }      
                 else
@@ -45,6 +51,7 @@ public class PlayerFloating : PlayerStates
 
     public override void OnEnter()
     {
+        m_startingPosition = m_player.transform.position;
         m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
         m_player.m_gravitationSphere.SetActive(true);
