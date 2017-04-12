@@ -36,6 +36,11 @@ public class Character : MonoBehaviour {
         m_rigidBody.freezeRotation = true;
 	}
 
+    public virtual void Update()
+    {
+
+    }
+
     // We use FixedUpdate since we will be dealing with forces
     // This method should control character's movements
     public virtual void FixedUpdate()

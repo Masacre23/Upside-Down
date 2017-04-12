@@ -40,8 +40,11 @@ public class Player : Character
     public bool m_changeButtonReleased = true;
     public float m_floatingHeight = 1.0f;
 
-	//Pruebas
-	public Vector3 up;
+    //Variables regarding player's throw of objects
+    public float m_maxTimeThrowing = 30.0f;
+    public float m_throwStrengthPerSecond = 1.0f;
+    public float m_objectsFloatingHeight = 1.0f;
+    public bool m_throwButtonReleased = true;
 
     public override void Awake()
     {
@@ -84,18 +87,18 @@ public class Player : Character
 
     // This method should control player movements
     // First, it should read input from PlayerController in Update, since we need input every frame
-    public void Update()
+    public override void Update()
     {
-        up = transform.up;
         m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical);
         m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject);
 
         if (!m_changeGravity)
             m_changeButtonReleased = true;
 
+        if (!m_throwObject)
+            m_throwButtonReleased = true;
 
-
-		m_playerStopped = false;
+        m_playerStopped = false;
 
 		PlayerStates previousState = m_currentState;
 		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.fixedDeltaTime))

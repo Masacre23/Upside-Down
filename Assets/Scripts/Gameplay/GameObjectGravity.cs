@@ -14,6 +14,9 @@ public class GameObjectGravity : MonoBehaviour {
     public List<Rigidbody> m_planets;
     public bool m_planetGravity;
 
+    bool m_thrownForce = false;
+    Vector3 m_impulseForce;
+
     //This should be the same for all gameobjects
     static float m_gravityStrength = -9.8f;
 
@@ -29,6 +32,8 @@ public class GameObjectGravity : MonoBehaviour {
         m_rigidBody.useGravity = false;
         m_gravity = Physics.gravity;
         m_planetGravity = true;
+        m_thrownForce = false;
+        m_impulseForce = Vector3.zero;
 	}
 	
 	// Called to add gravity force into the rigid body.
@@ -58,6 +63,12 @@ public class GameObjectGravity : MonoBehaviour {
         }
 
         m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
+
+        if (m_thrownForce)
+        {
+            m_rigidBody.AddForce(m_impulseForce, ForceMode.VelocityChange);
+            m_thrownForce = false;
+        }
     }
 
     //This function is called automatically when this object colliders begins to touch another collider.
@@ -107,5 +118,20 @@ public class GameObjectGravity : MonoBehaviour {
             this.m_gravity = this.m_oldGravity;
         }
        
+    }
+
+    //This function is called when we want a object to float. Usually called when player is floating while changing gravity
+    //or when an object is floating due the player throwing them.
+    public void Float(Vector3 initialPosition, Vector3 finalPosition, float percentage)
+    {
+        float perc = 2 * percentage - percentage * percentage * percentage;
+        m_rigidBody.transform.position = Vector3.Slerp(initialPosition, finalPosition, perc);
+    }
+
+    //This function is called when a object is thrown by the player, using PlayerThrowing state.
+    public void ThrowObject(Vector3 throwForce)
+    {
+        m_thrownForce = true;
+        m_impulseForce = throwForce;
     }
 }

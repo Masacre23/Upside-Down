@@ -32,11 +32,11 @@ public class PlayerGrounded : PlayerStates {
             m_player.Jump();
             ret = true;
         }
-        //else if (throwing)
-        //{
-        //    m_player.m_currentState = m_player.m_throwing;
-        //    ret = true;
-        //}
+        else if (throwing && m_player.m_throwButtonReleased)
+        {
+            m_player.m_currentState = m_player.m_throwing;
+            ret = true;
+        }
         else
         {
             m_player.UpdateUp();

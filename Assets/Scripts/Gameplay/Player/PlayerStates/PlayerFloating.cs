@@ -23,8 +23,7 @@ public class PlayerFloating : PlayerStates
         HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_player.m_maxTimeFloating));
 
         float perc = m_timeFloating / m_player.m_maxTimeFloating;
-        perc = 2 * perc - perc * perc * perc;
-        m_player.transform.position = Vector3.Slerp(m_startingPosition, m_floatingPoint, perc);
+        m_player.m_gravityOnCharacter.Float(m_startingPosition, m_floatingPoint, perc);
 
         if (m_timeFloating > m_player.m_maxTimeFloating)
         {
