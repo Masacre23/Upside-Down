@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4034144519452328}
   - component: {fileID: 33877628572855182}
   - component: {fileID: 23561111577326520}
+  - component: {fileID: 64017353166895390}
   m_Layer: 0
   m_Name: PROP_Ice_Cube01
   m_TagString: Untagged
@@ -78,4 +79,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1463225161786154}
+  m_Mesh: {fileID: 4300018, guid: 318f06c9d9c76e8428d85223c45761ca, type: 3}
+--- !u!64 &64017353166895390
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1463225161786154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300018, guid: 318f06c9d9c76e8428d85223c45761ca, type: 3}
