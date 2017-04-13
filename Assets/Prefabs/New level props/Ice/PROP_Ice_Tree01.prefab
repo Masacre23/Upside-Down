@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4892541342852130}
   - component: {fileID: 33771628369518506}
   - component: {fileID: 23954155579366266}
+  - component: {fileID: 64878058281867704}
   m_Layer: 0
   m_Name: PROP_Ice_Tree01
   m_TagString: Untagged
@@ -54,8 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 10de2539a3c04144db2ce63d080743e4, type: 2}
-  - {fileID: 2100000, guid: 06f3e09fe76ced946af90cd461e78d0f, type: 2}
+  - {fileID: 2100000, guid: 326b196655f482b4db9be30586f07ec8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,4 +79,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1599409417417662}
-  m_Mesh: {fileID: 4300006, guid: 318f06c9d9c76e8428d85223c45761ca, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 59f412d12ab088a46a02f19159e22cfd, type: 3}
+--- !u!64 &64878058281867704
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1599409417417662}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 59f412d12ab088a46a02f19159e22cfd, type: 3}

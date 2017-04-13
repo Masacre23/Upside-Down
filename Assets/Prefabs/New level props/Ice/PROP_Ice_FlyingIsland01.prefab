@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4864443122097972}
   - component: {fileID: 33001018699860486}
   - component: {fileID: 23604812177172836}
+  - component: {fileID: 64524163596673170}
   m_Layer: 0
   m_Name: PROP_Ice_FlyingIsland01
   m_TagString: Untagged
@@ -54,8 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 06f3e09fe76ced946af90cd461e78d0f, type: 2}
-  - {fileID: 2100000, guid: dd73f171a0bab8743b4e7178d92bc9c0, type: 2}
+  - {fileID: 2100000, guid: 326b196655f482b4db9be30586f07ec8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,4 +79,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979759994398824}
-  m_Mesh: {fileID: 4300050, guid: 318f06c9d9c76e8428d85223c45761ca, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 679e116678ec4524e82d408f14d1e883, type: 3}
+--- !u!64 &64524163596673170
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1979759994398824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 679e116678ec4524e82d408f14d1e883, type: 3}
