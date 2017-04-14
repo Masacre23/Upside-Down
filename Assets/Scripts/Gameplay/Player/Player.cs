@@ -124,7 +124,8 @@ public class Player : Character
     // We also clean the input only after a FixedUpdate, so we are sure we have at least one FixedUpdate with the correct input recieved in Update
     public override void FixedUpdate ()
     {
-       
+        base.FixedUpdate();
+        HUDManager.ChangeEnergyValue(base.m_health / base.m_maxHealth);
     }
 
     //This functions controls the character movement and the model orientation.
@@ -167,4 +168,13 @@ public class Player : Character
     //        m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
     //    }
     //}
+
+    void OnCollisionEnter(Collision col)
+	{
+        if(col.collider.tag == "Enemy")
+        {
+            base.m_damageRecive = true;
+            base.m_damagePower = 20;
+        }
+    }
 }

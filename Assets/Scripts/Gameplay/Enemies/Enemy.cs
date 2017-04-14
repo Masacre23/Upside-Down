@@ -42,20 +42,25 @@ public class Enemy : Character {
 		UpdateUp ();
 	}
 
-	/*void OnCollisionEnter(Collision col)
+	void OnCollisionEnter(Collision col)
 	{
-		/*if (col.gameObject.tag == "EnemyWall") 
+        if (col.collider.tag == "GravityAffected")
+        {
+            base.m_damageRecive = true;
+            base.m_damagePower = 20;
+        }
+        /*if (col.gameObject.tag == "EnemyWall") 
 		{
 			m_currentState.OnExit ();
 			m_currentState = m_Changing;
 			m_currentState.OnEnter ();
 		}*/
-		/*if (m_currentState == m_Changing) 
+        /*if (m_currentState == m_Changing) 
 		{
 			m_currentState.OnExit ();
 			m_currentState.OnEnter ();
 		}*/
-	//}
+    }
 
 	void OnTriggerEnter(Collider col)
 	{

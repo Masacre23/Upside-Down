@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
+    public float m_maxHealth = 100.0f;
     public float m_health = 100.0f;
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
     public float m_jumpForce = 4.0f;
     public float m_lerpSpeed = 10.0f;
 
+    public bool m_damageRecive = false;
+    public int m_damagePower = 0;
+
     public GameObjectGravity m_gravityOnCharacter;
     protected Rigidbody m_rigidBody;
     CapsuleCollider m_capsule;
     public float m_capsuleHeight;
+
+    //Variables regarding damage state
+    public DamageStates m_damageState;
+    public DamageStates m_recive;
+    public DamageStates m_animation;
+    public DamageStates m_notRecive;
+    public DamageStates m_dead;
 
     protected float m_groundCheckDistance;
     protected float m_defaultGroundCheckDistance = 0.3f;
@@ -24,6 +35,13 @@ public class Character : MonoBehaviour {
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
             m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
+
+        m_recive = gameObject.AddComponent<DamageRecive>();
+        m_animation = gameObject.AddComponent<DamageAnimation>();
+        m_notRecive = gameObject.AddComponent<DamageNotRecive>();
+        m_dead = gameObject.AddComponent<DamageDead>();
+
+        m_damageState = m_recive;
     }
 
     // Use this for initialization
@@ -45,7 +63,14 @@ public class Character : MonoBehaviour {
     // This method should control character's movements
     public virtual void FixedUpdate()
     {
-
+        DamageStates previousState = m_damageState;
+        if (m_damageState.OnUpdate(m_damageRecive, m_damagePower))
+        {
+            previousState.OnExit();
+            m_damageState.OnEnter();
+        }
+        m_damagePower = 0;
+        m_damageRecive = false;
 	}
 
     // This function checks if the character is currently touching a collider below their "feet"

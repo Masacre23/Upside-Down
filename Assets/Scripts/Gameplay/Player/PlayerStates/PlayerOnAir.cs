@@ -35,6 +35,11 @@ public class PlayerOnAir : PlayerStates
             if (m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_grounded;
+                //if(m_player.rigidbody. > 20)
+                //{
+                //    m_player.m_damageRecive = true;
+                //    m_player.m_damagePower = (int)m_player.m_moveSpeed - 20;
+                //}
                 ret = true;
             }
         }
