@@ -10,9 +10,11 @@ public class Character : MonoBehaviour {
     float m_turnSpeed;
     public float m_jumpForce = 4.0f;
     public float m_lerpSpeed = 10.0f;
+    public Transform m_checkPoint;
 
     public bool m_damageRecive = false;
     public int m_damagePower = 0;
+    public bool m_alive = true;
 
     public GameObjectGravity m_gravityOnCharacter;
     protected Rigidbody m_rigidBody;
@@ -56,7 +58,6 @@ public class Character : MonoBehaviour {
 
     public virtual void Update()
     {
-
     }
 
     // We use FixedUpdate since we will be dealing with forces
@@ -64,7 +65,7 @@ public class Character : MonoBehaviour {
     public virtual void FixedUpdate()
     {
         DamageStates previousState = m_damageState;
-        if (m_damageState.OnUpdate(m_damageRecive, m_damagePower))
+        if (m_damageState.OnUpdate(m_damageRecive, m_damagePower, m_alive))
         {
             previousState.OnExit();
             m_damageState.OnEnter();

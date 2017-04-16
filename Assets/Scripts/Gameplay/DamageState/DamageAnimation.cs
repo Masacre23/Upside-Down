@@ -15,7 +15,7 @@ public class DamageAnimation : DamageStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(bool recive, int damage)
+    public override bool OnUpdate(bool recive, int damage, bool alive)
     {
         bool ret = false;
         m_currentTime += Time.fixedDeltaTime;

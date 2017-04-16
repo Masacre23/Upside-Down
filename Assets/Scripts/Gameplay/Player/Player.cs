@@ -171,7 +171,7 @@ public class Player : Character
 
     void OnCollisionEnter(Collision col)
 	{
-        if(col.collider.tag == "Enemy")
+        if(col.collider.tag.Contains("Enemy") || col.collider.tag == "Planet")
         {
             base.m_damageRecive = true;
             base.m_damagePower = 20;

@@ -29,9 +29,20 @@ public class CustomSpawnPlayer : MonoBehaviour {
 		{
 			Spawn (p4);
 		}
-	}
+        if (Input.GetKey(KeyCode.Alpha5))
+        {
+            if (!GetComponent<Player>().m_alive)
+            {
+                Player player = GetComponent<Player>();
+                Spawn(player.m_checkPoint);
+                player.m_alive = true;
+                player.m_health = player.m_maxHealth;
+            }
+        }
+        
+    }
 
-	void Spawn(Transform tr)
+	public void Spawn(Transform tr)
 	{
 		transform.position = tr.position;
 		transform.rotation = tr.rotation;
