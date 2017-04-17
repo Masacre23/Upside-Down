@@ -29,8 +29,8 @@ public class CustomSpawnPlayer : MonoBehaviour {
 		{
 			Spawn (p4);
 		}
-        if (Input.GetKey(KeyCode.Alpha5))
-        {
+        /*if (Input.GetKey(KeyCode.Alpha5))
+        {*/
             if (!GetComponent<Player>().m_alive)
             {
                 Player player = GetComponent<Player>();
@@ -38,7 +38,7 @@ public class CustomSpawnPlayer : MonoBehaviour {
                 player.m_alive = true;
                 player.m_health = player.m_maxHealth;
             }
-        }
+        //}
         
     }
 

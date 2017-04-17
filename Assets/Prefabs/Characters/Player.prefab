@@ -2458,14 +2458,14 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1478264135585292}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 11d4f0adb67208e48804af899c072729, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2674,12 +2674,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a6701dd0cfcfb42aa24db584c8dbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_maxHealth: 100
   m_health: 100
   m_moveSpeed: 3
   m_jumpForce: 5
   m_lerpSpeed: 10
+  m_checkPoint: {fileID: 0}
+  m_damageRecive: 0
+  m_damagePower: 0
+  m_alive: 1
   m_gravityOnCharacter: {fileID: 0}
   m_capsuleHeight: 0
+  m_damageState: {fileID: 0}
+  m_recive: {fileID: 0}
+  m_animation: {fileID: 0}
+  m_notRecive: {fileID: 0}
+  m_dead: {fileID: 0}
   m_currentState: {fileID: 0}
   m_grounded: {fileID: 0}
   m_onAir: {fileID: 0}
@@ -2687,14 +2697,21 @@ MonoBehaviour:
   m_floating: {fileID: 0}
   m_changing: {fileID: 0}
   m_freezeMovementOnAir: 0
+  m_mainCam: {fileID: 0}
   m_rotationFollowPlayer: 0
+  m_playerStopped: 0
   m_gravityRange: 10
   m_gravitationSphere: {fileID: 0}
   m_playerGravity: {fileID: 0}
   m_maxTimeFloating: 2
   m_maxTimeChanging: 1
-  m_changeEnabled: 1
-  up: {x: 0, y: 0, z: 0}
+  m_reachedGround: 1
+  m_changeButtonReleased: 1
+  m_floatingHeight: 1
+  m_maxTimeThrowing: 30
+  m_throwStrengthPerSecond: 1
+  m_objectsFloatingHeight: 1
+  m_throwButtonReleased: 1
 --- !u!114 &114705217124677604
 MonoBehaviour:
   m_ObjectHideFlags: 1
