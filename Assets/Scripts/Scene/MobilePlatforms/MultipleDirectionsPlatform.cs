@@ -32,11 +32,15 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     private Vector3 m_speedLastUpdate;
     private PlatformState m_state = PlatformState.STOP;
     private bool m_playerDetected = false;
+    private Vector3 m_initialPosition;
+    private Quaternion m_initialRotation; 
 
     // Use this for initialization
     void Start()
     {
         m_speedLastUpdate = Vector3.zero;
+        m_initialPosition = gameObject.transform.position;
+        m_initialRotation = gameObject.transform.rotation;
     }
 
     // Update is called once per frame
@@ -129,6 +133,11 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                 }
                 break;
             case PlatformState.FINISH:
+                m_movementIndex = -1;
+                m_rotateIndex = -1;
+                transform.position = m_initialPosition;
+                transform.rotation = m_initialRotation;
+                m_state = PlatformState.WAIT;
                 break;
         }
     }
