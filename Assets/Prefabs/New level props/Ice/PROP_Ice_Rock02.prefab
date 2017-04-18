@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4028492894950268}
   - component: {fileID: 33849115942314982}
   - component: {fileID: 23590793931645686}
+  - component: {fileID: 64733642090301316}
   m_Layer: 0
   m_Name: PROP_Ice_Rock02
   m_TagString: Untagged
@@ -54,7 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: dd73f171a0bab8743b4e7178d92bc9c0, type: 2}
+  - {fileID: 2100000, guid: 326b196655f482b4db9be30586f07ec8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,4 +79,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1648317598252928}
-  m_Mesh: {fileID: 4300088, guid: 318f06c9d9c76e8428d85223c45761ca, type: 3}
+  m_Mesh: {fileID: 4300000, guid: e1d3de5813f135f43b0bb4c975fc1bc2, type: 3}
+--- !u!64 &64733642090301316
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1648317598252928}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: e1d3de5813f135f43b0bb4c975fc1bc2, type: 3}
