@@ -13,8 +13,9 @@ public class Enemy : Character {
 
 	//General variables
 	public int m_speed = 2;
-	public GameObject currentWall;
+	//public GameObject currentWall;
 
+	public Animator m_animator;
 	public GameObject player;
 
 	public override void Awake()
@@ -24,6 +25,8 @@ public class Enemy : Character {
 		m_Changing = gameObject.AddComponent<EnemyChanging> ();
 
 		m_currentState = m_Idle;
+		if(m_animator == null)
+			m_animator = GetComponent<Animator>();
 
 		base.Awake ();
 	}
@@ -49,17 +52,6 @@ public class Enemy : Character {
             base.m_damageRecive = true;
             base.m_damagePower = 20;
         }
-        /*if (col.gameObject.tag == "EnemyWall") 
-		{
-			m_currentState.OnExit ();
-			m_currentState = m_Changing;
-			m_currentState.OnEnter ();
-		}*/
-        /*if (m_currentState == m_Changing) 
-		{
-			m_currentState.OnExit ();
-			m_currentState.OnEnter ();
-		}*/
     }
 
 	void OnTriggerEnter(Collider col)
@@ -73,7 +65,6 @@ public class Enemy : Character {
 
 		if (col.tag == "EnemyWall") 
 		{
-			//m_Following.wallToChange = col.gameObject;
 			if (m_currentState == m_Following) 
 			{
 				m_currentState.OnExit ();
