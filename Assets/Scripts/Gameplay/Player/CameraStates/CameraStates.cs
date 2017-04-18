@@ -7,6 +7,7 @@ public class CameraStates : MonoBehaviour {
     public enum States
     {
         BACK,
+        TOP,
         AIMING,
         TRANSIT
     }
@@ -21,7 +22,7 @@ public class CameraStates : MonoBehaviour {
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public virtual bool OnUpdate(float axisHorizontal, float axisVertical, float timeStep)
+    public virtual bool OnUpdate(float axisHorizontal, float axisVertical, bool returnCam, float timeStep)
     {
         return false;
     }

@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1620317497138314}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.5, z: -3}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4597633026657924}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1620317497138314}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 730475ee64f9a894bbac0d9e6f22e813, type: 3}
   m_Name: 
@@ -227,12 +227,23 @@ MonoBehaviour:
   m_moveSpeed: 5
   m_rotateSpeed: 2
   m_turnSpeed: 1.5
+  m_autoReturnCam: 0
   m_maxReturnTime: 2
-  m_tiltMax: 50
-  m_tiltMin: 45
+  m_tiltMaxBack: 75
+  m_tiltMinBack: 45
+  m_tiltMaxTop: 75
+  m_tiltMinTop: 45
+  m_tiltMaxAim: 55
+  m_tiltMinAim: 45
+  m_aimSpeed: 3
+  m_lookMaxAim: 60
+  m_lookMinAim: 45
+  m_backCamPosition: {x: 0, y: 1.5, z: -3}
   m_aimingCamPosition: {x: 1, y: 1.5, z: -0.5}
+  m_topCamPosition: {x: 0, y: 3, z: -5}
   m_changeCamOnPosition: 0
   m_timeBetweenChanges: 0.5
+  m_player: {fileID: 0}
   m_playerScript: {fileID: 0}
   m_model: {fileID: 0}
   m_pivot: {fileID: 0}
@@ -240,6 +251,7 @@ MonoBehaviour:
   m_cam: {fileID: 0}
   m_currentState: {fileID: 0}
   m_onBack: {fileID: 0}
+  m_onTop: {fileID: 0}
   m_aiming: {fileID: 0}
   m_transit: {fileID: 0}
   m_cameraProtection: {fileID: 0}

@@ -14,7 +14,7 @@ public class CameraAiming : CameraStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool returnCam, float timeStep)
     {
         bool ret = false;
 
@@ -47,9 +47,10 @@ public class CameraAiming : CameraStates {
 
     void CameraRotation(float x, float y, float deltaTime)
     {
-        m_lookAngle += x * m_variableCam.m_turnSpeed;
-        m_tiltAngle -= y * m_variableCam.m_turnSpeed;
-        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_variableCam.m_tiltMin, m_variableCam.m_tiltMax);
+        m_lookAngle += x * m_variableCam.m_aimSpeed;
+        m_lookAngle = Mathf.Clamp(m_lookAngle, -m_variableCam.m_lookMinAim, m_variableCam.m_lookMaxAim);
+        m_tiltAngle -= y * m_variableCam.m_aimSpeed;
+        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_variableCam.m_tiltMinAim, m_variableCam.m_tiltMaxAim);
 
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
         Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);

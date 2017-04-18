@@ -24,7 +24,7 @@ public class CameraTransiting : CameraStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool returnCam, float timeStep)
     {
         bool ret = false;
 
@@ -42,7 +42,7 @@ public class CameraTransiting : CameraStates {
         Vector3 newPosition = Vector3.Lerp(m_initialPosition, m_finalPosition, perc);
         m_variableCam.m_cam.localPosition = newPosition;
 
-        if (newPosition.Equals(m_finalPosition))
+        if (perc >= 1.0f)
         {
             m_variableCam.m_currentState = m_finalState;
             ret = true;

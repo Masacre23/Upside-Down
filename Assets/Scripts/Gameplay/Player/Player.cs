@@ -11,9 +11,12 @@ public class Player : Character
     PlayerController m_playerInput;
     float m_axisHorizontal;
     float m_axisVertical;
+    float m_camHorizontal;
+    float m_camVertical;
     bool m_jumping;
     bool m_changeGravity;
     bool m_throwObject;
+    bool m_returnCam;
 
     //Variables regarding player state
     public PlayerStates m_currentState;
@@ -26,7 +29,7 @@ public class Player : Character
     //Variables regarding player movement
     Transform m_modelTransform;
     public bool m_freezeMovementOnAir;
-    public VariableCam m_mainCam;
+    public VariableCam m_camController;
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
 
@@ -68,7 +71,7 @@ public class Player : Character
 
         GameObject cameraFree = GameObject.Find("MainCameraRig");
         if (cameraFree)
-            m_mainCam = cameraFree.GetComponent<VariableCam>();
+            m_camController = cameraFree.GetComponent<VariableCam>();
         m_rotationFollowPlayer = true;
 
         base.Awake();
@@ -89,8 +92,8 @@ public class Player : Character
     // First, it should read input from PlayerController in Update, since we need input every frame
     public override void Update()
     {
-        m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical);
-        m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject);
+        m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
+        m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject, ref m_returnCam);
 
         if (!m_changeGravity)
             m_changeButtonReleased = true;
@@ -101,22 +104,29 @@ public class Player : Character
         m_playerStopped = false;
 
 		PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.fixedDeltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
 		}
 
-		if (m_mainCam && m_rotationFollowPlayer)
-			m_mainCam.RotateOnTarget(Time.fixedDeltaTime);
+        if (m_camController)
+        {
+            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, Time.deltaTime);
+            if (m_rotationFollowPlayer)
+                m_camController.RotateOnTarget(Time.fixedDeltaTime);
+        }
 
 		//m_playerGravity.DrawRay();
 
 		m_axisHorizontal = 0.0f;
 		m_axisVertical = 0.0f;
+        m_camHorizontal = 0.0f;
+        m_camVertical = 0.0f;
 		m_jumping = false;
 		m_changeGravity = false;
 		m_throwObject = false;
+        m_returnCam = false;
     }
 
     // Second, it should update player state regarding the current state & input
@@ -156,17 +166,18 @@ public class Player : Character
 
     //public void Move(float timeStep)
     //{
-    //    Vector3 forward = Camera.main.transform.up;
-    //    Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+    //    Vector3 camForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
+    //    Vector3 movement = - m_axisHorizontal * Camera.main.transform.right + m_axisVertical * camForward;
     //    movement.Normalize();
+    //    //movement = transform.InverseTransformDirection(movement);
 
     //    m_rigidBody.MovePosition(transform.position + movement * m_moveSpeed * timeStep);
 
-    //    if (movement != Vector3.zero)
-    //    {
-    //        Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-    //        m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
-    //    }
+    //    //if (movement != Vector3.zero)
+    //    //{
+    //    //    Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
+    //    //    m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+    //    //}
     //}
 
     void OnCollisionEnter(Collision col)

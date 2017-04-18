@@ -7,6 +7,7 @@ public class CameraOnBack : CameraStates
     float m_returnTime = 0.0f;
     float m_lookAngle = 0.0f;
     float m_tiltAngle = 0.0f;
+    public bool m_moveBehind = false;
 
     public override void Start()
     {
@@ -15,7 +16,7 @@ public class CameraOnBack : CameraStates
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool returnCam, float timeStep)
     {
         bool ret = false;
 
@@ -26,6 +27,27 @@ public class CameraOnBack : CameraStates
         {
             m_variableCam.m_currentState = m_variableCam.m_transit;
             ret = true;
+        }
+        else if (returnCam)
+        {
+            m_variableCam.SetCameraTransition(m_type);
+            m_variableCam.m_currentState = m_variableCam.m_transit;
+            ret = true;
+        }
+        else if (m_variableCam.m_autoReturnCam)
+        {
+            if (m_variableCam.m_playerScript.m_playerStopped && axisHorizontal == 0 && axisVertical == 0)
+            {
+                m_returnTime += timeStep;
+                if (m_returnTime > m_variableCam.m_maxReturnTime)
+                {
+                    m_variableCam.SetCameraTransition(m_type);
+                    m_variableCam.m_currentState = m_variableCam.m_transit;
+                    ret = true;
+                }
+            }
+            else
+                m_returnTime = 0.0f;
         }
 
         return ret;
@@ -43,35 +65,30 @@ public class CameraOnBack : CameraStates
         m_returnTime = 0.0f;
         m_variableCam.m_changeCamOnPosition = false;
         m_variableCam.m_cameraProtection.m_protectionEnabled = false;
+        m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
+        m_tiltAngle = 0.0f;
     }
 
     void CameraRotation(float x, float y, float deltaTime)
     {
-        if (m_variableCam.m_playerScript.m_playerStopped && x == 0 && y == 0)
-            m_returnTime += deltaTime;
-        else
-            m_returnTime = 0.0f;
+        m_lookAngle += x * m_variableCam.m_turnSpeed;
+        m_tiltAngle -= y * m_variableCam.m_turnSpeed;
+        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_variableCam.m_tiltMinBack, m_variableCam.m_tiltMaxBack);
 
-        if (m_returnTime > m_variableCam.m_maxReturnTime)
-        {
-            m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
-            m_tiltAngle = 0.0f;
+        Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
+        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
 
-            Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
-            Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
+        m_variableCam.m_pivot.localRotation = targetRotation * tiltRotation;
+    }
 
-            m_variableCam.m_pivot.localRotation = Quaternion.Lerp(m_variableCam.m_pivot.localRotation, targetRotation * tiltRotation, deltaTime * m_variableCam.m_rotateSpeed);
-        }
-        else
-        {
-            m_lookAngle += x * m_variableCam.m_turnSpeed;
-            m_tiltAngle -= y * m_variableCam.m_turnSpeed;
-            m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_variableCam.m_tiltMin, m_variableCam.m_tiltMax);
+    void MoveCamBehind(float deltaTime)
+    {
+        m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
+        m_tiltAngle = 0.0f;
 
-            Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
-            Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
+        Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
+        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
 
-            m_variableCam.m_pivot.localRotation = targetRotation * tiltRotation;
-        }
+        m_variableCam.m_pivot.localRotation = Quaternion.Lerp(m_variableCam.m_pivot.localRotation, targetRotation * tiltRotation, deltaTime * m_variableCam.m_rotateSpeed);
     }
 }

@@ -7,17 +7,27 @@ public class VariableCam : MonoBehaviour
 {
     public float m_moveSpeed = 1f;
     public float m_rotateSpeed = 1f;
-    [Range(0f, 10f)] public float m_turnSpeed = 1.5f;
+    public float m_turnSpeed = 1.5f;
+    public bool m_autoReturnCam = false;
     public float m_maxReturnTime = 1f;
-    public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
-    public float m_tiltMin = 45f;
 
-    Vector3 m_initialCamPosition;
+    public float m_tiltMaxBack = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMinBack = 45f;
+    public float m_tiltMaxTop = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMinTop = 45f;
+    public float m_tiltMaxAim = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMinAim = 45f;
+    public float m_aimSpeed = 1.5f;
+    public float m_lookMaxAim = 80f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_lookMinAim = -80f;
+
+    [SerializeField] Vector3 m_backCamPosition;
     [SerializeField] Vector3 m_aimingCamPosition;
+    [SerializeField] Vector3 m_topCamPosition;
     public bool m_changeCamOnPosition = false;
     public float m_timeBetweenChanges = 0.5f;
 
-    GameObject m_player;
+    public GameObject m_player;
     public Player m_playerScript;
     public Transform m_model;
     public Transform m_pivot;
@@ -26,6 +36,7 @@ public class VariableCam : MonoBehaviour
 
     public CameraStates m_currentState;
     public CameraStates m_onBack;
+    public CameraStates m_onTop;
     public CameraStates m_aiming;
     public CameraStates m_transit;
 
@@ -40,10 +51,9 @@ public class VariableCam : MonoBehaviour
         m_cam = m_pivot.FindChild("Main Camera");
 
         m_onBack = gameObject.AddComponent<CameraOnBack>();
+        //m_onTop = gameObject.AddComponent<CameraOnTop>();
         m_aiming = gameObject.AddComponent<CameraAiming>();
         m_transit = gameObject.AddComponent<CameraTransiting>();
-
-        m_currentState = m_onBack;
     }
 
     // Use this for initialization
@@ -52,16 +62,17 @@ public class VariableCam : MonoBehaviour
         m_playerScript = m_player.GetComponent<Player>();
         m_cameraProtection = GetComponent<VariableCameraProtectFromWallClip>();
 
-        m_initialCamPosition = m_cam.localPosition;
+        m_currentState = m_onBack;
+        m_cam.localPosition = m_backCamPosition;
+
+        //m_currentState = m_onTop;
+        //m_cam.localPosition = m_topCamPosition;
     }
 
-    void Update()
+    public void OnUpdate(float axisX, float axisY, bool moveCamBehind, float deltaTime)
     {
-        float x = CrossPlatformInputManager.GetAxis("Mouse X");
-        float y = CrossPlatformInputManager.GetAxis("Mouse Y");
-
         CameraStates previousState = m_currentState;
-        if (m_currentState.OnUpdate(x, y, Time.deltaTime))
+        if (m_currentState.OnUpdate(axisX, axisY, moveCamBehind, deltaTime))
         {
             previousState.OnExit();
             m_currentState.OnEnter();
@@ -90,8 +101,13 @@ public class VariableCam : MonoBehaviour
         switch (finalState)
         {
             case CameraStates.States.BACK:
-                transitingCam.m_finalPosition = m_initialCamPosition;
+                transitingCam.m_finalPosition = m_backCamPosition;
                 transitingCam.m_finalState = m_onBack;
+                m_changeCamOnPosition = true;
+                break;
+            case CameraStates.States.TOP:
+                transitingCam.m_finalPosition = m_topCamPosition;
+                transitingCam.m_finalState = m_onTop;
                 m_changeCamOnPosition = true;
                 break;
             case CameraStates.States.AIMING:
@@ -104,4 +120,8 @@ public class VariableCam : MonoBehaviour
         }
     }
 
+    public void ReturnCamBehind()
+    {
+
+    }
 }

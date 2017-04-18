@@ -67,7 +67,7 @@ class PlayerThrowing : PlayerStates
             }
         }
 
-        m_player.m_mainCam.SetCameraTransition(CameraStates.States.AIMING);
+        m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING);
         m_player.m_gravitationSphere.SetActive(true);
         m_player.m_throwButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
@@ -77,7 +77,7 @@ class PlayerThrowing : PlayerStates
     {
         m_objects.Clear();
         m_objectsInitialPositions.Clear();
-        m_player.m_mainCam.SetCameraTransition(CameraStates.States.BACK);
+        m_player.m_camController.SetCameraTransition(CameraStates.States.BACK);
         m_player.m_gravitationSphere.SetActive(false);
         m_timeThrowing = 0.0f;
         HUDManager.ShowGravityPanel(false);
