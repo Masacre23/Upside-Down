@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.537
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7237184, g: 0.44749504, b: 0.3385954, a: 0.537}
+  m_IndirectSpecularColor: {r: 0.7236617, g: 0.4474907, b: 0.33870658, a: 0.537}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -5850,7 +5850,7 @@ Prefab:
     - target: {fileID: 114671759835628360, guid: ec1a8ef2e917e694ea75485222517994,
         type: 2}
       propertyPath: m_boomerang
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 65166695292205590, guid: ec1a8ef2e917e694ea75485222517994,
         type: 2}
@@ -5864,6 +5864,11 @@ Prefab:
     - target: {fileID: 1840788966254552, guid: ec1a8ef2e917e694ea75485222517994, type: 2}
       propertyPath: m_TagString
       value: GravityWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 114671759835628360, guid: ec1a8ef2e917e694ea75485222517994,
+        type: 2}
+      propertyPath: m_returnWithoutPlayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec1a8ef2e917e694ea75485222517994, type: 2}
@@ -12933,6 +12938,8 @@ MonoBehaviour:
   m_direction: {x: 1, y: 0, z: 1}
   m_boomerang: 1
   m_waitForPlayer: 0
+  m_returnWithoutPlayer: 0
+  m_timeWithOutPlayer: 2
 --- !u!64 &782053854
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26726,6 +26733,16 @@ Prefab:
       propertyPath: m_TagString
       value: GravityWall
       objectReference: {fileID: 0}
+    - target: {fileID: 114671759835628360, guid: ec1a8ef2e917e694ea75485222517994,
+        type: 2}
+      propertyPath: m_boomerang
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114671759835628360, guid: ec1a8ef2e917e694ea75485222517994,
+        type: 2}
+      propertyPath: m_returnWithoutPlayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec1a8ef2e917e694ea75485222517994, type: 2}
   m_IsPrefabParent: 0
@@ -27837,6 +27854,16 @@ Prefab:
     - target: {fileID: 4348036956888342, guid: ec1a8ef2e917e694ea75485222517994, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114671759835628360, guid: ec1a8ef2e917e694ea75485222517994,
+        type: 2}
+      propertyPath: m_boomerang
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114671759835628360, guid: ec1a8ef2e917e694ea75485222517994,
+        type: 2}
+      propertyPath: m_returnWithoutPlayer
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec1a8ef2e917e694ea75485222517994, type: 2}
