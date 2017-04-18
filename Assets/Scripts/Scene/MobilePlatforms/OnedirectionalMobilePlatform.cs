@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum PlatformOneDirectionState
+{
+    STOP,
+    WAIT,
+    MOVE,
+    RETURN,
+}
+
 public class OnedirectionalMobilePlatform : MonoBehaviour {
 
     public float m_speed = 0.2f;
@@ -10,29 +18,58 @@ public class OnedirectionalMobilePlatform : MonoBehaviour {
     public Vector3 m_direction = new Vector3(1.0f, 0.0f, 0.0f);
     public bool m_boomerang = true;
     public bool m_waitForPlayer = false;
+    public bool m_returnWithoutPlayer = false;
+    public float m_timeWithOutPlayer = 2.0f;
 
     private float m_distanceTraveled = 0.0f;
     private float m_timeWaited = 0.0f;
     private int m_sense = 1;
-    private bool m_waiting = false;
-    private Vector3 m_speedLastUpdate;
-    private bool m_stop = false;
+    private PlatformOneDirectionState m_state = PlatformOneDirectionState.STOP;
+    private bool m_isPlayer = false;
+    
 	
     // Use this for initialization
-	void Start ()
-    {
-        m_speedLastUpdate = Vector3.zero;
-
-        m_stop = m_waitForPlayer;
-	}
+	void Start (){}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (!m_stop)
+        switch (m_state)
         {
-            if (!m_waiting)
-            {
+            case PlatformOneDirectionState.STOP:
+                if(!m_waitForPlayer || m_isPlayer)
+                {
+                    m_state = PlatformOneDirectionState.MOVE;
+                }
+                break;
+            case PlatformOneDirectionState.WAIT:
+                m_timeWaited += Time.deltaTime;
+                if (m_timeWaited >= m_waitTime)
+                {
+                    m_sense = m_sense == 1 ? -1 : 1;
+                    m_state = m_sense == 1 ? PlatformOneDirectionState.STOP : PlatformOneDirectionState.RETURN;
+                    m_timeWaited = 0.0f;
+                }
+                break;
+            case PlatformOneDirectionState.RETURN:
+                if (m_waitForPlayer && !m_isPlayer)
+                {
+                    m_timeWaited += Time.deltaTime;
+                    if(m_timeWaited >= m_timeWithOutPlayer)
+                    {
+                        m_state = PlatformOneDirectionState.MOVE;
+                    }
+                }else
+                {
+                    if (!m_waitForPlayer)
+                        m_state = PlatformOneDirectionState.MOVE;
+                    else
+                    {
+                        m_timeWaited = 0;
+                    }
+                }
+                break;
+            case PlatformOneDirectionState.MOVE:
                 float distanceToMove = m_distance - m_distanceTraveled;
                 if (m_speed * Time.deltaTime <= distanceToMove)
                     distanceToMove = m_speed * Time.deltaTime;
@@ -41,30 +78,25 @@ public class OnedirectionalMobilePlatform : MonoBehaviour {
                 if (m_distanceTraveled >= m_distance && m_boomerang)
                 {
                     m_distanceTraveled = 0;
-                    m_sense = m_sense == 1 ? -1 : 1;
-                    m_waiting = true;
+                    m_state = PlatformOneDirectionState.WAIT;
                 }
-                m_speedLastUpdate = m_sense * m_direction * m_speed;
-            }
-            else
-            {
-                m_timeWaited += Time.deltaTime;
-                if (m_timeWaited >= m_waitTime)
-                {
-                    m_waiting = false;
-                    m_timeWaited = 0.0f;
-                }
-                m_speedLastUpdate = Vector3.zero;
-            }
+                break;   
         }        
 	}
 
-    void OnCollisionEnter(Collision colInfo)
+    private void OnCollisionEnter(Collision colInfo)
     {
-        if (m_waitForPlayer && colInfo.collider.tag == "Player")
+        if (colInfo.collider.tag == "Player")
         {
-            m_waitForPlayer = false;
-            m_stop = false;
+            m_isPlayer = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision colInfo)
+    {
+        if (colInfo.collider.tag == "Player")
+        {
+            m_isPlayer = false;
         }
     }
 }
