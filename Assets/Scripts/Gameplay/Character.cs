@@ -106,13 +106,23 @@ public class Character : MonoBehaviour {
         m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
         m_isGrounded = false;
         m_groundCheckDistance = 0.1f;
-        m_gravityOnCharacter.m_planetGravity = true;
     }
 
     //This function should be called while character is on air.
     //It controls the detection of the floor. If the character is going up, the detection is small in order to avoid being unable to jump.
     public void OnAir()
     {
-        m_groundCheckDistance = Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 ? m_defaultGroundCheckDistance : 0.01f;
+        //m_groundCheckDistance = Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 ? m_defaultGroundCheckDistance : 0.01f;
+
+        if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
+        {
+            m_groundCheckDistance = m_defaultGroundCheckDistance;
+            if (!m_gravityOnCharacter.m_changingToAttractor)
+            {
+                m_gravityOnCharacter.m_planetGravity = true;
+            }
+        }
+        else
+            m_groundCheckDistance = 0.01f;
     }
 }

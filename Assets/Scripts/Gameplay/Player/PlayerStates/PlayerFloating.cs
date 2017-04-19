@@ -40,6 +40,7 @@ public class PlayerFloating : PlayerStates
                 {
                     m_player.m_currentState = m_player.m_onAir;
                     m_player.m_gravityOnCharacter.m_planetGravity = false;
+                    m_player.m_gravityOnCharacter.m_changingToAttractor = true;
                 }      
                 else
                     m_player.m_currentState = m_player.m_onAir;

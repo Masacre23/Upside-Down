@@ -13,6 +13,7 @@ public class GameObjectGravity : MonoBehaviour {
     public Vector3 m_gravity;
     public List<Rigidbody> m_planets;
     public bool m_planetGravity;
+    public bool m_changingToAttractor;
 
     bool m_thrownForce = false;
     Vector3 m_impulseForce;
@@ -32,6 +33,7 @@ public class GameObjectGravity : MonoBehaviour {
         m_rigidBody.useGravity = false;
         m_gravity = Physics.gravity;
         m_planetGravity = true;
+        m_changingToAttractor = false;
         m_thrownForce = false;
         m_impulseForce = Vector3.zero;
 	}
@@ -94,6 +96,7 @@ public class GameObjectGravity : MonoBehaviour {
             m_attractor = hit;
             m_gravity = hit.normal;
             m_planetGravity = false;
+            m_changingToAttractor = false;
         }
     }
 
