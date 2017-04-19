@@ -9,6 +9,7 @@ enum PlatformState
     MOVE,
     ROTATE,
     FINISH,
+    RESTART,
 }
 
 public class MultipleDirectionsPlatform : MonoBehaviour {
@@ -16,7 +17,8 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     public float m_speedMove;
     public float m_speedRotate;
     public float m_waitTime;
-  
+    public Transform m_initicalTransform;
+
     public float[] m_distance;
     public Vector3[] m_direction;
 
@@ -32,15 +34,15 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     private Vector3 m_speedLastUpdate;
     private PlatformState m_state = PlatformState.STOP;
     private bool m_playerDetected = false;
-    private Vector3 m_initialPosition;
-    private Quaternion m_initialRotation; 
+  
+    
+    private float m_verticalDistance = 6.0f;
+    private float m_speedVertical = 2.0f;
 
     // Use this for initialization
     void Start()
     {
         m_speedLastUpdate = Vector3.zero;
-        m_initialPosition = gameObject.transform.position;
-        m_initialRotation = gameObject.transform.rotation;
     }
 
     // Update is called once per frame
@@ -135,9 +137,32 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
             case PlatformState.FINISH:
                 m_movementIndex = -1;
                 m_rotateIndex = -1;
-                transform.position = m_initialPosition;
-                transform.rotation = m_initialRotation;
-                m_state = PlatformState.WAIT;
+                float vertical1ToMove = m_verticalDistance - m_distanceTraveled;
+                if (m_speedVertical * Time.deltaTime <= vertical1ToMove)
+                    vertical1ToMove = m_speedVertical * Time.deltaTime;
+                m_distanceTraveled += vertical1ToMove;
+                transform.Translate(new Vector3(0.0f, 0.0f, -1.0f) * vertical1ToMove);
+                if (m_distanceTraveled >= m_verticalDistance)
+                {
+                    m_distanceTraveled = 0;
+                    transform.position = m_initicalTransform.position;
+                    transform.rotation = m_initicalTransform.rotation;
+                    m_state = PlatformState.RESTART;
+                }
+                PlanetGravity.AlignWithFather(gameObject);
+                break;
+            case PlatformState.RESTART:
+                float verticalToMove = m_verticalDistance - m_distanceTraveled;
+                if (m_speedVertical * Time.deltaTime <= verticalToMove)
+                    verticalToMove = m_speedVertical * Time.deltaTime;
+                m_distanceTraveled += verticalToMove;
+                transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * verticalToMove);
+                if (m_distanceTraveled >= m_verticalDistance)
+                {
+                    m_distanceTraveled = 0;
+                    m_state = PlatformState.WAIT;
+                }
+                PlanetGravity.AlignWithFather(gameObject);
                 break;
         }
     }
