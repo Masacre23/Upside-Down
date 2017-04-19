@@ -182,10 +182,20 @@ public class Player : Character
 
     void OnCollisionEnter(Collision col)
 	{
-        if(col.collider.tag.Contains("Enemy") || col.collider.tag == "Planet")
+        if(col.collider.tag == "Planet")
         {
             base.m_damageRecive = true;
             base.m_damagePower = 20;
         }
+
+		if (col.collider.tag.Contains ("Enemy")) 
+		{
+			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
+			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
+			{
+				base.m_damageRecive = true;
+				base.m_damagePower = 20;
+			}
+		}
     }
 }

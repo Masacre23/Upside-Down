@@ -16,6 +16,7 @@ public class Character : MonoBehaviour {
     public int m_damagePower = 0;
     public bool m_alive = true;
 
+	public Animator m_animator;
     public GameObjectGravity m_gravityOnCharacter;
     protected Rigidbody m_rigidBody;
     CapsuleCollider m_capsule;
@@ -37,6 +38,11 @@ public class Character : MonoBehaviour {
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
             m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
+
+		if(tag == "Player")
+			m_animator = transform.GetChild(0).GetChild(0).GetComponent<Animator> ();
+		else
+			m_animator = transform.GetChild(0).GetComponent<Animator> ();
 
         m_recive = gameObject.AddComponent<DamageRecive>();
         m_animation = gameObject.AddComponent<DamageAnimation>();

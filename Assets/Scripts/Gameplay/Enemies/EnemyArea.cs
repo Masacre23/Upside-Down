@@ -50,7 +50,7 @@ public class EnemyArea : MonoBehaviour {
 		Collider[] allOverlappingColliders = Physics.OverlapSphere (center, radius);
 		foreach (Collider col in allOverlappingColliders) 
 		{
-			if (col.tag == "EnemySnail" || col.tag == "Enemy")
+			if (col.tag == "EnemySnail" && col.name != "CenterSpineFather" || col.tag == "Enemy")
 				enemies.Add (col.gameObject);
 		}
 	}
