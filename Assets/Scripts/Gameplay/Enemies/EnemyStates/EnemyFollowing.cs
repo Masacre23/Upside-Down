@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyFollowing : EnemyStates {
-	public GameObject player;
+	//public GameObject player;
 	int speed;
 	int damp = 4;
 	public bool canChange = true;
 	//public GameObject wallToChange;
 	public Vector3 up;
 	float radiusCollider;
-	public float rotationX;
-	public float rotationY;
-	public float rotationZ;
 
 	// Use this for initialization
 	public override void Start () {
@@ -33,7 +30,6 @@ public class EnemyFollowing : EnemyStates {
 		m_type = States.FOLLOWING;
 		m_enemy.m_animator.SetBool ("PlayerDetected", true);
 
-		player = m_enemy.player;
 		speed = m_enemy.m_speed;
 
 		radiusCollider = m_enemy.GetComponent<SphereCollider> ().radius;
@@ -47,7 +43,7 @@ public class EnemyFollowing : EnemyStates {
 
 	public void Move()
 	{
-		Vector3 target = player.transform.position;
+		Vector3 target = m_enemy.player.transform.position;
 
 		Vector3 difference = target - transform.position;
 

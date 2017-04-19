@@ -13,6 +13,7 @@ public class Enemy : Character {
 
 	//General variables
 	public int m_speed = 2;
+	public BoxCollider m_patrollingArea;
 	//public GameObject currentWall;
 
 	public Animator m_animator;
