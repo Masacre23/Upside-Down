@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyFollowing : EnemyStates {
 	//public GameObject player;
 	int speed;
-	int damp = 4;
+	int damp = 6;
 	public bool canChange = true;
 	float radiusCollider;
 	float capsuleRadius;

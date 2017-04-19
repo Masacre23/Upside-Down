@@ -38,6 +38,8 @@ public class Enemy : Character {
 
 	public override void FixedUpdate ()
 	{
+		base.FixedUpdate();
+
 		if (m_currentState.OnUpdate ())
 			m_currentState.OnEnter ();
 
