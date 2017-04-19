@@ -16,7 +16,7 @@ public class Enemy : Character {
 	public BoxCollider m_patrollingArea;
 	//public GameObject currentWall;
 
-	public Animator m_animator;
+	//public Animator m_animator;
 	public GameObject player;
 
 	public override void Awake()
@@ -26,8 +26,6 @@ public class Enemy : Character {
 		m_Changing = gameObject.AddComponent<EnemyChanging> ();
 
 		m_currentState = m_Idle;
-		if(m_animator == null)
-			m_animator = GetComponent<Animator>();
 
 		base.Awake ();
 	}
@@ -40,6 +38,8 @@ public class Enemy : Character {
 
 	public override void FixedUpdate ()
 	{
+		base.FixedUpdate();
+
 		if (m_currentState.OnUpdate ())
 			m_currentState.OnEnter ();
 
@@ -48,7 +48,7 @@ public class Enemy : Character {
 
 	void OnCollisionEnter(Collision col)
 	{
-        if (col.collider.tag == "GravityAffected")
+		if (col.collider.tag == "GravityAffected" || col.collider.tag == "Player")
         {
             base.m_damageRecive = true;
             base.m_damagePower = 20;

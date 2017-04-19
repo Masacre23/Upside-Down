@@ -20,7 +20,6 @@ public class DamageAnimation : DamageStates {
         bool ret = false;
         m_currentTime += Time.fixedDeltaTime;
 
-        //TODO: Here, we must to play the damage animation. 
         m_charapter.gameObject.transform.Translate((Vector3.back + Vector3.up) * Time.fixedDeltaTime);
 
         if (m_currentTime >= m_animtionTime)
@@ -34,11 +33,13 @@ public class DamageAnimation : DamageStates {
 
     public override void OnEnter()
     {
+		base.m_charapter.m_animator.SetBool("Damaged", true);
         m_currentTime = 0.0f;
     }
 
     public override void OnExit()
     {
         m_currentTime = 0.0f;  
+		base.m_charapter.m_animator.SetBool("Damaged", false);
     }
 }

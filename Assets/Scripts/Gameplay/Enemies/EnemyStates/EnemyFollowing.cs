@@ -5,23 +5,25 @@ using UnityEngine;
 public class EnemyFollowing : EnemyStates {
 	//public GameObject player;
 	int speed;
-	int damp = 4;
+	int damp = 6;
 	public bool canChange = true;
-	//public GameObject wallToChange;
-	public Vector3 up;
 	float radiusCollider;
+	float capsuleRadius;
 
-	// Use this for initialization
 	public override void Start () {
 		base.Start ();
 	}
-	
-	// Update is called once per frame
+
 	public override bool OnUpdate () {
-		up = transform.up;
 		bool ret = false;
 
-		Move();
+		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position);
+		m_enemy.m_animator.SetFloat ("PlayerDistance", distance);
+
+		if (m_enemy.m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
+		{
+			Move ();
+		}
 		return ret;
 	}
 
@@ -51,7 +53,6 @@ public class EnemyFollowing : EnemyStates {
 		Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
 
 		//transform.LookAt(pointOnPlane, transform.up);
-		//Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane);
 		Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
 		transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
 	

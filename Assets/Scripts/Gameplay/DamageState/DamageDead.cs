@@ -23,6 +23,7 @@ public class DamageDead : DamageStates {
     public override void OnEnter()
     {
         m_charapter.m_alive = false;
+		m_charapter.m_animator.SetBool ("Dead", true);
     }
 
     public override void OnExit()
