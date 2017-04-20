@@ -18,8 +18,6 @@ public class CameraAiming : CameraStates {
     {
         bool ret = false;
 
-        m_variableCam.m_playerScript.m_playerGravity.DrawRay();
-
         m_variableCam.FollowTarget(timeStep);
         CameraRotation(axisHorizontal, axisVertical, timeStep);
 
@@ -42,7 +40,6 @@ public class CameraAiming : CameraStates {
     public override void OnExit()
     {
         m_variableCam.m_changeCamOnPosition = false;
-        m_variableCam.m_playerScript.m_playerGravity.DisableRay();
     }
 
     void CameraRotation(float x, float y, float deltaTime)

@@ -46,6 +46,5 @@ public class PlayerChanging : PlayerStates
         m_rigidBody.isKinematic = false;
         m_player.m_gravitationSphere.SetActive(false);
         m_timeChanging = 0.0f;
-        m_player.m_freezeMovementOnAir = true;
     }
 }

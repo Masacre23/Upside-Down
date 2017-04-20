@@ -39,13 +39,33 @@ class PlayerThrowing : PlayerStates
         else
         {
             m_timeThrowing += timeStep;
+            RaycastHit target;
+            bool hasTarget = m_player.m_playerGravity.ViableTargetForThrowing(out target);
             if (!throwing)
             {
-                Vector3 throwVector = Camera.main.transform.forward * m_player.m_throwStrengthPerSecond * m_timeThrowing;
-                foreach (GameObjectGravity gravityObject in m_objects)
+                float throwPower = 0.0f;
+                if (m_player.m_incresePowerWithTime)
+                    throwPower = m_player.m_throwStrengthPerSecond * m_timeThrowing;
+                else
+                    throwPower = m_player.m_throwStrengthOnce;
+
+                if (hasTarget)
                 {
-                    gravityObject.ThrowObject(throwVector);
+                    foreach (GameObjectGravity gravityObject in m_objects)
+                    {
+                        Vector3 throwVector = (target.point - gravityObject.transform.position) * throwPower;
+                        gravityObject.ThrowObject(throwVector);
+                    }
                 }
+                else
+                {
+                    Vector3 throwVector = Camera.main.transform.forward * throwPower * m_player.m_noTargetStrengthMultiplier;
+                    foreach (GameObjectGravity gravityObject in m_objects)
+                    {
+                        gravityObject.ThrowObject(throwVector);
+                    }
+                }
+                
                 m_player.m_currentState = m_player.m_grounded;
                 ret = true;
             }

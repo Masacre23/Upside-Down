@@ -33,11 +33,14 @@ public class PlayerFloating : PlayerStates
         else
         {
             m_timeFloating += timeStep;
+            RaycastHit target;
+            bool legalTarget = m_player.m_playerGravity.ViableGravityChange(out target);
             if (!changeGravity)
             {
                 ret = true;
-                if (m_player.m_playerGravity.ChangePlayerGravity())
+                if (legalTarget)
                 {
+                    m_player.m_playerGravity.ChangeGravityTo(target);
                     m_player.m_currentState = m_player.m_onAir;
                     m_player.m_gravityOnCharacter.m_planetGravity = false;
                     m_player.m_gravityOnCharacter.m_changingToAttractor = true;
@@ -69,5 +72,7 @@ public class PlayerFloating : PlayerStates
         m_player.m_gravitationSphere.SetActive(false);
         m_timeFloating = 0.0f;
         HUDManager.ShowGravityPanel(false);
+        m_player.m_playerGravity.UnlightObject();
+        m_player.m_freezeMovementOnAir = true;
     }
 }

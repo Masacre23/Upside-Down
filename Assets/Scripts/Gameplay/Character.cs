@@ -40,7 +40,7 @@ public class Character : MonoBehaviour {
             m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
 
 		if(tag == "Player")
-			m_animator = transform.GetChild(0).GetChild(0).GetComponent<Animator> ();
+			m_animator = transform.GetChild(0).GetChild(1).GetComponent<Animator> ();
 		else
 			m_animator = transform.GetChild(0).GetComponent<Animator> ();
 

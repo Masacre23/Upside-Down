@@ -17,7 +17,8 @@ public class HUDManager : MonoBehaviour {
     private static float m_floatTimeValue = 0.0f;
     private static float m_energyValue = 1.0f;
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         m_gravityPanel.SetActive(m_showGravityPanel);
         m_lifePanel.SetActive(m_showLifePanel);
         m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 0.2f) : new Color(1.0f, 0.0f, 0.0f, 0.2f);

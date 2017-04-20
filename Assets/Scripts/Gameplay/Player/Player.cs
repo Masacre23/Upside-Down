@@ -44,8 +44,12 @@ public class Player : Character
     public float m_floatingHeight = 1.0f;
 
     //Variables regarding player's throw of objects
+    public bool m_incresePowerWithTime = false;
+    public float m_throwDetectionRange = 20.0f;
     public float m_maxTimeThrowing = 30.0f;
     public float m_throwStrengthPerSecond = 1.0f;
+    public float m_throwStrengthOnce = 20.0f;
+    public float m_noTargetStrengthMultiplier = 1.0f;
     public float m_objectsFloatingHeight = 1.0f;
     public bool m_throwButtonReleased = true;
 
@@ -116,8 +120,6 @@ public class Player : Character
             if (m_rotationFollowPlayer)
                 m_camController.RotateOnTarget(Time.fixedDeltaTime);
         }
-
-		//m_playerGravity.DrawRay();
 
 		m_axisHorizontal = 0.0f;
 		m_axisVertical = 0.0f;
