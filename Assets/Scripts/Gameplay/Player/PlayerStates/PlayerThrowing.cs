@@ -8,6 +8,7 @@ class PlayerThrowing : PlayerStates
     float m_objectDetectionRadius;
     List<GameObjectGravity> m_objects;
     List<Vector3> m_objectsInitialPositions;
+    float m_strengthWithoutTarget;
 
     public override void Start()
     {
@@ -19,6 +20,8 @@ class PlayerThrowing : PlayerStates
         m_objects = new List<GameObjectGravity>();
         m_objectsInitialPositions = new List<Vector3>();
         m_type = States.THROWING;
+
+        m_strengthWithoutTarget = m_player.m_throwDetectionRange;
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -59,7 +62,7 @@ class PlayerThrowing : PlayerStates
                 }
                 else
                 {
-                    Vector3 throwVector = Camera.main.transform.forward * throwPower * m_player.m_noTargetStrengthMultiplier;
+                    Vector3 throwVector = m_player.m_camController.m_camRay.direction * m_strengthWithoutTarget * throwPower;
                     foreach (GameObjectGravity gravityObject in m_objects)
                     {
                         gravityObject.ThrowObject(throwVector);

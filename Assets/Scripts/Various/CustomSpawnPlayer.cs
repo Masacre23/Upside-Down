@@ -13,19 +13,19 @@ public class CustomSpawnPlayer : MonoBehaviour {
 	}
 
 	void Update () {
-		if (Input.GetKey (KeyCode.Alpha1)) 
+		if (Input.GetKeyDown(KeyCode.Alpha1)) 
 		{
 			Spawn (p1);
 		}
-		if (Input.GetKey (KeyCode.Alpha2)) 
+		if (Input.GetKeyDown(KeyCode.Alpha2)) 
 		{
 			Spawn (p2);
 		}
-		if (Input.GetKey (KeyCode.Alpha3)) 
+		if (Input.GetKeyDown(KeyCode.Alpha3)) 
 		{
 			Spawn (p3);
 		}
-		if (Input.GetKey (KeyCode.Alpha4)) 
+		if (Input.GetKeyDown(KeyCode.Alpha4)) 
 		{
 			Spawn (p4);
 		}
@@ -42,6 +42,6 @@ public class CustomSpawnPlayer : MonoBehaviour {
 	{
 		transform.position = tr.position;
 		transform.rotation = tr.rotation;
-		this.GetComponent<Player> ().Start ();
+		this.GetComponent<Player>().Restart();
 	}
 }

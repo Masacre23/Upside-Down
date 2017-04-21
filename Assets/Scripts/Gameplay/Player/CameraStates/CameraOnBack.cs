@@ -36,7 +36,7 @@ public class CameraOnBack : CameraStates
         }
         else if (m_variableCam.m_autoReturnCam)
         {
-            if (m_variableCam.m_playerScript.m_playerStopped && axisHorizontal == 0 && axisVertical == 0)
+            if (m_variableCam.m_player.m_playerStopped && axisHorizontal == 0 && axisVertical == 0)
             {
                 m_returnTime += timeStep;
                 if (m_returnTime > m_variableCam.m_maxReturnTime)

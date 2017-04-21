@@ -7,6 +7,9 @@ public class CameraAiming : CameraStates {
     float m_lookAngle = 0.0f;
     float m_tiltAngle = 0.0f;
 
+    public bool m_lockingOnTarget = false;
+    public string m_tagTarget;
+
     public override void Start()
     {
         base.Start();
@@ -19,7 +22,11 @@ public class CameraAiming : CameraStates {
         bool ret = false;
 
         m_variableCam.FollowTarget(timeStep);
-        CameraRotation(axisHorizontal, axisVertical, timeStep);
+
+        if (m_lockingOnTarget)
+            HandleAim(axisHorizontal, axisVertical, timeStep);
+        else
+            CameraRotation(axisHorizontal, axisVertical, timeStep);
 
         if (m_variableCam.m_changeCamOnPosition)
         {
@@ -40,6 +47,34 @@ public class CameraAiming : CameraStates {
     public override void OnExit()
     {
         m_variableCam.m_changeCamOnPosition = false;
+    }
+
+    void HandleAim(float x, float y, float deltaTime)
+    {
+        float aimStrength = x * x + y * y;
+        if (aimStrength < m_variableCam.m_targetBreakLock * m_variableCam.m_targetBreakLock)
+        {
+            GameObject closestTarget = null;
+            float minimumDistance = m_variableCam.m_targetLockDistance * m_variableCam.m_targetLockDistance;
+            foreach (GameObject target in m_variableCam.m_player.m_targetsDetectors[m_tagTarget].m_targets)
+            {
+                float distance = Vector3.Cross(m_variableCam.m_camRay.direction, target.transform.position - m_variableCam.m_camRay.origin).sqrMagnitude;
+                if (distance < minimumDistance)
+                {
+                    closestTarget = target;
+                    minimumDistance = distance;
+                }
+            }
+
+            if (closestTarget)
+            {
+                m_variableCam.m_cam.LookAt(closestTarget.transform, m_variableCam.m_player.transform.up);
+            }
+            else
+                CameraRotation(x, y, deltaTime);
+        }
+        else
+            CameraRotation(x, y, deltaTime);
     }
 
     void CameraRotation(float x, float y, float deltaTime)

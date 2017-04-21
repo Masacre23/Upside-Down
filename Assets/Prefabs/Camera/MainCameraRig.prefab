@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 114991465111342590}
   - component: {fileID: 114020804145021018}
   - component: {fileID: 114124540566748746}
+  - component: {fileID: 114463410722210930}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -213,6 +214,17 @@ MonoBehaviour:
   edgesOnly: 0
   edgesOnlyBgColor: {r: 1, g: 1, b: 1, a: 1}
   edgeDetectShader: {fileID: 4800000, guid: 0d1644bdf064147baa97f235fc5b4903, type: 3}
+--- !u!114 &114463410722210930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620317497138314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd37c6ad8ee1b6940a5a4cf0a73da0a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114483449078654096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,13 +250,14 @@ MonoBehaviour:
   m_aimSpeed: 3
   m_lookMaxAim: 60
   m_lookMinAim: 45
+  m_targetLockDistance: 1.5
+  m_targetBreakLock: 0.3
   m_backCamPosition: {x: 0, y: 1.5, z: -3}
   m_aimingCamPosition: {x: 1, y: 1.5, z: -0.5}
   m_topCamPosition: {x: 0, y: 3, z: -5}
   m_changeCamOnPosition: 0
   m_timeBetweenChanges: 0.5
   m_player: {fileID: 0}
-  m_playerScript: {fileID: 0}
   m_model: {fileID: 0}
   m_pivot: {fileID: 0}
   m_pivotEulers: {x: 0, y: 0, z: 0}

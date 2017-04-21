@@ -62,6 +62,13 @@ public class Character : MonoBehaviour {
         m_rigidBody.freezeRotation = true;
 	}
 
+    public virtual void Restart()
+    {
+        m_rigidBody.velocity = Vector3.zero;
+        m_gravityOnCharacter.m_planetGravity = true;
+        m_gravityOnCharacter.m_changingToAttractor = false;
+    }
+
     public virtual void Update()
     {
     }

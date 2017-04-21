@@ -49,9 +49,11 @@ public class Player : Character
     public float m_maxTimeThrowing = 30.0f;
     public float m_throwStrengthPerSecond = 1.0f;
     public float m_throwStrengthOnce = 20.0f;
-    public float m_noTargetStrengthMultiplier = 1.0f;
     public float m_objectsFloatingHeight = 1.0f;
     public bool m_throwButtonReleased = true;
+
+    public Dictionary<string, TargetDetector> m_targetsDetectors;
+    GameObject m_detectorsEmpty;
 
     public override void Awake()
     {
@@ -78,6 +80,14 @@ public class Player : Character
             m_camController = cameraFree.GetComponent<VariableCam>();
         m_rotationFollowPlayer = true;
 
+        m_detectorsEmpty = GameObject.Find("TargetDetectors");
+        if (!m_detectorsEmpty)
+        {
+            m_detectorsEmpty = new GameObject("TargetDetectors");
+            m_detectorsEmpty.transform.parent = transform;
+            m_detectorsEmpty.transform.localPosition = Vector3.zero;
+        }    
+
         base.Awake();
     }
 
@@ -89,8 +99,21 @@ public class Player : Character
         m_freezeMovementOnAir = false;
 
         base.Start();
-	}
 
+        m_targetsDetectors = new Dictionary<string, TargetDetector>();
+        SetDetectors("Enemy", m_throwDetectionRange);
+        SetDetectors("GravityWall", m_gravityRange);
+    }
+
+    public override void Restart()
+    {
+        m_currentState.OnExit();
+        m_currentState = m_onAir;
+
+        ResetInput();
+
+        base.Restart();
+    }
 
     // This method should control player movements
     // First, it should read input from PlayerController in Update, since we need input every frame
@@ -121,14 +144,7 @@ public class Player : Character
                 m_camController.RotateOnTarget(Time.fixedDeltaTime);
         }
 
-		m_axisHorizontal = 0.0f;
-		m_axisVertical = 0.0f;
-        m_camHorizontal = 0.0f;
-        m_camVertical = 0.0f;
-		m_jumping = false;
-		m_changeGravity = false;
-		m_throwObject = false;
-        m_returnCam = false;
+        ResetInput();
     }
 
     // Second, it should update player state regarding the current state & input
@@ -199,5 +215,35 @@ public class Player : Character
 				base.m_damagePower = 20;
 			}
 		}
+    }
+
+    void SetDetectors(string tagName, float radiusCollider)
+    {
+        string objectName = string.Concat(tagName, "Detector");
+        if (!m_targetsDetectors.ContainsKey(tagName))
+        {
+            GameObject newObject = new GameObject(objectName);
+            newObject.transform.parent = m_detectorsEmpty.transform;
+            newObject.transform.localPosition = Vector3.zero;
+            newObject.transform.localRotation = Quaternion.identity;
+            newObject.transform.localScale = Vector3.one;
+
+            newObject.AddComponent<SphereCollider>();
+            TargetDetector newDetector = newObject.AddComponent<TargetDetector>();
+            newDetector.SetUpCollider(tagName, new Vector3(0, m_capsuleHeight / 2, 0), radiusCollider);
+            m_targetsDetectors.Add(tagName, newDetector);
+        }
+    }
+
+    void ResetInput()
+    {
+        m_axisHorizontal = 0.0f;
+        m_axisVertical = 0.0f;
+        m_camHorizontal = 0.0f;
+        m_camVertical = 0.0f;
+        m_jumping = false;
+        m_changeGravity = false;
+        m_throwObject = false;
+        m_returnCam = false;
     }
 }

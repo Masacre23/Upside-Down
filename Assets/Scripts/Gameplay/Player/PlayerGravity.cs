@@ -28,7 +28,7 @@ public class PlayerGravity : MonoBehaviour {
     {
         bool ret = false;
         UnlightObject();
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_player.m_gravityRange))
+        if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_gravityRange))
         {
             HUDManager.ChangeColorSight(target_wall.collider.tag == "GravityWall");
             if (target_wall.collider.tag == "GravityWall")
@@ -57,7 +57,7 @@ public class PlayerGravity : MonoBehaviour {
     public bool ViableTargetForThrowing(out RaycastHit target_wall)
     {
         bool ret = false;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall, m_player.m_throwDetectionRange))
+        if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_throwDetectionRange))
             ret = true;
 
         HUDManager.ChangeColorSight(ret);
