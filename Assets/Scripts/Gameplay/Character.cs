@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
+    public bool m_isThrowable = false;
     public float m_maxHealth = 100.0f;
     public float m_health = 100.0f;
     public float m_moveSpeed = 4.0f;
@@ -37,7 +38,10 @@ public class Character : MonoBehaviour {
     public virtual void Awake()
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
+        {
             m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
+            m_gravityOnCharacter.m_canBeThrowed = m_isThrowable;
+        }   
 
 		if(tag == "Player")
 			m_animator = transform.GetChild(0).GetChild(1).GetComponent<Animator> ();

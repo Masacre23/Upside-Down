@@ -82,15 +82,24 @@ class PlayerThrowing : PlayerStates
         Collider[] allobjects = Physics.OverlapSphere(m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2), m_objectDetectionRadius);
         for (int i = 0; i < allobjects.Length; i++)
         {
-            if (allobjects[i].transform.tag == "GravityAffected")
+            GameObjectGravity gravity_object = allobjects[i].transform.GetComponent<GameObjectGravity>();
+            if (gravity_object)
             {
-                GameObjectGravity gravity_object = allobjects[i].transform.GetComponent<GameObjectGravity>();
-                m_objects.Add(gravity_object);
-                m_objectsInitialPositions.Add(gravity_object.transform.position);
+                if (allobjects[i].transform.tag == "GravityAffected")
+                {
+                    m_objects.Add(gravity_object);
+                    m_objectsInitialPositions.Add(gravity_object.transform.position);
+                }
+                else if (allobjects[i].transform.tag == "Enemy" && gravity_object.m_canBeThrowed)
+                {
+                    m_objects.Add(gravity_object);
+                    m_objectsInitialPositions.Add(gravity_object.transform.position);
+                }
             }
         }
 
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING);
+        m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
         m_player.m_gravitationSphere.SetActive(true);
         m_player.m_throwButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
@@ -101,6 +110,7 @@ class PlayerThrowing : PlayerStates
         m_objects.Clear();
         m_objectsInitialPositions.Clear();
         m_player.m_camController.SetCameraTransition(CameraStates.States.BACK);
+        m_player.m_camController.UnsetAimLockOnTarget();
         m_player.m_gravitationSphere.SetActive(false);
         m_timeThrowing = 0.0f;
         HUDManager.ShowGravityPanel(false);

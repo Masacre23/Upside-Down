@@ -12,6 +12,7 @@ public class GameObjectGravity : MonoBehaviour {
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
     public List<Rigidbody> m_planets;
+    public bool m_canBeThrowed = true;
     public bool m_planetGravity;
     public bool m_changingToAttractor;
 
@@ -83,6 +84,7 @@ public class GameObjectGravity : MonoBehaviour {
             if (col.collider == m_attractor.collider)
             {
                 m_gravity = m_attractor.normal;
+                m_planetGravity = false;
             }
         }
     }
@@ -97,6 +99,10 @@ public class GameObjectGravity : MonoBehaviour {
             m_gravity = hit.normal;
             m_planetGravity = false;
             m_changingToAttractor = false;
+        }
+        else
+        {
+            m_planetGravity = true;
         }
     }
 
