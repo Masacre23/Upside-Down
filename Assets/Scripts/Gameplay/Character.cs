@@ -13,10 +13,7 @@ public class Character : MonoBehaviour {
     public float m_lerpSpeed = 10.0f;
     public Transform m_checkPoint;
 
-    public bool m_damageRecive = false;
-    public int m_damagePower = 0;
-    public bool m_respawn = false;
-    public bool m_alive = true;
+    public DamageData m_damage;
 
 	public Animator m_animator;
     public GameObjectGravity m_gravityOnCharacter;
@@ -28,7 +25,7 @@ public class Character : MonoBehaviour {
     public DamageStates m_damageState;
     public DamageStates m_recive;
     public DamageStates m_animation;
-    public DamageStates m_damageRespawn;
+    public DamageStates m_respawn;
     public DamageStates m_notRecive;
     public DamageStates m_dead;
 
@@ -52,10 +49,11 @@ public class Character : MonoBehaviour {
 
         m_recive = gameObject.AddComponent<DamageRecive>();
         m_animation = gameObject.AddComponent<DamageAnimation>();
-        m_damageRespawn = gameObject.AddComponent<DamageRespawn>();
+        m_respawn = gameObject.AddComponent<DamageRespawn>();
         m_notRecive = gameObject.AddComponent<DamageNotRecive>();
         m_dead = gameObject.AddComponent<DamageDead>();
 
+        m_damage = new DamageData();
         m_damageState = m_recive;
     }
 
@@ -85,13 +83,13 @@ public class Character : MonoBehaviour {
     public virtual void FixedUpdate()
     {
         DamageStates previousState = m_damageState;
-        if (m_damageState.OnUpdate(m_damageRecive, m_damagePower, m_damageRespawn, m_alive))
+        if (m_damageState.OnUpdate(m_damage))
         {
             previousState.OnExit();
             m_damageState.OnEnter();
         }
-        m_damagePower = 0;
-        m_damageRecive = false;
+        m_damage.m_damage = 0;
+        m_damage.m_recive = false;
 	}
 
     // This function checks if the character is currently touching a collider below their "feet"

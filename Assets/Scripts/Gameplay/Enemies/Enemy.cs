@@ -50,8 +50,8 @@ public class Enemy : Character {
 	{
 		if (col.collider.tag == "GravityAffected" || col.collider.tag == "Player")
         {
-            base.m_damageRecive = true;
-            base.m_damagePower = 20;
+            base.m_damage.m_recive = true;
+            base.m_damage.m_damage = 20;
         }
     }
 

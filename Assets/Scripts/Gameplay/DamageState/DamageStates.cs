@@ -23,7 +23,7 @@ public class DamageStates : MonoBehaviour {
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public virtual bool OnUpdate(bool recive, int damage, bool respawn, bool alive)
+    public virtual bool OnUpdate(DamageData data)
     {
         return false;
     }

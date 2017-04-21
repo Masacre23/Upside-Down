@@ -202,11 +202,12 @@ public class Player : Character
 
     void OnCollisionEnter(Collision col)
 	{
+        m_damage.m_force = -col.relativeVelocity * 0.1f;
         if(col.collider.tag == "Liquid")
         {
-            base.m_damageRecive = true;
-            base.m_damagePower = 20;
-            base.m_respawn = true;
+            base.m_damage.m_recive = true;
+            base.m_damage.m_damage = 20;
+            base.m_damage.m_respawn = true;
         }
 
 		if (col.collider.tag.Contains ("Enemy")) 
@@ -214,15 +215,15 @@ public class Player : Character
 			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
 			{
-				base.m_damageRecive = true;
-				base.m_damagePower = 20;
+				base.m_damage.m_recive = true;
+				base.m_damage.m_damage = 20;
 			}
 		}
 
         if(col.collider.tag == "HarmfulObject")
         {
-            base.m_damageRecive = true;
-            base.m_damagePower = 20;
+            base.m_damage.m_recive = true;
+            base.m_damage.m_damage = 20;
         }
     }
 

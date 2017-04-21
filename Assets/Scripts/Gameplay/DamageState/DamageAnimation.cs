@@ -15,12 +15,12 @@ public class DamageAnimation : DamageStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(bool recive, int damage, bool respawn, bool alive)
+    public override bool OnUpdate(DamageData data)
     {
         bool ret = false;
         m_currentTime += Time.fixedDeltaTime;
 
-        m_charapter.gameObject.transform.Translate((Vector3.back + Vector3.up) * Time.fixedDeltaTime);
+        m_charapter.gameObject.transform.Translate(data.m_force * Time.fixedDeltaTime);
 
         if (m_currentTime >= m_animtionTime)
         {

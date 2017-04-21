@@ -11,18 +11,22 @@ public class DamageDead : DamageStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(bool recive, int damage, bool respaqn, bool alive)
+    public override bool OnUpdate(DamageData data)
     {
-        if(alive)
+        if(m_charapter is Player)
+        {
+            Application.LoadLevel(2);
+        }
+        if(data.m_alive)
         {
             m_charapter.m_damageState = m_charapter.m_notRecive;
         }
-        return alive;
+        return data.m_alive;
     }
 
     public override void OnEnter()
     {
-        m_charapter.m_alive = false;
+        m_charapter.m_damage.m_alive = false;
 		m_charapter.m_animator.SetBool ("Dead", true);
     }
 
