@@ -8,6 +8,8 @@ public class CustomSpawnPlayer : MonoBehaviour {
 	public Transform p3;
 	public Transform p4;
 
+    public Transform p5;
+
 	void Start () {
 		
 	}
@@ -29,6 +31,10 @@ public class CustomSpawnPlayer : MonoBehaviour {
 		{
 			Spawn (p4);
 		}
+        if (Input.GetKey(KeyCode.Alpha5))
+        {
+            Spawn(p5);
+        }
         if (!GetComponent<Player>().m_alive)
         {
             Player player = GetComponent<Player>();

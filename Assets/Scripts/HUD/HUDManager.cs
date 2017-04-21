@@ -7,8 +7,8 @@ public class HUDManager : MonoBehaviour {
     public GameObject m_lifePanel;
     public GameObject m_gravityPanel;
     public Image m_sight;
-    public Slider m_floatTime;
-    public Slider m_energy;
+    public Image m_floatTime;
+    public Image m_energy;
 
     private static bool m_showLifePanel = true;
     private static bool m_showGravityPanel = false;
@@ -22,8 +22,8 @@ public class HUDManager : MonoBehaviour {
         m_gravityPanel.SetActive(m_showGravityPanel);
         m_lifePanel.SetActive(m_showLifePanel);
         m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 0.2f) : new Color(1.0f, 0.0f, 0.0f, 0.2f);
-        m_floatTime.value = m_floatTimeValue;
-        m_energy.value = m_energyValue;
+        m_floatTime.fillAmount = m_floatTimeValue;
+        m_energy.fillAmount = m_energyValue;
     }
 
     public static void ShowLifePanel(bool showLifePanel)

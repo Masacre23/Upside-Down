@@ -9,30 +9,31 @@ using UnityEngine;
 public class MovingWithPlatform : MonoBehaviour
 {
     private Vector3 position;
-    private Transform child = null;
+    private Player player = null;
 
     private void Update()
     {
-        if (child != null)
+        if (player != null)
         {
             Vector3 offset = transform.position - position;
             position = transform.position;
-            child.position += offset;
+            player.m_offset += offset;
         }
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Player" || col.tag == "GravityAffected")
+
+        if (col.tag == "Player")
         {
             position = transform.position;
-            child = col.transform;
+            player = col.gameObject.GetComponent<Player>();
         }
     }
 
     void OnTriggerExit(Collider col)
     {
-        if (col.tag == "Player" || col.tag == "GravityAffected")
-            child = null;
+        if (col.tag == "Player" )
+            player = null;
     }
 }

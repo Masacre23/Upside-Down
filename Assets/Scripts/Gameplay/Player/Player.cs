@@ -32,6 +32,7 @@ public class Player : Character
     public VariableCam m_camController;
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
+    public Vector3 m_offset = Vector3.zero;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -164,7 +165,8 @@ public class Player : Character
         Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
         movement.Normalize();
 
-        m_rigidBody.MovePosition(transform.position + movement * m_moveSpeed * timeStep);
+        m_rigidBody.MovePosition(transform.position + m_offset + movement * m_moveSpeed * timeStep);
+        m_offset = Vector3.zero;
 
         if (movement != Vector3.zero)
         {
@@ -215,6 +217,12 @@ public class Player : Character
 				base.m_damagePower = 20;
 			}
 		}
+
+        if(col.collider.tag == "HarmfulObject")
+        {
+            base.m_damageRecive = true;
+            base.m_damagePower = 20;
+        }
     }
 
     void SetDetectors(string tagName, float radiusCollider)

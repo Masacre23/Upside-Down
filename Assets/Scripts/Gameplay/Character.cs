@@ -5,8 +5,8 @@ using UnityEngine;
 public class Character : MonoBehaviour {
 
     public bool m_isThrowable = false;
-    public float m_maxHealth = 100.0f;
-    public float m_health = 100.0f;
+    public float m_maxHealth = 120.0f;
+    public float m_health = 120.0f;
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
     public float m_jumpForce = 4.0f;
