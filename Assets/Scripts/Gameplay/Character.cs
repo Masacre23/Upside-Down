@@ -15,6 +15,7 @@ public class Character : MonoBehaviour {
 
     public bool m_damageRecive = false;
     public int m_damagePower = 0;
+    public bool m_respawn = false;
     public bool m_alive = true;
 
 	public Animator m_animator;
@@ -27,6 +28,7 @@ public class Character : MonoBehaviour {
     public DamageStates m_damageState;
     public DamageStates m_recive;
     public DamageStates m_animation;
+    public DamageStates m_damageRespawn;
     public DamageStates m_notRecive;
     public DamageStates m_dead;
 
@@ -50,6 +52,7 @@ public class Character : MonoBehaviour {
 
         m_recive = gameObject.AddComponent<DamageRecive>();
         m_animation = gameObject.AddComponent<DamageAnimation>();
+        m_damageRespawn = gameObject.AddComponent<DamageRespawn>();
         m_notRecive = gameObject.AddComponent<DamageNotRecive>();
         m_dead = gameObject.AddComponent<DamageDead>();
 
@@ -82,7 +85,7 @@ public class Character : MonoBehaviour {
     public virtual void FixedUpdate()
     {
         DamageStates previousState = m_damageState;
-        if (m_damageState.OnUpdate(m_damageRecive, m_damagePower, m_alive))
+        if (m_damageState.OnUpdate(m_damageRecive, m_damagePower, m_damageRespawn, m_alive))
         {
             previousState.OnExit();
             m_damageState.OnEnter();

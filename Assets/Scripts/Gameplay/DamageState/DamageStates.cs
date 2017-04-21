@@ -8,6 +8,7 @@ public class DamageStates : MonoBehaviour {
     {
         RECIVE,
         ANIMATION,
+        RESPAWN,
         NOT_RECIVE, 
         DEAD
     }
@@ -22,7 +23,7 @@ public class DamageStates : MonoBehaviour {
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public virtual bool OnUpdate(bool recive, int damage, bool alive)
+    public virtual bool OnUpdate(bool recive, int damage, bool respawn, bool alive)
     {
         return false;
     }

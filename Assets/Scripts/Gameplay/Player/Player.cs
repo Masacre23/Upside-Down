@@ -202,10 +202,11 @@ public class Player : Character
 
     void OnCollisionEnter(Collision col)
 	{
-        if(col.collider.tag == "Planet")
+        if(col.collider.tag == "Liquid")
         {
             base.m_damageRecive = true;
             base.m_damagePower = 20;
+            base.m_respawn = true;
         }
 
 		if (col.collider.tag.Contains ("Enemy")) 

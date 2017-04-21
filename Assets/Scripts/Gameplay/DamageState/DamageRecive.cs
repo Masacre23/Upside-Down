@@ -11,7 +11,7 @@ public class DamageRecive : DamageStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(bool recive, int damage, bool alive)
+    public override bool OnUpdate(bool recive, int damage, bool respawn, bool alive)
     {
         bool ret = false;
 
@@ -24,7 +24,13 @@ public class DamageRecive : DamageStates {
             }
             else
             {
-                m_charapter.m_damageState = m_charapter.m_animation;
+                if (respawn)
+                {
+                    m_charapter.m_damageState = m_charapter.m_damageRespawn;
+                }else
+                {
+                    m_charapter.m_damageState = m_charapter.m_animation;
+                }
             }
             ret = true;
         }

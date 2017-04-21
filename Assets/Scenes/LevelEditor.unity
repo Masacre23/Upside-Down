@@ -1534,7 +1534,7 @@ Prefab:
     - target: {fileID: 114856520038537236, guid: 938e2c1b67b316144894edcd05232d24,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114124540566748746, guid: 938e2c1b67b316144894edcd05232d24,
         type: 2}
@@ -1747,13 +1747,14 @@ MonoBehaviour:
   m_aimSpeed: 1.5
   m_lookMaxAim: 80
   m_lookMinAim: -80
+  m_targetLockDistance: 0.5
+  m_targetBreakLock: 0.15
   m_backCamPosition: {x: 0, y: 0, z: 0}
   m_aimingCamPosition: {x: 0, y: 0, z: 0}
   m_topCamPosition: {x: 0, y: 0, z: 0}
   m_changeCamOnPosition: 0
   m_timeBetweenChanges: 0.5
   m_player: {fileID: 0}
-  m_playerScript: {fileID: 0}
   m_model: {fileID: 0}
   m_pivot: {fileID: 0}
   m_pivotEulers: {x: 0, y: 0, z: 0}
@@ -3111,6 +3112,24 @@ Transform:
   m_PrefabParentObject: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c,
     type: 2}
   m_PrefabInternal: {fileID: 178890899}
+--- !u!1 &185318022 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1127253740382042, guid: 0b441674fc0c55549ab92b595c56d25f,
+    type: 2}
+  m_PrefabInternal: {fileID: 239798226}
+--- !u!114 &185318023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 185318022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444fdfa64c7420345902c315654a40c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoints: []
+  fadePanel: {fileID: 958744318}
 --- !u!1 &189328607
 GameObject:
   m_ObjectHideFlags: 0
@@ -14426,9 +14445,24 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1200676690628102, guid: 5515ac15366c2454db9d449c57b902c8, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114014351037663912, guid: 5515ac15366c2454db9d449c57b902c8,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5515ac15366c2454db9d449c57b902c8, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &958744318 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114014351037663912, guid: 5515ac15366c2454db9d449c57b902c8,
+    type: 2}
+  m_PrefabInternal: {fileID: 958744317}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &961367353
 Prefab:
   m_ObjectHideFlags: 0
@@ -15580,7 +15614,7 @@ Prefab:
     - target: {fileID: 224574935800144804, guid: 2e723240b75ebb042a8b3f37b5f289b8,
         type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224574935800144804, guid: 2e723240b75ebb042a8b3f37b5f289b8,
         type: 2}
@@ -31033,7 +31067,7 @@ GameObject:
   - component: {fileID: 2116425395}
   m_Layer: 0
   m_Name: PLANET ICE
-  m_TagString: Planet
+  m_TagString: Liquid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

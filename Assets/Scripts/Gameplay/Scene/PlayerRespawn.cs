@@ -14,7 +14,7 @@ public class PlayerRespawn : MonoBehaviour {
 		player = GameObject.Find ("Player");
 	}
 
-	IEnumerator Fading()
+	IEnumerator Fading(Transform spawn)
 	{
 		for (float t = 0.0f; t < fadeTime;) 
 		{
@@ -23,9 +23,9 @@ public class PlayerRespawn : MonoBehaviour {
 			yield return null;
 		}
 
-		player.transform.position = spawnPoints [0].transform.position;
-		player.transform.rotation = spawnPoints [0].transform.rotation;
-		player.transform.GetChild(0).transform.rotation = spawnPoints [0].transform.rotation;
+		player.transform.position = spawn.position;
+		player.transform.rotation = spawn.rotation;
+		player.transform.GetChild(0).transform.rotation = spawn.rotation;
         player.GetComponent<Player>().Start();
         player.GetComponent<Rigidbody>().ResetInertiaTensor();
 
@@ -40,6 +40,11 @@ public class PlayerRespawn : MonoBehaviour {
 	void OnTriggerEnter(Collider col)
 	{
 		if(col.name == "Player")
-			StartCoroutine (Fading ());
+			StartCoroutine (Fading (spawnPoints[0].transform));
 	}
+
+    public void ReSpawn(Transform spawn)
+    {
+        StartCoroutine(Fading(spawn));
+    }
 }

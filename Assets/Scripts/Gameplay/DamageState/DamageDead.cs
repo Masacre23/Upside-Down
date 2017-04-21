@@ -11,7 +11,7 @@ public class DamageDead : DamageStates {
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(bool recive, int damage, bool alive)
+    public override bool OnUpdate(bool recive, int damage, bool respaqn, bool alive)
     {
         if(alive)
         {
