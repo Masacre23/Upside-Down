@@ -16,7 +16,7 @@ public class GameOver : MonoBehaviour {
 	void Update () {
 		if(Time.time - m_time > m_waitTime)
         {
-            Application.LoadLevel(0);
+            Scenes.LoadScene(Scenes.MainMenu);
         }
 	}
 }
