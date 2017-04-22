@@ -9,7 +9,7 @@ public class MainMenuManager : MonoBehaviour {
 	public Canvas m_creditsCanvas;
 
 	public void PressPlayButton(){
-		Application.LoadLevel(1);
+        Scenes.LoadScene(Scenes.Level1);
 	}
 
 	public void PreesQuitButton(){

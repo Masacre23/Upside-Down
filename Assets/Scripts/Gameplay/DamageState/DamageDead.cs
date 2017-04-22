@@ -15,7 +15,7 @@ public class DamageDead : DamageStates {
     {
         if(m_charapter is Player)
         {
-            Application.LoadLevel(2);
+            Scenes.LoadScene(Scenes.GameOver);
         }
         if(data.m_alive)
         {

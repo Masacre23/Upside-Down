@@ -65,6 +65,7 @@ public class Character : MonoBehaviour {
         m_capsuleHeight = m_capsule.height;
 
         m_rigidBody.freezeRotation = true;
+        m_health = m_maxHealth;
 	}
 
     public virtual void Restart()
