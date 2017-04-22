@@ -55,7 +55,7 @@ public class PlayerGrounded : PlayerStates {
     {
         m_player.m_rotationFollowPlayer = true;
         m_player.m_reachedGround = true;
-        m_player.m_freezeMovementOnAir = false;
+        m_player.m_freezeMovement = false;
     }
 
     public override void OnExit()

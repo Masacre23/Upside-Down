@@ -75,6 +75,6 @@ public class PlayerFloating : PlayerStates
         m_timeFloating = 0.0f;
         HUDManager.ShowGravityPanel(false);
         m_player.m_playerGravity.UnlightObject();
-        m_player.m_freezeMovementOnAir = true;
+        m_player.m_freezeMovement = true;
     }
 }

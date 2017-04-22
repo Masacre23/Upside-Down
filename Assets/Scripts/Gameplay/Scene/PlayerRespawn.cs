@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerRespawn : MonoBehaviour {
+public class PlayerRespawn : MonoBehaviour
+{
 	public GameObject[] spawnPoints;
 	float fadeTime = 1.0f;
 	public Image fadePanel;
@@ -26,7 +27,7 @@ public class PlayerRespawn : MonoBehaviour {
 		player.transform.position = spawn.position;
 		player.transform.rotation = spawn.rotation;
 		player.transform.GetChild(0).transform.rotation = spawn.rotation;
-        player.GetComponent<Player>().Start();
+        player.GetComponent<Player>().Restart();
         player.GetComponent<Rigidbody>().ResetInertiaTensor();
 
 		for (float t = fadeTime; t > 0.0f;) 

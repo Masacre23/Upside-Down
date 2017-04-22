@@ -17,6 +17,7 @@ public class Player : Character
     bool m_changeGravity;
     bool m_throwObject;
     bool m_returnCam;
+    bool m_negatePlayerInput;
 
     //Variables regarding player state
     public PlayerStates m_currentState;
@@ -28,7 +29,7 @@ public class Player : Character
 
     //Variables regarding player movement
     Transform m_modelTransform;
-    public bool m_freezeMovementOnAir;
+    public bool m_freezeMovement;
     public VariableCam m_camController;
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
@@ -97,7 +98,8 @@ public class Player : Character
     { 
         m_modelTransform = transform.FindChild("Model");
 
-        m_freezeMovementOnAir = false;
+        m_freezeMovement = false;
+        m_negatePlayerInput = false;
 
         base.Start();
 
@@ -113,6 +115,9 @@ public class Player : Character
 
         ResetInput();
 
+        m_freezeMovement = false;
+        m_negatePlayerInput = false;
+
         base.Restart();
     }
 
@@ -120,8 +125,11 @@ public class Player : Character
     // First, it should read input from PlayerController in Update, since we need input every frame
     public override void Update()
     {
-        m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-        m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject, ref m_returnCam);
+        if (!m_negatePlayerInput)
+        {
+            m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
+            m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject, ref m_returnCam);
+        }
 
         if (!m_changeGravity)
             m_changeButtonReleased = true;
@@ -161,17 +169,20 @@ public class Player : Character
     //TODO: Probably we will need to change this function when we have the character's animations.
     public void Move(float timeStep)
     {
-        Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
-        Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
-        movement.Normalize();
-
-        m_rigidBody.MovePosition(transform.position + m_offset + movement * m_moveSpeed * timeStep);
-        m_offset = Vector3.zero;
-
-        if (movement != Vector3.zero)
+        if (!m_freezeMovement)
         {
-            Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-            m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+            Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
+            Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+            movement.Normalize();
+
+            m_rigidBody.MovePosition(transform.position + m_offset + movement * m_moveSpeed * timeStep);
+            m_offset = Vector3.zero;
+
+            if (movement != Vector3.zero)
+            {
+                Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
+                m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+            }
         }
     }
 
@@ -208,6 +219,7 @@ public class Player : Character
             base.m_damage.m_recive = true;
             base.m_damage.m_damage = 20;
             base.m_damage.m_respawn = true;
+            m_negatePlayerInput = true;
         }
 
 		if (col.collider.tag.Contains ("Enemy")) 
