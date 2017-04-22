@@ -36,6 +36,19 @@ public class DamageNotRecive : DamageStates {
             m_charapter.m_damageState = m_charapter.m_recive;
             ret = true;
         }
+        if(data.m_recive && data.m_respawn)
+        {
+            m_charapter.m_health -= data.m_damage;
+            if (m_charapter.m_health <= 0)
+            {
+                m_charapter.m_damageState = m_charapter.m_dead;
+            }
+            else
+            {
+               m_charapter.m_damageState = m_charapter.m_respawn;
+            }
+            ret = true;
+        }
 
         return ret;
     }
