@@ -106,6 +106,8 @@ public class Player : Character
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
         SetDetectors("Enemy", m_throwDetectionRange);
         SetDetectors("GravityWall", m_gravityRange);
+
+        HUDManager.SetMaxEnergyValue(m_maxHealth);
     }
 
     public override void Restart()
@@ -162,7 +164,7 @@ public class Player : Character
     public override void FixedUpdate ()
     {
         base.FixedUpdate();
-        HUDManager.ChangeEnergyValue(base.m_health / base.m_maxHealth);
+        HUDManager.ChangeEnergyValue(base.m_health);
     }
 
     //This functions controls the character movement and the model orientation.

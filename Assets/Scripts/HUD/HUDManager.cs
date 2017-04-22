@@ -15,7 +15,9 @@ public class HUDManager : MonoBehaviour {
 
     private static bool m_isGreen = false;
     private static float m_floatTimeValue = 0.0f;
-    private static float m_energyValue = 1.0f;
+    private static float m_maxEnergyValue = 120.0f;
+    private static int m_energyValue = 7;
+    private static float[] m_energyValues = new float[7] { 0.0f, 0.175f, 0.329f, 0.5f, 0.675f, 0.821f, 1.0f };
 	// Update is called once per frame
 	void Update ()
     {
@@ -23,7 +25,7 @@ public class HUDManager : MonoBehaviour {
         m_lifePanel.SetActive(m_showLifePanel);
         m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 0.2f) : new Color(1.0f, 0.0f, 0.0f, 0.2f);
         m_floatTime.fillAmount = m_floatTimeValue;
-        m_energy.fillAmount = m_energyValue;
+        m_energy.fillAmount = m_energyValues[m_energyValue];
     }
 
     public static void ShowLifePanel(bool showLifePanel)
@@ -36,9 +38,14 @@ public class HUDManager : MonoBehaviour {
         m_showGravityPanel = showGravityPanel;
     }
 
+    public static void SetMaxEnergyValue(float value)
+    {
+        m_maxEnergyValue = value;
+    }
+
     public static void ChangeEnergyValue(float energy)
     {
-        m_energyValue = energy;
+        m_energyValue = (int)((energy / m_maxEnergyValue) * (m_energyValues.Length - 1));
     }
 
     public static void ChangeColorSight(bool isGreen)
