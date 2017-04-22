@@ -22,7 +22,24 @@ public class EffectsManager : MonoBehaviour {
 	
     public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Transform effectParent = null)
     {
-        return GetEffect(effectPrefab, effectPosition, Vector3.up, effectParent);
+        GameObject ret = null;
+
+        if (effectPrefab == null)
+            return null;
+
+        ret = GetEffectFromPool(effectPrefab);
+
+        ret.SetActive(true);
+
+        ret.transform.position = effectPosition;
+        ret.transform.rotation = Quaternion.identity;
+
+        if (effectParent == null)
+            ret.transform.parent = m_defaultParent;
+        else
+            ret.transform.parent = effectParent;
+
+        return ret;
     }
 
 	public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Vector3 effectUpDirection, Transform effectParent = null)
@@ -37,7 +54,7 @@ public class EffectsManager : MonoBehaviour {
         ret.SetActive(true);
 
         ret.transform.position = effectPosition;
-        ret.transform.rotation = ret.transform.rotation = Quaternion.FromToRotation(ret.transform.up, effectUpDirection);
+        ret.transform.rotation = ret.transform.rotation * Quaternion.FromToRotation(ret.transform.up, effectUpDirection);
 
         if (effectParent == null)
             ret.transform.parent = m_defaultParent;

@@ -1561,7 +1561,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4459697930372430}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4271946188503676
 Transform:
@@ -1743,8 +1743,8 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4341509297285390}
-  - {fileID: 4248169685998078}
   - {fileID: 4549270815601064}
+  - {fileID: 4248169685998078}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -176.855, y: -192.593, z: -1.2990112}
@@ -1881,7 +1881,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children: []
   m_Father: {fileID: 4459697930372430}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4574347287773138
 Transform:
@@ -2542,10 +2542,11 @@ MonoBehaviour:
   m_floatingHeight: 1
   m_incresePowerWithTime: 0
   m_throwDetectionRange: 20
-  m_maxTimeThrowing: 30
+  m_maxTimeThrowing: 3
   m_throwStrengthPerSecond: 1
-  m_throwStrengthOnce: 20
+  m_throwStrengthOnce: 30
   m_objectsFloatingHeight: 1
+  m_objectsRisingTime: 1
   m_throwButtonReleased: 1
 --- !u!114 &114747501203562008
 MonoBehaviour:

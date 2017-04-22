@@ -30,7 +30,9 @@ class PlayerThrowing : PlayerStates
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_player.m_maxTimeThrowing));
 
-        float perc = m_timeThrowing / m_player.m_maxTimeThrowing;
+        float perc = m_timeThrowing / m_player.m_objectsRisingTime;
+        if (perc > 1.0f)
+            perc = 1.0f;
         for (int i = 0; i < m_objects.Count; i++)
             m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_player.m_objectsFloatingHeight, perc);
 
@@ -56,13 +58,13 @@ class PlayerThrowing : PlayerStates
                 {
                     foreach (GameObjectGravity gravityObject in m_objects)
                     {
-                        Vector3 throwVector = (target.point - gravityObject.transform.position) * throwPower;
+                        Vector3 throwVector = (target.point - gravityObject.transform.position).normalized * throwPower;
                         gravityObject.ThrowObject(throwVector);
                     }
                 }
                 else
                 {
-                    Vector3 throwVector = m_player.m_camController.m_camRay.direction * m_strengthWithoutTarget * throwPower;
+                    Vector3 throwVector = m_player.m_camController.m_camRay.direction * throwPower;
                     foreach (GameObjectGravity gravityObject in m_objects)
                     {
                         gravityObject.ThrowObject(throwVector);
@@ -90,7 +92,7 @@ class PlayerThrowing : PlayerStates
                     m_objects.Add(gravity_object);
                     m_objectsInitialPositions.Add(gravity_object.transform.position);
                 }
-                else if (allobjects[i].transform.tag == "Enemy" && gravity_object.m_canBeThrowed)
+                else if (allobjects[i].gameObject.layer == LayerMask.NameToLayer("Enemy") && gravity_object.m_canBeThrowed)
                 {
                     m_objects.Add(gravity_object);
                     m_objectsInitialPositions.Add(gravity_object.transform.position);

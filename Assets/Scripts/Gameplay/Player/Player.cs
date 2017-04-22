@@ -48,10 +48,11 @@ public class Player : Character
     //Variables regarding player's throw of objects
     public bool m_incresePowerWithTime = false;
     public float m_throwDetectionRange = 20.0f;
-    public float m_maxTimeThrowing = 30.0f;
+    public float m_maxTimeThrowing = 3.0f;
     public float m_throwStrengthPerSecond = 1.0f;
-    public float m_throwStrengthOnce = 20.0f;
+    public float m_throwStrengthOnce = 30.0f;
     public float m_objectsFloatingHeight = 1.0f;
+    public float m_objectsRisingTime = 1.0f;
     public bool m_throwButtonReleased = true;
 
     public Dictionary<string, TargetDetector> m_targetsDetectors;
@@ -106,6 +107,9 @@ public class Player : Character
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
         SetDetectors("Enemy", m_throwDetectionRange);
         SetDetectors("GravityWall", m_gravityRange);
+
+        if (m_objectsRisingTime > m_maxTimeThrowing)
+            m_objectsRisingTime = m_maxTimeThrowing;
 
         HUDManager.SetMaxEnergyValue(m_maxHealth);
     }
