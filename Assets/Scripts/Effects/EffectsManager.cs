@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EffectsManager : MonoBehaviour {
 
-    public static EffectsManager m_instance;
+    public static EffectsManager Instance;
 
     private Transform m_defaultParent;
     private Dictionary<GameObject, List<GameObject>> m_poolEffects;
 
     void Awake()
     {
-        m_instance = this;
+        Instance = this;
         m_defaultParent = this.transform;
     }
 
@@ -20,7 +20,12 @@ public class EffectsManager : MonoBehaviour {
         m_poolEffects = new Dictionary<GameObject, List<GameObject>>();
 	}
 	
-	public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Transform effectParent = null)
+    public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Transform effectParent = null)
+    {
+        return GetEffect(effectPrefab, effectPosition, Vector3.up, effectParent);
+    }
+
+	public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Vector3 effectUpDirection, Transform effectParent = null)
     {
         GameObject ret = null;
 
@@ -32,6 +37,7 @@ public class EffectsManager : MonoBehaviour {
         ret.SetActive(true);
 
         ret.transform.position = effectPosition;
+        ret.transform.rotation = ret.transform.rotation = Quaternion.FromToRotation(ret.transform.up, effectUpDirection);
 
         if (effectParent == null)
             ret.transform.parent = m_defaultParent;
@@ -58,6 +64,11 @@ public class EffectsManager : MonoBehaviour {
                         ret = instance;
                         break;
                     }
+                }
+                if (!ret)
+                {
+                    ret = GameObject.Instantiate(effectPrefab);
+                    listInstances.Add(ret);
                 }
             }
         }

@@ -214,7 +214,9 @@ public class Player : Character
     void OnCollisionEnter(Collision col)
 	{
         m_damage.m_force = -col.relativeVelocity * 0.1f;
-        if(col.collider.tag == "Liquid")
+
+        int harmfulTerrain = LayerMask.NameToLayer("HarmfulTerrain");
+        if (col.collider.gameObject.layer == harmfulTerrain)
         {
             base.m_damage.m_recive = true;
             base.m_damage.m_damage = 20;
@@ -222,7 +224,8 @@ public class Player : Character
             m_negatePlayerInput = true;
         }
 
-		if (col.collider.tag.Contains ("Enemy")) 
+        int enemy = LayerMask.NameToLayer("Enemy");
+        if (col.collider.gameObject.layer == enemy) 
 		{
 			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
@@ -232,7 +235,8 @@ public class Player : Character
 			}
 		}
 
-        if(col.collider.tag == "HarmfulObject")
+        int harmfulObject = LayerMask.NameToLayer("HarmfulObject");
+        if(col.collider.gameObject.layer == harmfulObject)
         {
             base.m_damage.m_recive = true;
             base.m_damage.m_damage = 20;
@@ -244,14 +248,19 @@ public class Player : Character
         string objectName = string.Concat(tagName, "Detector");
         if (!m_targetsDetectors.ContainsKey(tagName))
         {
-            GameObject newObject = new GameObject(objectName);
-            newObject.transform.parent = m_detectorsEmpty.transform;
-            newObject.transform.localPosition = Vector3.zero;
-            newObject.transform.localRotation = Quaternion.identity;
-            newObject.transform.localScale = Vector3.one;
+            GameObject thisObject = GameObject.Find(objectName);
+            if (!thisObject)
+            {
+                thisObject = new GameObject(objectName);
+                thisObject.transform.parent = m_detectorsEmpty.transform;
+                thisObject.transform.localPosition = Vector3.zero;
+                thisObject.transform.localRotation = Quaternion.identity;
+                thisObject.transform.localScale = Vector3.one;
+                thisObject.layer = LayerMask.NameToLayer("GeneralTrigger");
+            }
 
-            newObject.AddComponent<SphereCollider>();
-            TargetDetector newDetector = newObject.AddComponent<TargetDetector>();
+            thisObject.AddComponent<SphereCollider>();
+            TargetDetector newDetector = thisObject.AddComponent<TargetDetector>();
             newDetector.SetUpCollider(tagName, new Vector3(0, m_capsuleHeight / 2, 0), radiusCollider);
             m_targetsDetectors.Add(tagName, newDetector);
         }

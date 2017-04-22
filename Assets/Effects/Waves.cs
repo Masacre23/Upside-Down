@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Waves : MonoBehaviour {
+public class Waves : MonoBehaviour
+{
 
 	public float waveHeight = 10.0f;
 	public float speed = 1.0f;
@@ -15,25 +16,24 @@ public class Waves : MonoBehaviour {
 	private Vector3[] vertices;
 	private Mesh mesh;
 
-	void Awake() {
+	void Awake()
+    {
 		mesh = GetComponent<MeshFilter>().mesh;
-		if (baseHeight == null) {
+		if (baseHeight == null)
 			baseHeight = mesh.vertices;
-		}
 	}
 
 	void Update () {
-		if (vertices == null) {
+		if (vertices == null)
 			vertices = new Vector3[baseHeight.Length];
-		}
 
-		for (int i=0;i<vertices.Length;i++) {
+		for (int i=0;i<vertices.Length;i++)
+        {
 			Vector3 vertex = baseHeight[i];
-			if (diagonalWaves) {
+			if (diagonalWaves)
 				vertex.y += Mathf.Sin(Time.time * speed + baseHeight[i].x * waveLength + baseHeight[i].y * waveLength + baseHeight[i].z * waveLength) * waveHeight;
-			} else {
+			else
 				vertex.y += Mathf.Sin(Time.time * speed + baseHeight[i].x * waveLength + baseHeight[i].y * waveLength) * waveHeight;
-			}
 			vertex.y += Mathf.PerlinNoise(baseHeight[i].x + noiseWalk, baseHeight[i].y + Mathf.Sin(Time.time * 0.1f)) * noiseStrength;
 			vertices[i] = vertex;
 		}

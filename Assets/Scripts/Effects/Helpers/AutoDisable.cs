@@ -15,7 +15,7 @@ public class AutoDisable : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if (!m_thisSystem.IsAlive(true))
+        if (!m_thisSystem.IsAlive())
             gameObject.SetActive(false);
-	}
+    }
 }
