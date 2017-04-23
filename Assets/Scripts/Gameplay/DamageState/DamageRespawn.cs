@@ -21,6 +21,7 @@ public class DamageRespawn : DamageStates
         PlayerRespawn m_respawn = m_charapter.gameObject.GetComponent<PlayerRespawn>();
         m_respawn.ReSpawn(m_charapter.m_checkPoint);
         m_charapter.m_damageState = m_charapter.m_notRecive;
+        data.m_respawn = false;
 
         return true;
     }
@@ -32,7 +33,7 @@ public class DamageRespawn : DamageStates
 
     public override void OnExit()
     {
-        
+
     }
 }
 

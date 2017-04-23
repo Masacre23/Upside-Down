@@ -23,7 +23,7 @@ public class HUDManager : MonoBehaviour {
     {
         m_gravityPanel.SetActive(m_showGravityPanel);
         m_lifePanel.SetActive(m_showLifePanel);
-        m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 0.2f) : new Color(1.0f, 0.0f, 0.0f, 0.2f);
+        m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f, 1.0f);
         m_floatTime.fillAmount = m_floatTimeValue;
         m_energy.fillAmount = m_energyValues[m_energyValue];
     }
