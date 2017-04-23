@@ -15,8 +15,11 @@ public class GameObjectGravity : MonoBehaviour {
     public bool m_canBeThrowed = true;
     public bool m_planetGravity;
     public bool m_changingToAttractor;
+    public float m_maxTimeTravelled = 0.5f;
 
+    public bool m_ignoreGravity = false;
     bool m_thrownForce = false;
+    float m_timeTravelled;
     Vector3 m_impulseForce;
 
     //This should be the same for all gameobjects
@@ -44,32 +47,44 @@ public class GameObjectGravity : MonoBehaviour {
     {
 		float strength = 0;
 
-		if (!m_planetGravity || m_planets.Count == 0)
+        if (!m_ignoreGravity)
         {
-            strength = m_gravityStrength;
+            if (!m_planetGravity || m_planets.Count == 0)
+            {
+                strength = m_gravityStrength;
+            }
+            else
+            {
+                foreach (Rigidbody planet in m_planets)
+                {
+                    Vector3 newGravity = transform.position - planet.transform.position;
+                    float distance = newGravity.magnitude;
+                    newGravity.Normalize();
+
+                    float newStrength = -planet.mass / (distance * distance);
+                    if (newStrength < strength)
+                    {
+                        strength = newStrength;
+                        m_gravity = newGravity;
+                    }
+                }
+            }
+
+            m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
         }
         else
         {
-            foreach (Rigidbody planet in m_planets)
+            m_timeTravelled += Time.fixedDeltaTime;
+            if (m_timeTravelled > m_maxTimeTravelled)
             {
-                Vector3 newGravity = transform.position - planet.transform.position;
-                float distance = newGravity.magnitude;
-                newGravity.Normalize();
-
-                float newStrength = - planet.mass / (distance * distance);
-                if (newStrength < strength)
-                {
-                    strength = newStrength;
-                    m_gravity = newGravity;
-                }     
-            }           
+                m_timeTravelled = 0.0f;
+                m_ignoreGravity = false;
+            }
         }
-
-        m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
-
+        
         if (m_thrownForce)
         {
-            m_rigidBody.AddForce(m_impulseForce, ForceMode.VelocityChange);
+            m_rigidBody.AddForce(m_impulseForce * m_rigidBody.mass, ForceMode.Impulse);
             m_thrownForce = false;
         }
     }
@@ -137,10 +152,22 @@ public class GameObjectGravity : MonoBehaviour {
         m_rigidBody.transform.position = Vector3.Slerp(initialPosition, finalPosition, perc);
     }
 
-    //This function is called when a object is thrown by the player, using PlayerThrowing state.
-    public void ThrowObject(Vector3 throwForce)
+    //This function is similar, but to be used only with non-kinematic rigidBodies 
+    //(in order to avoid passing through colliders when performing a translation or RigidBody.Move)
+    public void FloatVelocity(Vector3 finalPosition, float speedFactor)
     {
+        Vector3 distance = finalPosition - transform.position;
+        Vector3 speed = distance / Time.fixedDeltaTime;
+        speed = speedFactor > 1.0f ? speed : speed * speedFactor;
+        m_rigidBody.velocity = speed;
+    }
+
+    //This function is called when a object is thrown by the player, using PlayerThrowing state.
+    public void ThrowObject(Vector3 throwForce, float distance)
+    {
+        m_rigidBody.isKinematic = false;
         m_thrownForce = true;
         m_impulseForce = throwForce;
+        m_ignoreGravity = true;
     }
 }

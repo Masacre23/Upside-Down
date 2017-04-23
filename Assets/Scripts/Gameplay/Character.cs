@@ -30,7 +30,9 @@ public class Character : MonoBehaviour {
     public DamageStates m_dead;
 
     protected float m_groundCheckDistance;
-    protected float m_defaultGroundCheckDistance = 0.3f;
+    protected float m_defaultGroundCheckDistance = 0.4f;
+
+    protected bool m_isJumping = false;
 
     protected bool m_isGrounded;
 
@@ -100,8 +102,13 @@ public class Character : MonoBehaviour {
         Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
         if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance))
         {
+            if(this is Player)
+            {
+                ((Player)this).m_tagGround = hitInfo.collider.tag;
+            }
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
             m_isGrounded = true;
+            m_isJumping = false;
         }
         else
         {
@@ -124,6 +131,7 @@ public class Character : MonoBehaviour {
     {
         m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
         m_isGrounded = false;
+        m_isJumping = true;
         m_groundCheckDistance = 0.1f;
     }
 

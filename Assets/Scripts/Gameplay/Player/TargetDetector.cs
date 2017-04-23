@@ -32,7 +32,7 @@ public class TargetDetector : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == m_tag && !m_targets.Contains(col.gameObject))
+        if (col.tag.Contains(m_tag) && !m_targets.Contains(col.gameObject))
         {
             m_targets.Add(col.gameObject);
         }

@@ -15,6 +15,7 @@ public class Player : Character
     float m_camVertical;
     bool m_jumping;
     bool m_changeGravity;
+    bool m_aimObject;
     bool m_throwObject;
     bool m_returnCam;
     bool m_negatePlayerInput;
@@ -34,6 +35,11 @@ public class Player : Character
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
     public Vector3 m_offset = Vector3.zero;
+    public Vector3 m_lastMovement = Vector3.zero;
+    public string m_tagGround = "";
+    public float m_timeSlide = 0.2f;
+    public float m_slideSpeed = 2.0f;
+    private float m_timeSliding = 0.0f;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -50,17 +56,20 @@ public class Player : Character
     public float m_throwDetectionRange = 20.0f;
     public float m_maxTimeThrowing = 3.0f;
     public float m_throwStrengthPerSecond = 1.0f;
-    public float m_throwStrengthOnce = 30.0f;
+    public float m_throwStrengthOnce = 20.0f;
     public float m_objectsFloatingHeight = 1.0f;
     public float m_objectsRisingTime = 1.0f;
     public bool m_throwButtonReleased = true;
+    public int m_maxNumberObjects = 1;
 
-    //Variables reagarding player's helth and oxigem
-    public float m_maxOxigem = 240;
-    public float m_oxigem = 240;
+    //Variables reagarding player's helth and oxigen
+    public float m_maxOxigen = 240;
+    public float m_oxigen = 240;
 
     public Dictionary<string, TargetDetector> m_targetsDetectors;
     GameObject m_detectorsEmpty;
+    float m_inputSpeed;
+    float m_runSpeed;
 
     public override void Awake()
     {
@@ -115,8 +124,10 @@ public class Player : Character
         if (m_objectsRisingTime > m_maxTimeThrowing)
             m_objectsRisingTime = m_maxTimeThrowing;
 
-        m_oxigem = m_maxOxigem;
+        m_oxigen = m_maxOxigen;
         HUDManager.SetMaxEnergyValue(m_maxHealth);
+
+        m_runSpeed = 2 * m_moveSpeed;
     }
 
     public override void Restart()
@@ -139,23 +150,27 @@ public class Player : Character
         if (!m_negatePlayerInput)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject, ref m_returnCam);
+            m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
         }
 
         if (!m_changeGravity)
             m_changeButtonReleased = true;
 
-        if (!m_throwObject)
+        if (!m_aimObject)
             m_throwButtonReleased = true;
 
         m_playerStopped = false;
 
-		PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.deltaTime))
+        m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
+
+        PlayerStates previousState = m_currentState;
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
 		}
+
+        UpdateAnimator();
 
         if (m_camController)
         {
@@ -167,6 +182,14 @@ public class Player : Character
         ResetInput();
     }
 
+    public void ChangeCurrntStateToOnAir()
+    {
+        PlayerStates previousState = m_currentState;
+        m_currentState = m_onAir;
+        previousState.OnExit();
+        m_currentState.OnEnter();
+    }
+
     // Second, it should update player state regarding the current state & input
     // We use FixedUpdate when we need to deal with physics
     // We also clean the input only after a FixedUpdate, so we are sure we have at least one FixedUpdate with the correct input recieved in Update
@@ -175,14 +198,14 @@ public class Player : Character
         base.FixedUpdate();
         HUDManager.ChangeEnergyValue(base.m_health);
 
-        m_oxigem -= Time.fixedDeltaTime;
-        if (m_oxigem <= 0.0f)
+        m_oxigen -= Time.fixedDeltaTime;
+        if (m_oxigen <= 0.0f)
         {
             m_damage.m_damage = (int)m_health + 1;
             m_damage.m_recive = true;
             m_damage.m_respawn = true;
         }
-        HUDManager.ChangeOxigem(m_oxigem / m_maxOxigem);
+        HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
     }
 
     //This functions controls the character movement and the model orientation.
@@ -195,15 +218,45 @@ public class Player : Character
             Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
             movement.Normalize();
 
-            m_rigidBody.MovePosition(transform.position + m_offset + movement * m_moveSpeed * timeStep);
+            float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
+
+            m_rigidBody.MovePosition(transform.position + m_offset + movement * speed * timeStep);
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)
             {
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+                m_lastMovement = movement;
+                m_timeSliding = 0.0f;
+            }
+            else
+            {
+                m_timeSliding += timeStep;
+                if(m_tagGround == "Ice" && m_currentState == m_grounded)
+                {
+                    m_rigidBody.MovePosition(transform.position + m_lastMovement * m_slideSpeed * timeStep);
+                    if (m_timeSliding >= m_timeSlide)
+                    {
+                        m_lastMovement = Vector3.zero;
+                    }
+                }
+                else
+                {
+                    m_lastMovement = Vector3.zero;
+                }
+                
             }
         }
+    }
+
+    void UpdateAnimator()
+    {
+        m_animator.SetFloat("HorizontalVelocity", m_inputSpeed);
+        m_animator.SetFloat("AirVelocity", Vector3.Dot(m_rigidBody.velocity,transform.up));
+        m_animator.SetBool("Grounded", m_isGrounded);
+        m_animator.SetBool("Jump", m_isJumping);
+        m_animator.SetBool("Throwing", m_currentState == m_throwing);
     }
 
     public void SetFloatingPoint(float height)
@@ -214,22 +267,6 @@ public class Player : Character
 
         m_groundCheckDistance = 0.1f;
     }
-
-    //public void Move(float timeStep)
-    //{
-    //    Vector3 camForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
-    //    Vector3 movement = - m_axisHorizontal * Camera.main.transform.right + m_axisVertical * camForward;
-    //    movement.Normalize();
-    //    //movement = transform.InverseTransformDirection(movement);
-
-    //    m_rigidBody.MovePosition(transform.position + movement * m_moveSpeed * timeStep);
-
-    //    //if (movement != Vector3.zero)
-    //    //{
-    //    //    Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-    //    //    m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
-    //    //}
-    //}
 
     void OnCollisionEnter(Collision col)
 	{
@@ -276,7 +313,6 @@ public class Player : Character
                 thisObject.transform.localPosition = Vector3.zero;
                 thisObject.transform.localRotation = Quaternion.identity;
                 thisObject.transform.localScale = Vector3.one;
-                thisObject.layer = LayerMask.NameToLayer("GeneralTrigger");
             }
 
             thisObject.AddComponent<SphereCollider>();
@@ -294,6 +330,7 @@ public class Player : Character
         m_camVertical = 0.0f;
         m_jumping = false;
         m_changeGravity = false;
+        m_aimObject = false;
         m_throwObject = false;
         m_returnCam = false;
     }

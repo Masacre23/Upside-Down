@@ -12,7 +12,7 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
     public bool m_protecting { get; private set; }    // used for determining if there is an object between the target and the camera
     public string m_dontClipTag = "Player";           // don't clip against objects with this tag (useful for not clipping against the targeted object)
 
-    public bool m_protectionEnabled = true;
+    bool m_protectionEnabled = true;
 
     private Transform m_Cam;                  // the transform of the camera
     private Transform m_Pivot;                // the point at which the camera pivots around
@@ -125,5 +125,10 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
         {
             return ((RaycastHit)x).distance.CompareTo(((RaycastHit)y).distance);
         }
+    }
+
+    public void SetProtection(bool protectCam)
+    {
+        m_protectionEnabled = protectCam;
     }
 }
