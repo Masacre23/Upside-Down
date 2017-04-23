@@ -48,10 +48,10 @@ public class Enemy : Character {
 
 	void OnCollisionEnter(Collision col)
 	{
-		if (col.collider.tag == "GravityAffected" || col.collider.tag == "Player")
+		if (col.collider.tag == "GravityAffected")
         {
             base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 20;
+            base.m_damage.m_damage = 50;
         }
     }
 
