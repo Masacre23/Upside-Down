@@ -9,6 +9,7 @@ public class EnemyFollowing : EnemyStates {
 	public bool canChange = true;
 	float radiusCollider;
 	float capsuleRadius;
+	public Vector3 target;
 
 	public override void Start () {
 		base.Start ();
@@ -45,16 +46,17 @@ public class EnemyFollowing : EnemyStates {
 
 	public void Move()
 	{
-		Vector3 target = m_enemy.player.transform.position;
+		//Vector3 target = m_enemy.player.transform.position;
+		target = m_enemy.player.transform.position;
 
 		Vector3 difference = target - transform.position;
 
 		float distanceToPlane = Vector3.Dot(transform.up, difference);
 		Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
 
-		//transform.LookAt(pointOnPlane, transform.up);
-		Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
-		transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
+		transform.LookAt(pointOnPlane, transform.up);
+		//Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
+		//transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
 	
 		transform.position += transform.forward * speed * Time.deltaTime;
 	}
