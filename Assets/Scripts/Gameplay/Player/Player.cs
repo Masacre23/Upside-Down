@@ -57,6 +57,10 @@ public class Player : Character
     public bool m_throwButtonReleased = true;
     public int m_maxNumberObjects = 1;
 
+    //Variables reagarding player's helth and oxigem
+    public float m_maxOxigem = 240;
+    public float m_oxigem = 240;
+
     public Dictionary<string, TargetDetector> m_targetsDetectors;
     GameObject m_detectorsEmpty;
 
@@ -113,6 +117,7 @@ public class Player : Character
         if (m_objectsRisingTime > m_maxTimeThrowing)
             m_objectsRisingTime = m_maxTimeThrowing;
 
+        m_oxigem = m_maxOxigem;
         HUDManager.SetMaxEnergyValue(m_maxHealth);
     }
 
@@ -171,6 +176,15 @@ public class Player : Character
     {
         base.FixedUpdate();
         HUDManager.ChangeEnergyValue(base.m_health);
+
+        m_oxigem -= Time.fixedDeltaTime;
+        if (m_oxigem <= 0.0f)
+        {
+            m_damage.m_damage = (int)m_health + 1;
+            m_damage.m_recive = true;
+            m_damage.m_respawn = true;
+        }
+        HUDManager.ChangeOxigem(m_oxigem / m_maxOxigem);
     }
 
     //This functions controls the character movement and the model orientation.
