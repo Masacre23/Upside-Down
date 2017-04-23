@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33412941800455964}
   - component: {fileID: 135474924759718098}
   - component: {fileID: 23588219337800910}
+  - component: {fileID: 114690138010650230}
   m_Layer: 0
   m_Name: Hert
   m_TagString: Untagged
@@ -35,9 +36,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1350640273466520}
-  m_LocalRotation: {x: -0.12211385, y: -0.64852446, z: -0.73193175, w: 0.16964705}
-  m_LocalPosition: {x: -3.12, y: 18.97, z: 3.51}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalRotation: {x: -0.0033779736, y: -0.99164677, z: -0.020247681, w: 0.12733965}
+  m_LocalPosition: {x: -4, y: 0.6500001, z: -15.320005}
+  m_LocalScale: {x: 0.5000005, y: 0.50000036, z: 0.5000004}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -80,6 +81,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1350640273466520}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114690138010650230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1350640273466520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a84989d766b42479d05e4a3063c93c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_health: 20
 --- !u!135 &135474924759718098
 SphereCollider:
   m_ObjectHideFlags: 1
