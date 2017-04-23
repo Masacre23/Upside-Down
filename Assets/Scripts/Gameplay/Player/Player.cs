@@ -35,6 +35,11 @@ public class Player : Character
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
     public Vector3 m_offset = Vector3.zero;
+    public Vector3 m_lastMovement = Vector3.zero;
+    public string m_tagGround = "";
+    public float m_timeSlide = 0.2f;
+    public float m_slideSpeed = 2.0f;
+    private float m_timeSliding = 0.0f;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -204,6 +209,25 @@ public class Player : Character
             {
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+                m_lastMovement = movement;
+                m_timeSliding = 0.0f;
+            }
+            else
+            {
+                m_timeSliding += timeStep;
+                if(m_tagGround == "Ice" && m_currentState == m_grounded)
+                {
+                    m_rigidBody.MovePosition(transform.position + m_lastMovement * m_slideSpeed * timeStep);
+                    if (m_timeSliding >= m_timeSlide)
+                    {
+                        m_lastMovement = Vector3.zero;
+                    }
+                }
+                else
+                {
+                    m_lastMovement = Vector3.zero;
+                }
+                
             }
         }
     }
