@@ -19,6 +19,28 @@ public class EffectsManager : MonoBehaviour {
     {
         m_poolEffects = new Dictionary<GameObject, List<GameObject>>();
 	}
+
+    public GameObject GetEffect(GameObject effectPrefab, Transform effecTranform, Transform effectParent = null)
+    {
+        GameObject ret = null;
+
+        if (effectPrefab == null)
+            return null;
+
+        ret = GetEffectFromPool(effectPrefab);
+
+        ret.SetActive(true);
+
+        ret.transform.position = effecTranform.position;
+        ret.transform.rotation = effecTranform.rotation;
+
+        if (effectParent == null)
+            ret.transform.parent = m_defaultParent;
+        else
+            ret.transform.parent = effectParent;
+
+        return ret;
+    }
 	
     public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Transform effectParent = null)
     {
