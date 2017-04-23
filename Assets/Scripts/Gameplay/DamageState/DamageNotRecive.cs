@@ -38,6 +38,8 @@ public class DamageNotRecive : DamageStates {
         }
         if(data.m_recive && data.m_respawn)
         {
+            if (m_charapter is Player)
+                ((Player)m_charapter).ChangeCurrntStateToOnAir();
             m_charapter.m_health -= data.m_damage;
             if (m_charapter.m_health <= 0)
             {

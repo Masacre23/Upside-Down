@@ -174,6 +174,14 @@ public class Player : Character
         ResetInput();
     }
 
+    public void ChangeCurrntStateToOnAir()
+    {
+        PlayerStates previousState = m_currentState;
+        m_currentState = m_onAir;
+        previousState.OnExit();
+        m_currentState.OnEnter();
+    }
+
     // Second, it should update player state regarding the current state & input
     // We use FixedUpdate when we need to deal with physics
     // We also clean the input only after a FixedUpdate, so we are sure we have at least one FixedUpdate with the correct input recieved in Update
