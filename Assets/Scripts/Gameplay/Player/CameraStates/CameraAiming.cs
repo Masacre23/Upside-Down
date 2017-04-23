@@ -7,13 +7,18 @@ public class CameraAiming : CameraStates {
     float m_lookAngle = 0.0f;
     float m_tiltAngle = 0.0f;
 
-    public bool m_lockingOnTarget = false;
-    public string m_tagTarget;
+    bool m_lockingOnTarget = false;
+    string m_tagTarget;
+
+    public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMin = 45f;
+    public float m_aimSpeed = 1.5f;
+    public Vector3 m_camPosition = new Vector3(0.0f, 1.3f, 0.0f);
 
     public override void Start()
     {
         base.Start();
-        m_type = States.BACK;
+        m_type = States.AIMING;
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -79,14 +84,19 @@ public class CameraAiming : CameraStates {
 
     void CameraRotation(float x, float y, float deltaTime)
     {
-        m_lookAngle += x * m_variableCam.m_aimSpeed;
-        m_lookAngle = Mathf.Clamp(m_lookAngle, -m_variableCam.m_lookMinAim, m_variableCam.m_lookMaxAim);
-        m_tiltAngle -= y * m_variableCam.m_aimSpeed;
-        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_variableCam.m_tiltMinAim, m_variableCam.m_tiltMaxAim);
+        m_lookAngle += x * m_aimSpeed;
+        m_tiltAngle -= y * m_aimSpeed;
+        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_tiltMin, m_tiltMax);
 
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
         Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
 
         m_variableCam.m_cam.localRotation = targetRotation * tiltRotation;
+    }
+
+    public void SetTargetLock(bool isLocked, string tagToLock)
+    {
+        m_lockingOnTarget = isLocked;
+        m_tagTarget = tagToLock;
     }
 }

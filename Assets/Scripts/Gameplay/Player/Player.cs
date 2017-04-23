@@ -15,6 +15,7 @@ public class Player : Character
     float m_camVertical;
     bool m_jumping;
     bool m_changeGravity;
+    bool m_aimObject;
     bool m_throwObject;
     bool m_returnCam;
     bool m_negatePlayerInput;
@@ -54,6 +55,7 @@ public class Player : Character
     public float m_objectsFloatingHeight = 1.0f;
     public float m_objectsRisingTime = 1.0f;
     public bool m_throwButtonReleased = true;
+    public int m_maxNumberObjects = 1;
 
     public Dictionary<string, TargetDetector> m_targetsDetectors;
     GameObject m_detectorsEmpty;
@@ -134,19 +136,19 @@ public class Player : Character
         if (!m_negatePlayerInput)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_throwObject, ref m_returnCam);
+            m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
         }
 
         if (!m_changeGravity)
             m_changeButtonReleased = true;
 
-        if (!m_throwObject)
+        if (!m_aimObject)
             m_throwButtonReleased = true;
 
         m_playerStopped = false;
 
 		PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_throwObject, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -201,22 +203,6 @@ public class Player : Character
         m_groundCheckDistance = 0.1f;
     }
 
-    //public void Move(float timeStep)
-    //{
-    //    Vector3 camForward = Vector3.Scale(Camera.main.transform.forward, new Vector3(1, 0, 1));
-    //    Vector3 movement = - m_axisHorizontal * Camera.main.transform.right + m_axisVertical * camForward;
-    //    movement.Normalize();
-    //    //movement = transform.InverseTransformDirection(movement);
-
-    //    m_rigidBody.MovePosition(transform.position + movement * m_moveSpeed * timeStep);
-
-    //    //if (movement != Vector3.zero)
-    //    //{
-    //    //    Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-    //    //    m_modelTransform.rotation = Quaternion.Lerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
-    //    //}
-    //}
-
     void OnCollisionEnter(Collision col)
 	{
         m_damage.m_force = -col.relativeVelocity * 0.1f;
@@ -262,7 +248,6 @@ public class Player : Character
                 thisObject.transform.localPosition = Vector3.zero;
                 thisObject.transform.localRotation = Quaternion.identity;
                 thisObject.transform.localScale = Vector3.one;
-                thisObject.layer = LayerMask.NameToLayer("GeneralTrigger");
             }
 
             thisObject.AddComponent<SphereCollider>();
@@ -280,6 +265,7 @@ public class Player : Character
         m_camVertical = 0.0f;
         m_jumping = false;
         m_changeGravity = false;
+        m_aimObject = false;
         m_throwObject = false;
         m_returnCam = false;
     }

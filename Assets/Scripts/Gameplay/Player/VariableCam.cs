@@ -6,27 +6,15 @@ using UnityStandardAssets.CrossPlatformInput;
 public class VariableCam : MonoBehaviour
 {
     public float m_moveSpeed = 1f;
-    public float m_rotateSpeed = 1f;
     public float m_turnSpeed = 1.5f;
+    public float m_returnSpeed = 1f;
+
     public bool m_autoReturnCam = false;
     public float m_maxReturnTime = 1f;
-
-    public float m_tiltMaxBack = 75f;                       // The maximum value of the x axis rotation of the pivot.
-    public float m_tiltMinBack = 45f;
-    public float m_tiltMaxTop = 75f;                       // The maximum value of the x axis rotation of the pivot.
-    public float m_tiltMinTop = 45f;
-    public float m_tiltMaxAim = 75f;                       // The maximum value of the x axis rotation of the pivot.
-    public float m_tiltMinAim = 45f;
-    public float m_aimSpeed = 1.5f;
-    public float m_lookMaxAim = 80f;                       // The maximum value of the x axis rotation of the pivot.
-    public float m_lookMinAim = -80f;
 
     public float m_targetLockDistance = 0.5f;
     public float m_targetBreakLock = 0.15f;
 
-    [SerializeField] Vector3 m_backCamPosition;
-    [SerializeField] Vector3 m_aimingCamPosition;
-    [SerializeField] Vector3 m_topCamPosition;
     public bool m_changeCamOnPosition = false;
     public float m_timeBetweenChanges = 0.5f;
 
@@ -40,7 +28,6 @@ public class VariableCam : MonoBehaviour
 
     public CameraStates m_currentState;
     public CameraStates m_onBack;
-    public CameraStates m_onTop;
     public CameraStates m_aiming;
     public CameraStates m_transit;
 
@@ -54,10 +41,20 @@ public class VariableCam : MonoBehaviour
         m_pivotEulers = m_pivot.localRotation.eulerAngles;
         m_cam = m_pivot.FindChild("Main Camera");
 
-        m_onBack = gameObject.AddComponent<CameraOnBack>();
-        //m_onTop = gameObject.AddComponent<CameraOnTop>();
-        m_aiming = gameObject.AddComponent<CameraAiming>();
-        m_transit = gameObject.AddComponent<CameraTransiting>();
+        m_onBack = GetComponent<CameraOnBack>();
+        if (!m_onBack)
+            m_onBack = gameObject.AddComponent<CameraOnBack>();
+
+        m_aiming = GetComponent<CameraAiming>();
+        if (!m_aiming)
+            m_aiming = gameObject.AddComponent<CameraAiming>();
+
+        m_transit = GetComponent<CameraTransiting>();
+        if (!m_transit)
+            m_transit = gameObject.AddComponent<CameraTransiting>();
+
+        m_currentState = m_onBack;
+        m_cam.localPosition = ((CameraOnBack)m_onBack).m_camPosition;
     }
 
     // Use this for initialization
@@ -66,12 +63,6 @@ public class VariableCam : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         m_player = player.GetComponent<Player>();
         m_cameraProtection = GetComponent<VariableCameraProtectFromWallClip>();
-
-        m_currentState = m_onBack;
-        m_cam.localPosition = m_backCamPosition;
-
-        //m_currentState = m_onTop;
-        //m_cam.localPosition = m_topCamPosition;
 
         m_camRay = new Ray(m_cam.transform.position, m_cam.transform.forward);
     }
@@ -96,33 +87,27 @@ public class VariableCam : MonoBehaviour
 
     public void RotateOnTarget(float deltaTime)
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_rotateSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
     } 
 
     public void SetCameraTransition(CameraStates.States finalState)
     {
         CameraTransiting transitingCam = (CameraTransiting)m_transit;
+        Quaternion rotationPivot;
 
-        transitingCam.m_initialRotationCamera = m_cam.localRotation;
-        transitingCam.m_initialRotationPivot = m_pivot.localRotation;
-        transitingCam.m_initialPosition = m_cam.localPosition;
         transitingCam.ResetTime();
-
         switch (finalState)
         {
             case CameraStates.States.BACK:
-                transitingCam.m_finalPosition = m_backCamPosition;
-                transitingCam.m_finalState = m_onBack;
-                m_changeCamOnPosition = true;
-                break;
-            case CameraStates.States.TOP:
-                transitingCam.m_finalPosition = m_topCamPosition;
-                transitingCam.m_finalState = m_onTop;
+                CameraOnBack onBack = (CameraOnBack)m_onBack;
+                rotationPivot = Quaternion.Euler(onBack.m_defaultTiltAngle, m_model.localRotation.eulerAngles.y, 0);
+                transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, rotationPivot);
                 m_changeCamOnPosition = true;
                 break;
             case CameraStates.States.AIMING:
-                transitingCam.m_finalPosition = m_aimingCamPosition;
-                transitingCam.m_finalState = m_aiming;
+                CameraAiming aiming = (CameraAiming)m_aiming;
+                rotationPivot = Quaternion.Euler(0, m_pivot.localRotation.eulerAngles.y, 0);
+                transitingCam.SetTransitionValues(m_aiming, aiming.m_camPosition, rotationPivot);
                 m_changeCamOnPosition = true;
                 break;
             default:
@@ -132,15 +117,11 @@ public class VariableCam : MonoBehaviour
 
     public void SetAimLockOnTarget(bool isLocked, string tagToLock)
     {
-        CameraAiming aiming = (CameraAiming)m_aiming;
-        aiming.m_lockingOnTarget = isLocked;
-        aiming.m_tagTarget = tagToLock;
+        ((CameraAiming)m_aiming).SetTargetLock(isLocked, tagToLock);
     }
 
     public void UnsetAimLockOnTarget()
     {
-        CameraAiming aiming = (CameraAiming)m_aiming;
-        aiming.m_lockingOnTarget = false;
-        aiming.m_tagTarget = null;
+        ((CameraAiming)m_aiming).SetTargetLock(false, null);
     }
 }

@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class CameraTransiting : CameraStates {
 
-    public Vector3 m_initialPosition;
-    public Vector3 m_finalPosition;
     public CameraStates m_finalState;
-    public bool m_transitionStopped = false;
+    bool m_transitionStopped = false;
 
     float m_time;
     float m_addedTime;
-    Quaternion m_targetRotationPivot;
-    public Quaternion m_initialRotationPivot;
 
+    Vector3 m_initialPosition;
+    Vector3 m_targetPosition;
+    Quaternion m_initialRotationPivot;
+    Quaternion m_targetRotationPivot;
+    Quaternion m_initialRotationCamera;
     Quaternion m_targetRotationCamera;
-    public Quaternion m_initialRotationCamera;
+
+    Collider m_sphereCam;
 
     public override void Start()
     {
         base.Start();
         m_type = States.TRANSIT;
+
+        m_sphereCam = m_variableCam.m_cam.GetComponent<Collider>();
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -39,7 +43,7 @@ public class CameraTransiting : CameraStates {
         Quaternion newCameraRotation = Quaternion.Slerp(m_initialRotationCamera, m_targetRotationCamera, perc);
         m_variableCam.m_cam.localRotation = newCameraRotation;
 
-        Vector3 newPosition = Vector3.Lerp(m_initialPosition, m_finalPosition, perc);
+        Vector3 newPosition = Vector3.Lerp(m_initialPosition, m_targetPosition, perc);
         m_variableCam.m_cam.localPosition = newPosition;
 
         if (perc >= 1.0f)
@@ -56,17 +60,28 @@ public class CameraTransiting : CameraStates {
         m_time = 0.0f;
         m_addedTime = 0.0f;
         m_transitionStopped = false;
-        m_targetRotationPivot = Quaternion.Euler(m_variableCam.m_model.localRotation.eulerAngles.y * Vector3.up);
         m_targetRotationCamera = Quaternion.identity;
+        m_sphereCam.enabled = true;
     }
 
     public override void OnExit()
     {
+        m_sphereCam.enabled = false;
     }
 
     public void ResetTime()
     {
         m_addedTime = m_variableCam.m_timeBetweenChanges - m_time;
         m_time = 0.0f;
+    }
+
+    public void SetTransitionValues(CameraStates finalState, Vector3 targetPosition, Quaternion targetRotationPivot)
+    {
+        m_initialRotationCamera = m_variableCam.m_cam.localRotation;
+        m_initialRotationPivot = m_variableCam.m_pivot.localRotation;
+        m_initialPosition = m_variableCam.m_cam.localPosition;
+        m_finalState = finalState;
+        m_targetPosition = targetPosition;
+        m_targetRotationPivot = targetRotationPivot;
     }
 }

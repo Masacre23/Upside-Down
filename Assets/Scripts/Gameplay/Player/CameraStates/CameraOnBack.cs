@@ -7,12 +7,17 @@ public class CameraOnBack : CameraStates
     float m_returnTime = 0.0f;
     float m_lookAngle = 0.0f;
     float m_tiltAngle = 0.0f;
-    public bool m_moveBehind = false;
+
+    public float m_defaultTiltAngle = 45f;
+    public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMin = 45f;
+    public Vector3 m_camPosition = new Vector3(0.0f, 2.0f, -5.0f);
 
     public override void Start()
     {
         base.Start();
         m_type = States.BACK;
+        m_tiltAngle = m_defaultTiltAngle;
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -57,23 +62,23 @@ public class CameraOnBack : CameraStates
     {
         m_returnTime = m_variableCam.m_maxReturnTime;
         m_variableCam.m_changeCamOnPosition = false;
-        m_variableCam.m_cameraProtection.m_protectionEnabled = true;
+        m_variableCam.m_cameraProtection.SetProtection(true);
     }
 
     public override void OnExit()
     {
         m_returnTime = 0.0f;
         m_variableCam.m_changeCamOnPosition = false;
-        m_variableCam.m_cameraProtection.m_protectionEnabled = false;
+        m_variableCam.m_cameraProtection.SetProtection(false);
         m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
-        m_tiltAngle = 0.0f;
+        m_tiltAngle = m_defaultTiltAngle;
     }
 
     void CameraRotation(float x, float y, float deltaTime)
     {
         m_lookAngle += x * m_variableCam.m_turnSpeed;
         m_tiltAngle -= y * m_variableCam.m_turnSpeed;
-        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_variableCam.m_tiltMinBack, m_variableCam.m_tiltMaxBack);
+        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_tiltMin, m_tiltMax);
 
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
         Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
@@ -89,6 +94,6 @@ public class CameraOnBack : CameraStates
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
         Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
 
-        m_variableCam.m_pivot.localRotation = Quaternion.Lerp(m_variableCam.m_pivot.localRotation, targetRotation * tiltRotation, deltaTime * m_variableCam.m_rotateSpeed);
+        m_variableCam.m_pivot.localRotation = Quaternion.Lerp(m_variableCam.m_pivot.localRotation, targetRotation * tiltRotation, deltaTime * m_variableCam.m_returnSpeed);
     }
 }

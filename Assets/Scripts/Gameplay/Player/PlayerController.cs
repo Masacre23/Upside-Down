@@ -23,15 +23,20 @@ public class PlayerController : MonoBehaviour
         camVertical = CrossPlatformInputManager.GetAxis("Mouse Y");
     }
 
-    public void GetButtons(ref bool jump, ref bool changeGravity, ref bool throwObjects, ref bool returnCam)
+    public void GetButtons(ref bool jump, ref bool changeGravity, ref bool aimObjects, ref bool throwObjects, ref bool returnCam)
     {
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
             jump = true;
-        if (CrossPlatformInputManager.GetButton("Fire2"))
+        if (CrossPlatformInputManager.GetButton("AimGravity"))
             changeGravity = true;
-        if (CrossPlatformInputManager.GetButton("Fire1"))
-            throwObjects = true;
+        if (CrossPlatformInputManager.GetButton("AimObjects"))
+            aimObjects = true;
         if (CrossPlatformInputManager.GetButtonDown("ReturnCam"))
             returnCam = true;
+
+        float leftTrigger = CrossPlatformInputManager.GetAxis("ThrowObjects");
+        throwObjects = leftTrigger > 0 ? true : false;
+        if (!throwObjects && CrossPlatformInputManager.GetButton("ThrowObjects"))
+            throwObjects = true;
     }
 }

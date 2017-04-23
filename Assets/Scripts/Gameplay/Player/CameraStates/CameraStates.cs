@@ -7,7 +7,6 @@ public class CameraStates : MonoBehaviour {
     public enum States
     {
         BACK,
-        TOP,
         AIMING,
         TRANSIT
     }

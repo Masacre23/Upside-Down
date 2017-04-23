@@ -5,7 +5,6 @@ using UnityEngine;
 //This class controls the gravity changes caused by the player, either on himself or into the surroundings.
 public class PlayerGravity : MonoBehaviour {
 
-    float m_objectDetectionRadius;
     Player m_player;
     GameObjectGravity m_playerGravity;
     GameObject m_objectDetected = null;
@@ -20,7 +19,6 @@ public class PlayerGravity : MonoBehaviour {
 
         GameObject gravSphere = m_player.m_gravitationSphere;
         SphereCollider sphereCollider = gravSphere.GetComponent<SphereCollider>();
-        m_objectDetectionRadius = sphereCollider.radius * gravSphere.transform.localScale.x;
 	}
 
     //This functions returns true if the target aimed by the player is a legal GravityWall. Also controls the color of the sight
@@ -57,7 +55,9 @@ public class PlayerGravity : MonoBehaviour {
     public bool ViableTargetForThrowing(out RaycastHit target_wall)
     {
         bool ret = false;
-        if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_throwDetectionRange))
+        int layerMask = 1 << LayerMask.NameToLayer("ThrowableObject");
+        layerMask = ~layerMask;
+        if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_throwDetectionRange, layerMask))
             ret = true;
 
         HUDManager.ChangeColorSight(ret);
