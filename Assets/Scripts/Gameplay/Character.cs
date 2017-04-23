@@ -102,6 +102,10 @@ public class Character : MonoBehaviour {
         Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
         if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance))
         {
+            if(this is Player)
+            {
+                ((Player)this).m_tagGround = hitInfo.collider.tag;
+            }
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
             m_isGrounded = true;
             m_isJumping = false;
