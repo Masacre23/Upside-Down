@@ -45,8 +45,8 @@ public class PlayerGrounded : PlayerStates {
             {
                 m_player.m_currentState = m_player.m_onAir;
                 ret = true;
-            }            
-        }
+            }
+        }   
 
         return ret;
     }

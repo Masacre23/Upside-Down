@@ -51,18 +51,20 @@ public class Player : Character
     public float m_throwDetectionRange = 20.0f;
     public float m_maxTimeThrowing = 3.0f;
     public float m_throwStrengthPerSecond = 1.0f;
-    public float m_throwStrengthOnce = 30.0f;
+    public float m_throwStrengthOnce = 20.0f;
     public float m_objectsFloatingHeight = 1.0f;
     public float m_objectsRisingTime = 1.0f;
     public bool m_throwButtonReleased = true;
     public int m_maxNumberObjects = 1;
 
-    //Variables reagarding player's helth and oxigem
-    public float m_maxOxigem = 240;
-    public float m_oxigem = 240;
+    //Variables reagarding player's helth and oxigen
+    public float m_maxOxigen = 240;
+    public float m_oxigen = 240;
 
     public Dictionary<string, TargetDetector> m_targetsDetectors;
     GameObject m_detectorsEmpty;
+    float m_inputSpeed;
+    float m_runSpeed;
 
     public override void Awake()
     {
@@ -117,8 +119,10 @@ public class Player : Character
         if (m_objectsRisingTime > m_maxTimeThrowing)
             m_objectsRisingTime = m_maxTimeThrowing;
 
-        m_oxigem = m_maxOxigem;
+        m_oxigen = m_maxOxigen;
         HUDManager.SetMaxEnergyValue(m_maxHealth);
+
+        m_runSpeed = 2 * m_moveSpeed;
     }
 
     public override void Restart()
@@ -152,12 +156,16 @@ public class Player : Character
 
         m_playerStopped = false;
 
-		PlayerStates previousState = m_currentState;
+        m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
+
+        PlayerStates previousState = m_currentState;
 		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
 		}
+
+        UpdateAnimator();
 
         if (m_camController)
         {
@@ -177,14 +185,14 @@ public class Player : Character
         base.FixedUpdate();
         HUDManager.ChangeEnergyValue(base.m_health);
 
-        m_oxigem -= Time.fixedDeltaTime;
-        if (m_oxigem <= 0.0f)
+        m_oxigen -= Time.fixedDeltaTime;
+        if (m_oxigen <= 0.0f)
         {
             m_damage.m_damage = (int)m_health + 1;
             m_damage.m_recive = true;
             m_damage.m_respawn = true;
         }
-        HUDManager.ChangeOxigem(m_oxigem / m_maxOxigem);
+        HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
     }
 
     //This functions controls the character movement and the model orientation.
@@ -197,7 +205,9 @@ public class Player : Character
             Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
             movement.Normalize();
 
-            m_rigidBody.MovePosition(transform.position + m_offset + movement * m_moveSpeed * timeStep);
+            float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
+
+            m_rigidBody.MovePosition(transform.position + m_offset + movement * speed * timeStep);
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)
@@ -206,6 +216,15 @@ public class Player : Character
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
             }
         }
+    }
+
+    void UpdateAnimator()
+    {
+        m_animator.SetFloat("HorizontalVelocity", m_inputSpeed);
+        m_animator.SetFloat("AirVelocity", Vector3.Dot(m_rigidBody.velocity,transform.up));
+        m_animator.SetBool("Grounded", m_isGrounded);
+        m_animator.SetBool("Jump", m_isJumping);
+        m_animator.SetBool("Throwing", m_currentState == m_throwing);
     }
 
     public void SetFloatingPoint(float height)

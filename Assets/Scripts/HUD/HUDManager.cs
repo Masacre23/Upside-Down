@@ -8,7 +8,7 @@ public class HUDManager : MonoBehaviour {
     public GameObject m_gravityPanel;
     public Image m_sight;
     public Image m_energy;
-    public Image m_oxigem;
+    public Image m_oxigen;
 
 
     private static bool m_showLifePanel = true;
@@ -17,7 +17,7 @@ public class HUDManager : MonoBehaviour {
     private static bool m_isGreen = false;
     private static float m_floatTimeValue = 0.0f;
     private static float m_maxEnergyValue = 120.0f;
-    private static float m_oxigemValue = 1.0f;
+    private static float m_oxigenValue = 1.0f;
     private static int m_energyValue = 7;
     private static float[] m_energyValues = new float[7] { 0.0f, 0.175f, 0.329f, 0.5f, 0.675f, 0.821f, 1.0f };
 	// Update is called once per frame
@@ -28,7 +28,7 @@ public class HUDManager : MonoBehaviour {
         m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f, 1.0f);
         m_sight.fillAmount = m_floatTimeValue;
         m_energy.fillAmount = m_energyValues[m_energyValue];
-        m_oxigem.fillAmount = m_oxigemValue;
+        m_oxigen.fillAmount = m_oxigenValue;
     }
 
     public static void ShowLifePanel(bool showLifePanel)
@@ -61,9 +61,9 @@ public class HUDManager : MonoBehaviour {
         m_floatTimeValue = floatTime;
     }
 
-    public static void ChangeOxigem(float oxigem)
+    public static void ChangeOxigen(float oxigen)
     {
-        m_oxigemValue = oxigem;
+        m_oxigenValue = oxigen;
     }
 
 }

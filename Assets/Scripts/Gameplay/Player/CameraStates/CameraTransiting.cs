@@ -61,12 +61,12 @@ public class CameraTransiting : CameraStates {
         m_addedTime = 0.0f;
         m_transitionStopped = false;
         m_targetRotationCamera = Quaternion.identity;
-        m_sphereCam.enabled = true;
+        //m_sphereCam.enabled = true;
     }
 
     public override void OnExit()
     {
-        m_sphereCam.enabled = false;
+        //m_sphereCam.enabled = false;
     }
 
     public void ResetTime()

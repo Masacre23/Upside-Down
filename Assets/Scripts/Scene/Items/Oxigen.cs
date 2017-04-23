@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Oxigem : MonoBehaviour {
-    public float m_oxigem = 60;
+public class Oxigen : MonoBehaviour {
+    public float m_oxigen = 60;
 
     private Player m_player = null;
 
@@ -18,9 +18,9 @@ public class Oxigem : MonoBehaviour {
     {
         if (m_player != null)
         {
-            m_player.m_oxigem += m_oxigem;
-            if (m_player.m_oxigem > m_player.m_maxOxigem)
-                m_player.m_oxigem = m_player.m_maxOxigem;
+            m_player.m_oxigen += m_oxigen;
+            if (m_player.m_oxigen > m_player.m_maxOxigen)
+                m_player.m_oxigen = m_player.m_maxOxigen;
             gameObject.SetActive(false);
         }
     }

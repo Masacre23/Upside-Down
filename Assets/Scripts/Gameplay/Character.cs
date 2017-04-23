@@ -30,7 +30,9 @@ public class Character : MonoBehaviour {
     public DamageStates m_dead;
 
     protected float m_groundCheckDistance;
-    protected float m_defaultGroundCheckDistance = 0.3f;
+    protected float m_defaultGroundCheckDistance = 0.4f;
+
+    protected bool m_isJumping = false;
 
     protected bool m_isGrounded;
 
@@ -102,6 +104,7 @@ public class Character : MonoBehaviour {
         {
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
             m_isGrounded = true;
+            m_isJumping = false;
         }
         else
         {
@@ -124,6 +127,7 @@ public class Character : MonoBehaviour {
     {
         m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
         m_isGrounded = false;
+        m_isJumping = true;
         m_groundCheckDistance = 0.1f;
     }
 
