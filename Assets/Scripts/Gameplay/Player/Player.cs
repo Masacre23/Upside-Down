@@ -43,7 +43,6 @@ public class Player : Character
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
-    public GameObject m_gravitationSphere;
     public PlayerGravity m_playerGravity;
     public float m_maxTimeFloating = 30.0f;
     public float m_maxTimeChanging = 1.0f;
@@ -53,6 +52,7 @@ public class Player : Character
 
     //Variables regarding player's throw of objects
     public bool m_incresePowerWithTime = false;
+    public float m_objectDetectionRadius = 1.5f;
     public float m_throwDetectionRange = 20.0f;
     public float m_maxTimeThrowing = 3.0f;
     public float m_throwStrengthPerSecond = 1.0f;
@@ -87,9 +87,6 @@ public class Player : Character
             m_playerGravity = gameObject.AddComponent<PlayerGravity>();
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
-        m_gravitationSphere = GameObject.Find("GravSphere");
-        m_gravitationSphere.transform.localPosition = Vector3.zero + Vector3.up * capsuleCollider.height / 2;
-        m_gravitationSphere.SetActive(false);
 
         GameObject cameraFree = GameObject.Find("MainCameraRig");
         if (cameraFree)
@@ -102,7 +99,9 @@ public class Player : Character
             m_detectorsEmpty = new GameObject("TargetDetectors");
             m_detectorsEmpty.transform.parent = transform;
             m_detectorsEmpty.transform.localPosition = Vector3.zero;
-        }    
+        }
+
+        m_targetsDetectors = new Dictionary<string, TargetDetector>();
 
         base.Awake();
     }
@@ -116,10 +115,6 @@ public class Player : Character
         m_negatePlayerInput = false;
 
         base.Start();
-
-        m_targetsDetectors = new Dictionary<string, TargetDetector>();
-        SetDetectors("Enemy", m_throwDetectionRange);
-        SetDetectors("GravityWall", m_gravityRange);
 
         if (m_objectsRisingTime > m_maxTimeThrowing)
             m_objectsRisingTime = m_maxTimeThrowing;
@@ -297,28 +292,6 @@ public class Player : Character
         {
             base.m_damage.m_recive = true;
             base.m_damage.m_damage = 20;
-        }
-    }
-
-    void SetDetectors(string tagName, float radiusCollider)
-    {
-        string objectName = string.Concat(tagName, "Detector");
-        if (!m_targetsDetectors.ContainsKey(tagName))
-        {
-            GameObject thisObject = GameObject.Find(objectName);
-            if (!thisObject)
-            {
-                thisObject = new GameObject(objectName);
-                thisObject.transform.parent = m_detectorsEmpty.transform;
-                thisObject.transform.localPosition = Vector3.zero;
-                thisObject.transform.localRotation = Quaternion.identity;
-                thisObject.transform.localScale = Vector3.one;
-            }
-
-            thisObject.AddComponent<SphereCollider>();
-            TargetDetector newDetector = thisObject.AddComponent<TargetDetector>();
-            newDetector.SetUpCollider(tagName, new Vector3(0, m_capsuleHeight / 2, 0), radiusCollider);
-            m_targetsDetectors.Add(tagName, newDetector);
         }
     }
 

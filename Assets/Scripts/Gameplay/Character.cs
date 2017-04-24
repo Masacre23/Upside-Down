@@ -45,8 +45,8 @@ public class Character : MonoBehaviour {
         }   
 
 		if(tag == "Player")
-			m_animator = transform.GetChild(0).GetChild(1).GetComponent<Animator> ();
-		else
+            m_animator = GetComponent<Animator>();
+        else
 			m_animator = transform.GetChild(0).GetComponent<Animator> ();
 
         m_recive = gameObject.AddComponent<DamageRecive>();

@@ -16,9 +16,6 @@ public class PlayerGravity : MonoBehaviour {
     {
         m_player = GetComponent<Player>();
         m_playerGravity = GetComponent<Player>().GetComponent<GameObjectGravity>();
-
-        GameObject gravSphere = m_player.m_gravitationSphere;
-        SphereCollider sphereCollider = gravSphere.GetComponent<SphereCollider>();
 	}
 
     //This functions returns true if the target aimed by the player is a legal GravityWall. Also controls the color of the sight

@@ -60,7 +60,6 @@ public class PlayerFloating : PlayerStates
         m_player.m_camController.SetAimLockOnTarget(true, "GravityWall");
         m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
-        m_player.m_gravitationSphere.SetActive(true);
         m_player.m_reachedGround = false;
         m_player.m_changeButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
@@ -71,7 +70,6 @@ public class PlayerFloating : PlayerStates
         m_rigidBody.isKinematic = false;
         m_player.m_camController.SetCameraTransition(CameraStates.States.BACK);
         m_player.m_camController.UnsetAimLockOnTarget();
-        m_player.m_gravitationSphere.SetActive(false);
         m_timeFloating = 0.0f;
         HUDManager.ShowGravityPanel(false);
         m_player.m_playerGravity.UnlightObject();

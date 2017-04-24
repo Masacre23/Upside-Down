@@ -4,13 +4,35 @@ using UnityEngine;
 
 public class TargetDetector : MonoBehaviour {
 
+    public string m_tag;
     public List<GameObject> m_targets;
-    string m_tag;
+
+    Player m_player;
+
+    void Awake()
+    {
+        m_targets = new List<GameObject>();
+    }
 
     // Use this for initialization
     void Start ()
     {
-        m_targets = new List<GameObject>();
+        GameObject player = GameObject.Find("Player");
+        m_player = player.GetComponent<Player>();
+
+        switch (m_tag)
+        {
+            case "Enemy":
+                SetUpCollider(new Vector3(0, m_player.m_capsuleHeight / 2, 0), m_player.m_throwDetectionRange);
+                m_player.m_targetsDetectors.Add(m_tag, this);
+                break;
+            case "GravityWall":
+                SetUpCollider(new Vector3(0, m_player.m_capsuleHeight / 2, 0), m_player.m_gravityRange);
+                m_player.m_targetsDetectors.Add(m_tag, this);
+                break;
+            default:
+                break;
+        }
     }
 	
 	// Update is called once per frame
@@ -18,9 +40,8 @@ public class TargetDetector : MonoBehaviour {
     {	
 	}
 
-    public void SetUpCollider(string tag, Vector3 center, float radius)
+    void SetUpCollider(Vector3 center, float radius)
     {
-        m_tag = tag;
         SphereCollider targetDetector = GetComponent<SphereCollider>();
         targetDetector.isTrigger = true;
         if (targetDetector)

@@ -5,7 +5,6 @@ using UnityEngine;
 class PlayerThrowing : PlayerStates
 {
     float m_timeThrowing;
-    float m_objectDetectionRadius;
     List<GameObjectGravity> m_objects;
     List<Vector3> m_objectsInitialPositions;
     float m_strengthWithoutTarget;
@@ -14,15 +13,11 @@ class PlayerThrowing : PlayerStates
     {
         base.Start();
         m_timeThrowing = 0.0f;
-        GameObject gravSphere = m_player.m_gravitationSphere;
-        SphereCollider sphereCollider = gravSphere.GetComponent<SphereCollider>();
-        m_objectDetectionRadius = sphereCollider.radius * gravSphere.transform.localScale.x;
         m_objects = new List<GameObjectGravity>();
         m_objectsInitialPositions = new List<Vector3>();
         m_type = States.THROWING;
 
         m_strengthWithoutTarget = m_player.m_throwDetectionRange;
-
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -99,7 +94,6 @@ class PlayerThrowing : PlayerStates
 
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
-        m_player.m_gravitationSphere.SetActive(true);
         m_player.m_throwButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
     }
@@ -117,7 +111,6 @@ class PlayerThrowing : PlayerStates
         m_objectsInitialPositions.Clear();
         m_player.m_camController.SetCameraTransition(CameraStates.States.BACK);
         m_player.m_camController.UnsetAimLockOnTarget();
-        m_player.m_gravitationSphere.SetActive(false);
         m_timeThrowing = 0.0f;
         HUDManager.ShowGravityPanel(false);
     }
@@ -126,7 +119,7 @@ class PlayerThrowing : PlayerStates
     {
         int ret = numObjects;
         Vector3 sphereOrigin = m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2);
-        List<Collider> allobjects = new List<Collider>(Physics.OverlapSphere(sphereOrigin, m_objectDetectionRadius, layerMask));
+        List<Collider> allobjects = new List<Collider>(Physics.OverlapSphere(sphereOrigin, m_player.m_objectDetectionRadius, layerMask));
         allobjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(sphereOrigin, a.transform.position).CompareTo(Vector3.Distance(sphereOrigin, b.transform.position)); });
 
         for (int i = 0; i < allobjects.Count; i++)

@@ -36,7 +36,6 @@ public class PlayerChanging : PlayerStates
     public override void OnEnter()
     {
         m_rigidBody.isKinematic = true;
-        m_player.m_gravitationSphere.SetActive(true);
         m_initialRotation = transform.rotation;
         m_finalRotation = Quaternion.FromToRotation(transform.up, m_player.m_gravityOnCharacter.m_gravity) * transform.rotation;
     }
@@ -44,7 +43,6 @@ public class PlayerChanging : PlayerStates
     public override void OnExit()
     {
         m_rigidBody.isKinematic = false;
-        m_player.m_gravitationSphere.SetActive(false);
         m_timeChanging = 0.0f;
     }
 }
