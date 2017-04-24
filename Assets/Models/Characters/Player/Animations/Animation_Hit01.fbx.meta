@@ -254,7 +254,8 @@ ModelImporter:
     400244: Spine2
     400246: Spine3
     4300000: CHR_Hero01
-    7400000: Take 001
+    7400000: Hit
+    7400002: Hit_Short
     9500000: //RootNode
     13700000: CHR_Hero01
   materials:
@@ -277,7 +278,715 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Hit
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 50
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CenterSpine_FATHER
+        weight: 1
+      - path: CenterSpine_FATHER/Belt
+        weight: 1
+      - path: CenterSpine_FATHER/Belt/belt2
+        weight: 1
+      - path: CenterSpine_FATHER/Belt/belt2/belt3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck/Bufanda
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck/Bufanda/Bufanda2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck/CenterHead
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/joint80
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger/LeftIndexFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger/LeftIndexFinger 1/LeftIndexFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger/LeftIndexFinger 1/LeftIndexFinger 2/LeftIndexFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger/LeftMiddleFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger/LeftMiddleFinger 1/LeftMiddleFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger/LeftMiddleFinger 1/LeftMiddleFinger 2/LeftMiddleFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger/LeftPinkyFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger/LeftPinkyFinger 1/LeftPinkyFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger/LeftPinkyFinger 1/LeftPinkyFinger 2/LeftPinkyFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger/LeftRingFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger/LeftRingFinger 1/LeftRingFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger/LeftRingFinger 1/LeftRingFinger 2/LeftRingFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb/LeftThumb 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb/LeftThumb 1/LeftThumb 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb/LeftThumb 1/LeftThumb 2/LeftThumb 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/joint81
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger/RightIndexFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger/RightIndexFinger 1/RightIndexFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger/RightIndexFinger 1/RightIndexFinger 2/RightIndexFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger/RightMiddleFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger/RightMiddleFinger 1/RightMiddleFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger/RightMiddleFinger 1/RightMiddleFinger 2/RightMiddleFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger/RightPinkyFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger/RightPinkyFinger 1/RightPinkyFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger/RightPinkyFinger 1/RightPinkyFinger 2/RightPinkyFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger/RightRingFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger/RightRingFinger 1/RightRingFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger/RightRingFinger 1/RightRingFinger 2/RightRingFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb/RightThumb 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb/RightThumb 1/RightThumb 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb/RightThumb 1/RightThumb 2/RightThumb 3
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip/LeftKnee
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip/LeftKnee/LeftFoot
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip/LeftKnee/LeftFoot/LeftToe
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip/RightKnee
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip/RightKnee/RightFoot
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip/RightKnee/RightFoot/RightToe
+        weight: 1
+      - path: CHR_Hero01
+        weight: 1
+      - path: group
+        weight: 1
+      - path: group/pasted__Root_Ctrl
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Belt_control
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle13
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle13/nurbsCircle14
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle16
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle16/nurbsCircle17
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle16/nurbsCircle17/nurbsCircle19
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle20
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle20/nurbsCircle22
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle20/nurbsCircle22/nurbsCircle49
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle26
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle26/nurbsCircle28
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle26/nurbsCircle28/nurbsCircle27
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle29
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle29/nurbsCircle30
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle29/nurbsCircle30/nurbsCircle31
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/Neck
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/nurbsCircle51
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/nurbsCircle51/nurbsCircle56
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle35
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle35/nurbsCircle36
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle37
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle37/nurbsCircle41
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle37/nurbsCircle41/nurbsCircle42
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle38
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle38/nurbsCircle43
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle38/nurbsCircle43/nurbsCircle44
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle39
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle39/nurbsCircle45
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle39/nurbsCircle45/nurbsCircle46
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle40
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle40/nurbsCircle47
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle40/nurbsCircle47/nurbsCircle48
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: ikHandle2
+        weight: 1
+      - path: L_Leg_CTrl
+        weight: 1
+      - path: L_Leg_CTrl/KneeControlLeft
+        weight: 1
+      - path: L_Leg_CTrl/KneeControlLeft/locator1
+        weight: 1
+      - path: L_Leg_CTrl/nurbsCircle1
+        weight: 1
+      - path: R_Leg_CTrl
+        weight: 1
+      - path: R_Leg_CTrl/KneeControlRight
+        weight: 1
+      - path: R_Leg_CTrl/KneeControlRight/locator2
+        weight: 1
+      - path: R_Leg_CTrl/nurbsCircle55
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Hit_Short
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 15.9
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: CenterSpine_FATHER
+        weight: 1
+      - path: CenterSpine_FATHER/Belt
+        weight: 1
+      - path: CenterSpine_FATHER/Belt/belt2
+        weight: 1
+      - path: CenterSpine_FATHER/Belt/belt2/belt3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck/Bufanda
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck/Bufanda/Bufanda2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/CenterNeck/CenterHead
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/joint80
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger/LeftIndexFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger/LeftIndexFinger 1/LeftIndexFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftIndexFinger/LeftIndexFinger 1/LeftIndexFinger 2/LeftIndexFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger/LeftMiddleFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger/LeftMiddleFinger 1/LeftMiddleFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftMiddleFinger/LeftMiddleFinger 1/LeftMiddleFinger 2/LeftMiddleFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger/LeftPinkyFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger/LeftPinkyFinger 1/LeftPinkyFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftPinkyFinger/LeftPinkyFinger 1/LeftPinkyFinger 2/LeftPinkyFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger/LeftRingFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger/LeftRingFinger 1/LeftRingFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftRingFinger/LeftRingFinger 1/LeftRingFinger 2/LeftRingFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb/LeftThumb 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb/LeftThumb 1/LeftThumb 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/LeftShoulder/LeftElbow/LeftHand/LeftHand
+          1/LeftThumb/LeftThumb 1/LeftThumb 2/LeftThumb 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/joint81
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger/RightIndexFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger/RightIndexFinger 1/RightIndexFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightIndexFinger/RightIndexFinger 1/RightIndexFinger 2/RightIndexFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger/RightMiddleFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger/RightMiddleFinger 1/RightMiddleFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightMiddleFinger/RightMiddleFinger 1/RightMiddleFinger 2/RightMiddleFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger/RightPinkyFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger/RightPinkyFinger 1/RightPinkyFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightPinkyFinger/RightPinkyFinger 1/RightPinkyFinger 2/RightPinkyFinger
+          3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger/RightRingFinger 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger/RightRingFinger 1/RightRingFinger 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightRingFinger/RightRingFinger 1/RightRingFinger 2/RightRingFinger 3
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb/RightThumb 1
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb/RightThumb 1/RightThumb 2
+        weight: 1
+      - path: CenterSpine_FATHER/CenterSpine1/CenterSpine2/CenterSpine3/RightShoulder/RightElbow/RightHand/RightHand
+          1/RightThumb/RightThumb 1/RightThumb 2/RightThumb 3
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip/LeftKnee
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip/LeftKnee/LeftFoot
+        weight: 1
+      - path: CenterSpine_FATHER/LeftHip/LeftKnee/LeftFoot/LeftToe
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip/RightKnee
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip/RightKnee/RightFoot
+        weight: 1
+      - path: CenterSpine_FATHER/RightHip/RightKnee/RightFoot/RightToe
+        weight: 1
+      - path: CHR_Hero01
+        weight: 1
+      - path: group
+        weight: 1
+      - path: group/pasted__Root_Ctrl
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Belt_control
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle13
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle13/nurbsCircle14
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle16
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle16/nurbsCircle17
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle16/nurbsCircle17/nurbsCircle19
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle20
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle20/nurbsCircle22
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle20/nurbsCircle22/nurbsCircle49
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle26
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle26/nurbsCircle28
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle26/nurbsCircle28/nurbsCircle27
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle29
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle29/nurbsCircle30
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/LeftShoulder 1/LeftElbow
+          1/LeftHand 2/nurbsCircle29/nurbsCircle30/nurbsCircle31
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/Neck
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/nurbsCircle51
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/nurbsCircle51/nurbsCircle56
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle35
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle35/nurbsCircle36
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle37
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle37/nurbsCircle41
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle37/nurbsCircle41/nurbsCircle42
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle38
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle38/nurbsCircle43
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle38/nurbsCircle43/nurbsCircle44
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle39
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle39/nurbsCircle45
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle39/nurbsCircle45/nurbsCircle46
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle40
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle40/nurbsCircle47
+        weight: 1
+      - path: group/pasted__Root_Ctrl/Spine1/Spine2/Spine3/RightShoulder 1/RightElbow
+          1/RightHand 2/nurbsCircle40/nurbsCircle47/nurbsCircle48
+        weight: 1
+      - path: ikHandle1
+        weight: 1
+      - path: ikHandle2
+        weight: 1
+      - path: L_Leg_CTrl
+        weight: 1
+      - path: L_Leg_CTrl/KneeControlLeft
+        weight: 1
+      - path: L_Leg_CTrl/KneeControlLeft/locator1
+        weight: 1
+      - path: L_Leg_CTrl/nurbsCircle1
+        weight: 1
+      - path: R_Leg_CTrl
+        weight: 1
+      - path: R_Leg_CTrl/KneeControlRight
+        weight: 1
+      - path: R_Leg_CTrl/KneeControlRight/locator2
+        weight: 1
+      - path: R_Leg_CTrl/nurbsCircle55
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

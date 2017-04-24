@@ -76,7 +76,8 @@ public class EffectsManager : MonoBehaviour {
         ret.SetActive(true);
 
         ret.transform.position = effectPosition;
-        ret.transform.rotation = ret.transform.rotation * Quaternion.FromToRotation(ret.transform.up, effectUpDirection);
+        ret.transform.rotation = Quaternion.FromToRotation(ret.transform.up, effectUpDirection) * ret.transform.rotation;
+        //ret.transform.rotation = ret.transform.rotation * Quaternion.FromToRotation(ret.transform.rotation.eulerAngles, effectUpDirection);
 
         if (effectParent == null)
             ret.transform.parent = m_defaultParent;

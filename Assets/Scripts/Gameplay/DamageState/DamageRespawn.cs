@@ -18,9 +18,9 @@ public class DamageRespawn : DamageStates
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
     public override bool OnUpdate(DamageData data)
     {
-        PlayerRespawn m_respawn = m_charapter.gameObject.GetComponent<PlayerRespawn>();
-        m_respawn.ReSpawn(m_charapter.m_checkPoint);
-        m_charapter.m_damageState = m_charapter.m_notRecive;
+        PlayerRespawn m_respawn = m_character.gameObject.GetComponent<PlayerRespawn>();
+        m_respawn.ReSpawn(m_character.m_checkPoint);
+        m_character.m_damageState = m_character.m_notRecive;
         data.m_respawn = false;
 
         return true;

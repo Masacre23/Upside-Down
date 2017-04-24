@@ -20,11 +20,11 @@ public class DamageAnimation : DamageStates {
         bool ret = false;
         m_currentTime += Time.fixedDeltaTime;
 
-        m_charapter.gameObject.transform.Translate(data.m_force * Time.fixedDeltaTime);
+        //m_character.gameObject.transform.Translate(data.m_force * Time.fixedDeltaTime);
 
         if (m_currentTime >= m_animtionTime)
         {
-            m_charapter.m_damageState = m_charapter.m_notRecive;
+            m_character.m_damageState = m_character.m_notRecive;
             ret = true;
         }
 
@@ -33,13 +33,14 @@ public class DamageAnimation : DamageStates {
 
     public override void OnEnter()
     {
-		base.m_charapter.m_animator.SetBool("Damaged", true);
+        m_character.m_rigidBody.AddForce(m_character.m_damage.m_force, ForceMode.VelocityChange);
+		base.m_character.m_animator.SetBool("Damaged", true);
         m_currentTime = 0.0f;
     }
 
     public override void OnExit()
     {
         m_currentTime = 0.0f;  
-		base.m_charapter.m_animator.SetBool("Damaged", false);
+		base.m_character.m_animator.SetBool("Damaged", false);
     }
 }

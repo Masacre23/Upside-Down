@@ -17,7 +17,7 @@ public class Character : MonoBehaviour {
 
 	public Animator m_animator;
     public GameObjectGravity m_gravityOnCharacter;
-    protected Rigidbody m_rigidBody;
+    public Rigidbody m_rigidBody;
     CapsuleCollider m_capsule;
     public float m_capsuleHeight;
 

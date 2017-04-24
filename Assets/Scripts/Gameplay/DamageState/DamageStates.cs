@@ -14,12 +14,12 @@ public class DamageStates : MonoBehaviour {
     }
 
     public States m_type;
-    protected Character m_charapter;
+    protected Character m_character;
 
     // Use this for initialization
     public virtual void Start()
     {
-        m_charapter = GetComponent<Character>();
+        m_character = GetComponent<Character>();
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())

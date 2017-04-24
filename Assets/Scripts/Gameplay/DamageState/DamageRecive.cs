@@ -17,21 +17,21 @@ public class DamageRecive : DamageStates {
 
         if (data.m_recive)
         {
-            if (m_charapter is Player)
-                ((Player)m_charapter).ChangeCurrntStateToOnAir();
-            m_charapter.m_health -= data.m_damage;
-            if(m_charapter.m_health <= 0)
+            if (m_character is Player)
+                ((Player)m_character).ChangeCurrntStateToOnAir();
+            m_character.m_health -= data.m_damage;
+            if(m_character.m_health <= 0)
             {
-                m_charapter.m_damageState = m_charapter.m_dead;
+                m_character.m_damageState = m_character.m_dead;
             }
             else
             {
                 if (data.m_respawn)
                 {
-                    m_charapter.m_damageState = m_charapter.m_respawn;
+                    m_character.m_damageState = m_character.m_respawn;
                 }else
                 {
-                    m_charapter.m_damageState = m_charapter.m_animation;
+                    m_character.m_damageState = m_character.m_animation;
                 }
             }
             ret = true;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DamageNotRecive : DamageStates {
 
-    private float m_notReciveTime = 5.0f;
-    private float m_speedPaint = 0.5f;
+    private float m_notReciveTime = 2.0f;
+    private float m_speedPaint = 0.1f;
     private float m_currentTime;
     SkinnedMeshRenderer[] meshes;
 
@@ -14,7 +14,7 @@ public class DamageNotRecive : DamageStates {
         base.Start();
         m_type = States.NOT_RECIVE;
         m_currentTime = 0.0f;
-        meshes = m_charapter.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+        meshes = m_character.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -33,21 +33,21 @@ public class DamageNotRecive : DamageStates {
 
         if (m_currentTime >= m_notReciveTime)
         {
-            m_charapter.m_damageState = m_charapter.m_recive;
+            m_character.m_damageState = m_character.m_recive;
             ret = true;
         }
         if(data.m_recive && data.m_respawn)
         {
-            if (m_charapter is Player)
-                ((Player)m_charapter).ChangeCurrntStateToOnAir();
-            m_charapter.m_health -= data.m_damage;
-            if (m_charapter.m_health <= 0)
+            if (m_character is Player)
+                ((Player)m_character).ChangeCurrntStateToOnAir();
+            m_character.m_health -= data.m_damage;
+            if (m_character.m_health <= 0)
             {
-                m_charapter.m_damageState = m_charapter.m_dead;
+                m_character.m_damageState = m_character.m_dead;
             }
             else
             {
-               m_charapter.m_damageState = m_charapter.m_respawn;
+                m_character.m_damageState = m_character.m_respawn;
             }
             ret = true;
         }
