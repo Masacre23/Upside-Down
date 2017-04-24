@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerChanging : PlayerStates
 {
+    public float m_maxTimeChanging = 1.0f;
+
     float m_timeChanging;
     Quaternion m_initialRotation;
     Quaternion m_finalRotation;
@@ -21,10 +23,10 @@ public class PlayerChanging : PlayerStates
         bool ret = false;
 
         m_timeChanging += timeStep;
-        float perc = m_timeChanging / m_player.m_maxTimeChanging;
+        float perc = m_timeChanging / m_maxTimeChanging;
         transform.rotation = Quaternion.Lerp(m_initialRotation, m_finalRotation, perc);
 
-        if (m_timeChanging > m_player.m_maxTimeChanging)
+        if (m_timeChanging > m_maxTimeChanging)
         {
             m_player.m_currentState = m_player.m_onAir;
             ret = true;

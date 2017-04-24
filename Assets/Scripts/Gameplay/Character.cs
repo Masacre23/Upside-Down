@@ -98,9 +98,9 @@ public class Character : MonoBehaviour {
     // This function checks if the character is currently touching a collider below their "feet"
     public bool CheckGroundStatus()
     {
-        RaycastHit hitInfo;
+        RaycastHit hitInfo = new RaycastHit();
         Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
-        if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance))
+        if (GroundCheck(ref hitInfo))
         {
             if(this is Player)
             {
@@ -151,5 +151,16 @@ public class Character : MonoBehaviour {
         }
         else
             m_groundCheckDistance = 0.01f;
+    }
+
+    bool GroundCheck(ref RaycastHit hitInfo)
+    {
+        bool ret = false;
+
+        ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance);
+        if (!ret)
+            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance);
+
+        return ret;
     }
 }

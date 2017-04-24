@@ -28,10 +28,13 @@ public class Player : Character
     public PlayerStates m_floating;
     public PlayerStates m_changing;
 
-    //Variables regarding player movement
+    //General Info variables
     Transform m_modelTransform;
-    public bool m_freezeMovement;
     public VariableCam m_camController;
+    public PlayerGravity m_playerGravity;
+
+    //Variables regarding player movement
+    public bool m_freezeMovement;
     public bool m_rotationFollowPlayer;
     public bool m_playerStopped = false;
     public Vector3 m_offset = Vector3.zero;
@@ -43,26 +46,14 @@ public class Player : Character
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
-    public PlayerGravity m_playerGravity;
-    public float m_maxTimeFloating = 30.0f;
-    public float m_maxTimeChanging = 1.0f;
     public bool m_reachedGround = true;
     public bool m_changeButtonReleased = true;
-    public float m_floatingHeight = 1.0f;
 
     //Variables regarding player's throw of objects
-    public bool m_incresePowerWithTime = false;
-    public float m_objectDetectionRadius = 1.5f;
     public float m_throwDetectionRange = 20.0f;
-    public float m_maxTimeThrowing = 3.0f;
-    public float m_throwStrengthPerSecond = 1.0f;
-    public float m_throwStrengthOnce = 20.0f;
-    public float m_objectsFloatingHeight = 1.0f;
-    public float m_objectsRisingTime = 1.0f;
     public bool m_throwButtonReleased = true;
-    public int m_maxNumberObjects = 1;
 
-    //Variables reagarding player's helth and oxigen
+    //Variables regarding player's health and oxigen
     public float m_maxOxigen = 240;
     public float m_oxigen = 240;
 
@@ -71,17 +62,30 @@ public class Player : Character
 	public GameObject m_runClouds;
 
     public Dictionary<string, TargetDetector> m_targetsDetectors;
-    GameObject m_detectorsEmpty;
     float m_inputSpeed;
     float m_runSpeed;
 
     public override void Awake()
     {
-        m_grounded = gameObject.AddComponent<PlayerGrounded>();
-        m_onAir = gameObject.AddComponent<PlayerOnAir>();
-        m_floating = gameObject.AddComponent<PlayerFloating>();
-        m_changing = gameObject.AddComponent<PlayerChanging>();
-        m_throwing = gameObject.AddComponent<PlayerThrowing>();
+        m_grounded = gameObject.GetComponent<PlayerGrounded>();
+        if (!m_grounded)
+            m_grounded = gameObject.AddComponent<PlayerGrounded>();
+
+        m_onAir = gameObject.GetComponent<PlayerOnAir>();
+        if (!m_onAir)
+            m_onAir = gameObject.AddComponent<PlayerOnAir>();
+
+        m_floating = gameObject.GetComponent<PlayerFloating>();
+        if (!m_floating)
+            m_floating = gameObject.AddComponent<PlayerFloating>();
+
+        m_changing = gameObject.GetComponent<PlayerChanging>();
+        if (!m_changing)
+            m_changing = gameObject.AddComponent<PlayerChanging>();
+
+        m_throwing = gameObject.GetComponent<PlayerThrowing>();
+        if (!m_throwing)
+            m_throwing = gameObject.AddComponent<PlayerThrowing>();
 
         m_currentState = m_onAir;
 
@@ -97,7 +101,7 @@ public class Player : Character
             m_camController = cameraFree.GetComponent<VariableCam>();
         m_rotationFollowPlayer = true;
 
-        m_detectorsEmpty = GameObject.Find("TargetDetectors");
+        GameObject m_detectorsEmpty = GameObject.Find("TargetDetectors");
         if (!m_detectorsEmpty)
         {
             m_detectorsEmpty = new GameObject("TargetDetectors");
@@ -119,9 +123,6 @@ public class Player : Character
         m_negatePlayerInput = false;
 
         base.Start();
-
-        if (m_objectsRisingTime > m_maxTimeThrowing)
-            m_objectsRisingTime = m_maxTimeThrowing;
 
         m_oxigen = m_maxOxigen;
         HUDManager.SetMaxEnergyValue(m_maxHealth);
@@ -162,14 +163,14 @@ public class Player : Character
 
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
 
-        DebugHits();
-
         PlayerStates previousState = m_currentState;
 		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
 		}
+
+        m_modelTransform.rotation = Quaternion.FromToRotation(m_modelTransform.up, transform.up) * m_modelTransform.rotation;
 
         UpdateAnimator();
 
@@ -314,19 +315,4 @@ public class Player : Character
         m_returnCam = false;
     }
 
-    void DebugHits()
-    {
-        bool hit = Input.GetKey("8");
-        bool dead = Input.GetKey("9");
-
-        if (hit)
-        {
-            m_damage.m_force = -m_modelTransform.forward * 3.0f;
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 20;
-        }
-        
-
-
-    }
 }

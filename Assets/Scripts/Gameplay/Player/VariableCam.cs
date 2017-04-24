@@ -90,7 +90,7 @@ public class VariableCam : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
     } 
 
-    public void SetCameraTransition(CameraStates.States finalState)
+    public void SetCameraTransition(CameraStates.States finalState, bool alignView = false)
     {
         CameraTransiting transitingCam = (CameraTransiting)m_transit;
         Quaternion rotationPivot;
@@ -106,7 +106,10 @@ public class VariableCam : MonoBehaviour
                 break;
             case CameraStates.States.AIMING:
                 CameraAiming aiming = (CameraAiming)m_aiming;
-                rotationPivot = Quaternion.Euler(0, m_pivot.localRotation.eulerAngles.y, 0);
+                if (alignView)
+                    rotationPivot = Quaternion.Euler(0, m_pivot.localRotation.eulerAngles.y, 0);
+                else
+                    rotationPivot = Quaternion.Euler(m_pivot.localRotation.eulerAngles.x, m_pivot.localRotation.eulerAngles.y, 0);
                 transitingCam.SetTransitionValues(m_aiming, aiming.m_camPosition, rotationPivot);
                 m_changeCamOnPosition = true;
                 break;

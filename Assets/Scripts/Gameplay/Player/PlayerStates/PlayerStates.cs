@@ -10,7 +10,8 @@ public class PlayerStates : MonoBehaviour
         ONAIR,
         THROWING,
         FLOATING,
-        CHANGING
+        CHANGING,
+        DAMAGED
     }
 
     public States m_type;

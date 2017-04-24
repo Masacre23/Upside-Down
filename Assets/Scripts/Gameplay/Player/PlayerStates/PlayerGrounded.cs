@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGrounded : PlayerStates {
+public class PlayerGrounded : PlayerStates
+{
+
+    public float m_floatingHeight = 1.0f;
 
     public override void Start()
     {
@@ -23,7 +26,7 @@ public class PlayerGrounded : PlayerStates {
         if (changeGravity && m_player.m_changeButtonReleased)
         {
             m_player.m_currentState = m_player.m_floating;
-            m_player.SetFloatingPoint(m_player.m_floatingHeight);
+            m_player.SetFloatingPoint(m_floatingHeight);
             ret = true;
         }
         else if (jumping)
