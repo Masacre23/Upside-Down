@@ -84,19 +84,20 @@ public class OnedirectionalMobilePlatform : MonoBehaviour {
         }        
 	}
 
-    private void OnCollisionEnter(Collision colInfo)
+    private void OnTriggerEnter(Collider other)
     {
-        if (colInfo.collider.tag == "Player")
+        if(other.tag == "Player")
         {
             m_isPlayer = true;
         }
     }
 
-    private void OnCollisionExit(Collision colInfo)
+    private void OnTriggerExit(Collider other)
     {
-        if (colInfo.collider.tag == "Player")
+        if(other.tag == "Player")
         {
             m_isPlayer = false;
         }
     }
+
 }

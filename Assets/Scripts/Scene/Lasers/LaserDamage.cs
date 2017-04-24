@@ -15,6 +15,7 @@ public class LaserDamage : MonoBehaviour
             {
                 go_player.m_damage.m_damage = 20;
                 go_player.m_damage.m_recive = true;
+                go_player.m_damage.m_force = -transform.forward * 4.0f;
             }
         }
     }
