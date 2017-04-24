@@ -66,6 +66,10 @@ public class Player : Character
     public float m_maxOxigen = 240;
     public float m_oxigen = 240;
 
+	//Effects
+	public GameObject m_jumpClouds;
+	public GameObject m_runClouds;
+
     public Dictionary<string, TargetDetector> m_targetsDetectors;
     GameObject m_detectorsEmpty;
     float m_inputSpeed;

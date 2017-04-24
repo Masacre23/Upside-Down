@@ -56,10 +56,12 @@ public class PlayerGrounded : PlayerStates {
         m_player.m_rotationFollowPlayer = true;
         m_player.m_reachedGround = true;
         m_player.m_freezeMovement = false;
+		EffectsManager.Instantiate (m_player.m_jumpClouds, transform.position, transform.rotation * m_player.m_jumpClouds.transform.rotation);
+		m_player.m_runClouds.GetComponent<ParticleSystem> ().Play();
     }
 
     public override void OnExit()
     {
-
+		m_player.m_runClouds.GetComponent<ParticleSystem> ().Stop();
     }
 }
