@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerFloating : PlayerStates
 {
-    float m_timeFloating;
+    public float m_maxTimeFloating = 2.0f;
     public Vector3 m_floatingPoint;
+
+    float m_timeFloating;
     Vector3 m_startingPosition;
 
     public override void Start()
@@ -20,12 +22,12 @@ public class PlayerFloating : PlayerStates
     public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
-        HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_player.m_maxTimeFloating));
+        HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_maxTimeFloating));
 
-        float perc = m_timeFloating / m_player.m_maxTimeFloating;
+        float perc = m_timeFloating / m_maxTimeFloating;
         m_player.m_gravityOnCharacter.Float(m_startingPosition, m_floatingPoint, perc);
 
-        if (m_timeFloating > m_player.m_maxTimeFloating)
+        if (m_timeFloating > m_maxTimeFloating)
         {
             m_player.m_currentState = m_player.m_onAir;
             ret = true;

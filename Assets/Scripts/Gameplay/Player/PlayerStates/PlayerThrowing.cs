@@ -4,6 +4,15 @@ using UnityEngine;
 
 class PlayerThrowing : PlayerStates
 {
+    public bool m_incresePowerWithTime = false;
+    public float m_objectDetectionRadius = 1.5f;
+    public float m_maxTimeThrowing = 3.0f;
+    public float m_throwStrengthPerSecond = 1.0f;
+    public float m_throwStrengthOnce = 20.0f;
+    public float m_objectsFloatingHeight = 1.0f;
+    public float m_objectsRisingTime = 1.0f;
+    public int m_maxNumberObjects = 1;
+
     float m_timeThrowing;
     List<GameObjectGravity> m_objects;
     List<Vector3> m_objectsInitialPositions;
@@ -17,6 +26,9 @@ class PlayerThrowing : PlayerStates
         m_objectsInitialPositions = new List<Vector3>();
         m_type = States.THROWING;
 
+        if (m_objectsRisingTime > m_maxTimeThrowing)
+            m_objectsRisingTime = m_maxTimeThrowing;
+
         m_strengthWithoutTarget = m_player.m_throwDetectionRange;
     }
 
@@ -24,19 +36,19 @@ class PlayerThrowing : PlayerStates
     public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
-        HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_player.m_maxTimeThrowing));
+        HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_maxTimeThrowing));
 
-        float perc = m_timeThrowing / m_player.m_objectsRisingTime;
+        float perc = m_timeThrowing / m_objectsRisingTime;
         if (perc > 1.0f)
             perc = 1.0f;
         for (int i = 0; i < m_objects.Count; i++)
         {
             //m_objects[i].FloatVelocity(m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, 0.5f);
             //m_objects[i].Float(m_objectsInitialPositions[i], m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, perc);
-            m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_player.m_objectsFloatingHeight, perc);
+            m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_objectsFloatingHeight, perc);
         }
 
-        if (m_timeThrowing > m_player.m_maxTimeThrowing)
+        if (m_timeThrowing > m_maxTimeThrowing)
         {
             m_player.m_currentState = m_player.m_grounded;
             ret = true;
@@ -54,10 +66,10 @@ class PlayerThrowing : PlayerStates
             else if (throwing)
             {
                 float throwPower = 0.0f;
-                if (m_player.m_incresePowerWithTime)
-                    throwPower = m_player.m_throwStrengthPerSecond * m_timeThrowing;
+                if (m_incresePowerWithTime)
+                    throwPower = m_throwStrengthPerSecond * m_timeThrowing;
                 else
-                    throwPower = m_player.m_throwStrengthOnce;
+                    throwPower = m_throwStrengthOnce;
 
                 if (hasTarget)
                 {
@@ -86,7 +98,7 @@ class PlayerThrowing : PlayerStates
 
     public override void OnEnter()
     {
-        int numObjects = m_player.m_maxNumberObjects;
+        int numObjects = m_maxNumberObjects;
         if (numObjects > 0)
             numObjects = LoadObjects(1 << LayerMask.NameToLayer("ThrowableObject"), numObjects);
         if (numObjects > 0)
@@ -119,7 +131,7 @@ class PlayerThrowing : PlayerStates
     {
         int ret = numObjects;
         Vector3 sphereOrigin = m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2);
-        List<Collider> allobjects = new List<Collider>(Physics.OverlapSphere(sphereOrigin, m_player.m_objectDetectionRadius, layerMask));
+        List<Collider> allobjects = new List<Collider>(Physics.OverlapSphere(sphereOrigin, m_objectDetectionRadius, layerMask));
         allobjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(sphereOrigin, a.transform.position).CompareTo(Vector3.Distance(sphereOrigin, b.transform.position)); });
 
         for (int i = 0; i < allobjects.Count; i++)
