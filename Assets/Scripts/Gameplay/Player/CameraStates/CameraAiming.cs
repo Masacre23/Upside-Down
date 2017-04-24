@@ -12,7 +12,7 @@ public class CameraAiming : CameraStates {
 
     public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
     public float m_tiltMin = 45f;
-    public float m_aimSpeed = 1.5f;
+    public float m_aimSpeed = 3f;
     public Vector3 m_camPosition = new Vector3(0.0f, 1.3f, 0.0f);
 
     public override void Start()

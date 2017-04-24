@@ -158,14 +158,14 @@ public class Player : Character
 
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
 
-        DebugHits();
-
         PlayerStates previousState = m_currentState;
 		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
 		}
+
+        m_modelTransform.rotation = Quaternion.FromToRotation(m_modelTransform.up, transform.up) * m_modelTransform.rotation;
 
         UpdateAnimator();
 
@@ -310,19 +310,4 @@ public class Player : Character
         m_returnCam = false;
     }
 
-    void DebugHits()
-    {
-        bool hit = Input.GetKey("8");
-        bool dead = Input.GetKey("9");
-
-        if (hit)
-        {
-            m_damage.m_force = -m_modelTransform.forward * 3.0f;
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 20;
-        }
-        
-
-
-    }
 }

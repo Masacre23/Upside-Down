@@ -92,7 +92,7 @@ class PlayerThrowing : PlayerStates
         if (numObjects > 0)
             numObjects = LoadObjects(1 << LayerMask.NameToLayer("Enemy"), numObjects);
 
-        m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING);
+        m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
         m_player.m_throwButtonReleased = false;
         HUDManager.ShowGravityPanel(true);

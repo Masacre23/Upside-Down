@@ -19,4 +19,13 @@ public class DamageData
         m_alive = true;
         m_force = Vector3.back + Vector3.up;
     }
+
+    public void ResetDamageData()
+    {
+        m_recive = false;
+        m_damage = 0;
+        m_respawn = false;
+        m_alive = true;
+        m_force = Vector3.back + Vector3.up;
+    }
 }
