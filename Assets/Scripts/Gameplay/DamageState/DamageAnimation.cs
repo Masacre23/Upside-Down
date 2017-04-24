@@ -36,11 +36,19 @@ public class DamageAnimation : DamageStates {
         m_character.m_rigidBody.AddForce(m_character.m_damage.m_force, ForceMode.VelocityChange);
 		base.m_character.m_animator.SetBool("Damaged", true);
         m_currentTime = 0.0f;
+        if (m_character is Player)
+        {
+            m_character.GetComponent<Player>().m_negatePlayerInput = true;
+        }
     }
 
     public override void OnExit()
     {
         m_currentTime = 0.0f;  
 		base.m_character.m_animator.SetBool("Damaged", false);
+        if (m_character is Player)
+        {
+            m_character.GetComponent<Player>().m_negatePlayerInput = false;
+        }
     }
 }

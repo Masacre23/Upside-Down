@@ -13,10 +13,19 @@ public class DamageDead : DamageStates {
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
     public override bool OnUpdate(DamageData data)
     {
-        if(m_character is Player)
+        if (m_character is Player)
         {
-            Scenes.LoadScene(Scenes.GameOver);
+            AnimatorStateInfo animatorInfo = m_character.m_animator.GetCurrentAnimatorStateInfo(0);
+            if (animatorInfo.IsName("Dead") && animatorInfo.normalizedTime >= 1.0f)
+            {
+                OnExit();
+            }
+            if (m_character.m_damage.m_respawn)
+            {
+                OnExit();
+            }
         }
+
         if(data.m_alive)
         {
             m_character.m_damageState = m_character.m_notRecive;
@@ -28,10 +37,17 @@ public class DamageDead : DamageStates {
     {
         m_character.m_damage.m_alive = false;
         m_character.m_animator.SetBool("Dead", true);
+        if (m_character is Player)
+        {
+            m_character.GetComponent<Player>().m_negatePlayerInput = true;
+        }
     }
 
     public override void OnExit()
     {
-       
+        if (m_character is Player)
+        {
+            Scenes.LoadScene(Scenes.GameOver);
+        }
     }
 }

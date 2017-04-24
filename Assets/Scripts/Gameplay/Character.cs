@@ -93,7 +93,7 @@ public class Character : MonoBehaviour {
         }
         m_damage.m_damage = 0;
         m_damage.m_recive = false;
-	}
+}
 
     // This function checks if the character is currently touching a collider below their "feet"
     public bool CheckGroundStatus()

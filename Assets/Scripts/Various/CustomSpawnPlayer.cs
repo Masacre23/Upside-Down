@@ -35,13 +35,13 @@ public class CustomSpawnPlayer : MonoBehaviour {
         {
             Spawn(p5);
         }
-        if (!GetComponent<Player>().m_damage.m_alive)
-        {
-            Player player = GetComponent<Player>();
-            Spawn(player.m_checkPoint);
-            player.m_damage.m_alive = true;
-            player.m_health = player.m_maxHealth;
-        }
+        //if (!GetComponent<Player>().m_damage.m_alive)
+        //{
+        //    Player player = GetComponent<Player>();
+        //    Spawn(player.m_checkPoint);
+        //    player.m_damage.m_alive = true;
+        //    player.m_health = player.m_maxHealth;
+        //}
     }
 
 	public void Spawn(Transform tr)

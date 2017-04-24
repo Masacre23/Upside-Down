@@ -11,7 +11,8 @@ public class PlayerStates : MonoBehaviour
         THROWING,
         FLOATING,
         CHANGING,
-        DAMAGED
+        DAMAGED,
+        DEAD
     }
 
     public States m_type;

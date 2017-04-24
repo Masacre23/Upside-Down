@@ -18,7 +18,7 @@ public class Player : Character
     bool m_aimObject;
     bool m_throwObject;
     bool m_returnCam;
-    bool m_negatePlayerInput;
+    public bool m_negatePlayerInput;
 
     //Variables regarding player state
     public PlayerStates m_currentState;
@@ -172,6 +172,8 @@ public class Player : Character
 
         m_modelTransform.rotation = Quaternion.FromToRotation(m_modelTransform.up, transform.up) * m_modelTransform.rotation;
 
+        HitDebug();
+
         UpdateAnimator();
 
         if (m_camController)
@@ -205,7 +207,7 @@ public class Player : Character
         {
             m_damage.m_damage = (int)m_health + 1;
             m_damage.m_recive = true;
-            m_damage.m_respawn = true;
+            //m_damage.m_respawn = true;
         }
         HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
     }
@@ -272,7 +274,8 @@ public class Player : Character
 
     void OnCollisionEnter(Collision col)
 	{
-        m_damage.m_force = -col.relativeVelocity * 10.0f;
+        //m_damage.m_force = -col.relativeVelocity * 10.0f;
+        base.m_damage.m_force = -col.relativeVelocity.normalized * 2.0f;
 
         int harmfulTerrain = LayerMask.NameToLayer("HarmfulTerrain");
         if (col.collider.gameObject.layer == harmfulTerrain)
@@ -289,9 +292,9 @@ public class Player : Character
 			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
 			{
-				base.m_damage.m_recive = true;
-				base.m_damage.m_damage = 20;
-			}
+                base.m_damage.m_recive = true;
+                base.m_damage.m_damage = 20;
+            }
 		}
 
         int harmfulObject = LayerMask.NameToLayer("HarmfulObject");
@@ -313,6 +316,24 @@ public class Player : Character
         m_aimObject = false;
         m_throwObject = false;
         m_returnCam = false;
+    }
+
+    void HitDebug()
+    {
+        bool hit = Input.GetKey("9");
+        bool dead = Input.GetKey("0");
+
+        if (hit)
+        {
+            base.m_damage.m_recive = true;
+            base.m_damage.m_damage = 20;
+            base.m_damage.m_force = -m_modelTransform.forward * 2.0f;
+        }
+        else if (dead)
+        {
+            base.m_damage.m_recive = true;
+            base.m_damage.m_damage = (int)m_health + 1;
+        }
     }
 
 }

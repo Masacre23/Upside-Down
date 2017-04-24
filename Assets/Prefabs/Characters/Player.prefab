@@ -267,6 +267,10 @@ GameObject:
   - component: {fileID: 114879085852002670}
   - component: {fileID: 114257778677461082}
   - component: {fileID: 114451858752273606}
+  - component: {fileID: 114274937194158446}
+  - component: {fileID: 114791943455659006}
+  - component: {fileID: 114056729487603638}
+  - component: {fileID: 114423459186156134}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -2279,6 +2283,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114056729487603638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86331244a1a0bff4ebb73e9aaed186f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 3
+  m_maxTimeFloating: 2
+  m_floatingPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &114257778677461082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2295,6 +2313,39 @@ MonoBehaviour:
   p3: {fileID: 0}
   p4: {fileID: 0}
   p5: {fileID: 0}
+--- !u!114 &114274937194158446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc3ea4ffecc340044b88ae1b39fa98b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 0
+  m_floatingHeight: 1
+--- !u!114 &114423459186156134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc1a2a78e3dd6b64c802aba38c96c6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 2
+  m_incresePowerWithTime: 0
+  m_objectDetectionRadius: 1.5
+  m_maxTimeThrowing: 3
+  m_throwStrengthPerSecond: 1
+  m_throwStrengthOnce: 20
+  m_objectsFloatingHeight: 1
+  m_objectsRisingTime: 1
+  m_maxNumberObjects: 1
 --- !u!114 &114451858752273606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2321,6 +2372,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tag: GravityWall
   m_targets: []
+--- !u!114 &114791943455659006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196f788698dd1d64dbf69771ea30915d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 1
 --- !u!114 &114879085852002670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2349,6 +2412,7 @@ MonoBehaviour:
   m_respawn: {fileID: 0}
   m_notRecive: {fileID: 0}
   m_dead: {fileID: 0}
+  m_negatePlayerInput: 0
   m_currentState: {fileID: 0}
   m_grounded: {fileID: 0}
   m_onAir: {fileID: 0}
@@ -2421,7 +2485,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.37
+  m_Radius: 0.3
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
