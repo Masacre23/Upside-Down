@@ -175,8 +175,6 @@ public class Player : Character
 
         m_modelTransform.rotation = Quaternion.FromToRotation(m_modelTransform.up, transform.up) * m_modelTransform.rotation;
 
-        HitDebug();
-
         UpdateAnimator();
 
         if (m_camController)
@@ -324,10 +322,10 @@ public class Player : Character
         m_returnCam = false;
     }
 
-    void HitDebug()
+    public void HitDebug()
     {
-        bool hit = Input.GetKey("9");
-        bool dead = Input.GetKey("0");
+        bool hit = Input.GetKeyDown(KeyCode.Alpha8);
+        bool dead = Input.GetKeyDown(KeyCode.Alpha9);
 
         if (hit)
         {
