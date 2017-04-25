@@ -45,8 +45,8 @@ class PlayerThrowing : PlayerStates
                 perc = 1.0f;
             for (int i = 0; i < m_objects.Count; i++)
             {
-                m_objects[i].FloatVelocity(m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, 0.5f);
-                //m_objects[i].Float(m_objectsInitialPositions[i], m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, perc);
+                //m_objects[i].FloatVelocity(m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, 0.5f);
+                m_objects[i].Float(m_objectsInitialPositions[i], m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, perc);
                 //m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_objectsFloatingHeight, perc);
             }
         }
@@ -107,6 +107,13 @@ class PlayerThrowing : PlayerStates
         if (numObjects > 0)
             numObjects = LoadObjects(1 << LayerMask.NameToLayer("Enemy"), numObjects);
 
+        foreach (GameObjectGravity gravityObject in m_objects)
+        {
+            Enemy enemy = gravityObject.GetComponent<Enemy>();
+            if (enemy)
+                enemy.m_isFloating = true;
+        }
+
         m_rigidBody.isKinematic = true;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
@@ -121,6 +128,9 @@ class PlayerThrowing : PlayerStates
             Rigidbody rigidBody = gravityObject.GetComponent<Rigidbody>();
             if (rigidBody)
                 rigidBody.isKinematic = false;
+            Enemy enemy = gravityObject.GetComponent<Enemy>();
+            if (enemy)
+                enemy.m_isFloating = false;
         }
 
         m_rigidBody.isKinematic = false;
@@ -147,11 +157,25 @@ class PlayerThrowing : PlayerStates
                 Rigidbody rigidBody = gravity_object.GetComponent<Rigidbody>(); 
                 if (rigidBody)
                 {
-                    //rigidBody.isKinematic = true;
-                    m_objects.Add(gravity_object);
-                    m_objectsInitialPositions.Add(gravity_object.transform.position);
-                    if (--numObjects == 0)
-                        return 0;
+                    rigidBody.isKinematic = true;
+                    if (rigidBody.tag.Contains("Enemy"))
+                    {
+                        Enemy enemy = rigidBody.GetComponent<Enemy>();
+                        if (enemy.m_damageState != enemy.m_dead)
+                        {
+                            m_objects.Add(gravity_object);
+                            m_objectsInitialPositions.Add(gravity_object.transform.position);
+                            if (--numObjects == 0)
+                                return 0;
+                        }  
+                    }
+                    else
+                    {
+                        m_objects.Add(gravity_object);
+                        m_objectsInitialPositions.Add(gravity_object.transform.position);
+                        if (--numObjects == 0)
+                            return 0;
+                    }
                 }
             }
         }

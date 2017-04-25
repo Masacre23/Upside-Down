@@ -37,7 +37,7 @@ public class TargetDetector : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update ()
-    {	
+    {
 	}
 
     void SetUpCollider(Vector3 center, float radius)
@@ -57,8 +57,11 @@ public class TargetDetector : MonoBehaviour {
         {
             if (m_tag.Contains("Enemy"))
             {
-                if (col.gameObject.GetComponent<Enemy>())
+                Enemy enemy = col.gameObject.GetComponent<Enemy>();
+                if (enemy && enemy.m_damageState != enemy.m_dead)
+                {
                     m_targets.Add(col.gameObject);
+                }       
             }
             else
                 m_targets.Add(col.gameObject);
@@ -68,6 +71,16 @@ public class TargetDetector : MonoBehaviour {
     void OnTriggerExit(Collider col)
     {
         if (m_targets.Contains(col.gameObject))
+        {
             m_targets.Remove(col.gameObject);
+        }
+    }
+
+    public void CleanDeadEnemy(GameObject deadEnemy)
+    {
+        if (m_targets.Contains(deadEnemy))
+        {
+            m_targets.Remove(deadEnemy);
+        }
     }
 }

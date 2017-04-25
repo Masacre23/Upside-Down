@@ -294,7 +294,7 @@ public class Player : Character
         if (col.collider.gameObject.layer == enemy) 
 		{
 			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
-			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
+			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo(0).IsName ("Attack"))
 			{
                 base.m_damage.m_recive = true;
                 base.m_damage.m_damage = 20;
@@ -304,8 +304,11 @@ public class Player : Character
         int harmfulObject = LayerMask.NameToLayer("HarmfulObject");
         if(col.collider.gameObject.layer == harmfulObject)
         {
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 20;
+            if (col.relativeVelocity.magnitude > 2.0f)
+            {
+                base.m_damage.m_recive = true;
+                base.m_damage.m_damage = 20;
+            }
         }
     }
 

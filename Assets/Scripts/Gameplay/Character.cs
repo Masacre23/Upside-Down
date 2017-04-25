@@ -18,7 +18,7 @@ public class Character : MonoBehaviour {
 	public Animator m_animator;
     public GameObjectGravity m_gravityOnCharacter;
     public Rigidbody m_rigidBody;
-    CapsuleCollider m_capsule;
+    public CapsuleCollider m_capsule;
     public float m_capsuleHeight;
 
     //Variables regarding damage state

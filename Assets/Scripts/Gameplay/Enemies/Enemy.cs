@@ -14,7 +14,8 @@ public class Enemy : Character {
 	//General variables
 	public int m_speed = 2;
 	public BoxCollider m_patrollingArea;
-	//public GameObject currentWall;
+    //public GameObject currentWall;
+    public bool m_isFloating = false;
 
 	//public Animator m_animator;
 	public GameObject player;
@@ -50,8 +51,13 @@ public class Enemy : Character {
 	{
 		if (col.collider.tag == "GravityAffected")
         {
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 50;
+            GameObjectGravity gravityOnObject = col.rigidbody.GetComponent<GameObjectGravity>();
+            if (gravityOnObject && gravityOnObject.m_throwed && gravityOnObject.m_rigidBody.velocity.magnitude > 2.0f)
+            {
+                base.m_damage.m_recive = true;
+                base.m_damage.m_damage = 50;
+                gravityOnObject.m_throwed = false;
+            }
         }
     }
 

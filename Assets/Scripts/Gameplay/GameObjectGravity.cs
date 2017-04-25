@@ -7,7 +7,7 @@ using UnityEngine;
 //It controls the current gravity of the object, and adds it to its rigid body.
 public class GameObjectGravity : MonoBehaviour {
 
-    Rigidbody m_rigidBody;
+    public Rigidbody m_rigidBody;
     Vector3 m_oldGravity;
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
@@ -18,6 +18,7 @@ public class GameObjectGravity : MonoBehaviour {
     public float m_maxTimeTravelled = 0.5f;
 
     public bool m_ignoreGravity = false;
+    public bool m_throwed = false;
     bool m_thrownForce = false;
     float m_timeTravelled;
     Vector3 m_impulseForce;
@@ -169,5 +170,10 @@ public class GameObjectGravity : MonoBehaviour {
         m_thrownForce = true;
         m_impulseForce = throwForce;
         m_ignoreGravity = true;
+        m_throwed = true;
+
+        Enemy enemy = GetComponent<Enemy>();
+        if (enemy)
+            enemy.m_isFloating = false;
     }
 }
