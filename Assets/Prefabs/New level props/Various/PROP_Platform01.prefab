@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 65779776844278920}
   - component: {fileID: 65804798849040550}
   - component: {fileID: 65677473929953238}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PROP_Platform_outside_01
   m_TagString: GravityWall
   m_Icon: {fileID: 0}
@@ -75,8 +75,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1386937665392446}
-  m_LocalRotation: {x: 0.5, y: 0.50000006, z: -0.50000006, w: -0.5}
-  m_LocalPosition: {x: -2.9400024, y: 13.200001, z: 19.080017}
+  m_LocalRotation: {x: 0.12642545, y: -0.23677644, z: 0.66628593, w: 0.69571304}
+  m_LocalPosition: {x: -113.74779, y: 66.23876, z: 40.573105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4535159537183562}
@@ -294,10 +294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd4f9a7574100640a94bd953b7111af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 2
-  m_distance: 2
-  m_waitTime: 0.5
-  m_direction: {x: 2, y: 0, z: 0}
+  m_speed: 3
+  m_distance: 6
+  m_waitTime: 2
+  m_direction: {x: 0, y: 1, z: 0}
   m_boomerang: 1
   m_waitForPlayer: 1
   m_returnWithoutPlayer: 1

@@ -43,6 +43,7 @@ public class Player : Character
     public float m_timeSlide = 0.2f;
     public float m_slideSpeed = 2.0f;
     private float m_timeSliding = 0.0f;
+    private Vector3 m_rigidBodyTotal = Vector3.zero;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -128,6 +129,8 @@ public class Player : Character
         HUDManager.SetMaxEnergyValue(m_maxHealth);
 
         m_runSpeed = 2 * m_moveSpeed;
+
+        m_rigidBodyTotal = Vector3.zero;
     }
 
     public override void Restart()
@@ -210,6 +213,8 @@ public class Player : Character
             //m_damage.m_respawn = true;
         }
         HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
+        m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
+        m_rigidBodyTotal = Vector3.zero;
     }
 
     //This functions controls the character movement and the model orientation.
@@ -224,7 +229,8 @@ public class Player : Character
 
             float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
 
-            m_rigidBody.MovePosition(transform.position + m_offset + movement * speed * timeStep);
+            //m_rigidBody.MovePosition(transform.position + m_offset + movement * speed * timeStep);
+            m_rigidBodyTotal += m_offset + movement * speed * timeStep;
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)

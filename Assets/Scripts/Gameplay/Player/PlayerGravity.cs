@@ -23,7 +23,8 @@ public class PlayerGravity : MonoBehaviour {
     {
         bool ret = false;
         UnlightObject();
-        if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_gravityRange))
+        int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+        if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_gravityRange, layerMask))
         {
             HUDManager.ChangeColorSight(target_wall.collider.tag == "GravityWall");
             if (target_wall.collider.tag == "GravityWall")

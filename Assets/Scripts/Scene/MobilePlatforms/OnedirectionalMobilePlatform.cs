@@ -100,4 +100,9 @@ public class OnedirectionalMobilePlatform : MonoBehaviour {
         }
     }
 
+    public bool IsMoving()
+    {
+        return m_state == PlatformOneDirectionState.MOVE;
+    }
+
 }
