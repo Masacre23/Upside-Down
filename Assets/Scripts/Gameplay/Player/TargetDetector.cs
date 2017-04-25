@@ -55,7 +55,13 @@ public class TargetDetector : MonoBehaviour {
     {
         if (col.tag.Contains(m_tag) && !m_targets.Contains(col.gameObject))
         {
-            m_targets.Add(col.gameObject);
+            if (m_tag.Contains("Enemy"))
+            {
+                if (col.gameObject.GetComponent<Enemy>())
+                    m_targets.Add(col.gameObject);
+            }
+            else
+                m_targets.Add(col.gameObject);
         }
     }
 

@@ -50,10 +50,10 @@ public class PlayerGravity : MonoBehaviour {
 
     //This function is called to see if the player is targeting an object or a direction in order to throw.
     //Also controls sight color.
-    public bool ViableTargetForThrowing(out RaycastHit target_wall)
+    public bool ViableTargetForThrowing(out RaycastHit target_wall, int layer)
     {
         bool ret = false;
-        int layerMask = 1 << LayerMask.NameToLayer("ThrowableObject");
+        int layerMask = 1 << layer;
         layerMask = ~layerMask;
         if (Physics.Raycast(m_player.m_camController.m_camRay, out target_wall, m_player.m_throwDetectionRange, layerMask))
             ret = true;

@@ -38,14 +38,17 @@ class PlayerThrowing : PlayerStates
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_maxTimeThrowing));
 
-        float perc = m_timeThrowing / m_objectsRisingTime;
-        if (perc > 1.0f)
-            perc = 1.0f;
-        for (int i = 0; i < m_objects.Count; i++)
+        if (m_player.m_camController.m_currentState.m_type == CameraStates.States.AIMING)
         {
-            //m_objects[i].FloatVelocity(m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, 0.5f);
-            //m_objects[i].Float(m_objectsInitialPositions[i], m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, perc);
-            m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_objectsFloatingHeight, perc);
+            float perc = m_timeThrowing / m_objectsRisingTime;
+            if (perc > 1.0f)
+                perc = 1.0f;
+            for (int i = 0; i < m_objects.Count; i++)
+            {
+                m_objects[i].FloatVelocity(m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, 0.5f);
+                //m_objects[i].Float(m_objectsInitialPositions[i], m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, perc);
+                //m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_objectsFloatingHeight, perc);
+            }
         }
 
         if (m_timeThrowing > m_maxTimeThrowing)
@@ -56,15 +59,15 @@ class PlayerThrowing : PlayerStates
         else
         {
             m_timeThrowing += timeStep;
-            RaycastHit target;
-            bool hasTarget = m_player.m_playerGravity.ViableTargetForThrowing(out target);
             if (!aimingObject)
             {
                 m_player.m_currentState = m_player.m_grounded;
                 ret = true;
             }
-            else if (throwing)
+            else if (throwing && m_objects.Count > 0)
             {
+                RaycastHit target;
+                bool hasTarget = m_player.m_playerGravity.ViableTargetForThrowing(out target, m_objects[0].gameObject.layer);
                 float throwPower = 0.0f;
                 if (m_incresePowerWithTime)
                     throwPower = m_throwStrengthPerSecond * m_timeThrowing;
@@ -104,6 +107,7 @@ class PlayerThrowing : PlayerStates
         if (numObjects > 0)
             numObjects = LoadObjects(1 << LayerMask.NameToLayer("Enemy"), numObjects);
 
+        m_rigidBody.isKinematic = true;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
         m_player.m_throwButtonReleased = false;
@@ -119,6 +123,7 @@ class PlayerThrowing : PlayerStates
                 rigidBody.isKinematic = false;
         }
 
+        m_rigidBody.isKinematic = false;
         m_objects.Clear();
         m_objectsInitialPositions.Clear();
         m_player.m_camController.SetCameraTransition(CameraStates.States.BACK);
@@ -142,7 +147,7 @@ class PlayerThrowing : PlayerStates
                 Rigidbody rigidBody = gravity_object.GetComponent<Rigidbody>(); 
                 if (rigidBody)
                 {
-                    rigidBody.isKinematic = true;
+                    //rigidBody.isKinematic = true;
                     m_objects.Add(gravity_object);
                     m_objectsInitialPositions.Add(gravity_object.transform.position);
                     if (--numObjects == 0)
@@ -153,5 +158,11 @@ class PlayerThrowing : PlayerStates
         return ret;
     }
 
-    
+    public GameObject NextObjectThrow()
+    {
+        if (m_objects.Count > 0)
+            return m_objects[0].gameObject;
+        else
+            return null;
+    }
 }

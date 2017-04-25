@@ -2365,7 +2365,7 @@ Prefab:
     - target: {fileID: 114856520038537236, guid: 938e2c1b67b316144894edcd05232d24,
         type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114124540566748746, guid: 938e2c1b67b316144894edcd05232d24,
         type: 2}
@@ -2393,6 +2393,16 @@ Prefab:
     - target: {fileID: 1222552522042562, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114483449078654096, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
+      propertyPath: m_targetBreakLock
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114483449078654096, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
+      propertyPath: m_targetLockDistance
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114792612982311710, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
@@ -8063,7 +8073,7 @@ Prefab:
         type: 2}
       propertyPath: p5
       value: 
-      objectReference: {fileID: 742918674}
+      objectReference: {fileID: 643873770}
     - target: {fileID: 1984387562476602, guid: e1692553d18705e4a866f49b076cd092, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
@@ -11263,6 +11273,11 @@ Prefab:
     - target: {fileID: 1092291310857354, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54564652599057642, guid: 3e776c534b4751b4091f37866a0f790e,
+        type: 2}
+      propertyPath: m_Mass
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
@@ -19118,11 +19133,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1783874421}
   m_GameObject: {fileID: 740400636}
   m_Mesh: {fileID: 4300000, guid: 679e116678ec4524e82d408f14d1e883, type: 3}
---- !u!4 &742918674 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4448802585132530, guid: 8a707834ac582c8488ddc6d347077a8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 1186913676}
 --- !u!1001 &744521440
 Prefab:
   m_ObjectHideFlags: 0
@@ -29554,6 +29564,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 54564652599057642, guid: 3e776c534b4751b4091f37866a0f790e,
+        type: 2}
+      propertyPath: m_Mass
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
   m_IsPrefabParent: 0
@@ -39709,6 +39724,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 54564652599057642, guid: 3e776c534b4751b4091f37866a0f790e,
+        type: 2}
+      propertyPath: m_Mass
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
   m_IsPrefabParent: 0
@@ -44532,6 +44552,11 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 1.0000001
       objectReference: {fileID: 0}
+    - target: {fileID: 54564652599057642, guid: 3e776c534b4751b4091f37866a0f790e,
+        type: 2}
+      propertyPath: m_Mass
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
   m_IsPrefabParent: 0
@@ -48085,6 +48110,10 @@ Prefab:
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_RootOrder
       value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1092291310857354, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
