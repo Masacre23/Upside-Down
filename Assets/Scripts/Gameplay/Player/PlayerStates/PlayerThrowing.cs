@@ -4,86 +4,95 @@ using UnityEngine;
 
 class PlayerThrowing : PlayerStates
 {
+    public bool m_incresePowerWithTime = false;
+    public float m_objectDetectionRadius = 1.5f;
+    public float m_maxTimeThrowing = 3.0f;
+    public float m_throwStrengthPerSecond = 1.0f;
+    public float m_throwStrengthOnce = 20.0f;
+    public float m_objectsFloatingHeight = 1.0f;
+    public float m_objectsRisingTime = 1.0f;
+    public int m_maxNumberObjects = 1;
+
     float m_timeThrowing;
-    float m_objectDetectionRadius;
     List<GameObjectGravity> m_objects;
+    List<Vector3> m_objectsInitialPositions;
+    float m_strengthWithoutTarget;
 
     public override void Start()
     {
         base.Start();
         m_timeThrowing = 0.0f;
-        GameObject gravSphere = m_player.m_gravitationSphere;
-        SphereCollider sphereCollider = gravSphere.GetComponent<SphereCollider>();
-        m_objectDetectionRadius = sphereCollider.radius * gravSphere.transform.localScale.x;
         m_objects = new List<GameObjectGravity>();
+        m_objectsInitialPositions = new List<Vector3>();
         m_type = States.THROWING;
+
+        if (m_objectsRisingTime > m_maxTimeThrowing)
+            m_objectsRisingTime = m_maxTimeThrowing;
+
+        m_strengthWithoutTarget = m_player.m_throwDetectionRange;
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
-        HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_player.m_maxTimeFloating));
+        HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_maxTimeThrowing));
 
-        if( !throwing)
+        if (m_player.m_camController.m_currentState.m_type == CameraStates.States.AIMING)
         {
-            m_player.m_currentState = m_player.m_grounded;
-            RaycastHit target_wall;
-            bool hit = Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out target_wall);
-            if (target_wall.transform.tag == "GravityAffected")
+            float perc = m_timeThrowing / m_objectsRisingTime;
+            if (perc > 1.0f)
+                perc = 1.0f;
+            for (int i = 0; i < m_objects.Count; i++)
             {
-                RaycastHit[] alltargets = Physics.RaycastAll(Camera.main.transform.position, Camera.main.transform.forward, 1000.0f);
-                foreach (RaycastHit rayhit in alltargets)
-                {
-                    if (rayhit.transform.tag != "GravityAffected")
-                    {
-                        target_wall = rayhit;
-                        break;
-                    }
-                }
+                //m_objects[i].FloatVelocity(m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, 0.5f);
+                m_objects[i].Float(m_objectsInitialPositions[i], m_player.m_camController.m_cam.position + 2 * m_player.m_camController.m_camRay.direction, perc);
+                //m_objects[i].Float(m_objectsInitialPositions[i], m_objectsInitialPositions[i] + m_player.transform.up * m_objectsFloatingHeight, perc);
             }
-
-            foreach (GameObjectGravity gravity_object in m_objects)
-            {
-                gravity_object.SetAsThrowingObject(null);
-                gravity_object.m_attractor = target_wall;
-                gravity_object.m_gravity = (gravity_object.gameObject.transform.position - target_wall.point).normalized;
-            }
-            m_objects.Clear();
-            ret = true;
         }
-        else if (m_timeThrowing > m_player.m_maxTimeFloating)
+
+        if (m_timeThrowing > m_maxTimeThrowing)
         {
             m_player.m_currentState = m_player.m_grounded;
-            foreach(GameObjectGravity gravityObject in m_objects)
-            {
-                gravityObject.SetAsThrowingObject(null);
-            }
-            m_objects.Clear();
             ret = true;
         }
         else
         {
             m_timeThrowing += timeStep;
-            Collider[] allobjects = Physics.OverlapSphere(m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2), m_objectDetectionRadius);
-            for (int i = 0; i < allobjects.Length; i++)
+            if (!aimingObject)
             {
-                if (allobjects[i].transform.tag == "GravityAffected")
+                m_player.m_currentState = m_player.m_grounded;
+                ret = true;
+            }
+            else if (throwing && m_objects.Count > 0)
+            {
+                RaycastHit target;
+                bool hasTarget = m_player.m_playerGravity.ViableTargetForThrowing(out target, m_objects[0].gameObject.layer);
+                float throwPower = 0.0f;
+                if (m_incresePowerWithTime)
+                    throwPower = m_throwStrengthPerSecond * m_timeThrowing;
+                else
+                    throwPower = m_throwStrengthOnce;
+
+                if (hasTarget)
                 {
-                    GameObjectGravity gravity_object = allobjects[i].transform.GetComponent<GameObjectGravity>();
-                    if (!m_objects.Contains(gravity_object))
+                    foreach (GameObjectGravity gravityObject in m_objects)
                     {
-                        m_objects.Add(gravity_object);
-                        gravity_object.SetAsThrowingObject(this.gameObject);
+                        Vector3 vectorToTarget = target.point - gravityObject.transform.position;
+                        Vector3 throwVector = vectorToTarget.normalized * throwPower;
+                        gravityObject.ThrowObject(throwVector, vectorToTarget.magnitude);
                     }
                 }
-            }
-            m_player.UpdateUp();
-            m_player.Move(timeStep);
-            if (!m_player.CheckGroundStatus())
-            {
-                m_player.m_currentState = m_player.m_onAir;
-                ret = true;
+                else
+                {
+                    Vector3 throwVector = m_player.m_camController.m_camRay.direction * throwPower;
+                    foreach (GameObjectGravity gravityObject in m_objects)
+                    {
+                        gravityObject.ThrowObject(throwVector, m_player.m_throwDetectionRange);
+                    }
+                }
+                m_objects.Clear();
+                m_objectsInitialPositions.Clear();
             }
         }
 
@@ -92,17 +101,92 @@ class PlayerThrowing : PlayerStates
 
     public override void OnEnter()
     {
+        int numObjects = m_maxNumberObjects;
+        if (numObjects > 0)
+            numObjects = LoadObjects(1 << LayerMask.NameToLayer("ThrowableObject"), numObjects);
+        if (numObjects > 0)
+            numObjects = LoadObjects(1 << LayerMask.NameToLayer("Enemy"), numObjects);
+
+        foreach (GameObjectGravity gravityObject in m_objects)
+        {
+            Enemy enemy = gravityObject.GetComponent<Enemy>();
+            if (enemy)
+                enemy.m_isFloating = true;
+        }
+
         m_rigidBody.isKinematic = true;
-        m_player.m_gravitationSphere.SetActive(true);
-        m_player.m_changeEnabled = false;
+        m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
+        m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
+        m_player.m_throwButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
     }
 
     public override void OnExit()
     {
+        foreach (GameObjectGravity gravityObject in m_objects)
+        {
+            Rigidbody rigidBody = gravityObject.GetComponent<Rigidbody>();
+            if (rigidBody)
+                rigidBody.isKinematic = false;
+            Enemy enemy = gravityObject.GetComponent<Enemy>();
+            if (enemy)
+                enemy.m_isFloating = false;
+        }
+
         m_rigidBody.isKinematic = false;
-        m_player.m_gravitationSphere.SetActive(false);
+        m_objects.Clear();
+        m_objectsInitialPositions.Clear();
+        m_player.m_camController.SetCameraTransition(CameraStates.States.BACK);
+        m_player.m_camController.UnsetAimLockOnTarget();
         m_timeThrowing = 0.0f;
         HUDManager.ShowGravityPanel(false);
+    }
+
+    private int LoadObjects(int layerMask, int numObjects)
+    {
+        int ret = numObjects;
+        Vector3 sphereOrigin = m_player.transform.position + m_player.transform.up * (m_player.m_capsuleHeight / 2);
+        List<Collider> allobjects = new List<Collider>(Physics.OverlapSphere(sphereOrigin, m_objectDetectionRadius, layerMask));
+        allobjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(sphereOrigin, a.transform.position).CompareTo(Vector3.Distance(sphereOrigin, b.transform.position)); });
+
+        for (int i = 0; i < allobjects.Count; i++)
+        {
+            GameObjectGravity gravity_object = allobjects[i].transform.GetComponent<GameObjectGravity>();
+            if (gravity_object && gravity_object.m_canBeThrowed)
+            {
+                Rigidbody rigidBody = gravity_object.GetComponent<Rigidbody>(); 
+                if (rigidBody)
+                {
+                    rigidBody.isKinematic = true;
+                    if (rigidBody.tag.Contains("Enemy"))
+                    {
+                        Enemy enemy = rigidBody.GetComponent<Enemy>();
+                        if (enemy.m_damageState != enemy.m_dead)
+                        {
+                            m_objects.Add(gravity_object);
+                            m_objectsInitialPositions.Add(gravity_object.transform.position);
+                            if (--numObjects == 0)
+                                return 0;
+                        }  
+                    }
+                    else
+                    {
+                        m_objects.Add(gravity_object);
+                        m_objectsInitialPositions.Add(gravity_object.transform.position);
+                        if (--numObjects == 0)
+                            return 0;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    public GameObject NextObjectThrow()
+    {
+        if (m_objects.Count > 0)
+            return m_objects[0].gameObject;
+        else
+            return null;
     }
 }

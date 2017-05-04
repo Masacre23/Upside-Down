@@ -26,6 +26,6 @@ public class FinalDoor : MonoBehaviour {
 	void DoAction()
 	{
 		this.gameObject.SetActive (false);
-		GameObject.Find ("SceneManager").GetComponent <SceneManager> ().GameOver ();
+		Scenes.LoadScene(Scenes.GameOver);
 	}
 }

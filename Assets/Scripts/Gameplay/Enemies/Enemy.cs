@@ -13,8 +13,11 @@ public class Enemy : Character {
 
 	//General variables
 	public int m_speed = 2;
-	public GameObject currentWall;
+	public BoxCollider m_patrollingArea;
+    //public GameObject currentWall;
+    public bool m_isFloating = false;
 
+	//public Animator m_animator;
 	public GameObject player;
 
 	public override void Awake()
@@ -36,24 +39,27 @@ public class Enemy : Character {
 
 	public override void FixedUpdate ()
 	{
+		base.FixedUpdate();
+
 		if (m_currentState.OnUpdate ())
 			m_currentState.OnEnter ();
+
+		UpdateUp ();
 	}
 
 	void OnCollisionEnter(Collision col)
 	{
-		/*if (col.gameObject.tag == "EnemyWall") 
-		{
-			m_currentState.OnExit ();
-			m_currentState = m_Changing;
-			m_currentState.OnEnter ();
-		}*/
-		if (m_currentState == m_Changing) 
-		{
-			m_currentState.OnExit ();
-			m_currentState.OnEnter ();
-		}
-	}
+		if (col.collider.tag == "GravityAffected")
+        {
+            GameObjectGravity gravityOnObject = col.rigidbody.GetComponent<GameObjectGravity>();
+            if (gravityOnObject && gravityOnObject.m_throwed && gravityOnObject.m_rigidBody.velocity.magnitude > 2.0f)
+            {
+                base.m_damage.m_recive = true;
+                base.m_damage.m_damage = 50;
+                gravityOnObject.m_throwed = false;
+            }
+        }
+    }
 
 	void OnTriggerEnter(Collider col)
 	{
@@ -66,7 +72,6 @@ public class Enemy : Character {
 
 		if (col.tag == "EnemyWall") 
 		{
-			//m_Following.wallToChange = col.gameObject;
 			if (m_currentState == m_Following) 
 			{
 				m_currentState.OnExit ();

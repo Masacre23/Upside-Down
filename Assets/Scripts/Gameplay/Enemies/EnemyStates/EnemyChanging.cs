@@ -44,9 +44,8 @@ public class EnemyChanging : EnemyStates {
 			if (hit.collider.tag == "GravityWall") 
 			{
 				m_enemy.m_gravityOnCharacter.m_attractor = hit;
-				//m_enemy.m_gravityOnCharacter.m_gravity = (transform.position - hit.point).normalized;
 				m_enemy.m_gravityOnCharacter.m_gravity = hit.transform.up;
-				m_enemy.currentWall = hit.collider.gameObject;
+				//m_enemy.currentWall = hit.collider.gameObject;
 			}
 		}
 		finalRot = Quaternion.FromToRotation (transform.up, m_enemy.m_gravityOnCharacter.m_gravity) * transform.rotation;

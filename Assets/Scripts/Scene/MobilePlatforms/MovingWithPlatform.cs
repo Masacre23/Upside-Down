@@ -8,16 +8,32 @@ using UnityEngine;
 //More tags should be added if needed (enemies, ...)
 public class MovingWithPlatform : MonoBehaviour
 {
+    private Vector3 position;
+    private Player player = null;
 
-    void OnCollisionEnter(Collision colInfo)
+    private void Update()
     {
-        if (colInfo.collider.tag == "Player" || colInfo.collider.tag == "GravityAffected")
-            colInfo.transform.parent = transform;
+        if (player != null)
+        {
+            Vector3 offset = transform.position - position;
+            position = transform.position;
+            player.m_offset += offset;
+        }
     }
 
-    void OnCollisionExit(Collision colInfo)
+    void OnTriggerEnter(Collider col)
     {
-        if (colInfo.collider.tag == "Player" || colInfo.collider.tag == "GravityAffected")
-            colInfo.transform.parent = null;
+
+        if (col.tag == "Player")
+        {
+            position = transform.position;
+            player = col.gameObject.GetComponent<Player>();
+        }
+    }
+
+    void OnTriggerExit(Collider col)
+    {
+        if (col.tag == "Player" )
+            player = null;
     }
 }

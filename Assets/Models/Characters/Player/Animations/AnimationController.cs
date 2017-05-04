@@ -18,17 +18,17 @@ public class AnimationController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        h = Input.GetAxis("Horizontal");
-        v = Input.GetAxis("Vertical");
+		h = Mathf.Abs(Input.GetAxis("Horizontal"));
+		v = Mathf.Abs(Input.GetAxis("Vertical"));
 
-        if(Input.GetButtonDown("Jump"))
+      /*  if(Input.GetButtonDown("Jump"))
         {
             run = true;
-        }
-        if(h == 0 && v == 0)
-            animator.SetFloat("Vel", 0);
-        else
-            animator.SetFloat("Vel", 1);
-        animator.SetBool("Sprint", run);
+        }*/
+    
+		float vel = h + v;
+		animator.SetFloat ("Vel", vel);
+
+        //animator.SetBool("Sprint", run);
     }
 }

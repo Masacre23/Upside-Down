@@ -1,0 +1,72 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DamageNotRecive : DamageStates {
+
+    private float m_notReciveTime = 2.0f;
+    private float m_speedPaint = 0.1f;
+    private float m_currentTime;
+    SkinnedMeshRenderer[] meshes;
+
+    public override void Start()
+    {
+        base.Start();
+        m_type = States.NOT_RECIVE;
+        m_currentTime = 0.0f;
+        meshes = m_character.gameObject.GetComponentsInChildren<SkinnedMeshRenderer>();
+    }
+
+    //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
+    public override bool OnUpdate(DamageData data)
+    {
+        bool ret = false;
+        m_currentTime += Time.fixedDeltaTime;
+
+        float aWithDecimal = m_currentTime / m_speedPaint;
+        int aWithoutDecimal = (int)aWithDecimal;
+        float a = aWithDecimal - aWithoutDecimal;
+        for (int i = 0; i<meshes.Length; i++)
+        {
+            meshes[i].enabled = (a > 0.5);
+        }
+
+        if (m_currentTime >= m_notReciveTime)
+        {
+            m_character.m_damageState = m_character.m_recive;
+            ret = true;
+        }
+        if(data.m_recive && data.m_respawn)
+        {
+            if (m_character is Player)
+                ((Player)m_character).ChangeCurrntStateToOnAir();
+            m_character.m_health -= data.m_damage;
+            if (m_character.m_health <= 0)
+            {
+                m_character.m_damageState = m_character.m_dead;
+            }
+            else
+            {
+                m_character.m_damageState = m_character.m_respawn;
+            }
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    public override void OnEnter()
+    {
+        m_currentTime = 0.0f;
+    }
+
+    public override void OnExit()
+    {
+        m_currentTime = 0.0f;
+
+        for (int i = 0; i < meshes.Length; i++)
+        {
+            meshes[i].enabled = true;
+        }
+    }
+}

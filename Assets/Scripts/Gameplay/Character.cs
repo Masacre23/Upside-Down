@@ -4,26 +4,59 @@ using UnityEngine;
 
 public class Character : MonoBehaviour {
 
-    public float m_health = 100.0f;
+    public bool m_isThrowable = false;
+    public float m_maxHealth = 120.0f;
+    public float m_health = 120.0f;
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
     public float m_jumpForce = 4.0f;
     public float m_lerpSpeed = 10.0f;
+    public Transform m_checkPoint;
 
+    public DamageData m_damage;
+
+	public Animator m_animator;
     public GameObjectGravity m_gravityOnCharacter;
-    protected Rigidbody m_rigidBody;
-    CapsuleCollider m_capsule;
+    public Rigidbody m_rigidBody;
+    public CapsuleCollider m_capsule;
     public float m_capsuleHeight;
 
+    //Variables regarding damage state
+    public DamageStates m_damageState;
+    public DamageStates m_recive;
+    public DamageStates m_animation;
+    public DamageStates m_respawn;
+    public DamageStates m_notRecive;
+    public DamageStates m_dead;
+
     protected float m_groundCheckDistance;
-    protected float m_defaultGroundCheckDistance = 0.3f;
+    protected float m_defaultGroundCheckDistance = 0.4f;
+
+    protected bool m_isJumping = false;
 
     protected bool m_isGrounded;
 
     public virtual void Awake()
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
+        {
             m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
+            m_gravityOnCharacter.m_canBeThrowed = m_isThrowable;
+        }   
+
+		if(tag == "Player")
+            m_animator = GetComponent<Animator>();
+        else
+			m_animator = transform.GetChild(0).GetComponent<Animator> ();
+
+        m_recive = gameObject.AddComponent<DamageRecive>();
+        m_animation = gameObject.AddComponent<DamageAnimation>();
+        m_respawn = gameObject.AddComponent<DamageRespawn>();
+        m_notRecive = gameObject.AddComponent<DamageNotRecive>();
+        m_dead = gameObject.AddComponent<DamageDead>();
+
+        m_damage = new DamageData();
+        m_damageState = m_recive;
     }
 
     // Use this for initialization
@@ -34,24 +67,48 @@ public class Character : MonoBehaviour {
         m_capsuleHeight = m_capsule.height;
 
         m_rigidBody.freezeRotation = true;
+        m_health = m_maxHealth;
 	}
+
+    public virtual void Restart()
+    {
+        m_rigidBody.velocity = Vector3.zero;
+        m_gravityOnCharacter.m_planetGravity = true;
+        m_gravityOnCharacter.m_changingToAttractor = false;
+    }
+
+    public virtual void Update()
+    {
+    }
 
     // We use FixedUpdate since we will be dealing with forces
     // This method should control character's movements
     public virtual void FixedUpdate()
     {
-
-	}
+        DamageStates previousState = m_damageState;
+        if (m_damageState.OnUpdate(m_damage))
+        {
+            previousState.OnExit();
+            m_damageState.OnEnter();
+        }
+        m_damage.m_damage = 0;
+        m_damage.m_recive = false;
+}
 
     // This function checks if the character is currently touching a collider below their "feet"
     public bool CheckGroundStatus()
     {
-        RaycastHit hitInfo;
+        RaycastHit hitInfo = new RaycastHit();
         Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
-        if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance))
+        if (GroundCheck(ref hitInfo))
         {
+            if(this is Player)
+            {
+                ((Player)this).m_tagGround = hitInfo.collider.tag;
+            }
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
             m_isGrounded = true;
+            m_isJumping = false;
         }
         else
         {
@@ -74,6 +131,7 @@ public class Character : MonoBehaviour {
     {
         m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
         m_isGrounded = false;
+        m_isJumping = true;
         m_groundCheckDistance = 0.1f;
     }
 
@@ -81,6 +139,28 @@ public class Character : MonoBehaviour {
     //It controls the detection of the floor. If the character is going up, the detection is small in order to avoid being unable to jump.
     public void OnAir()
     {
-        m_groundCheckDistance = Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 ? m_defaultGroundCheckDistance : 0.01f;
+        //m_groundCheckDistance = Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 ? m_defaultGroundCheckDistance : 0.01f;
+
+        if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
+        {
+            m_groundCheckDistance = m_defaultGroundCheckDistance;
+            if (!m_gravityOnCharacter.m_changingToAttractor)
+            {
+                m_gravityOnCharacter.m_planetGravity = true;
+            }
+        }
+        else
+            m_groundCheckDistance = 0.01f;
+    }
+
+    bool GroundCheck(ref RaycastHit hitInfo)
+    {
+        bool ret = false;
+
+        ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance);
+        if (!ret)
+            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance);
+
+        return ret;
     }
 }
