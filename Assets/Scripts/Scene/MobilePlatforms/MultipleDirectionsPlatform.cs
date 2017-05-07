@@ -36,7 +36,7 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     private bool m_playerDetected = false;
   
     
-    private float m_verticalDistance = 6.0f;
+    private float m_verticalDistance = 5.0f;
     private float m_speedVertical = 2.0f;
 
     // Use this for initialization
@@ -156,7 +156,7 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                 if (m_speedVertical * Time.deltaTime <= verticalToMove)
                     verticalToMove = m_speedVertical * Time.deltaTime;
                 m_distanceTraveled += verticalToMove;
-                transform.Translate(new Vector3(0.0f, 0.0f, 1.0f) * verticalToMove);
+                transform.Translate(new Vector3(0.0f, 0.0f, 2.0f) * verticalToMove);
                 if (m_distanceTraveled >= m_verticalDistance)
                 {
                     m_distanceTraveled = 0;
