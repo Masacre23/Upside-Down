@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelBoundaries : MonoBehaviour
 {
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
