@@ -160,7 +160,8 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                 if (m_distanceTraveled >= m_verticalDistance)
                 {
                     m_distanceTraveled = 0;
-                    m_state = PlatformState.WAIT;
+                    m_playerDetected = false;
+                    m_state = PlatformState.STOP;
                 }
                 PlanetGravity.AlignWithFather(gameObject);
                 break;
