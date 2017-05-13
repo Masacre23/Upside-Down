@@ -184,6 +184,9 @@ public class Player : Character
                 m_camController.RotateOnTarget(Time.fixedDeltaTime);
         }
 
+        this.transform.position = this.transform.position + m_rigidBodyTotal;
+        m_rigidBodyTotal = Vector3.zero;
+
         ResetInput();
     }
 
@@ -211,8 +214,8 @@ public class Player : Character
             //m_damage.m_respawn = true;
         }
         HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
-        m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
-        m_rigidBodyTotal = Vector3.zero;
+        //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
+        //m_rigidBodyTotal = Vector3.zero;
     }
 
     //This functions controls the character movement and the model orientation.
