@@ -22,6 +22,24 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _BumpTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ColorRamp
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _CoverageTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _DetailAlbedoMap
       second:
         m_Texture: {fileID: 0}
@@ -35,6 +53,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     - first:
         name: _DetailNormalMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DiffuseTex
       second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -76,6 +100,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _SpecGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _ToonShade
       second:
         m_Texture: {fileID: 0}
@@ -86,11 +116,17 @@ Material:
         name: _BumpScale
       second: 1
     - first:
+        name: _Coverage
+      second: 0
+    - first:
         name: _Cutoff
       second: 0.5
     - first:
         name: _DetailNormalMapScale
       second: 1
+    - first:
+        name: _DiffuseThreshold
+      second: 0.1
     - first:
         name: _DstBlend
       second: 0
@@ -104,6 +140,9 @@ Material:
         name: _GlossyReflections
       second: 1
     - first:
+        name: _LitOutlineThickness
+      second: 0.1
+    - first:
         name: _Metallic
       second: 0
     - first:
@@ -116,11 +155,26 @@ Material:
         name: _Outline
       second: 0.005
     - first:
+        name: _OutlineThickness
+      second: 0.1
+    - first:
         name: _Parallax
       second: 0.02
     - first:
+        name: _RandomHeight
+      second: 0.5
+    - first:
+        name: _RandomSpeed
+      second: 0.5
+    - first:
+        name: _Refraction
+      second: 0
+    - first:
         name: _Shininess
-      second: 0.13
+      second: 5.01
+    - first:
+        name: _Smooth
+      second: 0
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -131,12 +185,30 @@ Material:
         name: _SrcBlend
       second: 1
     - first:
+        name: _Transparency
+      second: 0
+    - first:
         name: _UVSec
       second: 0
+    - first:
+        name: _UnlitOutlineThickness
+      second: 0.4
+    - first:
+        name: _WaveHeight
+      second: 0.5
+    - first:
+        name: _WaveLength
+      second: 0.5
+    - first:
+        name: _WaveSpeed
+      second: 1
     - first:
         name: _ZWrite
       second: 1
     m_Colors:
+    - first:
+        name: _BaseColor
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _Color
       second: {r: 1, g: 1, b: 1, a: 1}
@@ -146,3 +218,9 @@ Material:
     - first:
         name: _OutlineColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _UnlitColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
