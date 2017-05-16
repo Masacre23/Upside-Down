@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerOnAir : PlayerStates
 {
+
+    private bool m_doulbeJump = false;
     public override void Start()
     {
         base.Start();
@@ -20,6 +22,12 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
+        if (jumping && !m_doulbeJump)
+        {
+            m_player.Jump();
+            m_doulbeJump = true;
+            m_player.m_oxigen.LostOxigem(20);
+        }
         if (changeGravity && m_player.m_reachedGround && m_player.m_changeButtonReleased)
         {
             m_player.m_currentState = m_player.m_floating;
@@ -48,7 +56,7 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnEnter()
     {
-        
+        m_doulbeJump = false;   
     }
 
     public override void OnExit()

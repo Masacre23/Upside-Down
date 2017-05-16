@@ -149,11 +149,11 @@ public class PlayerDebugMode : MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.Alpha7))
             {
-                if (m_playerClass.m_oxigen > 0)
+                if (m_playerClass.m_oxigen.m_oxigen > 0)
                 {
-                    m_playerClass.m_oxigen += 60;
-                    if (m_playerClass.m_oxigen > m_playerClass.m_maxOxigen)
-                        m_playerClass.m_oxigen = m_playerClass.m_maxOxigen;
+                    m_playerClass.m_oxigen.m_oxigen += 60;
+                    if (m_playerClass.m_oxigen.m_oxigen > m_playerClass.m_oxigen.m_maxOxigen)
+                        m_playerClass.m_oxigen.m_oxigen = m_playerClass.m_oxigen.m_maxOxigen;
                 }
             }
             if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Alpha9))
