@@ -55,8 +55,7 @@ public class Player : Character
     public bool m_throwButtonReleased = true;
 
     //Variables regarding player's health and oxigen
-    public float m_maxOxigen = 240;
-    public float m_oxigen = 240;
+    public Oxigem m_oxigen;
 
 	//Effects
 	public GameObject m_jumpClouds;
@@ -95,6 +94,8 @@ public class Player : Character
         if (!(m_playerGravity = GetComponent<PlayerGravity>()))        
             m_playerGravity = gameObject.AddComponent<PlayerGravity>();
 
+        m_oxigen = GetComponent<Oxigem>();
+
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
         GameObject cameraFree = GameObject.Find("MainCameraRig");
@@ -125,7 +126,6 @@ public class Player : Character
 
         base.Start();
 
-        m_oxigen = m_maxOxigen;
         HUDManager.SetMaxEnergyValue(m_maxHealth);
 
         m_runSpeed = 2 * m_moveSpeed;
@@ -205,15 +205,12 @@ public class Player : Character
     {
         base.FixedUpdate();
         HUDManager.ChangeEnergyValue(base.m_health);
-
-        m_oxigen -= Time.fixedDeltaTime;
-        if (m_oxigen <= 0.0f)
+        if (m_oxigen.m_oxigen <= 0.0f)
         {
             m_damage.m_damage = (int)m_health + 1;
             m_damage.m_recive = true;
             //m_damage.m_respawn = true;
         }
-        HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
         //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
         //m_rigidBodyTotal = Vector3.zero;
     }

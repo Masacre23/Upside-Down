@@ -18,9 +18,9 @@ public class Oxigen : MonoBehaviour {
     {
         if (m_player != null)
         {
-            m_player.m_oxigen += m_oxigen;
-            if (m_player.m_oxigen > m_player.m_maxOxigen)
-                m_player.m_oxigen = m_player.m_maxOxigen;
+            m_player.m_oxigen.m_oxigen += m_oxigen;
+            if (m_player.m_oxigen.m_oxigen > m_player.m_oxigen.m_maxOxigen)
+                m_player.m_oxigen.m_oxigen = m_player.m_oxigen.m_maxOxigen;
             gameObject.SetActive(false);
         }
     }
