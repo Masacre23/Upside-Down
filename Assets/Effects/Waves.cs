@@ -15,11 +15,13 @@ public class Waves : MonoBehaviour
 	private Vector3[] baseHeight;
 	private Vector3[] vertices;
 	private Mesh mesh;
+    private MeshCollider mc;
 
 	void Awake()
     {
-		mesh = GetComponent<MeshFilter>().mesh;
-		if (baseHeight == null)
+		mesh = GetComponent<MeshFilter>().sharedMesh;
+        mc = GetComponent<MeshCollider>();
+        if (baseHeight == null)
 			baseHeight = mesh.vertices;
 	}
 
@@ -39,5 +41,6 @@ public class Waves : MonoBehaviour
 		}
 		mesh.vertices = vertices;
 		mesh.RecalculateNormals();
-	}
+        mc.sharedMesh = mesh;
+    }
 }
