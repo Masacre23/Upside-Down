@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Pruebas
-  m_Shader: {fileID: 4800000, guid: 20af536137907f446a2707558c28f473, type: 3}
+  m_Shader: {fileID: 4800000, guid: 44766f0e9c6f69544bd5cfba1e9cfd3b, type: 3}
   m_ShaderKeywords: _EMISSION _SUNDISK_HIGH_QUALITY
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -143,6 +143,9 @@ Material:
         name: _RandomSpeed
       second: 0.5
     - first:
+        name: _RimPower
+      second: 3
+    - first:
         name: _Rotation
       second: 0
     - first:
@@ -197,6 +200,9 @@ Material:
     - first:
         name: _ReflectColor
       second: {r: 0.35294116, g: 0.35294116, b: 0.35294116, a: 0.5}
+    - first:
+        name: _RimColor
+      second: {r: 0.26, g: 0.19, b: 0.16, a: 0}
     - first:
         name: _SkyTint
       second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
