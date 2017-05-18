@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Oxigem : MonoBehaviour {
+public class OxigenPlayer : MonoBehaviour {
 
     public float m_maxOxigen = 240;
     public float m_oxigen = 240;

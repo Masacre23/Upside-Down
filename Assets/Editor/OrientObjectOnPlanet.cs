@@ -6,7 +6,7 @@ using UnityEditor;
 public class OrientObjectOnPlanet : ScriptableWizard
 {
     
-    [MenuItem ("Additional Tools/Align radially with father")]
+    [MenuItem ("Additional Tools/Align Z radially with father")]
     static void AlignWithFather()
     {
         foreach (GameObject child in Selection.gameObjects)

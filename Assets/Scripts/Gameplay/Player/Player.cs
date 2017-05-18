@@ -55,7 +55,7 @@ public class Player : Character
     public bool m_throwButtonReleased = true;
 
     //Variables regarding player's health and oxigen
-    public Oxigem m_oxigen;
+    public OxigenPlayer m_oxigen;
 
 	//Effects
 	public GameObject m_jumpClouds;
@@ -94,7 +94,8 @@ public class Player : Character
         if (!(m_playerGravity = GetComponent<PlayerGravity>()))        
             m_playerGravity = gameObject.AddComponent<PlayerGravity>();
 
-        m_oxigen = GetComponent<Oxigem>();
+        if (!(m_oxigen = GetComponent<OxigenPlayer>()))
+            m_oxigen = gameObject.AddComponent<OxigenPlayer>();
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 

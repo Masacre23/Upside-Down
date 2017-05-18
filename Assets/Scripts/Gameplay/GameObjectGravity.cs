@@ -62,7 +62,7 @@ public class GameObjectGravity : MonoBehaviour {
                     float distance = newGravity.magnitude;
                     newGravity.Normalize();
 
-                    float newStrength = -planet.mass / (distance * distance);
+                    float newStrength = -planet.mass / (25.0f * distance);
                     if (newStrength < strength)
                     {
                         strength = newStrength;
