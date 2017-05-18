@@ -1968,7 +1968,7 @@ MonoBehaviour:
   p1: {fileID: 341528340}
   p2: {fileID: 1618923736}
   p3: {fileID: 482544845}
-  p4: {fileID: 813372333}
+  p4: {fileID: 491741028}
 --- !u!1001 &163746563
 Prefab:
   m_ObjectHideFlags: 0
@@ -2474,7 +2474,7 @@ Transform:
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.99999976}
   m_Children: []
   m_Father: {fileID: 1345878753}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -97.77, y: 1.6639862, z: -1.3410034}
 --- !u!1001 &205499884
 Prefab:
@@ -4840,6 +4840,63 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6b8728c6daad7949be8b86f33b99f01, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &389297982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 1904347742801778, guid: 8a707834ac582c8488ddc6d347077a8f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 389297983}
+  - component: {fileID: 389297985}
+  - component: {fileID: 389297984}
+  m_Layer: 15
+  m_Name: CheckPoint2 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &389297983
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 4350165607867534, guid: 8a707834ac582c8488ddc6d347077a8f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389297982}
+  m_LocalRotation: {x: -0.54018974, y: -0.05482897, z: -0.088925034, w: 0.83503366}
+  m_LocalPosition: {x: -12.499992, y: 26.430008, z: 49.779984}
+  m_LocalScale: {x: 0.20029005, y: 0.20029013, z: 0.20029005}
+  m_Children: []
+  m_Father: {fileID: 1345878753}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -63.314003, y: 0, z: 0}
+--- !u!114 &389297984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 114351318136639948, guid: 8a707834ac582c8488ddc6d347077a8f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389297982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93696a2515083e441990a64d8da293b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &389297985
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 65799259216323928, guid: 8a707834ac582c8488ddc6d347077a8f,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 389297982}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7, y: 6.5, z: 7}
+  m_Center: {x: 0.6, y: -3.2, z: 0}
 --- !u!1 &402020740
 GameObject:
   m_ObjectHideFlags: 0
@@ -9130,7 +9187,7 @@ GameObject:
   - component: {fileID: 848345145}
   m_Layer: 8
   m_Name: PROP_Ice_Cube01 (3)
-  m_TagString: Untagged
+  m_TagString: GravityWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9203,8 +9260,8 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 848345143}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 3.5, y: 3.5, z: 1}
   m_Center: {x: 0, y: 0, z: 1.69}
@@ -11824,19 +11881,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4835132909241564, guid: c5a9f7c7e7b2cb04392aebae1d7793fb, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.895535
+      value: 0.9397023
       objectReference: {fileID: 0}
     - target: {fileID: 4835132909241564, guid: c5a9f7c7e7b2cb04392aebae1d7793fb, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.116375685
+      value: 0.13190442
       objectReference: {fileID: 0}
     - target: {fileID: 4835132909241564, guid: c5a9f7c7e7b2cb04392aebae1d7793fb, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0.13131136
+      value: 0.11569862
       objectReference: {fileID: 0}
     - target: {fileID: 4835132909241564, guid: c5a9f7c7e7b2cb04392aebae1d7793fb, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.40893915
+      value: 0.29355517
       objectReference: {fileID: 0}
     - target: {fileID: 4835132909241564, guid: c5a9f7c7e7b2cb04392aebae1d7793fb, type: 2}
       propertyPath: m_RootOrder
@@ -13544,6 +13601,7 @@ Transform:
   m_Children:
   - {fileID: 341528340}
   - {fileID: 1618923736}
+  - {fileID: 389297983}
   - {fileID: 1476762266}
   - {fileID: 204937684}
   m_Father: {fileID: 0}
@@ -15017,7 +15075,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1345878753}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 57.675003, y: 5.11, z: 38.628002}
 --- !u!114 &1476762267
 MonoBehaviour:
@@ -15456,7 +15514,7 @@ GameObject:
   - component: {fileID: 1511433920}
   m_Layer: 8
   m_Name: PROP_Ice_Cube01 (4)
-  m_TagString: Untagged
+  m_TagString: GravityWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15515,8 +15573,8 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1511433919}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 3.5, y: 3.5, z: 1}
   m_Center: {x: 0, y: 0, z: 1.69}
@@ -15688,19 +15746,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.06639228
+      value: 0.06639227
       objectReference: {fileID: 0}
     - target: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.31928793
+      value: 0.3192879
       objectReference: {fileID: 0}
     - target: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.7173207
+      value: -0.7173206
       objectReference: {fileID: 0}
     - target: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.6157097
+      value: 0.61570966
       objectReference: {fileID: 0}
     - target: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c, type: 2}
       propertyPath: m_RootOrder
@@ -17011,7 +17069,7 @@ GameObject:
   - component: {fileID: 1638644411}
   m_Layer: 8
   m_Name: PROP_Ice_Cube01 (5)
-  m_TagString: Untagged
+  m_TagString: GravityWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17084,8 +17142,8 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1638644409}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
+  m_IsTrigger: 0
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 3.5, y: 3.5, z: 1}
   m_Center: {x: 0, y: 0, z: 1.69}
