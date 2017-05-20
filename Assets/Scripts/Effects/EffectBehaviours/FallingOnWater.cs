@@ -19,6 +19,12 @@ public class FallingOnWater : MonoBehaviour
             Vector3 direction = other.transform.position - transform.position;
 
             EffectsManager.Instance.GetEffect(m_prefabEffect, other.transform.position, direction.normalized, transform);
+
+            PlayerSoundEffects playerSound = other.gameObject.GetComponent<PlayerSoundEffects>();
+            if(playerSound != null)
+            {
+                playerSound.PlaySound(PlayerSoundEffects.SplashWater);
+            }
         } 
     }
 }

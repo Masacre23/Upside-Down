@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Ice
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 6b0539804dd76c14ab5d2bf3daedd291, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -17,6 +17,18 @@ Material:
     m_TexEnvs:
     - first:
         name: _BumpMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _BumpTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DepthTex
       second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -46,6 +58,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _GlitterTex
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _MainTex
       second:
         m_Texture: {fileID: 2800000, guid: 620f4a77258ceaf43b58eddd9d8fb588, type: 3}
@@ -70,6 +88,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
+        name: _Ramp
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
         name: _SpecGlossMap
       second:
         m_Texture: {fileID: 0}
@@ -77,17 +101,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: _Aniso
+      second: 0
+    - first:
         name: _BumpScale
       second: 1
     - first:
         name: _Cutoff
       second: 0.5
     - first:
+        name: _Depth
+      second: 1
+    - first:
         name: _DetailNormalMapScale
       second: 1
     - first:
         name: _DstBlend
       second: 0
+    - first:
+        name: _Glitter
+      second: 0.5
     - first:
         name: _GlossMapScale
       second: 0.479
@@ -110,8 +143,17 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
+        name: _RampPower
+      second: 1
+    - first:
+        name: _Shininess
+      second: 0.08
+    - first:
         name: _SmoothnessTextureChannel
       second: 0
+    - first:
+        name: _Specular
+      second: 1
     - first:
         name: _SpecularHighlights
       second: 1
