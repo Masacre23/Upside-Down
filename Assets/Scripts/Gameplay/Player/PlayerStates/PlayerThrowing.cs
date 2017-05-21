@@ -33,7 +33,7 @@ class PlayerThrowing : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeThrowing / m_maxTimeThrowing));
@@ -59,7 +59,7 @@ class PlayerThrowing : PlayerStates
         else
         {
             m_timeThrowing += timeStep;
-            if (!aimingObject)
+            if (aimingObject || jumping)
             {
                 m_player.m_currentState = m_player.m_grounded;
                 ret = true;
@@ -117,7 +117,6 @@ class PlayerThrowing : PlayerStates
         m_rigidBody.isKinematic = true;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
-        m_player.m_throwButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
     }
 

@@ -29,7 +29,7 @@ public class PlayerStates : MonoBehaviour
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public virtual bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public virtual bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         return false;
     }

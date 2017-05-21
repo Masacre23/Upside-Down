@@ -14,6 +14,7 @@ public class Player : Character
     float m_camHorizontal;
     float m_camVertical;
     bool m_jumping;
+    bool m_aimGravity;
     bool m_changeGravity;
     bool m_aimObject;
     bool m_throwObject;
@@ -48,11 +49,9 @@ public class Player : Character
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
     public bool m_reachedGround = true;
-    public bool m_changeButtonReleased = true;
 
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
-    public bool m_throwButtonReleased = true;
 
     //Variables regarding player's health and oxigen
     public OxigenPlayer m_oxigen;
@@ -154,21 +153,15 @@ public class Player : Character
         if (!m_negatePlayerInput)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
+            m_playerInput.GetButtons(ref m_jumping, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
         }
-
-        if (!m_changeGravity)
-            m_changeButtonReleased = true;
-
-        if (!m_aimObject)
-            m_throwButtonReleased = true;
 
         m_playerStopped = false;
 
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
 
         PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_aimGravity, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -320,6 +313,7 @@ public class Player : Character
         m_camHorizontal = 0.0f;
         m_camVertical = 0.0f;
         m_jumping = false;
+        m_aimGravity = false;
         m_changeGravity = false;
         m_aimObject = false;
         m_throwObject = false;

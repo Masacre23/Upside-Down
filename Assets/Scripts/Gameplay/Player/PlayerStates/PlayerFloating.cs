@@ -20,7 +20,7 @@ public class PlayerFloating : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_maxTimeFloating));
@@ -40,7 +40,7 @@ public class PlayerFloating : PlayerStates
             m_timeFloating += timeStep;
             RaycastHit target;
             bool legalTarget = m_player.m_playerGravity.ViableGravityChange(out target);
-            if (!changeGravity)
+            if (changeGravity)
             {
                 ret = true;
                 if (legalTarget)
@@ -53,7 +53,12 @@ public class PlayerFloating : PlayerStates
                 else
                     m_player.m_currentState = m_player.m_onAir;
             }
-        }
+            else if (aimGravity || jumping)
+            {
+                ret = true;
+                m_player.m_currentState = m_player.m_onAir;
+            }
+        }   
 
         return ret;
     }
@@ -66,7 +71,6 @@ public class PlayerFloating : PlayerStates
         m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
         m_player.m_reachedGround = false;
-        m_player.m_changeButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
     }
 
