@@ -20,7 +20,7 @@ public class PlayerFloating : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_maxTimeFloating));

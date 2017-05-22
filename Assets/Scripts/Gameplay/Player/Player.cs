@@ -14,6 +14,7 @@ public class Player : Character
     float m_camHorizontal;
     float m_camVertical;
     bool m_jumping;
+    bool m_pickObjects;
     bool m_aimGravity;
     bool m_changeGravity;
     bool m_aimObject;
@@ -52,6 +53,9 @@ public class Player : Character
 
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
+
+    //Variables regarding player picking up objects
+    public FloatingAroundPlayer m_floatingObjects;
 
     //Variables regarding player's health and oxigen
     public OxigenPlayer m_oxigen;
@@ -113,6 +117,8 @@ public class Player : Character
 
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
 
+        m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
+
         base.Awake();
     }
 
@@ -153,7 +159,7 @@ public class Player : Character
         if (!m_negatePlayerInput)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
+            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
         }
 
         m_playerStopped = false;
@@ -161,7 +167,7 @@ public class Player : Character
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
 
         PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_aimGravity, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimGravity, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -252,6 +258,12 @@ public class Player : Character
         }
     }
 
+    public void RotateModel(Vector3 forward)
+    {
+        Quaternion modelRotation = Quaternion.LookRotation(forward, m_modelTransform.up);
+        m_modelTransform.rotation = modelRotation;
+    }
+
     void UpdateAnimator()
     {
         m_animator.SetFloat("HorizontalVelocity", m_inputSpeed);
@@ -268,6 +280,14 @@ public class Player : Character
         floating.m_floatingPoint = transform.position + transform.up * height;
 
         m_groundCheckDistance = 0.1f;
+    }
+
+    public void PickObjects()
+    {
+        if (m_floatingObjects.CanPickMoreObejects())
+        {
+            m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
+        }
     }
 
     void OnCollisionEnter(Collision col)
@@ -313,6 +333,7 @@ public class Player : Character
         m_camHorizontal = 0.0f;
         m_camVertical = 0.0f;
         m_jumping = false;
+        m_pickObjects = false;
         m_aimGravity = false;
         m_changeGravity = false;
         m_aimObject = false;

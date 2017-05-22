@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 64529756377337378}
   - component: {fileID: 54663745462195074}
   - component: {fileID: 114066949807331738}
+  - component: {fileID: 114156339414107830}
   m_Layer: 14
   m_Name: PROP_Ice_Rock01
   m_TagString: GravityAffected
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1102b78b8528dd84d9c570aad8bacf04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rigidBody: {fileID: 0}
   m_gravity: {x: 0, y: 0, z: 0}
   m_planets: []
   m_canBeThrowed: 1
@@ -129,3 +131,20 @@ MonoBehaviour:
   m_changingToAttractor: 0
   m_maxTimeTravelled: 0.5
   m_ignoreGravity: 0
+  m_throwed: 0
+--- !u!114 &114156339414107830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880500523228294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4670d71b1a2d79a468c2b06cb3218baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canBePicked: 1
+  m_isFloating: 0
+  m_floatingSpeed: 20
+  m_maxTimeFloating: 10
+  m_rotationSpeed: 100

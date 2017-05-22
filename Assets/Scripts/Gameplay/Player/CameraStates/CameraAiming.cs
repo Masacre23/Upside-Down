@@ -39,6 +39,8 @@ public class CameraAiming : CameraStates {
             ret = true;
         }
 
+        m_variableCam.m_player.RotateModel(m_variableCam.m_camRay.direction);
+
         return ret;
     }
 

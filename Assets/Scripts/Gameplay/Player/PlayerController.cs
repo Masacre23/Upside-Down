@@ -23,10 +23,12 @@ public class PlayerController : MonoBehaviour
         camVertical = CrossPlatformInputManager.GetAxis("Mouse Y");
     }
 
-    public void GetButtons(ref bool jump, ref bool aimGravity, ref bool changeGravity, ref bool aimObjects, ref bool throwObjects, ref bool returnCam)
+    public void GetButtons(ref bool jump, ref bool pickObject, ref bool aimGravity, ref bool changeGravity, ref bool aimObjects, ref bool throwObjects, ref bool returnCam)
     {
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
             jump = true;
+        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+            pickObject = true;
         if (CrossPlatformInputManager.GetButtonDown("AimGravity"))
             aimGravity = true;
         if (CrossPlatformInputManager.GetButtonDown("AimObjects"))
