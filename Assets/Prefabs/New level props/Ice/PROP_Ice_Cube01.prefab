@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33877628572855182}
   - component: {fileID: 23561111577326520}
   - component: {fileID: 64017353166895390}
+  - component: {fileID: 65377434733340340}
   m_Layer: 0
   m_Name: PROP_Ice_Cube01
   m_TagString: Untagged
@@ -35,8 +36,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1463225161786154}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -178.15869, y: 1.8280368, z: -28.843018}
+  m_LocalRotation: {x: -0.9579979, y: -0.060311463, z: 0.26944888, w: -0.07745865}
+  m_LocalPosition: {x: -7.44, y: -3.87, z: -12.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,3 +95,15 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 018f214dafa39414fafa7bee5f56a913, type: 3}
+--- !u!65 &65377434733340340
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1463225161786154}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5, y: 3.5, z: 1}
+  m_Center: {x: 0, y: 0, z: 1.69}
