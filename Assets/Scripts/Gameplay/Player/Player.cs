@@ -18,22 +18,25 @@ public class Player : Character
     bool m_aimGravity;
     bool m_changeGravity;
     bool m_aimObject;
-    bool m_throwObject;
+    bool m_throwObjectButtonDown;
     bool m_returnCam;
+
+    bool m_throwObjectButtonUp = true;
+
     public bool m_negatePlayerInput;
 
     //Variables regarding player state
     public PlayerStates m_currentState;
-    public PlayerStates m_grounded;
-    public PlayerStates m_onAir;
-    public PlayerStates m_throwing;
-    public PlayerStates m_floating;
-    public PlayerStates m_changing;
+    [HideInInspector] public PlayerStates m_grounded;
+    [HideInInspector] public PlayerStates m_onAir;
+    [HideInInspector] public PlayerStates m_aimToThrow;
+    [HideInInspector] public PlayerStates m_floating;
+    [HideInInspector] public PlayerStates m_changing;
 
     //General Info variables
     Transform m_modelTransform;
-    public VariableCam m_camController;
-    public PlayerGravity m_playerGravity;
+    [HideInInspector] public VariableCam m_camController;
+    [HideInInspector] public PlayerGravity m_playerGravity;
 
     //Variables regarding player movement
     public bool m_freezeMovement;
@@ -46,6 +49,7 @@ public class Player : Character
     public float m_slideSpeed = 2.0f;
     private float m_timeSliding = 0.0f;
     private Vector3 m_rigidBodyTotal = Vector3.zero;
+    [HideInInspector] public bool m_doubleJumping = false;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -53,18 +57,20 @@ public class Player : Character
 
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
+    public float m_throwForce = 20.0f;
+    [HideInInspector] public Transform m_throwAimOrigin;
 
     //Variables regarding player picking up objects
-    public FloatingAroundPlayer m_floatingObjects;
+    [HideInInspector] public FloatingAroundPlayer m_floatingObjects;
 
     //Variables regarding player's health and oxigen
-    public OxigenPlayer m_oxigen;
+    [HideInInspector] public OxigenPlayer m_oxigen;
 
 	//Effects
 	public GameObject m_jumpClouds;
 	public GameObject m_runClouds;
 
-    public Dictionary<string, TargetDetector> m_targetsDetectors;
+    [HideInInspector] public Dictionary<string, TargetDetector> m_targetsDetectors;
     float m_inputSpeed;
     float m_runSpeed;
 
@@ -86,9 +92,9 @@ public class Player : Character
         if (!m_changing)
             m_changing = gameObject.AddComponent<PlayerChanging>();
 
-        m_throwing = gameObject.GetComponent<PlayerThrowing>();
-        if (!m_throwing)
-            m_throwing = gameObject.AddComponent<PlayerThrowing>();
+        m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
+        if (!m_aimToThrow)
+            m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
 
         m_currentState = m_onAir;
 
@@ -118,6 +124,8 @@ public class Player : Character
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
 
         m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
+
+        m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
 
         base.Awake();
     }
@@ -159,7 +167,23 @@ public class Player : Character
         if (!m_negatePlayerInput)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObject, ref m_returnCam);
+            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
+
+            if (m_throwObjectButtonUp)
+            {
+                if (m_throwObjectButtonDown)
+                    m_throwObjectButtonUp = false;
+            }
+            else
+            {
+                if (m_throwObjectButtonDown)
+                    m_throwObjectButtonDown = false;
+                else
+                    m_throwObjectButtonUp = true;
+            }
+
+            if (m_throwObjectButtonDown)
+                m_throwObjectButtonUp = false;
         }
 
         m_playerStopped = false;
@@ -167,7 +191,7 @@ public class Player : Character
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
 
         PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimGravity, m_changeGravity, m_aimObject, m_throwObject, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimGravity, m_changeGravity, m_aimObject, m_throwObjectButtonDown, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -187,6 +211,7 @@ public class Player : Character
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
 
+        m_doubleJumping = false;
         ResetInput();
     }
 
@@ -270,7 +295,8 @@ public class Player : Character
         m_animator.SetFloat("AirVelocity", Vector3.Dot(m_rigidBody.velocity,transform.up));
         m_animator.SetBool("Grounded", m_isGrounded);
         m_animator.SetBool("Jump", m_isJumping);
-        m_animator.SetBool("Throwing", m_currentState == m_throwing);
+        m_animator.SetBool("DoubleJump", m_doubleJumping);
+        m_animator.SetBool("Throwing", m_currentState == m_aimToThrow);
     }
 
     public void SetFloatingPoint(float height)
@@ -284,10 +310,35 @@ public class Player : Character
 
     public void PickObjects()
     {
-        if (m_floatingObjects.CanPickMoreObejects())
-        {
+        if (m_floatingObjects.CanPickMoreObjects())
             m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
-        }
+    }
+
+    public void ThrowObjectsManager(bool hasThrown, bool thirdPerson)
+    {
+        if (m_floatingObjects.HasObjectsToThrow())
+        {
+            if (thirdPerson)
+            {
+                RaycastHit targetHit;
+                bool hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
+                Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
+                if (hasTarget)
+                {
+                    m_floatingObjects.SetTarget(targetHit.point);
+                    if (hasThrown)
+                        m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
+                }
+                else
+                {
+                    m_floatingObjects.UnsetTarget();
+                    if (hasThrown)
+                        m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+                }    
+            }
+        } 
+        else
+            m_floatingObjects.UnsetTarget();
     }
 
     void OnCollisionEnter(Collision col)
@@ -337,7 +388,7 @@ public class Player : Character
         m_aimGravity = false;
         m_changeGravity = false;
         m_aimObject = false;
-        m_throwObject = false;
+        m_throwObjectButtonDown = false;
         m_returnCam = false;
     }
 

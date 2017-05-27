@@ -37,13 +37,14 @@ public class PlayerGrounded : PlayerStates
         }
         else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
         {
-            m_player.m_currentState = m_player.m_throwing;
+            m_player.m_currentState = m_player.m_aimToThrow;
             ret = true;
         }
         else
         {
             m_player.UpdateUp();
             m_player.Move(timeStep);
+            m_player.ThrowObjectsManager(throwing, true);
             if (pickObjects)
             {
                 m_player.PickObjects();

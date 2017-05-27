@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerOnAir : PlayerStates
 {
+    private bool m_doubleJump = false;
 
-    private bool m_doulbeJump = false;
     public override void Start()
     {
         base.Start();
@@ -22,10 +22,11 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        if (jumping && !m_doulbeJump)
+        if (jumping && !m_doubleJump)
         {
             m_player.Jump();
-            m_doulbeJump = true;
+            m_doubleJump = true;
+            m_player.m_doubleJumping = true;
             m_player.m_oxigen.LostOxigem(20);
         }
         if (m_player.m_reachedGround && (aimGravity || changeGravity))
@@ -42,11 +43,6 @@ public class PlayerOnAir : PlayerStates
             if (m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_grounded;
-                //if(m_player.rigidbody. > 20)
-                //{
-                //    m_player.m_damageRecive = true;
-                //    m_player.m_damagePower = (int)m_player.m_moveSpeed - 20;
-                //}
                 ret = true;
             }
         }
@@ -56,11 +52,10 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnEnter()
     {
-        m_doulbeJump = false;   
+        m_doubleJump = false;   
     }
 
     public override void OnExit()
     {
-
     }
 }

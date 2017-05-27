@@ -65,7 +65,7 @@ public class CameraAiming : CameraStates {
             float minimumDistance = m_variableCam.m_targetLockDistance * m_variableCam.m_targetLockDistance;
             foreach (GameObject target in m_variableCam.m_player.m_targetsDetectors[m_tagTarget].m_targets)
             {
-                GameObject toThrow = ((PlayerThrowing)m_variableCam.m_player.m_throwing).NextObjectThrow();
+                GameObject toThrow = ((PlayerThrowing)m_variableCam.m_player.m_aimToThrow).NextObjectThrow();
                 if (toThrow && toThrow != target)
                 {
                     float distance = Vector3.Cross(m_variableCam.m_camRay.direction, target.transform.position - m_variableCam.m_camRay.origin).sqrMagnitude;

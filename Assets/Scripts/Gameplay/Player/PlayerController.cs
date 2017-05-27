@@ -7,6 +7,7 @@ using UnityStandardAssets.CrossPlatformInput;
 //Input for debug mode should be dealt in DebugMode class. Input for menus should be dealt in LevelManager class.
 public class PlayerController : MonoBehaviour
 {
+    int count = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -45,5 +46,6 @@ public class PlayerController : MonoBehaviour
         throwObjects = leftTrigger > 0 ? true : false;
         if (!throwObjects && CrossPlatformInputManager.GetButton("ThrowObjects"))
             throwObjects = true;
+
     }
 }

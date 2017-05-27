@@ -48,10 +48,7 @@ public class ThrowableObject : MonoBehaviour
             // Checking if the object should fall
             m_timeFloating += Time.deltaTime;
             if (m_timeFloating > m_maxTimeFloating)
-            {
                 StopFloating();
-                m_timeFloating = 0.0f;
-            }
         }
 
         //Checks if the object can damage to enemies. When its velocity falls below a certain value, it stops to deal damage if collided.
@@ -106,6 +103,8 @@ public class ThrowableObject : MonoBehaviour
             m_collider.enabled = false;
 
         m_rotationRandomVector = new Vector3(Random.value, Random.value, Random.value).normalized;
+
+        m_timeFloating = 0.0f;
     }
 
     //This function should be called when an object stop floating around the character

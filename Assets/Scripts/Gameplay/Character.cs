@@ -30,7 +30,7 @@ public class Character : MonoBehaviour {
     public DamageStates m_dead;
 
     protected float m_groundCheckDistance;
-    protected float m_defaultGroundCheckDistance = 0.4f;
+    protected float m_defaultGroundCheckDistance = 0.3f;
 
     protected bool m_isJumping = false;
 
@@ -129,10 +129,11 @@ public class Character : MonoBehaviour {
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
     public void Jump()
     {
-        m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * m_jumpForce;
+        float fallVelocity = Vector3.Dot(m_gravityOnCharacter.m_gravity, m_rigidBody.velocity);
+        m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * (m_jumpForce - fallVelocity);
         m_isGrounded = false;
         m_isJumping = true;
-        m_groundCheckDistance = 0.1f;
+        m_groundCheckDistance = 0.01f;
         PlayerSoundEffects m_soundEffects = GetComponent<PlayerSoundEffects>();
         if(m_soundEffects != null)
         {
