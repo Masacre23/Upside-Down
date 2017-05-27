@@ -58,6 +58,7 @@ public class Player : Character
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
     public float m_throwForce = 20.0f;
+    public float m_angleEnemyDetection = 30.0f;
     [HideInInspector] public Transform m_throwAimOrigin;
 
     //Variables regarding player picking up objects
@@ -314,31 +315,62 @@ public class Player : Character
             m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
     }
 
-    public void ThrowObjectsManager(bool hasThrown, bool thirdPerson)
+    public void ThrowObjectsThirdPerson(bool hasThrown)
     {
         if (m_floatingObjects.HasObjectsToThrow())
         {
-            if (thirdPerson)
+            GameObject targetEnemy = FixingOnEnemy(m_throwAimOrigin, m_angleEnemyDetection);
+
+            RaycastHit targetHit;
+            bool hasTarget = false;
+            if (targetEnemy != null)
             {
-                RaycastHit targetHit;
-                bool hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
-                Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
-                if (hasTarget)
-                {
-                    m_floatingObjects.SetTarget(targetHit.point);
-                    if (hasThrown)
-                        m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
-                }
-                else
-                {
-                    m_floatingObjects.UnsetTarget();
-                    if (hasThrown)
-                        m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
-                }    
+                Vector3 toEnemy = targetEnemy.transform.position - m_throwAimOrigin.position;
+                hasTarget = Physics.Raycast(m_throwAimOrigin.position, toEnemy.normalized, out targetHit, m_throwDetectionRange);
             }
-        } 
+            else
+            {
+                hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
+                Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
+            }
+
+            if (hasTarget)
+            {
+                m_floatingObjects.SetTarget(targetHit.point);
+                if (hasThrown)
+                    m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
+            }
+            else
+            {
+                m_floatingObjects.UnsetTarget();
+                if (hasThrown)
+                    m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+            }
+        }
         else
             m_floatingObjects.UnsetTarget();
+    }
+
+    public GameObject FixingOnEnemy(Transform origin, float angleDetection)
+    {
+        GameObject closestTarget = null;
+        float closestDistance = 10000.0f;
+        foreach (GameObject target in m_targetsDetectors["Enemy"].m_targets)
+        {
+            if (!m_floatingObjects.EnemyIsFloating(target))
+            {
+                Vector3 toTarget = target.transform.position - origin.position;
+                float distance = toTarget.sqrMagnitude;
+                float thisAngle = Vector3.Angle(origin.forward, toTarget);
+                if (thisAngle < angleDetection && distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = target;
+                }
+            }
+        }
+
+        return closestTarget;
     }
 
     void OnCollisionEnter(Collision col)

@@ -44,7 +44,7 @@ public class PlayerGrounded : PlayerStates
         {
             m_player.UpdateUp();
             m_player.Move(timeStep);
-            m_player.ThrowObjectsManager(throwing, true);
+            m_player.ThrowObjectsThirdPerson(throwing);
             if (pickObjects)
             {
                 m_player.PickObjects();
@@ -71,5 +71,6 @@ public class PlayerGrounded : PlayerStates
     public override void OnExit()
     {
 		m_player.m_runClouds.GetComponent<ParticleSystem> ().Stop();
+        m_player.m_floatingObjects.UnsetTarget();
     }
 }

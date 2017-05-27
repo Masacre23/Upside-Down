@@ -255,4 +255,17 @@ public class FloatingAroundPlayer : MonoBehaviour
     {
         return m_pickedObjects.Count > 0;
     }
+
+    public bool EnemyIsFloating(GameObject enemy)
+    {
+        bool ret = false;
+
+        foreach (GameObject objectFloating in m_pickedObjects.Values)
+        {
+            if (objectFloating == enemy)
+                ret = true;
+        }
+
+        return ret;
+    }
 }

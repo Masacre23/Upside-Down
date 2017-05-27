@@ -13,6 +13,7 @@ public class CameraAiming : CameraStates {
     public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
     public float m_tiltMin = 45f;
     public float m_aimSpeed = 3f;
+    public float m_minAngleToTarget = 15.0f;
     public Vector3 m_camPosition = new Vector3(0.0f, 1.3f, 0.0f);
 
     public override void Start()
@@ -59,31 +60,25 @@ public class CameraAiming : CameraStates {
     void HandleAim(float x, float y, float deltaTime)
     {
         float aimStrength = x * x + y * y;
+        //If strength < the minimum input to unlock
         if (aimStrength < m_variableCam.m_targetBreakLock * m_variableCam.m_targetBreakLock)
         {
-            GameObject closestTarget = null;
-            float minimumDistance = m_variableCam.m_targetLockDistance * m_variableCam.m_targetLockDistance;
-            foreach (GameObject target in m_variableCam.m_player.m_targetsDetectors[m_tagTarget].m_targets)
-            {
-                GameObject toThrow = ((PlayerThrowing)m_variableCam.m_player.m_aimToThrow).NextObjectThrow();
-                if (toThrow && toThrow != target)
-                {
-                    float distance = Vector3.Cross(m_variableCam.m_camRay.direction, target.transform.position - m_variableCam.m_camRay.origin).sqrMagnitude;
-                    if (distance < minimumDistance)
-                    {
-                        closestTarget = target;
-                        minimumDistance = distance;
-                    }
-                }  
-            }
+            GameObject closestTarget = m_variableCam.m_player.FixingOnEnemy(Camera.main.transform, m_minAngleToTarget);
 
+            //If its close to a target
             if (closestTarget)
             {
-                m_variableCam.m_cam.LookAt(closestTarget.transform, m_variableCam.m_player.transform.up);
+                Vector3 camToTarget = closestTarget.transform.position - Camera.main.transform.position;
+                Quaternion targetRotation = Quaternion.LookRotation(camToTarget.normalized, Camera.main.transform.up);
+                m_variableCam.m_cam.rotation = Quaternion.Lerp(m_variableCam.m_cam.rotation, targetRotation, Time.deltaTime);
+                m_lookAngle = 0.0f;
+                m_tiltAngle = 0.0f;
             }
+            //Deal normal rotation
             else
                 CameraRotation(x, y, deltaTime);
         }
+        //Deal normal rotation
         else
             CameraRotation(x, y, deltaTime);
     }
