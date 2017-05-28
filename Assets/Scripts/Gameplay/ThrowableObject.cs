@@ -16,7 +16,7 @@ public class ThrowableObject : MonoBehaviour
     Transform m_floatingPoint;
     FloatingAroundPlayer m_targetPlayer;
 
-    bool m_canDamage = false;
+    [HideInInspector] public bool m_canDamage = false;
     bool m_applyThrownForce = false;
     Vector3 m_thrownForce = Vector3.zero;
     float m_minVelocityDamage = 2.0f;

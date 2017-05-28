@@ -2,32 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour {
+public class Character : MonoBehaviour
+{
 
-    public bool m_isThrowable = false;
     public float m_maxHealth = 120.0f;
     public float m_health = 120.0f;
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
     public float m_jumpForce = 4.0f;
     public float m_lerpSpeed = 10.0f;
-    public Transform m_checkPoint;
 
     public DamageData m_damage;
 
-	public Animator m_animator;
-    public GameObjectGravity m_gravityOnCharacter;
-    public Rigidbody m_rigidBody;
-    public CapsuleCollider m_capsule;
-    public float m_capsuleHeight;
-
-    //Variables regarding damage state
-    public DamageStates m_damageState;
-    public DamageStates m_recive;
-    public DamageStates m_animation;
-    public DamageStates m_respawn;
-    public DamageStates m_notRecive;
-    public DamageStates m_dead;
+    [HideInInspector] public Animator m_animator;
+    [HideInInspector] public GameObjectGravity m_gravityOnCharacter;
+    [HideInInspector] public Rigidbody m_rigidBody;
+    [HideInInspector] public CapsuleCollider m_capsule;
+    [HideInInspector] public float m_capsuleHeight;
 
     protected float m_groundCheckDistance;
     protected float m_defaultGroundCheckDistance = 0.3f;
@@ -39,24 +30,12 @@ public class Character : MonoBehaviour {
     public virtual void Awake()
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
-        {
             m_gravityOnCharacter = gameObject.AddComponent<GameObjectGravity>();
-            m_gravityOnCharacter.m_canBeThrowed = m_isThrowable;
-        }   
 
 		if(tag == "Player")
             m_animator = GetComponent<Animator>();
         else
 			m_animator = transform.GetChild(0).GetComponent<Animator> ();
-
-        m_recive = gameObject.AddComponent<DamageRecive>();
-        m_animation = gameObject.AddComponent<DamageAnimation>();
-        m_respawn = gameObject.AddComponent<DamageRespawn>();
-        m_notRecive = gameObject.AddComponent<DamageNotRecive>();
-        m_dead = gameObject.AddComponent<DamageDead>();
-
-        m_damage = new DamageData();
-        m_damageState = m_recive;
     }
 
     // Use this for initialization
@@ -85,15 +64,7 @@ public class Character : MonoBehaviour {
     // This method should control character's movements
     public virtual void FixedUpdate()
     {
-        DamageStates previousState = m_damageState;
-        if (m_damageState.OnUpdate(m_damage))
-        {
-            previousState.OnExit();
-            m_damageState.OnEnter();
-        }
-        m_damage.m_damage = 0;
-        m_damage.m_recive = false;
-}
+    }
 
     // This function checks if the character is currently touching a collider below their "feet"
     public bool CheckGroundStatus()

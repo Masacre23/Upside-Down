@@ -22,9 +22,9 @@ public class EnemyArea : MonoBehaviour
 			{
 				Enemy enemy = go.GetComponent<Enemy> ();
 				enemy.player = col.gameObject;
-				enemy.m_currentState.OnExit ();
+				enemy.m_currentState.OnExit();
 				enemy.m_currentState = enemy.m_Following;
-				enemy.m_currentState.OnEnter ();
+				enemy.m_currentState.OnEnter();
 			}
 		}
 
@@ -41,9 +41,9 @@ public class EnemyArea : MonoBehaviour
 			foreach(GameObject go in enemies)
 			{
 				Enemy enemy = go.GetComponent<Enemy>();
-				enemy.m_currentState.OnExit ();
+				enemy.m_currentState.OnExit();
 				enemy.m_currentState = enemy.m_Idle;
-				enemy.m_currentState.OnEnter ();
+				enemy.m_currentState.OnEnter();
 			}
 		}
 

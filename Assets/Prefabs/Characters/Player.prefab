@@ -290,6 +290,10 @@ GameObject:
   - component: {fileID: 82996679614651898}
   - component: {fileID: 114017894589256794}
   - component: {fileID: 114804540859633044}
+  - component: {fileID: 114776814694138904}
+  - component: {fileID: 114465086514618156}
+  - component: {fileID: 114504887055471440}
+  - component: {fileID: 114719795294375054}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -2653,6 +2657,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoints: []
   fadePanel: {fileID: 0}
+--- !u!114 &114465086514618156
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7a63a8453161334fbc54ee4b835b18f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 1
+--- !u!114 &114504887055471440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7b69087142d6574f9cb91476de06261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 2
 --- !u!114 &114582996899756736
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2677,6 +2705,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_tag: GravityWall
   m_targets: []
+--- !u!114 &114719795294375054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c141ee49deec04183e0e3f305481c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 0
+--- !u!114 &114776814694138904
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1223869246188240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a4a8b7f97993c42b6e254b7873a824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_type: 3
 --- !u!114 &114791943455659006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2740,6 +2792,12 @@ MonoBehaviour:
   m_aimToThrow: {fileID: 0}
   m_floating: {fileID: 0}
   m_changing: {fileID: 0}
+  m_playerDamageState: {fileID: 0}
+  m_vulnerable: {fileID: 0}
+  m_invulnerable: {fileID: 0}
+  m_receivingDamage: {fileID: 0}
+  m_deadState: {fileID: 0}
+  m_playerRespawn: {fileID: 0}
   m_camController: {fileID: 0}
   m_playerGravity: {fileID: 0}
   m_freezeMovement: 0

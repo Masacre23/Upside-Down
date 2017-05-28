@@ -27,7 +27,7 @@ public class PlayerOnAir : PlayerStates
             m_player.Jump();
             m_doubleJump = true;
             m_player.m_doubleJumping = true;
-            m_player.m_oxigen.LostOxigem(20);
+            m_player.m_oxigen.LostOxigen(20);
         }
         if (m_player.m_reachedGround && (aimGravity || changeGravity))
         {

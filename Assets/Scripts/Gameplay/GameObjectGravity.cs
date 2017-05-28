@@ -12,7 +12,6 @@ public class GameObjectGravity : MonoBehaviour {
     public RaycastHit m_attractor;
     public Vector3 m_gravity;
     public List<Rigidbody> m_planets;
-    public bool m_canBeThrowed = true;
     public bool m_planetGravity;
     public bool m_changingToAttractor;
     public float m_maxTimeTravelled = 0.5f;
@@ -122,29 +121,6 @@ public class GameObjectGravity : MonoBehaviour {
         }
     }
 
-    //This function sets the GravityObject as a throwing object by the player. 
-    public void SetAsThrowingObject(GameObject player)
-    {
-        if(player != null)
-        {
-            this.transform.parent = player.transform;
-            this.transform.localEulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-            this.transform.localPosition = new Vector3(0.0f, 1.0f, 1.0f);
-            this.m_oldGravity = this.m_gravity;
-            this.m_gravity = new Vector3(0.0f, 0.0f, 0.0f);
-            HingeJoint hingeJoint = this.gameObject.AddComponent<HingeJoint>();
-            hingeJoint.connectedBody = player.GetComponent<Rigidbody>();
-        }
-        else
-        {
-            HingeJoint hingeJoint = this.gameObject.GetComponent<HingeJoint>();
-            Destroy(hingeJoint);
-            this.transform.parent = null;
-            this.m_gravity = this.m_oldGravity;
-        }
-       
-    }
-
     //This function is called when we want a object to float. Usually called when player is floating while changing gravity
     //or when an object is floating due the player throwing them.
     public void Float(Vector3 initialPosition, Vector3 finalPosition, float percentage)
@@ -161,19 +137,5 @@ public class GameObjectGravity : MonoBehaviour {
         Vector3 speed = distance / Time.fixedDeltaTime;
         speed = speedFactor > 1.0f ? speed : speed * speedFactor;
         m_rigidBody.velocity = speed;
-    }
-
-    //This function is called when a object is thrown by the player, using PlayerThrowing state.
-    public void ThrowObject(Vector3 throwForce, float distance)
-    {
-        m_rigidBody.isKinematic = false;
-        m_thrownForce = true;
-        m_impulseForce = throwForce;
-        m_ignoreGravity = true;
-        m_throwed = true;
-
-        Enemy enemy = GetComponent<Enemy>();
-        if (enemy)
-            enemy.m_isFloating = false;
     }
 }

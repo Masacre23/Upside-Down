@@ -23,7 +23,7 @@ public class TargetDetector : MonoBehaviour {
         switch (m_tag)
         {
             case "Enemy":
-                SetUpCollider(new Vector3(0, m_player.m_capsuleHeight / 2, 0), m_player.m_throwDetectionRange);
+                SetUpCollider(new Vector3(0, m_player.m_capsuleHeight / 2, 0), 10.0f);
                 m_player.m_targetsDetectors.Add(m_tag, this);
                 break;
             case "GravityWall":
@@ -58,7 +58,7 @@ public class TargetDetector : MonoBehaviour {
             if (m_tag.Contains("Enemy"))
             {
                 Enemy enemy = col.gameObject.GetComponent<Enemy>();
-                if (enemy && enemy.m_damageState != enemy.m_dead)
+                if (enemy && enemy.m_health > 0.0f)
                 {
                     m_targets.Add(col.gameObject);
                 }       

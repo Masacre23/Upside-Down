@@ -188,6 +188,8 @@ GameObject:
   - component: {fileID: 135294875260527344}
   - component: {fileID: 136241918495405060}
   - component: {fileID: 114666747388420396}
+  - component: {fileID: 114193801501227358}
+  - component: {fileID: 114919453644291758}
   m_Layer: 10
   m_Name: EnemySnailIce
   m_TagString: EnemySnail
@@ -3369,6 +3371,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114193801501227358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092291310857354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4670d71b1a2d79a468c2b06cb3218baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canBePicked: 0
+  m_isFloating: 0
+  m_floatingSpeed: 10
+  m_maxTimeFloating: 10
+  m_rotationSpeed: 100
+  m_canDamage: 0
 --- !u!114 &114666747388420396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3390,6 +3409,7 @@ MonoBehaviour:
   m_animator: {fileID: 95058456309787788}
   m_gravityOnCharacter: {fileID: 0}
   m_rigidBody: {fileID: 0}
+  m_capsule: {fileID: 0}
   m_capsuleHeight: 0
   m_damageState: {fileID: 0}
   m_recive: {fileID: 0}
@@ -3401,9 +3421,32 @@ MonoBehaviour:
   m_Idle: {fileID: 0}
   m_Following: {fileID: 0}
   m_Changing: {fileID: 0}
+  m_ReceivingDamage: {fileID: 0}
+  m_Dead: {fileID: 0}
   m_speed: 2
   m_patrollingArea: {fileID: 0}
+  m_isFloating: 0
   player: {fileID: 0}
+--- !u!114 &114919453644291758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092291310857354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1102b78b8528dd84d9c570aad8bacf04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rigidBody: {fileID: 0}
+  m_gravity: {x: 0, y: 0, z: 0}
+  m_planets: []
+  m_canBeThrowed: 1
+  m_planetGravity: 0
+  m_changingToAttractor: 0
+  m_maxTimeTravelled: 0.5
+  m_ignoreGravity: 0
+  m_throwed: 0
 --- !u!135 &135294875260527344
 SphereCollider:
   m_ObjectHideFlags: 1

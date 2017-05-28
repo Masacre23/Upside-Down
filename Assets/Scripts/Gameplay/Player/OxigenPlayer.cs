@@ -29,8 +29,8 @@ public class OxigenPlayer : MonoBehaviour {
         HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
     }
 
-    public void LostOxigem(float oxigem)
+    public void LostOxigen(float oxigen)
     {
-        m_lostOxigen = oxigem;
+        m_lostOxigen = oxigen;
     }
 }

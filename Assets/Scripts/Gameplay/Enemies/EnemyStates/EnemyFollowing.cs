@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFollowing : EnemyStates {
-	//public GameObject player;
+public class EnemyFollowing : EnemyStates
+{
+
 	int speed;
 	int damp = 6;
 	public bool canChange = true;
@@ -11,37 +12,47 @@ public class EnemyFollowing : EnemyStates {
 	float capsuleRadius;
 	public Vector3 target;
 
-	public override void Start () {
-		base.Start ();
-	}
+	public override void Start ()
+    {
+		base.Start();
+        m_type = States.FOLLOWING;
+    }
 
-	public override bool OnUpdate () {
+	public override bool OnUpdate (DamageData data)
+    {
 		bool ret = false;
 
 		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position);
 		m_enemy.m_animator.SetFloat ("PlayerDistance", distance);
 
-		if (m_enemy.m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
+		if (m_enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) 
 		{
-			Move ();
+			Move();
 		}
-		return ret;
+
+        if (data.m_recive)
+        {
+            ret = true;
+            m_enemy.DamageManager(data);
+        }
+
+        return ret;
 	}
 
 	public override void OnEnter()
 	{
 		m_type = States.FOLLOWING;
-		m_enemy.m_animator.SetBool ("PlayerDetected", true);
+		m_enemy.m_animator.SetBool("PlayerDetected", true);
 
 		speed = m_enemy.m_speed;
 
-		radiusCollider = m_enemy.GetComponent<SphereCollider> ().radius;
-		m_enemy.GetComponent<SphereCollider> ().radius = 0;
+		radiusCollider = m_enemy.GetComponent<SphereCollider>().radius;
+		m_enemy.GetComponent<SphereCollider>().radius = 0;
 	}
 
 	public override void OnExit()
 	{
-		m_enemy.GetComponent<SphereCollider> ().radius = radiusCollider;
+		m_enemy.GetComponent<SphereCollider>().radius = radiusCollider;
 	}
 
 	public void Move()

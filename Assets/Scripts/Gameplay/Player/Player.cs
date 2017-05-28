@@ -33,6 +33,19 @@ public class Player : Character
     [HideInInspector] public PlayerStates m_floating;
     [HideInInspector] public PlayerStates m_changing;
 
+    //Variables regarding player damage state
+    public PlayerDamageStates m_playerDamageState;
+    [HideInInspector] public PlayerDamageStates m_vulnerable;
+    [HideInInspector] public PlayerDamageStates m_invulnerable;
+    [HideInInspector] public PlayerDamageStates m_receivingDamage;
+    [HideInInspector] public PlayerDamageStates m_deadState;
+    DamageData m_damageData;
+    [HideInInspector] public PlayerRespawn m_playerRespawn;
+    public Transform m_checkPoint;
+
+    [HideInInspector] public bool m_damageForceToApply = false;
+    [HideInInspector] public Vector3 m_damageForce;
+
     //General Info variables
     Transform m_modelTransform;
     [HideInInspector] public VariableCam m_camController;
@@ -98,6 +111,28 @@ public class Player : Character
             m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
 
         m_currentState = m_onAir;
+
+        m_vulnerable = gameObject.GetComponent<PlayerVulnerable>();
+        if (!m_vulnerable)
+            m_vulnerable = gameObject.AddComponent<PlayerVulnerable>();
+
+        m_invulnerable = gameObject.GetComponent<PlayerInvulnerable>();
+        if (!m_invulnerable)
+            m_invulnerable = gameObject.AddComponent<PlayerInvulnerable>();
+
+        m_receivingDamage = gameObject.GetComponent<PlayerReceivingDamage>();
+        if (!m_receivingDamage)
+            m_receivingDamage = gameObject.AddComponent<PlayerReceivingDamage>();
+
+        m_deadState = gameObject.GetComponent<PlayerDead>();
+        if (!m_deadState)
+            m_deadState = gameObject.AddComponent<PlayerDead>();
+
+        m_playerDamageState = m_vulnerable;
+
+        m_damageData = new DamageData();
+
+        m_playerRespawn = gameObject.GetComponent<PlayerRespawn>();
 
         if (!(m_playerInput = GetComponent<PlayerController>()))
             m_playerInput = gameObject.AddComponent<PlayerController>();
@@ -212,11 +247,19 @@ public class Player : Character
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
 
+        PlayerDamageStates previousDamageState = m_playerDamageState;
+        if (m_playerDamageState.OnUpdate(m_damageData))
+        {
+            previousDamageState.OnExit(m_damageData);
+            m_playerDamageState.OnEnter(m_damageData);
+        }
+        m_damageData.ResetDamageData();
+
         m_doubleJumping = false;
         ResetInput();
     }
 
-    public void ChangeCurrntStateToOnAir()
+    public void ChangeCurrentStateToOnAir()
     {
         PlayerStates previousState = m_currentState;
         m_currentState = m_onAir;
@@ -235,14 +278,18 @@ public class Player : Character
         {
             m_damage.m_damage = (int)m_health + 1;
             m_damage.m_recive = true;
-            //m_damage.m_respawn = true;
         }
         //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
         //m_rigidBodyTotal = Vector3.zero;
+        if (m_damageForceToApply)
+        {
+            m_rigidBody.AddForce(m_damageForce, ForceMode.VelocityChange);
+            m_damageForceToApply = false;
+        }
+            
     }
 
     //This functions controls the character movement and the model orientation.
-    //TODO: Probably we will need to change this function when we have the character's animations.
     public void Move(float timeStep)
     {
         if (!m_freezeMovement)
@@ -278,8 +325,7 @@ public class Player : Character
                 else
                 {
                     m_lastMovement = Vector3.zero;
-                }
-                
+                }  
             }
         }
     }
@@ -376,14 +422,14 @@ public class Player : Character
     void OnCollisionEnter(Collision col)
 	{
         //m_damage.m_force = -col.relativeVelocity * 10.0f;
-        base.m_damage.m_force = -col.relativeVelocity.normalized * 2.0f;
+        m_damageData.m_force = -col.relativeVelocity.normalized * 2.0f;
 
         int harmfulTerrain = LayerMask.NameToLayer("HarmfulTerrain");
         if (col.collider.gameObject.layer == harmfulTerrain)
         {
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 20;
-            base.m_damage.m_respawn = true;
+            m_damageData.m_recive = true;
+            m_damageData.m_damage = 20;
+            m_damageData.m_respawn = true;
             m_negatePlayerInput = true;
         }
 
@@ -393,8 +439,8 @@ public class Player : Character
 			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo(0).IsName ("Attack"))
 			{
-                base.m_damage.m_recive = true;
-                base.m_damage.m_damage = 20;
+                m_damageData.m_recive = true;
+                m_damageData.m_damage = 20;
             }
 		}
 
@@ -403,8 +449,8 @@ public class Player : Character
         {
             if (col.relativeVelocity.magnitude > 2.0f)
             {
-                base.m_damage.m_recive = true;
-                base.m_damage.m_damage = 20;
+                m_damageData.m_recive = true;
+                m_damageData.m_damage = 20;
             }
         }
     }
@@ -431,14 +477,14 @@ public class Player : Character
 
         if (hit)
         {
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = 20;
-            base.m_damage.m_force = -m_modelTransform.forward * 2.0f;
+            m_damageData.m_recive = true;
+            m_damageData.m_damage = 20;
+            m_damageData.m_force = -m_modelTransform.forward * 2.0f;
         }
         else if (dead)
         {
-            base.m_damage.m_recive = true;
-            base.m_damage.m_damage = (int)m_health + 1;
+            m_damageData.m_recive = true;
+            m_damageData.m_damage = (int)m_health + 1;
         }
     }
 
