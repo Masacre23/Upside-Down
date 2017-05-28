@@ -19,7 +19,7 @@ public class Waves : MonoBehaviour
 
 	void Awake()
     {
-		mesh = GetComponent<MeshFilter>().sharedMesh;
+		mesh = GetComponent<MeshFilter>().mesh;
         mc = GetComponent<MeshCollider>();
         if (baseHeight == null)
 			baseHeight = mesh.vertices;
