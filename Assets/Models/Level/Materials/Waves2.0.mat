@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Waves2.0
-  m_Shader: {fileID: 4800000, guid: f890dad3f8737484ba141941baf2475d, type: 3}
+  m_Shader: {fileID: 4800000, guid: b8ac2fe41ad07e748bceef1ac9b8b162, type: 3}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -173,8 +173,11 @@ Material:
         name: _RefrDistort
       second: 1.355
     - first:
+        name: _RimPower
+      second: 3
+    - first:
         name: _Shininess
-      second: 5.88
+      second: 10
     - first:
         name: _SmoothnessTextureChannel
       second: 1
@@ -270,8 +273,11 @@ Material:
         name: _RefrColor
       second: {r: 0.34, g: 0.85, b: 0.92, a: 1}
     - first:
+        name: _RimColor
+      second: {r: 0.26, g: 0.19, b: 0.16, a: 0}
+    - first:
         name: _SpecColor
-      second: {r: 1, g: 1, b: 1, a: 0.841}
+      second: {r: 0.4705882, g: 0.71521276, b: 1, a: 0.841}
     - first:
         name: _SpecularColor
       second: {r: 0.72, g: 0.72, b: 0.72, a: 1}
