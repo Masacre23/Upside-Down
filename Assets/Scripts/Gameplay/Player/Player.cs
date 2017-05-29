@@ -64,6 +64,8 @@ public class Player : Character
     private Vector3 m_rigidBodyTotal = Vector3.zero;
     [HideInInspector] public bool m_doubleJumping = false;
     [HideInInspector] public Vector3 m_jumpDirection = Vector3.zero;
+    private bool m_hasJumped = false;
+    private Vector3 m_jumpVector;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -287,7 +289,12 @@ public class Player : Character
             m_rigidBody.AddForce(m_damageForce, ForceMode.VelocityChange);
             m_damageForceToApply = false;
         }
-            
+
+        if (m_hasJumped)
+        {
+            m_rigidBody.velocity = m_jumpVector;
+            m_hasJumped = false;
+        }
     }
 
     //This function deals with the jump of the character
@@ -301,8 +308,12 @@ public class Player : Character
         if (movement != Vector3.zero)
             m_modelTransform.rotation = Quaternion.LookRotation(movement, transform.up);
 
-        m_rigidBody.velocity = m_gravityOnCharacter.m_gravity * m_jumpForceVertical;
-        m_rigidBody.velocity += movement.normalized * m_jumpForceHorizontal;
+        m_hasJumped = true;
+        m_jumpVector = Vector3.zero;
+
+        //m_jumpVector = m_gravityOnCharacter.m_gravity * m_jumpForceVertical;
+        m_jumpVector = transform.up * m_jumpForceVertical;
+        m_jumpVector += movement.normalized * m_jumpForceHorizontal;
         m_jumpDirection = movement.normalized;
         m_isGrounded = false;
         m_isJumping = true;

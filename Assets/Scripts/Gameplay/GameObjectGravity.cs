@@ -5,11 +5,12 @@ using UnityEngine;
 
 //This class should be added to any GameObject which gravity can be changed during the game.
 //It controls the current gravity of the object, and adds it to its rigid body.
-public class GameObjectGravity : MonoBehaviour {
-
-    public Rigidbody m_rigidBody;
-    Vector3 m_oldGravity;
-    public RaycastHit m_attractor;
+public class GameObjectGravity : MonoBehaviour
+{
+    public float m_speedAutoExitAttractor = 10.0f;
+    [HideInInspector] public Rigidbody m_rigidBody;
+    [HideInInspector] Vector3 m_oldGravity;
+    [HideInInspector] public RaycastHit m_attractor;
     public Vector3 m_gravity;
     public List<Rigidbody> m_planets;
     public bool m_planetGravity;
@@ -17,8 +18,6 @@ public class GameObjectGravity : MonoBehaviour {
     public float m_maxTimeTravelled = 0.5f;
 
     public bool m_ignoreGravity = false;
-    public bool m_throwed = false;
-    bool m_thrownForce = false;
     float m_timeTravelled;
     Vector3 m_impulseForce;
 
@@ -40,10 +39,17 @@ public class GameObjectGravity : MonoBehaviour {
         m_gravity = Physics.gravity;
         m_planetGravity = true;
         m_changingToAttractor = false;
-        m_thrownForce = false;
         m_impulseForce = Vector3.zero;
 	}
 	
+    public void Update()
+    {
+        if (!m_changingToAttractor && m_rigidBody.velocity.magnitude > m_speedAutoExitAttractor)
+        {
+            m_planetGravity = true;
+        }
+    }
+
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
@@ -76,12 +82,6 @@ public class GameObjectGravity : MonoBehaviour {
                 m_timeTravelled = 0.0f;
                 m_ignoreGravity = false;
             }
-        }
-        
-        if (m_thrownForce)
-        {
-            m_rigidBody.AddForce(m_impulseForce * m_rigidBody.mass, ForceMode.Impulse);
-            m_thrownForce = false;
         }
     }
 
