@@ -39,7 +39,7 @@ public class Player : Character
     [HideInInspector] public PlayerDamageStates m_invulnerable;
     [HideInInspector] public PlayerDamageStates m_receivingDamage;
     [HideInInspector] public PlayerDamageStates m_deadState;
-    DamageData m_damageData;
+    [HideInInspector] public DamageData m_damageData;
     [HideInInspector] public PlayerRespawn m_playerRespawn;
     public Transform m_checkPoint;
 
@@ -63,6 +63,7 @@ public class Player : Character
     private float m_timeSliding = 0.0f;
     private Vector3 m_rigidBodyTotal = Vector3.zero;
     [HideInInspector] public bool m_doubleJumping = false;
+    [HideInInspector] public Vector3 m_jumpDirection = Vector3.zero;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
@@ -276,8 +277,8 @@ public class Player : Character
         HUDManager.ChangeEnergyValue(base.m_health);
         if (m_oxigen.m_oxigen <= 0.0f)
         {
-            m_damage.m_damage = (int)m_health + 1;
-            m_damage.m_recive = true;
+            m_damageData.m_damage = (int)m_health + 1;
+            m_damageData.m_recive = true;
         }
         //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
         //m_rigidBodyTotal = Vector3.zero;
@@ -287,6 +288,30 @@ public class Player : Character
             m_damageForceToApply = false;
         }
             
+    }
+
+    //This function deals with the jump of the character
+    //It mainly adds a velocity to the rigidbody in the direction of the gravity.
+    public override void Jump()
+    {
+        Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
+        Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+        movement.Normalize();
+
+        if (movement != Vector3.zero)
+            m_modelTransform.rotation = Quaternion.LookRotation(movement, transform.up);
+
+        m_rigidBody.velocity = m_gravityOnCharacter.m_gravity * m_jumpForceVertical;
+        m_rigidBody.velocity += movement.normalized * m_jumpForceHorizontal;
+        m_jumpDirection = movement.normalized;
+        m_isGrounded = false;
+        m_isJumping = true;
+        m_groundCheckDistance = 0.01f;
+        PlayerSoundEffects m_soundEffects = GetComponent<PlayerSoundEffects>();
+        if (m_soundEffects != null)
+        {
+            m_soundEffects.PlaySound(PlayerSoundEffects.Jump);
+        }
     }
 
     //This functions controls the character movement and the model orientation.
@@ -318,14 +343,40 @@ public class Player : Character
                 {
                     m_rigidBody.MovePosition(transform.position + m_lastMovement * m_slideSpeed * timeStep);
                     if (m_timeSliding >= m_timeSlide)
-                    {
                         m_lastMovement = Vector3.zero;
-                    }
                 }
                 else
-                {
                     m_lastMovement = Vector3.zero;
-                }  
+            }
+        }
+    }
+
+    //This functions controls the character movement and the model orientation while on air
+    public void MoveOnAir(float timeStep)
+    {
+        if (!m_freezeMovement)
+        {
+            Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
+            Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+            movement.Normalize();
+
+            //We need to ignore input in the direction of the jump
+            Vector3 finalDirection = movement;
+            float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
+            if (forwardIntensity > 0.0f)
+                finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
+
+            float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
+
+            m_rigidBodyTotal += m_offset + finalDirection * speed * timeStep;
+            m_offset = Vector3.zero;
+
+            if (movement != Vector3.zero)
+            {
+                Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
+                m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+                m_lastMovement = movement;
+                m_timeSliding = 0.0f;
             }
         }
     }
@@ -382,7 +433,11 @@ public class Player : Character
 
             if (hasTarget)
             {
-                m_floatingObjects.SetTarget(targetHit.point);
+                if (targetEnemy)
+                    m_floatingObjects.SetTarget(targetHit.point);
+                else
+                    m_floatingObjects.UnsetTarget();
+
                 if (hasThrown)
                     m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
             }
@@ -447,7 +502,14 @@ public class Player : Character
         int harmfulObject = LayerMask.NameToLayer("HarmfulObject");
         if(col.collider.gameObject.layer == harmfulObject)
         {
-            if (col.relativeVelocity.magnitude > 2.0f)
+            MovingDamagingObject objectMoving = col.collider.GetComponent<MovingDamagingObject>();
+            if (objectMoving)
+            {
+                m_damageData.m_recive = true;
+                m_damageData.m_damage = objectMoving.m_impactDamage;
+                m_damageData.m_force = objectMoving.m_directionMovement * objectMoving.m_forceMultiplier;
+            }
+            else if (col.relativeVelocity.magnitude > 2.0f)
             {
                 m_damageData.m_recive = true;
                 m_damageData.m_damage = 20;

@@ -39,7 +39,7 @@ public class PlayerOnAir : PlayerStates
         {
             m_player.OnAir();
             m_player.UpdateUp();
-            m_player.Move(timeStep);
+            m_player.MoveOnAir(timeStep);
             if (m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_grounded;

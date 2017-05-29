@@ -66,6 +66,7 @@ public class PlayerGrounded : PlayerStates
         m_player.m_freezeMovement = false;
 		EffectsManager.Instantiate (m_player.m_jumpClouds, transform.position, transform.rotation * m_player.m_jumpClouds.transform.rotation);
 	    m_player.m_runClouds.GetComponent<ParticleSystem> ().Play();
+        m_player.m_jumpDirection = Vector3.zero;
     }
 
     public override void OnExit()

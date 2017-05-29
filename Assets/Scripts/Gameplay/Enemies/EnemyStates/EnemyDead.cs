@@ -17,7 +17,7 @@ public class EnemyDead : EnemyStates
 		bool ret = false;
 
         //AnimatorStateInfo animatorInfo = m_enemy.m_animator.GetCurrentAnimatorStateInfo(0);
-        //if (animatorInfo.normalizedTime >= 1.0f)
+        //if (animatorInfo.IsName(m_animationName) && animatorInfo.normalizedTime >= 1.0f)
         //{
         //    OnExit(data);
         //}

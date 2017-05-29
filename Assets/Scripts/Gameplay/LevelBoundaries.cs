@@ -10,9 +10,9 @@ public class LevelBoundaries : MonoBehaviour
         if (other.tag == "Player")
         {
             Player m_player = other.GetComponent<Player>();
-            m_player.m_damage.m_recive = true;
-            m_player.m_damage.m_damage = 20;
-            m_player.m_damage.m_respawn = true;
+            m_player.m_damageData.m_recive = true;
+            m_player.m_damageData.m_damage = 20;
+            m_player.m_damageData.m_respawn = true;
         }
     }
 }

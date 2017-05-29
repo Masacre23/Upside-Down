@@ -13,9 +13,9 @@ public class LaserDamage : MonoBehaviour
             Player go_player = other.gameObject.GetComponent<Player>();
             if(go_player != null)
             {
-                go_player.m_damage.m_damage = 20;
-                go_player.m_damage.m_recive = true;
-                go_player.m_damage.m_force = -transform.forward * 4.0f;
+                go_player.m_damageData.m_damage = 20;
+                go_player.m_damageData.m_recive = true;
+                go_player.m_damageData.m_force = -transform.forward * 4.0f;
             }
         }
     }

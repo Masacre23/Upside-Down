@@ -9,10 +9,9 @@ public class Character : MonoBehaviour
     public float m_health = 120.0f;
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
-    public float m_jumpForce = 4.0f;
+    public float m_jumpForceVertical = 4.0f;
+    public float m_jumpForceHorizontal = 4.0f;
     public float m_lerpSpeed = 10.0f;
-
-    public DamageData m_damage;
 
     [HideInInspector] public Animator m_animator;
     [HideInInspector] public GameObjectGravity m_gravityOnCharacter;
@@ -21,7 +20,7 @@ public class Character : MonoBehaviour
     [HideInInspector] public float m_capsuleHeight;
 
     protected float m_groundCheckDistance;
-    protected float m_defaultGroundCheckDistance = 0.3f;
+    protected float m_defaultGroundCheckDistance = 0.25f;
 
     protected bool m_isJumping = false;
 
@@ -80,10 +79,12 @@ public class Character : MonoBehaviour
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
             m_isGrounded = true;
             m_isJumping = false;
+            m_gravityOnCharacter.m_getStrongestGravity = true;
         }
         else
         {
             m_isGrounded = false;
+            m_gravityOnCharacter.m_getStrongestGravity = false;
         }
 
         return m_isGrounded;
@@ -98,18 +99,20 @@ public class Character : MonoBehaviour
 
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public void Jump()
+    public virtual void Jump()
     {
         float fallVelocity = Vector3.Dot(m_gravityOnCharacter.m_gravity, m_rigidBody.velocity);
-        m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * (m_jumpForce - fallVelocity);
+        m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * (m_jumpForceVertical - fallVelocity);
+        //m_rigidBody.velocity = up * m_jumpForceVertical;
+        //m_rigidBody.velocity += forward.normalized * m_jumpForceHorizontal;
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
-        PlayerSoundEffects m_soundEffects = GetComponent<PlayerSoundEffects>();
-        if(m_soundEffects != null)
-        {
-            m_soundEffects.PlaySound(PlayerSoundEffects.Jump);
-        }
+        //PlayerSoundEffects m_soundEffects = GetComponent<PlayerSoundEffects>();
+        //if(m_soundEffects != null)
+        //{
+        //    m_soundEffects.PlaySound(PlayerSoundEffects.Jump);
+        //}
     }
 
     //This function should be called while character is on air.

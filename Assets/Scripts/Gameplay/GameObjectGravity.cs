@@ -22,8 +22,10 @@ public class GameObjectGravity : MonoBehaviour {
     float m_timeTravelled;
     Vector3 m_impulseForce;
 
+    public bool m_getStrongestGravity = true;
+
     //This should be the same for all gameobjects
-    static float m_gravityStrength = -9.8f;
+    static float m_gravityStrength = -19.0f;
 
     void Awake()
     {
@@ -55,19 +57,13 @@ public class GameObjectGravity : MonoBehaviour {
             }
             else
             {
-                foreach (Rigidbody planet in m_planets)
-                {
-                    Vector3 newGravity = transform.position - planet.transform.position;
-                    float distance = newGravity.magnitude;
-                    newGravity.Normalize();
+                Vector3 gravity = Vector3.zero;
+                if (m_getStrongestGravity)
+                    GetStrongestPlanetGravity(ref strength, ref gravity);
+                else
+                    GetSumPlanetGravity(ref strength, ref gravity);
 
-                    float newStrength = -planet.mass / (25.0f * distance);
-                    if (newStrength < strength)
-                    {
-                        strength = newStrength;
-                        m_gravity = newGravity;
-                    }
-                }
+                m_gravity = gravity;
             }
 
             m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
@@ -87,6 +83,48 @@ public class GameObjectGravity : MonoBehaviour {
             m_rigidBody.AddForce(m_impulseForce * m_rigidBody.mass, ForceMode.Impulse);
             m_thrownForce = false;
         }
+    }
+
+    //Get the strongest gravity among the planets currently affecting the object
+    private void GetStrongestPlanetGravity(ref float strength, ref Vector3 directionGravity)
+    {
+        foreach (Rigidbody planet in m_planets)
+        {
+            Vector3 newGravity = transform.position - planet.transform.position;
+            float distance = newGravity.magnitude;
+            newGravity.Normalize();
+
+            float newStrength = GravityStrength(planet.mass, distance);
+            if (newStrength < strength)
+            {
+                strength = newStrength;
+                directionGravity = newGravity;
+            }
+        }
+    }
+
+    //Get the sum of all the planet gravities affecting the object
+    private void GetSumPlanetGravity(ref float strength, ref Vector3 directionGravity)
+    {
+        Vector3 gravity = Vector3.zero;
+        foreach (Rigidbody planet in m_planets)
+        {
+            Vector3 newGravity = transform.position - planet.transform.position;
+            float distance = newGravity.magnitude;
+            newGravity.Normalize();
+            float newStrength = GravityStrength(planet.mass, distance);
+
+            gravity += newGravity * newStrength;
+        }
+
+        strength = - gravity.magnitude;
+        directionGravity = - gravity.normalized;
+    }
+
+    //Function to compute planet gravity strength
+    private float GravityStrength(float mass, float distance)
+    {
+        return - mass / (25.0f * distance);
     }
 
     //This function is called automatically when this object colliders begins to touch another collider.
