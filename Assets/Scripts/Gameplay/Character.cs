@@ -124,10 +124,10 @@ public class Character : MonoBehaviour
         if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
         {
             m_groundCheckDistance = m_defaultGroundCheckDistance;
-            if (!m_gravityOnCharacter.m_changingToAttractor)
-            {
-                m_gravityOnCharacter.m_planetGravity = true;
-            }
+            //if (!m_gravityOnCharacter.m_changingToAttractor)
+            //{
+            //    m_gravityOnCharacter.m_planetGravity = true;
+            //}
         }
         else
             m_groundCheckDistance = 0.01f;
