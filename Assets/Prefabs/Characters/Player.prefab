@@ -2269,7 +2269,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1223869246188240}
   m_LocalRotation: {x: 0.5846614, y: -0.065237075, z: -0.78075933, w: 0.21054713}
-  m_LocalPosition: {x: -59, y: -16.73, z: 150.04}
+  m_LocalPosition: {x: -58.3, y: -9.96, z: 155.32}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4499579924382306}
@@ -2767,24 +2767,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a6701dd0cfcfb42aa24db584c8dbb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isThrowable: 0
   m_maxHealth: 120
   m_health: 120
   m_moveSpeed: 2
-  m_jumpForce: 5
+  m_jumpForceVertical: 8
+  m_jumpForceHorizontal: 4
   m_lerpSpeed: 10
-  m_checkPoint: {fileID: 0}
   m_animator: {fileID: 0}
   m_gravityOnCharacter: {fileID: 0}
   m_rigidBody: {fileID: 0}
   m_capsule: {fileID: 0}
   m_capsuleHeight: 0
-  m_damageState: {fileID: 0}
-  m_recive: {fileID: 0}
-  m_animation: {fileID: 0}
-  m_respawn: {fileID: 0}
-  m_notRecive: {fileID: 0}
-  m_dead: {fileID: 0}
   m_negatePlayerInput: 0
   m_currentState: {fileID: 0}
   m_grounded: {fileID: 0}
@@ -2798,6 +2791,9 @@ MonoBehaviour:
   m_receivingDamage: {fileID: 0}
   m_deadState: {fileID: 0}
   m_playerRespawn: {fileID: 0}
+  m_checkPoint: {fileID: 0}
+  m_damageForceToApply: 0
+  m_damageForce: {x: 0, y: 0, z: 0}
   m_camController: {fileID: 0}
   m_playerGravity: {fileID: 0}
   m_freezeMovement: 0
@@ -2809,6 +2805,7 @@ MonoBehaviour:
   m_timeSlide: 0.2
   m_slideSpeed: 2
   m_doubleJumping: 0
+  m_jumpDirection: {x: 0, y: 0, z: 0}
   m_gravityRange: 10
   m_reachedGround: 1
   m_throwDetectionRange: 20

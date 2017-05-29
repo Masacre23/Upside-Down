@@ -151,7 +151,7 @@ public class DebugMode : MonoBehaviour {
         // Turn off depth writes
         m_material.SetInt("_ZWrite", 0);
 
-        CalculateTriangles();
+        //CalculateTriangles();
     }
 
     //We should implicitly destroy the material since it isn't destroyed by the garbage collection
