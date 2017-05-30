@@ -39,7 +39,7 @@ public class PlayerChanging : PlayerStates
     {
         m_rigidBody.isKinematic = true;
         m_initialRotation = transform.rotation;
-        m_finalRotation = Quaternion.FromToRotation(transform.up, m_player.m_gravityOnCharacter.m_gravity) * transform.rotation;
+        m_finalRotation = Quaternion.FromToRotation(transform.up, m_player.m_gravityOnCharacter.GetGravityVector()) * transform.rotation;
     }
 
     public override void OnExit()

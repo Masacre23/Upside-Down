@@ -51,8 +51,7 @@ public class Character : MonoBehaviour
     public virtual void Restart()
     {
         m_rigidBody.velocity = Vector3.zero;
-        m_gravityOnCharacter.m_planetGravity = true;
-        m_gravityOnCharacter.m_changingToAttractor = false;
+        m_gravityOnCharacter.ReturnToPlanet();
     }
 
     public virtual void Update()
@@ -93,7 +92,7 @@ public class Character : MonoBehaviour
     //This function rotates the character so its Vector.up aligns with the direction of the attractor's gravity
     public void UpdateUp()
     {
-        Quaternion targetRot = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.m_gravity) * transform.rotation;
+        Quaternion targetRot = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.GetGravityVector()) * transform.rotation;
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, m_lerpSpeed * Time.fixedDeltaTime);
     }
 
@@ -101,8 +100,9 @@ public class Character : MonoBehaviour
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
     public virtual void Jump()
     {
-        float fallVelocity = Vector3.Dot(m_gravityOnCharacter.m_gravity, m_rigidBody.velocity);
-        m_rigidBody.velocity += m_gravityOnCharacter.m_gravity * (m_jumpForceVertical - fallVelocity);
+        Vector3 gravity = m_gravityOnCharacter.GetGravityVector();
+        float fallVelocity = Vector3.Dot(gravity, m_rigidBody.velocity);
+        m_rigidBody.velocity += gravity * (m_jumpForceVertical - fallVelocity);
         //m_rigidBody.velocity = up * m_jumpForceVertical;
         //m_rigidBody.velocity += forward.normalized * m_jumpForceHorizontal;
         m_isGrounded = false;

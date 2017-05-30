@@ -23,13 +23,13 @@ public class GravityWall : MonoBehaviour
         GameObjectGravity objectGravity = col.GetComponent<GameObjectGravity>();
         if (objectGravity)
         {
-            if (!objectGravity.m_planetGravity && !objectGravity.m_changingToAttractor)
+            if (!objectGravity.IsPlanetGravity() && !objectGravity.IsChanging())
             {
                 RaycastHit target;
                 Vector3 direction = transform.position - col.transform.position;
                 if (Physics.Raycast(col.transform.position, direction.normalized, out target, direction.magnitude, layerMask))
                 {
-                    objectGravity.m_attractor = target;
+                    objectGravity.SetAttractor(target);
                 }
             }
         }
@@ -40,9 +40,9 @@ public class GravityWall : MonoBehaviour
         GameObjectGravity objectGravity = col.GetComponent<GameObjectGravity>();
         if (objectGravity)
         {
-            if (!objectGravity.m_planetGravity && objectGravity.m_attractor.transform.gameObject == m_gravityWall)
+            if (!objectGravity.IsPlanetGravity() && objectGravity.GetAttractorGameObject() == m_gravityWall)
             {
-                objectGravity.m_planetGravity = true;
+                objectGravity.ReturnToPlanet();
             }
         }
     }

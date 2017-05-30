@@ -37,6 +37,8 @@ public class PlayerOnAir : PlayerStates
         }
         else
         {
+            if (changeGravity && !m_player.m_gravityOnCharacter.IsChanging())
+                m_player.m_gravityOnCharacter.ReturnToPlanet();
             m_player.OnAir();
             m_player.UpdateUp();
             m_player.MoveOnAir(timeStep);
