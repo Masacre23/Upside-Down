@@ -260,11 +260,11 @@ public class DebugMode : MonoBehaviour {
     {
         m_numTris = 0;
 
-        foreach (MeshFilter meshFilter in FindObjectsOfType(typeof(MeshFilter)))
+        /*foreach (MeshFilter meshFilter in FindObjectsOfType(typeof(MeshFilter)))
         {
             if (meshFilter.gameObject.isStatic == false)
                 m_numTris += (ulong)meshFilter.sharedMesh.triangles.Length / 3;
-        }
+        }*/
 
     }
 }

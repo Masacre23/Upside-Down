@@ -20,10 +20,10 @@ public class FallingOnWater : MonoBehaviour
 
             EffectsManager.Instance.GetEffect(m_prefabEffect, other.transform.position, direction.normalized, transform);
 
-            PlayerSoundEffects playerSound = other.gameObject.GetComponent<PlayerSoundEffects>();
-            if(playerSound != null)
+            SoundEffects sound = other.gameObject.GetComponent<SoundEffects>();
+            if(sound != null)
             {
-                playerSound.PlaySound(PlayerSoundEffects.SplashWater);
+                sound.PlaySound("SplashWater");
             }
         } 
     }

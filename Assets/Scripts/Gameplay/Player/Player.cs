@@ -318,10 +318,10 @@ public class Player : Character
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
-        PlayerSoundEffects m_soundEffects = GetComponent<PlayerSoundEffects>();
+        SoundEffects m_soundEffects = GetComponent<SoundEffects>();
         if (m_soundEffects != null)
         {
-            m_soundEffects.PlaySound(PlayerSoundEffects.Jump);
+            m_soundEffects.PlaySound("Jump");
         }
     }
 
