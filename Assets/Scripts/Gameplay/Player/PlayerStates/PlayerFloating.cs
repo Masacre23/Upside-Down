@@ -46,9 +46,8 @@ public class PlayerFloating : PlayerStates
                 if (legalTarget)
                 {
                     m_player.m_playerGravity.ChangeGravityTo(target);
+                    m_player.m_gravityOnCharacter.ChangeToAttractor();
                     m_player.m_currentState = m_player.m_onAir;
-                    m_player.m_gravityOnCharacter.m_planetGravity = false;
-                    m_player.m_gravityOnCharacter.m_changingToAttractor = true;
                 }      
                 else
                     m_player.m_currentState = m_player.m_onAir;

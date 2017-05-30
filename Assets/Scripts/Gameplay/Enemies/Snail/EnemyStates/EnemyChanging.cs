@@ -46,12 +46,13 @@ public class EnemyChanging : EnemyStates {
 		{
 			if (hit.collider.tag == "GravityWall") 
 			{
-				m_enemy.m_gravityOnCharacter.m_attractor = hit;
-				m_enemy.m_gravityOnCharacter.m_gravity = hit.transform.up;
+                m_enemy.m_gravityOnCharacter.ChangeToNormal(hit);
+				//m_enemy.m_gravityOnCharacter.m_attractor = hit;
+				//m_enemy.m_gravityOnCharacter.m_gravity = hit.transform.up;
 				//m_enemy.currentWall = hit.collider.gameObject;
 			}
 		}
-		finalRot = Quaternion.FromToRotation (transform.up, m_enemy.m_gravityOnCharacter.m_gravity) * transform.rotation;
+		finalRot = Quaternion.FromToRotation (transform.up, m_enemy.m_gravityOnCharacter.GetGravityVector()) * transform.rotation;
 	}
 
 	public override void OnExit()

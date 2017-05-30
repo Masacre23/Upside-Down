@@ -250,6 +250,12 @@ public class Player : Character
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
 
+        if (m_hasJumped)
+        {
+            m_rigidBody.velocity = m_jumpVector;
+            m_hasJumped = false;
+        }
+
         PlayerDamageStates previousDamageState = m_playerDamageState;
         if (m_playerDamageState.OnUpdate(m_damageData))
         {
@@ -289,12 +295,6 @@ public class Player : Character
             m_rigidBody.AddForce(m_damageForce, ForceMode.VelocityChange);
             m_damageForceToApply = false;
         }
-
-        if (m_hasJumped)
-        {
-            m_rigidBody.velocity = m_jumpVector;
-            m_hasJumped = false;
-        }
     }
 
     //This function deals with the jump of the character
@@ -311,7 +311,7 @@ public class Player : Character
         m_hasJumped = true;
         m_jumpVector = Vector3.zero;
 
-        //m_jumpVector = m_gravityOnCharacter.m_gravity * m_jumpForceVertical;
+        //m_jumpVector = m_gravityOnCharacter.GetGravityVector() * m_jumpForceVertical;
         m_jumpVector = transform.up * m_jumpForceVertical;
         m_jumpVector += movement.normalized * m_jumpForceHorizontal;
         m_jumpDirection = movement.normalized;

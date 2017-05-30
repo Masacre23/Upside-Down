@@ -10,11 +10,11 @@ public class GameObjectGravity : MonoBehaviour
     public float m_speedAutoExitAttractor = 10.0f;
     [HideInInspector] public Rigidbody m_rigidBody;
     [HideInInspector] Vector3 m_oldGravity;
-    [HideInInspector] public RaycastHit m_attractor;
-    public Vector3 m_gravity;
+    private RaycastHit m_attractor;
+    [SerializeField] private Vector3 m_gravity;
     public List<Rigidbody> m_planets;
-    public bool m_planetGravity;
-    public bool m_changingToAttractor;
+    [SerializeField] private bool m_planetGravity;
+    [SerializeField] private bool m_changingToAttractor;
     public float m_maxTimeTravelled = 0.5f;
 
     public bool m_ignoreGravity = false;
@@ -157,6 +157,63 @@ public class GameObjectGravity : MonoBehaviour
         {
             m_planetGravity = true;
         }
+    }
+
+    //This function changes object gravity so it falls towards the collision point
+    public void ChangeGravityToPoint(RaycastHit attractor, Vector3 objectPosition)
+    {
+        m_attractor = attractor;
+        m_gravity = (objectPosition - attractor.point).normalized;
+    }
+
+    //This function changes object gravity so it falls into a direction equal to the normal of the position hit
+    public void ChangeToNormal(RaycastHit attractor)
+    {
+        m_attractor = attractor;
+        m_gravity = attractor.normal;
+    }
+
+    //This functions only changes the attractor, without changing the current gravity
+    public void SetAttractor(RaycastHit attractor)
+    {
+        m_attractor = attractor;
+    }
+
+    //This function returns the attractor point gameobject
+    public GameObject GetAttractorGameObject()
+    {
+        return m_attractor.transform.gameObject;
+    }
+
+    //This function is called to disable the gravity from attractors, and to return to the planet gravity
+    public void ReturnToPlanet()
+    {
+        m_planetGravity = true;
+        m_changingToAttractor = false;
+    }
+
+    //This function is called when the player begins changing to an attractor
+    public void ChangeToAttractor()
+    {
+        m_planetGravity = false;
+        m_changingToAttractor = true;
+    }
+
+    //This function is call to know if the player has initiated a change of gravity through aiming to a surface
+    public bool IsChanging()
+    {
+        return m_changingToAttractor;
+    }
+
+    public bool IsPlanetGravity()
+    {
+        return m_planetGravity;
+    }
+
+    //Returns the object gravity
+    public Vector3 GetGravityVector()
+    {
+        return m_gravity;
     }
 
     //This function is called when we want a object to float. Usually called when player is floating while changing gravity

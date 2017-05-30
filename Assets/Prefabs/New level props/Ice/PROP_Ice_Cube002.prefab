@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4351957671621720}
   - component: {fileID: 33040992778231278}
   - component: {fileID: 23823556123585588}
+  - component: {fileID: 114262611517681162}
   m_Layer: 8
   m_Name: PROP_Ice_Cube002
   m_TagString: Untagged
@@ -79,3 +80,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1227397965065050}
   m_Mesh: {fileID: 4300000, guid: a5064eea628d34a4e9210d74d451d138, type: 3}
+--- !u!114 &114262611517681162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1227397965065050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0e268770b8a1147bdf20afc40cabec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seeThrough: 1
+  flashingStartColor: {r: 0, g: 0, b: 1, a: 1}
+  flashingEndColor: {r: 0, g: 1, b: 1, a: 1}
+  flashingDelay: 2.5
+  flashingFrequency: 2

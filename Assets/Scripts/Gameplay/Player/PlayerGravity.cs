@@ -44,8 +44,7 @@ public class PlayerGravity : MonoBehaviour {
     //This functions is called when a gravity change is performed by aiming at another legal surface
     public void ChangeGravityTo(RaycastHit attractor)
     {
-        m_playerGravity.m_attractor = attractor;
-        m_playerGravity.m_gravity = (m_player.transform.position - attractor.point).normalized;
+        m_playerGravity.ChangeGravityToPoint(attractor, m_player.transform.position);
     }
 
     //This function is called to see if the player is targeting an object or a direction in order to throw.

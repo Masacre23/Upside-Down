@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33033714383747896}
   - component: {fileID: 23682511843552016}
   - component: {fileID: 64248226898437252}
+  - component: {fileID: 114907180364878608}
   m_Layer: 0
   m_Name: PROP_Ice_CandyB01
   m_TagString: GravityWall
@@ -94,3 +95,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: e18f33b656d54394f8428d3214f86cf2, type: 3}
+--- !u!114 &114907180364878608
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1656161862843520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0e268770b8a1147bdf20afc40cabec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seeThrough: 0
+  flashingStartColor: {r: 0, g: 0, b: 1, a: 1}
+  flashingEndColor: {r: 0, g: 1, b: 1, a: 1}
+  flashingDelay: 2.5
+  flashingFrequency: 2
