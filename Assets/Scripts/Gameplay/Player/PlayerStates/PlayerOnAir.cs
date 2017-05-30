@@ -29,7 +29,7 @@ public class PlayerOnAir : PlayerStates
             m_player.m_doubleJumping = true;
             m_player.m_oxigen.LostOxigen(20);
         }
-        if (m_player.m_reachedGround && (aimGravity || changeGravity))
+        if (m_player.m_reachedGround && aimGravity)
         {
             m_player.m_currentState = m_player.m_floating;
             m_player.SetFloatingPoint(0.0f);
@@ -39,7 +39,7 @@ public class PlayerOnAir : PlayerStates
         {
             m_player.OnAir();
             m_player.UpdateUp();
-            m_player.Move(timeStep);
+            m_player.MoveOnAir(timeStep);
             if (m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_grounded;

@@ -17,7 +17,7 @@ public class PlayerDead : PlayerDamageStates
         bool ret = false;
 
         AnimatorStateInfo animatorInfo = m_player.m_animator.GetCurrentAnimatorStateInfo(0);
-        if (animatorInfo.normalizedTime >= 1.0f)
+        if (animatorInfo.IsName(m_animationName) && animatorInfo.normalizedTime >= 1.0f)
         {
             OnExit(data);
         }
@@ -27,6 +27,7 @@ public class PlayerDead : PlayerDamageStates
 
     public override void OnEnter(DamageData data)
     {
+        m_player.m_floatingObjects.DropAll();
         m_player.ChangeCurrentStateToOnAir();
         m_player.m_negatePlayerInput = true;
         m_player.m_animator.SetBool("Dead", true);

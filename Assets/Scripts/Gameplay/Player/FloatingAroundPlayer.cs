@@ -99,6 +99,22 @@ public class FloatingAroundPlayer : MonoBehaviour
         }
     }
 
+    //This function is called to drop all pickup objects
+    public void DropAll()
+    {
+        List<ThrowableObject> pickeds = new List<ThrowableObject>();
+
+        foreach (GameObject pickedObject in m_pickedObjects.Values)
+        {
+            ThrowableObject throwScript = pickedObject.GetComponent<ThrowableObject>();
+            if (throwScript)
+                pickeds.Add(throwScript);
+        }
+
+        foreach (ThrowableObject picked in pickeds)
+            picked.StopFloating();
+    }
+
     //This functions serves to allocate the object in the nearest free position in the player
     private Transform FindNearestPosition(GameObject objectToPick)
     {

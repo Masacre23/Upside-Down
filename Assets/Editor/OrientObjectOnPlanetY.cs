@@ -12,8 +12,8 @@ public class OrientObjectOnPlanetY : ScriptableWizard
         foreach (GameObject child in Selection.gameObjects)
         {
             Transform parentTransform = child.transform.parent;
-            if (parentTransform.tag == "Planet")
-            {
+            //if (parentTransform.tag == "Planet")
+            //{
                 Vector3 localPosition = child.transform.localPosition;
 
                 Vector3 radialPosition = child.transform.position - parentTransform.position;
@@ -21,7 +21,7 @@ public class OrientObjectOnPlanetY : ScriptableWizard
                 child.transform.rotation = targetRotation * child.transform.rotation;
 
                 child.transform.localPosition = localPosition;
-            }
+            //}
         }
     }
 

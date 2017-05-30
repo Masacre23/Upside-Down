@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ThrowableObject : MonoBehaviour
 {
+    public bool m_floatLimitless = true;
     public bool m_canBePicked = true;
     public bool m_isFloating = false;
     public float m_floatingSpeed = 10.0f;
@@ -46,9 +47,12 @@ public class ThrowableObject : MonoBehaviour
             transform.Rotate(m_rotationRandomVector * m_rotationSpeed * Time.deltaTime);
 
             // Checking if the object should fall
-            m_timeFloating += Time.deltaTime;
-            if (m_timeFloating > m_maxTimeFloating)
-                StopFloating();
+            if (!m_floatLimitless)
+            {
+                m_timeFloating += Time.deltaTime;
+                if (m_timeFloating > m_maxTimeFloating)
+                    StopFloating();
+            } 
         }
 
         //Checks if the object can damage to enemies. When its velocity falls below a certain value, it stops to deal damage if collided.
