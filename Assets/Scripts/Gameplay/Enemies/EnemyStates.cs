@@ -10,6 +10,7 @@ public class EnemyStates : MonoBehaviour
 		FOLLOWING,
 		CHANGING,
         RECEIVING,
+        ATTACKING,
         DEAD
 	}
 

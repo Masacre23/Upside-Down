@@ -12,7 +12,7 @@ public class EnemyFollowing : EnemyStates
 	float capsuleRadius;
 	public Vector3 target;
 
-	public override void Start ()
+    public override void Start ()
     {
 		base.Start();
         m_type = States.FOLLOWING;

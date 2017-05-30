@@ -7,12 +7,13 @@ public class FlyingEnemy : Character {
 	//Variables regarding enemy state
 	public EnemyStates m_currentState;
 	[HideInInspector] public EnemyStates m_Idle;
-	//[HideInInspector] public EnemyStates m_Following;
-	//[HideInInspector] public EnemyStates m_Changing;
-	//[HideInInspector] public EnemyStates m_ReceivingDamage;
-	//[HideInInspector] public EnemyStates m_Dead;
+    [HideInInspector] public EnemyStates m_Attacking;
+    //[HideInInspector] public EnemyStates m_Following;
+    //[HideInInspector] public EnemyStates m_Changing;
+    //[HideInInspector] public EnemyStates m_ReceivingDamage;
+    //[HideInInspector] public EnemyStates m_Dead;
 
-	public DamageData m_damageData;
+    public DamageData m_damageData;
 
 	//General variables
 	public int m_speed = 2;
@@ -21,11 +22,14 @@ public class FlyingEnemy : Character {
 
 	public override void Awake()
 	{
-		m_Idle = gameObject.GetComponent<EnemyIdle>();
+		m_Idle = gameObject.GetComponent<FlyingEnemyIdle>();
 		if (!m_Idle)
-			m_Idle = gameObject.AddComponent<EnemyIdle>();
+			m_Idle = gameObject.AddComponent<FlyingEnemyIdle>();
 
-		/*m_Following = gameObject.GetComponent<EnemyFollowing>();
+        if (!m_Attacking)
+            m_Attacking = gameObject.AddComponent<FlyingEnemyAttacking>();
+
+        /*m_Following = gameObject.GetComponent<EnemyFollowing>();
 		if (!m_Following)
 			m_Following = gameObject.AddComponent<EnemyFollowing>();
 
@@ -40,8 +44,8 @@ public class FlyingEnemy : Character {
 		m_Dead = gameObject.GetComponent<EnemyDead>();
 		if (!m_Dead)
 			m_Dead = gameObject.AddComponent<EnemyDead>();*/
-		
-		m_currentState = m_Idle;
+
+        m_currentState = m_Idle;
 
 		m_damageData = new DamageData();
 
