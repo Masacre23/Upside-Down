@@ -10,7 +10,7 @@ public class EnemyWalls : MonoBehaviour {
 		{
 			Enemy enemy = col.gameObject.GetComponent<Enemy> ();
 			enemy.m_currentState.OnExit ();
-			enemy.m_currentState = enemy.m_Changing;
+			//enemy.m_currentState = enemy.m_Changing;
 			enemy.m_currentState.OnEnter ();
 		}
 	}

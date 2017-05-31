@@ -20,23 +20,11 @@ public class EnemyArea : MonoBehaviour
 		{
 			foreach(GameObject go in enemies)
 			{
-                if (go.tag == "EnemySnail")
-                {
-                    Enemy enemy = go.GetComponent<Enemy>();
-                    enemy.player = col.gameObject;
-                    enemy.m_currentState.OnExit();
-                    enemy.m_currentState = enemy.m_Following;
-                    enemy.m_currentState.OnEnter();
-                }
-
-                if (go.tag == "FlyingEnemy")
-                {
-                    FlyingEnemy enemy = go.GetComponent<FlyingEnemy>();
-                    enemy.player = col.gameObject;
-                    enemy.m_currentState.OnExit();
-                    enemy.m_currentState = enemy.m_Attacking;
-                    enemy.m_currentState.OnEnter();
-                }
+                 Enemy enemy = go.GetComponent<Enemy>();
+                 enemy.player = col.gameObject;
+                 enemy.m_currentState.OnExit();
+                 enemy.m_currentState = enemy.m_Following;
+                 enemy.m_currentState.OnEnter();
              }
 		}
 
@@ -52,22 +40,10 @@ public class EnemyArea : MonoBehaviour
 		{
 			foreach(GameObject go in enemies)
 			{
-                if (go.tag == "EnemySnail")
-                {
-                    Enemy enemy = go.GetComponent<Enemy>();
-                    enemy.m_currentState.OnExit();
-                    enemy.m_currentState = enemy.m_Idle;
-                    enemy.m_currentState.OnEnter();
-                }
-
-                if (go.tag == "FlyingEnemy")
-                {
-                    FlyingEnemy enemy = go.GetComponent<FlyingEnemy>();
-                    enemy.m_currentState.OnExit();
-                    enemy.m_currentState = enemy.m_Idle;
-                    enemy.m_currentState.OnEnter();
-                }
-				
+                Enemy enemy = go.GetComponent<Enemy>();
+                enemy.m_currentState.OnExit();
+                enemy.m_currentState = enemy.m_Idle;
+                enemy.m_currentState.OnEnter();
 			}
 		}
 

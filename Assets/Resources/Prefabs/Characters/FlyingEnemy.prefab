@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4673183869746310}
   - component: {fileID: 33771761183109328}
   - component: {fileID: 23073703818563440}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CHR_EnemyIce01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,13 +37,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4608873196184900}
   - component: {fileID: 54821767581242676}
+  - component: {fileID: 135738437344931594}
   - component: {fileID: 136573239416234974}
-  - component: {fileID: 114969466624372468}
+  - component: {fileID: 114220547769913182}
   - component: {fileID: 114059902161348250}
   - component: {fileID: 114116944524061274}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: FlyingEnemy
-  m_TagString: Untagged
+  m_TagString: FlyingEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,7 +126,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -140,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4670d71b1a2d79a468c2b06cb3218baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_floatLimitless: 1
   m_canBePicked: 1
   m_isFloating: 0
   m_floatingSpeed: 10
@@ -157,15 +159,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1102b78b8528dd84d9c570aad8bacf04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_rigidBody: {fileID: 54821767581242676}
+  m_speedAutoExitAttractor: 10
+  m_rigidBody: {fileID: 0}
   m_gravity: {x: 0, y: 0, z: 0}
   m_planets: []
   m_planetGravity: 0
   m_changingToAttractor: 0
   m_maxTimeTravelled: 0.5
-  m_ignoreGravity: 0
-  m_throwed: 0
---- !u!114 &114969466624372468
+  m_ignoreGravity: 1
+  m_getStrongestGravity: 1
+--- !u!114 &114220547769913182
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -173,13 +176,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1300204459058772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb07b3ed38c68b438539dfce2b4fba2, type: 3}
+  m_Script: {fileID: 11500000, guid: 914cb82ab3b58e442ba666c179895296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxHealth: 120
   m_health: 120
   m_moveSpeed: 4
-  m_jumpForce: 4
+  m_jumpForceVertical: 4
+  m_jumpForceHorizontal: 4
   m_lerpSpeed: 10
   m_animator: {fileID: 0}
   m_gravityOnCharacter: {fileID: 0}
@@ -188,9 +192,26 @@ MonoBehaviour:
   m_capsuleHeight: 0
   m_currentState: {fileID: 0}
   m_Idle: {fileID: 0}
+  m_Following: {fileID: 0}
+  m_ReceivingDamage: {fileID: 0}
+  m_Dead: {fileID: 0}
   m_speed: 2
   m_patrollingArea: {fileID: 0}
+  m_isFloating: 0
   player: {fileID: 0}
+  m_type: 1
+--- !u!135 &135738437344931594
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300204459058772}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136573239416234974
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -200,7 +221,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.08
+  m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

@@ -26,7 +26,8 @@ public class EnemyIdle : EnemyStates {
 
 	public override void OnEnter()
 	{
-		m_enemy.m_animator.SetBool("PlayerDetected", false);
+        if(m_enemy.m_animator != null)
+		    m_enemy.m_animator.SetBool("PlayerDetected", false);
 	}
 
 	public override void OnExit()
