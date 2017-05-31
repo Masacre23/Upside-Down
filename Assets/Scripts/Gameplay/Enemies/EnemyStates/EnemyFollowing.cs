@@ -18,6 +18,7 @@ public class EnemyFollowing : EnemyStates
     private float fireRate = 2;
     private float innerRadiusToPlayer = 10;
     private float outterRadiusToPlayer = 20;
+    private GameObject planet;
 
     public void Awake()
     {
@@ -27,6 +28,7 @@ public class EnemyFollowing : EnemyStates
     {
 		base.Start();
         m_type = States.FOLLOWING;
+        planet = transform.parent.gameObject;
     }
 
 	public override bool OnUpdate (DamageData data)
@@ -102,6 +104,15 @@ public class EnemyFollowing : EnemyStates
                     transform.position -= transform.forward * speed * Time.deltaTime;
                 else if(difference.sqrMagnitude > outterRadiusToPlayer)
                     transform.position += transform.forward * speed * Time.deltaTime;
+
+                float distance_playerY = (m_enemy.player.transform.position - planet.transform.position + m_enemy.player.transform.up).sqrMagnitude;
+                float distance_enemyY = (transform.position - planet.transform.position).sqrMagnitude;
+
+                if(distance_playerY > distance_enemyY && distance_playerY - distance_enemyY > speed)
+                    transform.position += transform.up * speed * Time.deltaTime;
+                else if (distance_playerY < distance_enemyY && distance_enemyY - distance_playerY  > speed)
+                    transform.position -= transform.up * speed * Time.deltaTime;
+
                 break;
         }
 	}
