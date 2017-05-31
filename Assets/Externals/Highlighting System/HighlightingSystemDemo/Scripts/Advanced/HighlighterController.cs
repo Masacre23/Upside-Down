@@ -39,13 +39,13 @@ public class HighlighterController : MonoBehaviour
 		}
 
 		// Fade in/out constant highlighting with button '1'
-		if (Input.GetKeyDown(KeyCode.Alpha1)) { h.ConstantSwitch(); }
+		//if (Input.GetKeyDown(KeyCode.Alpha1)) { h.ConstantSwitch(); }
 
 		// Turn on/off constant highlighting with button '2'
-		else if (Input.GetKeyDown(KeyCode.Alpha2)) { h.ConstantSwitchImmediate(); }
+		//else if (Input.GetKeyDown(KeyCode.Alpha2)) { h.ConstantSwitchImmediate(); }
 		
 		// Turn off all highlighting modes with button '3'
-		if (Input.GetKeyDown(KeyCode.Alpha3)) { h.Off(); }
+		//if (Input.GetKeyDown(KeyCode.Alpha3)) { h.Off(); }
 	}
 
 	// 

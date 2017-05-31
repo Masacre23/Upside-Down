@@ -373,9 +373,9 @@ public class Player : Character
 
             //We need to ignore input in the direction of the jump
             Vector3 finalDirection = movement;
-            float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
-            if (forwardIntensity > 0.0f)
-                finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
+            //float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
+            //if (forwardIntensity > 0.0f)
+            //    finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
 
             float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
 

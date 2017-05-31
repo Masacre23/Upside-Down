@@ -7,7 +7,7 @@ using UnityEngine;
 //It controls the current gravity of the object, and adds it to its rigid body.
 public class GameObjectGravity : MonoBehaviour
 {
-    public float m_speedAutoExitAttractor = 10.0f;
+    [SerializeField] private float m_speedAutoExitAttractor = 10.0f;
     [HideInInspector] public Rigidbody m_rigidBody;
     [HideInInspector] Vector3 m_oldGravity;
     private RaycastHit m_attractor;
@@ -44,9 +44,13 @@ public class GameObjectGravity : MonoBehaviour
 	
     public void Update()
     {
-        if (!m_changingToAttractor && m_rigidBody.velocity.magnitude > m_speedAutoExitAttractor)
+        if (!m_changingToAttractor && !m_planetGravity)
         {
-            m_planetGravity = true;
+            float fallingVelocity = Vector3.Dot(m_rigidBody.velocity, m_gravity);
+            if (fallingVelocity < 0.0f && -fallingVelocity > m_speedAutoExitAttractor)
+            {
+                m_planetGravity = true;
+            }
         }
     }
 
@@ -130,17 +134,17 @@ public class GameObjectGravity : MonoBehaviour
     //This function is called automatically when this object colliders begins to touch another collider.
     //It's used so when the gameobject reaches it's attractor, it changes its current gravity for the attractor's normal.
     //It's main importance regards objects falling (characters have it's own way to detect floors).
-    private void OnCollisionEnter(Collision col)
-    {
-        if (m_attractor.collider != null)
-        {
-            if (col.collider == m_attractor.collider)
-            {
-                m_gravity = m_attractor.normal;
-                m_planetGravity = false;
-            }
-        }
-    }
+    //private void OnCollisionEnter(Collision col)
+    //{
+    //    if (m_attractor.collider != null)
+    //    {
+    //        if (col.collider == m_attractor.collider)
+    //        {
+    //            m_gravity = m_attractor.normal;
+    //            m_planetGravity = false;
+    //        }
+    //    }
+    //}
 
     //This function sets the passed raycasthit as the current attractor for the game object
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet
