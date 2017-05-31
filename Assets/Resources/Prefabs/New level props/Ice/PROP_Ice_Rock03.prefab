@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33453404876629120}
   - component: {fileID: 23044320260621044}
   - component: {fileID: 64570387384011690}
+  - component: {fileID: 114034993142123852}
   m_Layer: 0
   m_Name: PROP_Ice_Rock03
   m_TagString: Untagged
@@ -94,3 +95,18 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: dba08c7a139c0d545ba41e9a4e27a100, type: 3}
+--- !u!114 &114034993142123852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165113555600168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0588b83538c7d43b2dc23c4cf9ea7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys:
+  - SplashWater
+  sounds:
+  - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
