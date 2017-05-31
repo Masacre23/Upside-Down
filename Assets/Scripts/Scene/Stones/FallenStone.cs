@@ -19,7 +19,7 @@ public class FallenStone : MonoBehaviour {
 	void Start () {}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         switch (m_state)
         {
             case FallenStoneState.WAIT:
@@ -29,8 +29,8 @@ public class FallenStone : MonoBehaviour {
             case FallenStoneState.FALL_DOWN:
                 Rigidbody rigidBody = GetComponent<Rigidbody>();
                 rigidBody.isKinematic = false;
-                Vector3 force = transform.parent.position - transform.position;
-                rigidBody.AddForce(force * stronge, ForceMode.Impulse);
+                Vector3 force = transform.position + -transform.position.normalized *stronge;
+                rigidBody.MovePosition(force); //* stronge);//, ForceMode.Impulse);
                 break;
         }
         

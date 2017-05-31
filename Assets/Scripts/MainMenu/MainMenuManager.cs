@@ -65,8 +65,6 @@ public class MainMenuManager : MonoBehaviour {
 
     public void PressPlayButton(){
         m_video.PlayVideo();
-        //Scenes.LoadScene(Scenes.Level1);
-        //AudioManager.Instance().PlayMusic(m_gameMusic, 4.0f);
 	}
 
 	public void PreesQuitButton(){
