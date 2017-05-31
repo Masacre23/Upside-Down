@@ -9,6 +9,11 @@ public class HUDManager : MonoBehaviour {
     public Image m_sight;
     public Image m_energy;
     public Image m_oxigen;
+    public Image m_plunger;
+    public Animator m_signAnimator;
+    public Sprite[] m_plungersSprites;
+    public Sprite[] m_energySprites;
+    public Character m_playerGravity;
 
 
     private static bool m_showLifePanel = true;
@@ -18,17 +23,19 @@ public class HUDManager : MonoBehaviour {
     private static float m_floatTimeValue = 0.0f;
     private static float m_maxEnergyValue = 120.0f;
     private static float m_oxigenValue = 1.0f;
-    private static int m_energyValue = 7;
-    private static float[] m_energyValues = new float[7] { 0.0f, 0.175f, 0.329f, 0.5f, 0.675f, 0.821f, 1.0f };
-	// Update is called once per frame
-	void Update ()
+    private static int m_energyValue = 9;
+    private static int m_energyMaxValue = 9;
+
+    void Update ()
     {
         m_gravityPanel.SetActive(m_showGravityPanel);
         m_lifePanel.SetActive(m_showLifePanel);
         m_sight.color = m_isGreen ? new Color(0.0f, 1.0f, 0.0f, 1.0f) : new Color(1.0f, 0.0f, 0.0f, 1.0f);
         m_sight.fillAmount = m_floatTimeValue;
-        m_energy.fillAmount = m_energyValues[m_energyValue];
+        m_energy.sprite = m_energySprites[m_energyValue];
         m_oxigen.fillAmount = m_oxigenValue;
+        m_plunger.sprite = m_plungersSprites[(int) ((1 - m_oxigenValue) * m_plungersSprites.Length)];
+        m_signAnimator.SetBool("PlanetGravity", m_playerGravity.m_gravityOnCharacter.IsPlanetGravity());
     }
 
     public static void ShowLifePanel(bool showLifePanel)
@@ -48,7 +55,7 @@ public class HUDManager : MonoBehaviour {
 
     public static void ChangeEnergyValue(float energy)
     {
-        m_energyValue = (int)((energy / m_maxEnergyValue) * (m_energyValues.Length - 1));
+        m_energyValue = (int)((energy / m_maxEnergyValue) * (m_energyMaxValue - 1));
     }
 
     public static void ChangeColorSight(bool isGreen)
