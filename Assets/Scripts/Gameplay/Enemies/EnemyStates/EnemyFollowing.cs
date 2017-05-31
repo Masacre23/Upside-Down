@@ -12,8 +12,12 @@ public class EnemyFollowing : EnemyStates
 	float capsuleRadius;
 	public Vector3 target;
     public GameObject m_prefabEffect;
+
+    //Flying enemy
     private float nextFire;
     private float fireRate = 2;
+    private float innerRadiusToPlayer = 10;
+    private float outterRadiusToPlayer = 20;
 
     public void Awake()
     {
@@ -87,8 +91,19 @@ public class EnemyFollowing : EnemyStates
 		transform.LookAt(pointOnPlane, transform.up);
 		//Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
 		//transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
-	
-		transform.position += transform.forward * speed * Time.deltaTime;
+	    
+        switch (m_enemy.m_type)
+        {
+            case Enemy.Types.SNAIL:
+                transform.position += transform.forward * speed * Time.deltaTime;
+                break;
+            case Enemy.Types.FLYING:
+                if(difference.sqrMagnitude < innerRadiusToPlayer )
+                    transform.position -= transform.forward * speed * Time.deltaTime;
+                else if(difference.sqrMagnitude > outterRadiusToPlayer)
+                    transform.position += transform.forward * speed * Time.deltaTime;
+                break;
+        }
 	}
 
     public void Attack() // Only for flying enemy
