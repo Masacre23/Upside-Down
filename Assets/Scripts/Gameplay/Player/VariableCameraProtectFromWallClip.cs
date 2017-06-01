@@ -25,7 +25,7 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
     private Vector3 m_originalPosition;
 
     private Vector3 m_playerToCam;
-    int ignorePlayer;
+    public LayerMask m_layersToIgnore;
 
     private void Start()
     {
@@ -41,8 +41,6 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
         // create a new RayHitComparer
         m_RayHitComparer = new RayHitComparer();
 
-        ignorePlayer = 1 << LayerMask.NameToLayer("Player");
-        ignorePlayer = ~ignorePlayer;
     }
 
 
@@ -50,6 +48,8 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
     {
         if (m_protectionEnabled)
         {
+            LayerMask layersToCollide = ~m_layersToIgnore;
+
             // initially set the target distance
             float targetDist = m_OriginalDist;
 
@@ -62,7 +62,7 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
 
 
             // initial check to see if start of spherecast intersects anything
-            var cols = Physics.OverlapSphere(m_Ray.origin, m_sphereCastRadius, ignorePlayer);
+            var cols = Physics.OverlapSphere(m_Ray.origin, m_sphereCastRadius, layersToCollide);
 
             bool initialIntersect = false;
             bool hitSomething = false;
@@ -85,13 +85,13 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
                 //m_Ray.origin += m_Pivot.forward * m_sphereCastRadius;
 
                 // do a raycast and gather all the intersections
-                m_Hits = Physics.RaycastAll(m_Ray, m_playerToCam.magnitude - m_sphereCastRadius, ignorePlayer);
+                m_Hits = Physics.RaycastAll(m_Ray, m_playerToCam.magnitude - m_sphereCastRadius, layersToCollide);
                 //m_Hits = Physics.RaycastAll(m_Ray, m_OriginalDist - m_sphereCastRadius, ignorePlayer);
             }
             else
             {
                 // if there was no collision do a sphere cast to see if there were any other collisions
-                m_Hits = Physics.SphereCastAll(m_Ray, m_sphereCastRadius, m_playerToCam.magnitude + m_sphereCastRadius, ignorePlayer);
+                m_Hits = Physics.SphereCastAll(m_Ray, m_sphereCastRadius, m_playerToCam.magnitude + m_sphereCastRadius, layersToCollide);
                 //m_Hits = Physics.SphereCastAll(m_Ray, m_sphereCastRadius, m_OriginalDist + m_sphereCastRadius, ignorePlayer);
             }
 
