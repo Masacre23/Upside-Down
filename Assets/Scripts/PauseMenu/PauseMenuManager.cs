@@ -30,7 +30,10 @@ public class PauseMenuManager : MonoBehaviour {
         if (Input.GetButtonDown(m_pauseInputButton))
         {
             Paused();
-            m_player.PausePlayer();
+            if (mIsPaused)
+                m_player.PausePlayer();
+            else
+                m_player.UnpausePlayer();
         }
         if (m_eventSysterm.currentSelectedGameObject != m_selected)
         {
@@ -46,7 +49,6 @@ public class PauseMenuManager : MonoBehaviour {
         mIsPaused = !mIsPaused;
         mPausePanel.SetActive(mIsPaused);
         Time.timeScale = mIsPaused ? 0 : 1;
-        //m_player.m_negatePlayerInput = !m_player.m_negatePlayerInput;
     }
 
     public void Resume()

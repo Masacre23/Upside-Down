@@ -103,7 +103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1107622098570300
 GameObject:
   m_ObjectHideFlags: 1
@@ -2532,7 +2532,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -2812,6 +2812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1
+  m_oxigenDoubleJump: 20
 --- !u!114 &114804540859633044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2842,7 +2843,7 @@ MonoBehaviour:
   m_health: 160
   m_moveSpeed: 2
   m_jumpForceVertical: 8
-  m_jumpForceHorizontal: 4
+  m_jumpForceHorizontal: 2
   m_lerpSpeed: 10
   m_animator: {fileID: 0}
   m_gravityOnCharacter: {fileID: 0}
@@ -2850,6 +2851,10 @@ MonoBehaviour:
   m_capsule: {fileID: 0}
   m_capsuleHeight: 0
   m_negatePlayerInput: 0
+  m_savedPlayerInput: 0
+  m_paused: 0
+  m_justUnpaused: 0
+  m_negateJump: 0
   m_currentState: {fileID: 0}
   m_grounded: {fileID: 0}
   m_onAir: {fileID: 0}
@@ -2879,6 +2884,8 @@ MonoBehaviour:
   m_jumpDirection: {x: 0, y: 0, z: 0}
   m_gravityRange: 10
   m_reachedGround: 1
+  m_markedTarget: {fileID: 0}
+  m_markAimedObject: 0
   m_throwDetectionRange: 20
   m_throwForce: 20
   m_angleEnemyDetection: 30
@@ -2888,6 +2895,7 @@ MonoBehaviour:
   m_jumpClouds: {fileID: 1720592957757330, guid: af69c11a6b8fc49469697602b5d4dedc,
     type: 2}
   m_runClouds: {fileID: 1257855661589194}
+  m_soundEffects: {fileID: 0}
 --- !u!114 &114937028661882648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3114,7 +3122,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 743774446
+  randomSeed: -716503118
   InitialModule:
     serializedVersion: 3
     enabled: 1

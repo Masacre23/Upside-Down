@@ -21,12 +21,13 @@ GameObject:
   - component: {fileID: 4780307716733522}
   - component: {fileID: 33471300208774394}
   - component: {fileID: 23037595098331968}
+  - component: {fileID: 64714475839957440}
   m_Layer: 0
   m_Name: PROP_Ice_Snowman01 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1111606525721526
 GameObject:
@@ -38,12 +39,13 @@ GameObject:
   - component: {fileID: 4582753577455874}
   - component: {fileID: 33710224059569850}
   - component: {fileID: 23038032725885262}
+  - component: {fileID: 64915136261842448}
   m_Layer: 0
   m_Name: PROP_Ice_Snowman01 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1150329869086646
 GameObject:
@@ -58,7 +60,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1203746283997852
 GameObject:
@@ -70,12 +72,13 @@ GameObject:
   - component: {fileID: 4317294090163894}
   - component: {fileID: 33333931945702664}
   - component: {fileID: 23390107308631430}
+  - component: {fileID: 64797598622912976}
   m_Layer: 0
   m_Name: PROP_Ice_Snowman01 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1364188052426138
 GameObject:
@@ -87,12 +90,13 @@ GameObject:
   - component: {fileID: 4504281803424376}
   - component: {fileID: 33745580036988550}
   - component: {fileID: 23661183293592326}
+  - component: {fileID: 64865232914991326}
   m_Layer: 0
   m_Name: PROP_Ice_Snowman01 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!1 &1568651893394520
 GameObject:
@@ -104,12 +108,13 @@ GameObject:
   - component: {fileID: 4179683345635258}
   - component: {fileID: 33750726434237578}
   - component: {fileID: 23978234113962342}
+  - component: {fileID: 64340063024489606}
   m_Layer: 0
   m_Name: PROP_Ice_Snowman01 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4179683345635258
 Transform:
@@ -143,9 +148,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150329869086646}
-  m_LocalRotation: {x: 0.27832696, y: -0.63626796, z: -0.35641837, w: 0.6250305}
-  m_LocalPosition: {x: -22.22, y: -1.03, z: -20.53}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.035541326, y: 0.0076040328, z: 0.43455043, w: 0.89991385}
+  m_LocalPosition: {x: 0.8451729, y: 1.2447624, z: 26.358124}
+  m_LocalScale: {x: 1.2000024, y: 1.2000017, z: 1.2000009}
   m_Children:
   - {fileID: 4780307716733522}
   - {fileID: 4179683345635258}
@@ -269,7 +274,6 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b51b1ddbfd9805c47bc18e04b250300f, type: 2}
   - {fileID: 2100000, guid: 8fc467d68dcdeb9429689116d9b4036a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -301,8 +305,6 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: b51b1ddbfd9805c47bc18e04b250300f, type: 2}
-  - {fileID: 2100000, guid: 47524783c8a447e419294bae79a4f708, type: 2}
   - {fileID: 2100000, guid: 8fc467d68dcdeb9429689116d9b4036a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -388,3 +390,73 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1568651893394520}
   m_Mesh: {fileID: 4300000, guid: 3704e167711552a4993e2b2526bb414f, type: 3}
+--- !u!64 &64340063024489606
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1568651893394520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300000, guid: 3704e167711552a4993e2b2526bb414f, type: 3}
+--- !u!64 &64714475839957440
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1017719863387488}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300008, guid: 3704e167711552a4993e2b2526bb414f, type: 3}
+--- !u!64 &64797598622912976
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1203746283997852}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300006, guid: 3704e167711552a4993e2b2526bb414f, type: 3}
+--- !u!64 &64865232914991326
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1364188052426138}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300002, guid: 3704e167711552a4993e2b2526bb414f, type: 3}
+--- !u!64 &64915136261842448
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1111606525721526}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300004, guid: 3704e167711552a4993e2b2526bb414f, type: 3}

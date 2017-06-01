@@ -45,7 +45,7 @@ public class PlayerGrounded : PlayerStates
             //    ret = true;
             //}
             //else
-                m_player.m_gravityOnCharacter.SwapPlanetAttractor();
+                m_player.SwapGravity();
         }
         else if (jumping)
         {

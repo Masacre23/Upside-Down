@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DialogueZone : MonoBehaviour
 {
-    string m_inputNameButton = "Submit";
+    string m_inputNameButton = "Activate";
     public GameObject m_dialogue;
 
     bool m_playerInside = false;
@@ -31,21 +31,12 @@ public class DialogueZone : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
-        {
             m_playerInside = true;
-            if (!m_alreadyPlayed)
-            {
-                m_playerManager.m_negateJump = true;
-            }
-        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
-        {
-            m_playerInside = false;
-            m_playerManager.m_negateJump = false;
-        }    
+            m_playerInside = false; 
     }
 }

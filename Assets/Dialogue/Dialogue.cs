@@ -13,7 +13,7 @@ public class Dialogue : MonoBehaviour
     public float CharacterRateMultiplier = 0.5f;
 
     //public KeyCode DialogueInput = KeyCode.Return;
-    public string m_inputNameButton = "Submit";
+    public string m_inputNameButton = "Activate";
 
     private bool _isStringBeingRevealed = false;
     private bool _isDialoguePlaying = false;
@@ -90,7 +90,7 @@ public class Dialogue : MonoBehaviour
         this.gameObject.transform.parent.gameObject.SetActive(false);
 
         playerManager.m_negatePlayerInput = false;
-        playerManager.m_negateJump = false;
+        //playerManager.m_negateJump = false;
     }
 
     private IEnumerator DisplayString(string stringToDisplay)

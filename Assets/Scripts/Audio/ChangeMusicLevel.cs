@@ -10,7 +10,10 @@ public class ChangeMusicLevel : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            AudioManager.Instance().PlayMusic(m_clip, 4.0f);
+            if (AudioManager.Instance())
+            {
+                AudioManager.Instance().PlayMusic(m_clip, 4.0f);
+            }
         }
     }
 }

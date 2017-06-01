@@ -70,49 +70,49 @@ public class PlayerDebugMode : MonoBehaviour {
         m_stylePlayerDebugMenu.alignment = TextAnchor.UpperLeft;
         m_stylePlayerDebugMenu.fontSize = 4 * m_screenHeight / 100;
         m_stylePlayerDebugMenu.normal.textColor = m_colorInfo;
-        m_rectPlayerDebugMenu = new Rect(m_screenWidth / 8, 0, m_screenWidth / 4, 4 * m_screenHeight / 100);
+        m_rectPlayerDebugMenu = new Rect(2 * m_screenWidth / 5, 0, m_screenWidth / 5, 4 * m_screenHeight / 100);
         m_titlePlayerDebugMenu = "Player Debug Mode";
 
         m_styleFixedSpawnsMenu = new GUIStyle();
         m_styleFixedSpawnsMenu.alignment = TextAnchor.UpperLeft;
         m_styleFixedSpawnsMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleFixedSpawnsMenu.normal.textColor = m_colorInactive;
-        m_rectFixedSpawnsMenu = new Rect(m_screenWidth / 8, 4 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectFixedSpawnsMenu = new Rect(2 * m_screenWidth / 5, 4 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleFixedSpawnsMenu = "1 - 4 : Fixed spawn points";
 
         m_styleCurrentSpawnsMenu = new GUIStyle();
         m_styleCurrentSpawnsMenu.alignment = TextAnchor.UpperLeft;
         m_styleCurrentSpawnsMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleCurrentSpawnsMenu.normal.textColor = m_colorInactive;
-        m_rectCurrentSpawnsMenu = new Rect(m_screenWidth / 8, 6 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectCurrentSpawnsMenu = new Rect(2 * m_screenWidth / 5, 6 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleCurrentSpawnsMenu = "5 : Return to last spawn point";
 
         m_styleRecoverHealthMenu= new GUIStyle();
         m_styleRecoverHealthMenu.alignment = TextAnchor.UpperLeft;
         m_styleRecoverHealthMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleRecoverHealthMenu.normal.textColor = m_colorInactive;
-        m_rectRecoverHealthMenu = new Rect(m_screenWidth / 8, 8 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectRecoverHealthMenu = new Rect(2 * m_screenWidth / 5, 8 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleRecoverHealthMenu = "6 : Recover health";
 
         m_styleRecoverOxigenMenu = new GUIStyle();
         m_styleRecoverOxigenMenu.alignment = TextAnchor.UpperLeft;
         m_styleRecoverOxigenMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleRecoverOxigenMenu.normal.textColor = m_colorInactive;
-        m_rectRecoverOxigenMenu = new Rect(m_screenWidth / 8, 10 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectRecoverOxigenMenu = new Rect(2 * m_screenWidth / 5, 10 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleRecoverOxigenMenu = "7 : Recover oxigen";
 
         m_styleHitPlayerMenu = new GUIStyle();
         m_styleHitPlayerMenu.alignment = TextAnchor.UpperLeft;
         m_styleHitPlayerMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleHitPlayerMenu.normal.textColor = m_colorInactive;
-        m_rectHitPlayerMenu = new Rect(m_screenWidth / 8, 12 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectHitPlayerMenu = new Rect(2 * m_screenWidth / 5, 12 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleHitPlayerMenu = "8 - Hit player";
 
         m_styleKillPlayerMenu = new GUIStyle();
         m_styleKillPlayerMenu.alignment = TextAnchor.UpperLeft;
         m_styleKillPlayerMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleKillPlayerMenu.normal.textColor = m_colorInactive;
-        m_rectKillPlayerMenu = new Rect(m_screenWidth / 8, 14 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectKillPlayerMenu = new Rect(2 * m_screenWidth / 5, 14 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleKillPlayerMenu = "9 - Kill player";        
         
     }
@@ -149,12 +149,7 @@ public class PlayerDebugMode : MonoBehaviour {
             }
             if (Input.GetKeyDown(KeyCode.Alpha7))
             {
-                if (m_playerClass.m_oxigen.m_oxigen > 0)
-                {
-                    m_playerClass.m_oxigen.m_oxigen += 60;
-                    if (m_playerClass.m_oxigen.m_oxigen > m_playerClass.m_oxigen.m_maxOxigen)
-                        m_playerClass.m_oxigen.m_oxigen = m_playerClass.m_oxigen.m_maxOxigen;
-                }
+                m_playerClass.m_oxigen.SetOxygenMax();
             }
             if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Alpha9))
                 m_playerClass.HitDebug();

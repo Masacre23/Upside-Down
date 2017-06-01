@@ -18,11 +18,16 @@ public class SoundEffects : MonoBehaviour {
         {
             m_soundsEffects.Add(keys[i], sounds[i]);
         }
+
+        m_audio = GetComponent<AudioSource>();
+        if (!m_audio)
+            m_audio = this.gameObject.AddComponent<AudioSource>();
     }
 
     // Use this for initialization
-    void Start () {
-        m_audio = this.gameObject.AddComponent<AudioSource>();
+    void Start ()
+    {
+        
 	}
 	
 	// Update is called once per frame
@@ -34,7 +39,7 @@ public class SoundEffects : MonoBehaviour {
     {
         if(m_soundsEffects.ContainsKey(sound))
         {
-            m_audio.PlayOneShot(m_soundsEffects[sound]);
+            m_audio.PlayOneShot(m_soundsEffects[sound], 1.0f);
         }
     }
 }

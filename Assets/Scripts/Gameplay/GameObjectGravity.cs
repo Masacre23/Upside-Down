@@ -14,7 +14,7 @@ public class GameObjectGravity : MonoBehaviour
     [HideInInspector] public Rigidbody m_rigidBody;
     private RaycastHit m_attractor;
     public GameObject m_attractorGameObject { get; private set; }
-    public Vector3 m_gravity { get; private set; }
+    [SerializeField] public Vector3 m_gravity { get; private set; }
     public List<Rigidbody> m_planets;
     public bool m_planetGravity { get; private set; }
     public bool m_getAttractorOnFeet { get; private set; }
@@ -30,6 +30,8 @@ public class GameObjectGravity : MonoBehaviour
     //This should be the same for all gameobjects
     static float m_gravityStrength = -19.0f;
 
+    Player m_player;
+
     void Awake()
     {
         m_planets = new List<Rigidbody>();
@@ -40,12 +42,14 @@ public class GameObjectGravity : MonoBehaviour
     {
         m_rigidBody = GetComponent<Rigidbody>();
         m_rigidBody.useGravity = false;
-        m_gravity = Physics.gravity;
+        m_gravity = Vector3.zero;
         m_planetGravity = true;
         m_changingToAttractor = false;
         m_impulseForce = Vector3.zero;
         m_getAttractorOnFeet = false;
         m_attractorGameObject = null;
+
+        m_player = GetComponent<Player>();
     }
 	
     public void Update()
@@ -77,6 +81,10 @@ public class GameObjectGravity : MonoBehaviour
             {
                 m_rigidBody.velocity = Vector3.zero;
                 ReturnToPlanet();
+                if (m_player)
+                {
+                    m_player.PlaySound("GravityChange");
+                }
             }
         }
     }
@@ -233,12 +241,9 @@ public class GameObjectGravity : MonoBehaviour
     }
 
     //This function swap the current gravity attraction from planet to attractor and viceversa
-    public void SwapPlanetAttractor()
+    public void ActivateAttractorOnFeet()
     {
-        if (!m_getAttractorOnFeet)
-            m_getAttractorOnFeet = true;
-        else
-            ReturnToPlanet();
+        m_getAttractorOnFeet = true;
     }
 
     //This function is called when we want a object to float. Usually called when player is floating while changing gravity

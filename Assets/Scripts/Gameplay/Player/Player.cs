@@ -99,6 +99,8 @@ public class Player : Character
     float m_inputSpeed;
     float m_runSpeed;
 
+    public SoundEffects m_soundEffects;
+
     public override void Awake()
     {
         m_grounded = gameObject.GetComponent<PlayerGrounded>();
@@ -155,6 +157,8 @@ public class Player : Character
             m_detectorsEmpty.transform.parent = transform;
             m_detectorsEmpty.transform.localPosition = Vector3.zero;
         }
+
+        m_soundEffects = GetComponent<SoundEffects>();
 
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
         m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
@@ -313,6 +317,23 @@ public class Player : Character
         }
     }
 
+    public void SwapGravity()
+    {
+        if (m_gravityOnCharacter.m_getAttractorOnFeet)
+        {
+            m_gravityOnCharacter.ReturnToPlanet();
+            if (m_soundEffects != null)
+                m_soundEffects.PlaySound("GravityChange");
+
+        }
+        else
+        {
+            m_gravityOnCharacter.ActivateAttractorOnFeet();
+            if (m_soundEffects != null)
+                m_soundEffects.PlaySound("NewGravity");
+        }
+    }
+
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
     public override void Jump()
@@ -334,11 +355,8 @@ public class Player : Character
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
-        SoundEffects m_soundEffects = GetComponent<SoundEffects>();
         if (m_soundEffects != null)
-        {
             m_soundEffects.PlaySound("Jump");
-        }
     }
 
     //This functions controls the character movement and the model orientation.
@@ -530,11 +548,17 @@ public class Player : Character
         if(col.collider.gameObject.layer == harmfulObject)
         {
             MovingDamagingObject objectMoving = col.collider.GetComponent<MovingDamagingObject>();
+            StaticDamageObject objectStatic = col.collider.GetComponent<StaticDamageObject>();
             if (objectMoving)
             {
                 m_damageData.m_recive = true;
                 m_damageData.m_damage = objectMoving.m_impactDamage;
                 m_damageData.m_force = objectMoving.m_directionMovement * objectMoving.m_forceMultiplier;
+            }
+            else if (objectStatic)
+            {
+                m_damageData.m_recive = true;
+                m_damageData.m_damage = objectStatic.m_impactDamage;
             }
             else if (col.relativeVelocity.magnitude > 2.0f)
             {
@@ -551,8 +575,8 @@ public class Player : Character
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
             m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
 
-            if (m_negateJump)
-                m_jumping = false;
+            //if (m_negateJump)
+            //    m_jumping = false;
 
             if (m_throwObjectButtonUp)
             {
@@ -631,6 +655,12 @@ public class Player : Character
     {
         m_justUnpaused = true;
         ResetInput();
+    }
+
+    public void PlaySound(string name)
+    {
+        if (m_soundEffects != null)
+            m_soundEffects.PlaySound(name);
     }
 
 }

@@ -9,6 +9,8 @@ public class PlanetGravity : MonoBehaviour
     void Start()
     {
         m_rigidBody = GetComponent<Rigidbody>();
+
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -47,8 +49,8 @@ public class PlanetGravity : MonoBehaviour
     public static void AlignWithFather(GameObject go)
     {
         Transform parentTransform = go.transform.parent;
-        if (parentTransform.tag == "Planet")
-        {
+        //if (parentTransform.tag == "Planet")
+        //{
             Vector3 localPosition = go.transform.localPosition;
 
             Vector3 radialPosition = go.transform.position - parentTransform.position;
@@ -56,7 +58,7 @@ public class PlanetGravity : MonoBehaviour
             go.transform.rotation = targetRotation * go.transform.rotation;
 
             go.transform.localPosition = localPosition;
-        }
+        //}
     }
 
 }

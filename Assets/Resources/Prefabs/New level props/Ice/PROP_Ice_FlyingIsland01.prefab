@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33001018699860486}
   - component: {fileID: 23604812177172836}
   - component: {fileID: 64524163596673170}
-  - component: {fileID: 65470867531247902}
   m_Layer: 8
   m_Name: PROP_Ice_FlyingIsland01
   m_TagString: Untagged
@@ -36,9 +35,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1979759994398824}
-  m_LocalRotation: {x: 0.03844243, y: -0.37831166, z: -0.3031104, w: 0.8738001}
-  m_LocalPosition: {x: -9.422471, y: 2.2323723, z: 9.785407}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.2794812, y: -0.033890154, z: 0.9466827, w: 0.15663217}
+  m_LocalPosition: {x: -13.122001, y: 0.55799997, z: 20.466}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,15 +94,3 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 679e116678ec4524e82d408f14d1e883, type: 3}
---- !u!65 &65470867531247902
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1979759994398824}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.5}
-  m_Center: {x: 0, y: 0, z: 0.3}

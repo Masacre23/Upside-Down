@@ -84,60 +84,60 @@ public class DebugMode : MonoBehaviour {
         m_styleDebugMenu.alignment = TextAnchor.UpperLeft;
         m_styleDebugMenu.fontSize = 4 * m_screenHeight / 100;
         m_styleDebugMenu.normal.textColor = m_colorInfo;
-        m_rectDebugMenu = new Rect(0, 0, m_screenWidth / 4, 4 * m_screenHeight / 100);
+        m_rectDebugMenu = new Rect(3 * m_screenWidth / 5, 0, 2 * m_screenWidth / 5, 4 * m_screenHeight / 100);
         m_titleDebugMenu = "Debug Mode";
 
         m_stylePerformanceMenu = new GUIStyle();
         m_stylePerformanceMenu.alignment = TextAnchor.UpperLeft;
         m_stylePerformanceMenu.fontSize = 2 * m_screenHeight / 100;
         m_stylePerformanceMenu.normal.textColor = m_colorInactive;
-        m_rectPerformanceMenu = new Rect(0, 4 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectPerformanceMenu = new Rect(3 * m_screenWidth / 5, 4 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titlePerformanceMenu = "F1 - Performance";
 
         m_stylePerformanceInfo = new GUIStyle();
         m_stylePerformanceInfo.alignment = TextAnchor.UpperLeft;
         m_stylePerformanceInfo.fontSize = 2 * m_screenHeight / 100;
         m_stylePerformanceInfo.normal.textColor = m_colorInfo;
-        m_rectPerformanceInfo = new Rect(m_screenWidth / 8, 4 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectPerformanceInfo = new Rect(4 * m_screenWidth / 5, 4 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
 
         m_styleCoordinatesMenu = new GUIStyle();
         m_styleCoordinatesMenu.alignment = TextAnchor.UpperLeft;
         m_styleCoordinatesMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleCoordinatesMenu.normal.textColor = m_colorInactive;
-        m_rectCoordinatesMenu = new Rect(0, 6 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectCoordinatesMenu = new Rect(3 * m_screenWidth / 5, 6 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleCoordinatesMenu = "F2 - Coordinates";
 
         m_styleCoordinatesInfo = new GUIStyle();
         m_styleCoordinatesInfo.alignment = TextAnchor.UpperLeft;
         m_styleCoordinatesInfo.fontSize = 2 * m_screenHeight / 100;
         m_styleCoordinatesInfo.normal.textColor = m_colorInfo;
-        m_rectCoordinatesInfo = new Rect(m_screenWidth / 8, 6 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectCoordinatesInfo = new Rect(4 * m_screenWidth / 5, 6 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
 
         m_styleGravityMenu = new GUIStyle();
         m_styleGravityMenu.alignment = TextAnchor.UpperLeft;
         m_styleGravityMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleGravityMenu.normal.textColor = m_colorInactive;
-        m_rectGravityMenu = new Rect(0, 8 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectGravityMenu = new Rect(3 * m_screenWidth / 5, 8 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleGravityMenu = "F3 - Gravity";
 
         m_styleGravityInfo = new GUIStyle();
         m_styleGravityInfo.alignment = TextAnchor.UpperLeft;
         m_styleGravityInfo.fontSize = 2 * m_screenHeight / 100;
         m_styleGravityInfo.normal.textColor = m_colorInfo;
-        m_rectGravityInfo = new Rect(m_screenWidth / 8, 8 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectGravityInfo = new Rect(4 * m_screenWidth / 5, 8 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
 
         m_styleWireframeMenu = new GUIStyle();
         m_styleWireframeMenu.alignment = TextAnchor.UpperLeft;
         m_styleWireframeMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleWireframeMenu.normal.textColor = m_colorInactive;
-        m_rectWireframeMenu = new Rect(0, 10 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectWireframeMenu = new Rect(3 * m_screenWidth / 5, 10 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleWireframeMenu = "F4 - Wireframe";
 
         m_styleDrawAxisMenu = new GUIStyle();
         m_styleDrawAxisMenu.alignment = TextAnchor.UpperLeft;
         m_styleDrawAxisMenu.fontSize = 2 * m_screenHeight / 100;
         m_styleDrawAxisMenu.normal.textColor = m_colorInactive;
-        m_rectDrawAxisMenu = new Rect(0, 12 * m_screenHeight / 100, m_screenWidth / 8, 2 * m_screenHeight / 100);
+        m_rectDrawAxisMenu = new Rect(3 * m_screenWidth / 5, 12 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleDrawAxisMenu = "F5 - World Axis";
 
         Shader shader = Shader.Find("Hidden/Internal-Colored");

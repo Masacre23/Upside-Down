@@ -45,6 +45,8 @@ public class PlayerOnAir : PlayerStates
             {
                 m_player.m_playerGravity.ChangeGravityTo(target);
                 m_player.m_gravityOnCharacter.ChangeToAttractor();
+                if (m_player.m_soundEffects != null)
+                    m_player.m_soundEffects.PlaySound("NewGravity");
                 m_player.m_rigidBody.velocity = Vector3.zero;
                 m_player.m_freezeMovement = true;
                 //m_player.m_currentState = m_player.m_changing;
@@ -52,7 +54,7 @@ public class PlayerOnAir : PlayerStates
                 ret = true;
             }
             else
-                m_player.m_gravityOnCharacter.SwapPlanetAttractor();
+                m_player.SwapGravity();
         }
         else
         {

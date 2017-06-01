@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 114921078345946826}
   - component: {fileID: 114158598526894556}
   - component: {fileID: 136188761086519076}
+  - component: {fileID: 114287538428044976}
   m_Layer: 12
   m_Name: CFX3_IceBall_A
   m_TagString: Untagged
@@ -13016,6 +13017,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_timeAlive: 0.5
+--- !u!114 &114287538428044976
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78311d21cb5b224c85d38ad72f96309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_impactDamage: 20
+  m_forceMultiplier: 10
+  m_directionMovement: {x: 0, y: 0, z: 0}
 --- !u!114 &114875128621896230
 MonoBehaviour:
   m_ObjectHideFlags: 1
