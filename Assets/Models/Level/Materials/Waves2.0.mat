@@ -108,7 +108,7 @@ Material:
     - first:
         name: _ShoreTex
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 7ff10a1e8dac5184ca28d6999515420f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -173,8 +173,11 @@ Material:
         name: _RefrDistort
       second: 1.355
     - first:
+        name: _RimPower
+      second: 3
+    - first:
         name: _Shininess
-      second: 5.88
+      second: 10
     - first:
         name: _SmoothnessTextureChannel
       second: 1
@@ -202,6 +205,9 @@ Material:
     - first:
         name: _ZWrite
       second: 0
+    - first:
+        name: _isInnerAlphaBlendOrColor
+      second: 0
     m_Colors:
     - first:
         name: WaveSpeed
@@ -214,7 +220,7 @@ Material:
       second: {r: 2.2, g: 2.2, b: -1.1, a: -1.1}
     - first:
         name: _BaseColor
-      second: {r: 0.54, g: 0.95, b: 0.99, a: 0.5}
+      second: {r: 0, g: 0.54482746, b: 1, a: 1}
     - first:
         name: _BumpDirection
       second: {r: 1, g: 1, b: -1, a: 1}
@@ -232,7 +238,7 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _Foam
-      second: {r: 0.1, g: 0.375, b: 0, a: 0}
+      second: {r: 0.23, g: 0.375, b: 0, a: 0}
     - first:
         name: _GAmplitude
       second: {r: 0.3, g: 0.35, b: 0.25, a: 0.25}
@@ -256,7 +262,7 @@ Material:
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _InvFadeParemeter
-      second: {r: 0.15, g: 0.15, b: 0.5, a: 1}
+      second: {r: 4.89, g: 1.52, b: 0.5, a: 1}
     - first:
         name: _ReflectColor
       second: {r: 1, g: 1, b: 1, a: 0.5}
@@ -267,8 +273,11 @@ Material:
         name: _RefrColor
       second: {r: 0.34, g: 0.85, b: 0.92, a: 1}
     - first:
+        name: _RimColor
+      second: {r: 0.26, g: 0.19, b: 0.16, a: 0}
+    - first:
         name: _SpecColor
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0.4705882, g: 0.71521276, b: 1, a: 0.841}
     - first:
         name: _SpecularColor
       second: {r: 0.72, g: 0.72, b: 0.72, a: 1}

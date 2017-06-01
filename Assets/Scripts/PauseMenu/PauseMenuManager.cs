@@ -5,24 +5,35 @@ using UnityEngine.EventSystems;
 
 public class PauseMenuManager : MonoBehaviour {
 
-    public KeyCode mPauseKey;
+    //public KeyCode mPauseKey;
+    public string m_pauseInputButton = "Pause";
     public GameObject mPausePanel;
-
     public EventSystem m_eventSysterm;
+    public AudioClip m_mainMenuClip;
 
     private GameObject m_selected;
 
+    private Player m_player;
+
     private bool mIsPaused = false;
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         mPausePanel.SetActive(mIsPaused);
         m_selected = m_eventSysterm.firstSelectedGameObject;
+        m_player = GameObject.Find("Player").GetComponent<Player>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(mPauseKey)){
+        //if (Input.GetKeyDown(mPauseKey))
+        if (Input.GetButtonDown(m_pauseInputButton))
+        {
             Paused();
+            if (mIsPaused)
+                m_player.PausePlayer();
+            else
+                m_player.UnpausePlayer();
         }
         if (m_eventSysterm.currentSelectedGameObject != m_selected)
         {
@@ -43,10 +54,16 @@ public class PauseMenuManager : MonoBehaviour {
     public void Resume()
     {
         Paused();
+        m_player.UnpausePlayer();
     }
 
     public void Quit()
     {
+        Paused();
+        if (AudioManager.Instance())
+        {
+            AudioManager.Instance().PlayMusic(m_mainMenuClip, 1.0f);
+        }
         Scenes.LoadScene(Scenes.MainMenu);
     }
 }

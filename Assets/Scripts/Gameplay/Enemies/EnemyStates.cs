@@ -8,7 +8,10 @@ public class EnemyStates : MonoBehaviour
 	{
 		IDLE,
 		FOLLOWING,
-		CHANGING
+		CHANGING,
+        RECEIVING,
+        ATTACKING,
+        DEAD
 	}
 
 	protected States m_type;
@@ -16,13 +19,14 @@ public class EnemyStates : MonoBehaviour
 	protected Rigidbody m_rigidBody;
 
 	// Use this for initialization
-	public virtual void Start () {
+	public virtual void Start ()
+    {
 		m_enemy = GetComponent<Enemy> ();
 		m_rigidBody = GetComponent<Rigidbody> ();
 	}
 	
 	//Main enemy update.
-	public virtual bool OnUpdate()
+	public virtual bool OnUpdate(DamageData data)
 	{
 		return false;
 	}

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerOnAir : PlayerStates
 {
+    public float m_oxigenDoubleJump = 20.0f;
+    private bool m_doubleJump = false;
+
     public override void Start()
     {
         base.Start();
@@ -11,7 +14,7 @@ public class PlayerOnAir : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
 
@@ -20,25 +23,49 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        if (changeGravity && m_player.m_reachedGround && m_player.m_changeButtonReleased)
+        RaycastHit target;
+        bool hasTarget = m_player.SetMarkedTarget(out target);
+
+        if (jumping && !m_doubleJump && m_player.m_oxigen.HasEnoughOxygen(m_oxigenDoubleJump))
         {
-            m_player.m_currentState = m_player.m_floating;
-            m_player.SetFloatingPoint(0.0f);
-            ret = true;
+            m_player.Jump();
+            m_doubleJump = true;
+            m_player.m_doubleJumping = true;
+            m_player.m_oxigen.LostOxigen(m_oxigenDoubleJump);
+        }
+        //if (m_player.m_reachedGround && aimGravity)
+        //{
+        //    m_player.m_currentState = m_player.m_floating;
+        //    m_player.SetFloatingPoint(0.0f);
+        //    ret = true;
+        //}
+        if (changeGravity)
+        {
+            if (hasTarget)
+            {
+                m_player.m_playerGravity.ChangeGravityTo(target);
+                m_player.m_gravityOnCharacter.ChangeToAttractor();
+                if (m_player.m_soundEffects != null)
+                    m_player.m_soundEffects.PlaySound("NewGravity");
+                m_player.m_rigidBody.velocity = Vector3.zero;
+                m_player.m_freezeMovement = true;
+                //m_player.m_currentState = m_player.m_changing;
+                m_player.m_currentState = m_player.m_onAir;
+                ret = true;
+            }
+            else
+                m_player.SwapGravity();
         }
         else
         {
+            if (changeGravity && !m_player.m_gravityOnCharacter.m_changingToAttractor)
+                m_player.m_gravityOnCharacter.ReturnToPlanet();
             m_player.OnAir();
             m_player.UpdateUp();
-            m_player.Move(timeStep);
+            m_player.MoveOnAir(timeStep);
             if (m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_grounded;
-                //if(m_player.rigidbody. > 20)
-                //{
-                //    m_player.m_damageRecive = true;
-                //    m_player.m_damagePower = (int)m_player.m_moveSpeed - 20;
-                //}
                 ret = true;
             }
         }
@@ -48,11 +75,11 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnEnter()
     {
-        
+        m_player.m_markAimedObject = true;
+        m_doubleJump = false;   
     }
 
     public override void OnExit()
     {
-
     }
 }

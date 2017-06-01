@@ -11,12 +11,15 @@ public class EnemyChanging : EnemyStates {
 	float time;
 
 	// Use this for initialization
-	public override void Start () {
+	public override void Start ()
+    {
 		base.Start ();
-	}
+        m_type = States.CHANGING;
+    }
 	
 	// Update is called once per frame
-	public override bool OnUpdate () {
+	public override bool OnUpdate (DamageData data)
+    {
 		bool ret = false;
 		//Debug.DrawRay(transform.position, 2 * (transform.forward + transform.up), Color.green);
 		time += 0.01f;
@@ -25,7 +28,7 @@ public class EnemyChanging : EnemyStates {
 		if (transform.rotation == finalRot) 
 		{
 			ret = true;
-			OnExit ();
+			OnExit();
 		}
 
 		return ret;
@@ -43,8 +46,9 @@ public class EnemyChanging : EnemyStates {
 		{
 			if (hit.collider.tag == "GravityWall") 
 			{
-				m_enemy.m_gravityOnCharacter.m_attractor = hit;
-				m_enemy.m_gravityOnCharacter.m_gravity = hit.transform.up;
+                m_enemy.m_gravityOnCharacter.ChangeToNormal(hit);
+				//m_enemy.m_gravityOnCharacter.m_attractor = hit;
+				//m_enemy.m_gravityOnCharacter.m_gravity = hit.transform.up;
 				//m_enemy.currentWall = hit.collider.gameObject;
 			}
 		}

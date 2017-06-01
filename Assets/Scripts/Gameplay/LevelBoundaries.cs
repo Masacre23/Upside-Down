@@ -5,14 +5,21 @@ using UnityEngine;
 public class LevelBoundaries : MonoBehaviour
 {
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
             Player m_player = other.GetComponent<Player>();
-            m_player.m_damage.m_recive = true;
-            m_player.m_damage.m_damage = 20;
-            m_player.m_damage.m_respawn = true;
+            m_player.m_damageData.m_recive = true;
+            m_player.m_damageData.m_damage = 20;
+            m_player.m_damageData.m_respawn = true;
+        }
+        else
+        {
+            int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
+            int throwLayer = 1 << LayerMask.NameToLayer("ThrowableObject");
+            if (other.gameObject.layer == enemyLayer || other.gameObject.layer == throwLayer)
+                other.gameObject.SetActive(false);
         }
     }
 }

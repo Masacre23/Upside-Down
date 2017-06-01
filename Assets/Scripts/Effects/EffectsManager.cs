@@ -122,4 +122,9 @@ public class EffectsManager : MonoBehaviour {
 
         return ret;
     }
+
+    public Transform GetDefaultParent()
+    {
+        return m_defaultParent;
+    }
 }

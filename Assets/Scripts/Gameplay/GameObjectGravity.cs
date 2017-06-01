@@ -5,26 +5,32 @@ using UnityEngine;
 
 //This class should be added to any GameObject which gravity can be changed during the game.
 //It controls the current gravity of the object, and adds it to its rigid body.
-public class GameObjectGravity : MonoBehaviour {
-
-    public Rigidbody m_rigidBody;
-    Vector3 m_oldGravity;
-    public RaycastHit m_attractor;
-    public Vector3 m_gravity;
+public class GameObjectGravity : MonoBehaviour
+{
+    [SerializeField] private float m_speedAutoExitAttractor = 10.0f;
+    [SerializeField] private float m_maxTimeGravity = 2.0f;
+    [SerializeField] private float m_maxDistanceFromAttractor = 8.0f;
+    private float m_timeGravity = 0.0f;
+    [HideInInspector] public Rigidbody m_rigidBody;
+    private RaycastHit m_attractor;
+    public GameObject m_attractorGameObject { get; private set; }
+    [SerializeField] public Vector3 m_gravity { get; private set; }
     public List<Rigidbody> m_planets;
-    public bool m_canBeThrowed = true;
-    public bool m_planetGravity;
-    public bool m_changingToAttractor;
+    public bool m_planetGravity { get; private set; }
+    public bool m_getAttractorOnFeet { get; private set; }
+    public bool m_changingToAttractor { get; private set; }
     public float m_maxTimeTravelled = 0.5f;
 
     public bool m_ignoreGravity = false;
-    public bool m_throwed = false;
-    bool m_thrownForce = false;
     float m_timeTravelled;
     Vector3 m_impulseForce;
 
+    public bool m_getStrongestGravity = true;
+
     //This should be the same for all gameobjects
-    static float m_gravityStrength = -9.8f;
+    static float m_gravityStrength = -19.0f;
+
+    Player m_player;
 
     void Awake()
     {
@@ -36,13 +42,53 @@ public class GameObjectGravity : MonoBehaviour {
     {
         m_rigidBody = GetComponent<Rigidbody>();
         m_rigidBody.useGravity = false;
-        m_gravity = Physics.gravity;
+        m_gravity = Vector3.zero;
         m_planetGravity = true;
         m_changingToAttractor = false;
-        m_thrownForce = false;
         m_impulseForce = Vector3.zero;
-	}
+        m_getAttractorOnFeet = false;
+        m_attractorGameObject = null;
+
+        m_player = GetComponent<Player>();
+    }
 	
+    public void Update()
+    {
+        //if (!m_planetGravity)
+        //{
+        //    m_timeGravity += Time.deltaTime;
+        //    if (!m_changingToAttractor)
+        //    {
+        //        float fallingVelocity = Vector3.Dot(m_rigidBody.velocity, m_gravity);
+        //        if (fallingVelocity < 0.0f && -fallingVelocity > m_speedAutoExitAttractor)
+        //        {
+        //            ReturnToPlanet();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (m_timeGravity > m_maxTimeGravity)
+        //        {
+        //            m_timeGravity = 0.0f;
+        //            ReturnToPlanet();
+        //        }
+        //    }
+        //}
+
+        if (!m_planetGravity)
+        {
+            if ((transform.position - m_attractor.point).magnitude > m_maxDistanceFromAttractor)
+            {
+                m_rigidBody.velocity = Vector3.zero;
+                ReturnToPlanet();
+                if (m_player)
+                {
+                    m_player.PlaySound("GravityChange");
+                }
+            }
+        }
+    }
+
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
@@ -56,19 +102,13 @@ public class GameObjectGravity : MonoBehaviour {
             }
             else
             {
-                foreach (Rigidbody planet in m_planets)
-                {
-                    Vector3 newGravity = transform.position - planet.transform.position;
-                    float distance = newGravity.magnitude;
-                    newGravity.Normalize();
+                Vector3 gravity = Vector3.zero;
+                if (m_getStrongestGravity)
+                    GetStrongestPlanetGravity(ref strength, ref gravity);
+                else
+                    GetSumPlanetGravity(ref strength, ref gravity);
 
-                    float newStrength = -planet.mass / (distance * distance);
-                    if (newStrength < strength)
-                    {
-                        strength = newStrength;
-                        m_gravity = newGravity;
-                    }
-                }
+                m_gravity = gravity;
             }
 
             m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
@@ -82,36 +122,73 @@ public class GameObjectGravity : MonoBehaviour {
                 m_ignoreGravity = false;
             }
         }
-        
-        if (m_thrownForce)
+    }
+
+    //Get the strongest gravity among the planets currently affecting the object
+    private void GetStrongestPlanetGravity(ref float strength, ref Vector3 directionGravity)
+    {
+        foreach (Rigidbody planet in m_planets)
         {
-            m_rigidBody.AddForce(m_impulseForce * m_rigidBody.mass, ForceMode.Impulse);
-            m_thrownForce = false;
+            Vector3 newGravity = transform.position - planet.transform.position;
+            float distance = newGravity.magnitude;
+            newGravity.Normalize();
+
+            float newStrength = GravityStrength(planet.mass, distance);
+            if (newStrength < strength)
+            {
+                strength = newStrength;
+                directionGravity = newGravity;
+            }
         }
+    }
+
+    //Get the sum of all the planet gravities affecting the object
+    private void GetSumPlanetGravity(ref float strength, ref Vector3 directionGravity)
+    {
+        Vector3 gravity = Vector3.zero;
+        foreach (Rigidbody planet in m_planets)
+        {
+            Vector3 newGravity = transform.position - planet.transform.position;
+            float distance = newGravity.magnitude;
+            newGravity.Normalize();
+            float newStrength = GravityStrength(planet.mass, distance);
+
+            gravity += newGravity * newStrength;
+        }
+
+        strength = - gravity.magnitude;
+        directionGravity = - gravity.normalized;
+    }
+
+    //Function to compute planet gravity strength
+    private float GravityStrength(float mass, float distance)
+    {
+        return - mass / (25.0f * distance);
     }
 
     //This function is called automatically when this object colliders begins to touch another collider.
     //It's used so when the gameobject reaches it's attractor, it changes its current gravity for the attractor's normal.
     //It's main importance regards objects falling (characters have it's own way to detect floors).
-    private void OnCollisionEnter(Collision col)
-    {
-        if (m_attractor.collider != null)
-        {
-            if (col.collider == m_attractor.collider)
-            {
-                m_gravity = m_attractor.normal;
-                m_planetGravity = false;
-            }
-        }
-    }
+    //private void OnCollisionEnter(Collision col)
+    //{
+    //    if (m_attractor.collider != null)
+    //    {
+    //        if (col.collider == m_attractor.collider)
+    //        {
+    //            m_gravity = m_attractor.normal;
+    //            m_planetGravity = false;
+    //        }
+    //    }
+    //}
 
     //This function sets the passed raycasthit as the current attractor for the game object
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet
     public void GravityOnFeet(RaycastHit hit)
     {
-        if (hit.collider.tag == "GravityWall")
+        if (hit.collider.tag == "GravityWall" && m_getAttractorOnFeet)
         {
             m_attractor = hit;
+            m_attractorGameObject = hit.transform.gameObject;
             m_gravity = hit.normal;
             m_planetGravity = false;
             m_changingToAttractor = false;
@@ -119,30 +196,54 @@ public class GameObjectGravity : MonoBehaviour {
         else
         {
             m_planetGravity = true;
+            m_attractorGameObject = null;
         }
     }
 
-    //This function sets the GravityObject as a throwing object by the player. 
-    public void SetAsThrowingObject(GameObject player)
+    //This function changes object gravity so it falls towards the collision point
+    public void ChangeGravityToPoint(RaycastHit attractor, Vector3 objectPosition)
     {
-        if(player != null)
-        {
-            this.transform.parent = player.transform;
-            this.transform.localEulerAngles = new Vector3(0.0f, 0.0f, 0.0f);
-            this.transform.localPosition = new Vector3(0.0f, 1.0f, 1.0f);
-            this.m_oldGravity = this.m_gravity;
-            this.m_gravity = new Vector3(0.0f, 0.0f, 0.0f);
-            HingeJoint hingeJoint = this.gameObject.AddComponent<HingeJoint>();
-            hingeJoint.connectedBody = player.GetComponent<Rigidbody>();
-        }
-        else
-        {
-            HingeJoint hingeJoint = this.gameObject.GetComponent<HingeJoint>();
-            Destroy(hingeJoint);
-            this.transform.parent = null;
-            this.m_gravity = this.m_oldGravity;
-        }
-       
+        m_attractor = attractor;
+        m_attractorGameObject = attractor.transform.gameObject;
+        m_gravity = (objectPosition - attractor.point).normalized;
+    }
+
+    //This function changes object gravity so it falls into a direction equal to the normal of the position hit
+    public void ChangeToNormal(RaycastHit attractor)
+    {
+        m_attractor = attractor;
+        m_attractorGameObject = attractor.transform.gameObject;
+        m_gravity = attractor.normal;
+    }
+
+    //This functions only changes the attractor, without changing the current gravity
+    public void SetAttractor(RaycastHit attractor)
+    {
+        m_attractor = attractor;
+        m_attractorGameObject = attractor.transform.gameObject;
+    }
+
+    //This function is called to disable the gravity from attractors, and to return to the planet gravity
+    public void ReturnToPlanet()
+    {
+        m_planetGravity = true;
+        m_changingToAttractor = false;
+        m_attractorGameObject = null;
+        m_getAttractorOnFeet = false;
+    }
+
+    //This function is called when the player begins changing to an attractor
+    public void ChangeToAttractor()
+    {
+        m_planetGravity = false;
+        m_changingToAttractor = true;
+        m_getAttractorOnFeet = true;
+    }
+
+    //This function swap the current gravity attraction from planet to attractor and viceversa
+    public void ActivateAttractorOnFeet()
+    {
+        m_getAttractorOnFeet = true;
     }
 
     //This function is called when we want a object to float. Usually called when player is floating while changing gravity
@@ -161,19 +262,5 @@ public class GameObjectGravity : MonoBehaviour {
         Vector3 speed = distance / Time.fixedDeltaTime;
         speed = speedFactor > 1.0f ? speed : speed * speedFactor;
         m_rigidBody.velocity = speed;
-    }
-
-    //This function is called when a object is thrown by the player, using PlayerThrowing state.
-    public void ThrowObject(Vector3 throwForce, float distance)
-    {
-        m_rigidBody.isKinematic = false;
-        m_thrownForce = true;
-        m_impulseForce = throwForce;
-        m_ignoreGravity = true;
-        m_throwed = true;
-
-        Enemy enemy = GetComponent<Enemy>();
-        if (enemy)
-            enemy.m_isFloating = false;
     }
 }

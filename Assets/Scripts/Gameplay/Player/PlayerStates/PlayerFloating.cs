@@ -20,7 +20,7 @@ public class PlayerFloating : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
         HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_maxTimeFloating));
@@ -40,33 +40,37 @@ public class PlayerFloating : PlayerStates
             m_timeFloating += timeStep;
             RaycastHit target;
             bool legalTarget = m_player.m_playerGravity.ViableGravityChange(out target);
-            if (!changeGravity)
+            if (changeGravity)
             {
                 ret = true;
                 if (legalTarget)
                 {
                     m_player.m_playerGravity.ChangeGravityTo(target);
+                    m_player.m_gravityOnCharacter.ChangeToAttractor();
                     m_player.m_currentState = m_player.m_onAir;
-                    m_player.m_gravityOnCharacter.m_planetGravity = false;
-                    m_player.m_gravityOnCharacter.m_changingToAttractor = true;
                 }      
                 else
                     m_player.m_currentState = m_player.m_onAir;
             }
-        }
+            else if (aimGravity || jumping)
+            {
+                ret = true;
+                m_player.m_currentState = m_player.m_onAir;
+            }
+        }   
 
         return ret;
     }
 
     public override void OnEnter()
     {
+        m_player.m_markAimedObject = false;
         m_startingPosition = m_player.transform.position;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING);
         //m_player.m_camController.SetAimLockOnTarget(true, "GravityWall");
         m_player.m_rotationFollowPlayer = false;
         m_rigidBody.isKinematic = true;
         m_player.m_reachedGround = false;
-        m_player.m_changeButtonReleased = false;
         HUDManager.ShowGravityPanel(true);
     }
 

@@ -20,15 +20,15 @@ public class EnemyArea : MonoBehaviour
 		{
 			foreach(GameObject go in enemies)
 			{
-				Enemy enemy = go.GetComponent<Enemy> ();
-				enemy.player = col.gameObject;
-				enemy.m_currentState.OnExit ();
-				enemy.m_currentState = enemy.m_Following;
-				enemy.m_currentState.OnEnter ();
-			}
+                 Enemy enemy = go.GetComponent<Enemy>();
+                 enemy.player = col.gameObject;
+                 enemy.m_currentState.OnExit();
+                 enemy.m_currentState = enemy.m_Following;
+                 enemy.m_currentState.OnEnter();
+             }
 		}
 
-        if (col.tag == "EnemySnail" && col.name != "CenterSpineFather" || col.tag == "Enemy")
+        if (col.tag == "EnemySnail" && col.name != "CenterSpineFather" || col.tag == "FlyingEnemy")
         {
             enemies.Add(col.gameObject);
         }
@@ -40,10 +40,11 @@ public class EnemyArea : MonoBehaviour
 		{
 			foreach(GameObject go in enemies)
 			{
-				Enemy enemy = go.GetComponent<Enemy>();
-				enemy.m_currentState.OnExit ();
-				enemy.m_currentState = enemy.m_Idle;
-				enemy.m_currentState.OnEnter ();
+                Enemy enemy = go.GetComponent<Enemy>();
+                enemy.player = null;
+                enemy.m_currentState.OnExit();
+                enemy.m_currentState = enemy.m_Idle;
+                enemy.m_currentState.OnEnter();
 			}
 		}
 

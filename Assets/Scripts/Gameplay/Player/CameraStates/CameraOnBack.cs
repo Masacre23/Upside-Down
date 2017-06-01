@@ -63,6 +63,8 @@ public class CameraOnBack : CameraStates
         m_returnTime = m_variableCam.m_maxReturnTime;
         m_variableCam.m_changeCamOnPosition = false;
         m_variableCam.m_cameraProtection.SetProtection(true);
+        m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
+        m_tiltAngle = m_defaultTiltAngle;
     }
 
     public override void OnExit()
@@ -86,7 +88,7 @@ public class CameraOnBack : CameraStates
         m_variableCam.m_pivot.localRotation = targetRotation * tiltRotation;
     }
 
-    void MoveCamBehind(float deltaTime)
+    void MoveCamBehind()
     {
         m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
         m_tiltAngle = 0.0f;
@@ -94,6 +96,6 @@ public class CameraOnBack : CameraStates
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
         Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
 
-        m_variableCam.m_pivot.localRotation = Quaternion.Lerp(m_variableCam.m_pivot.localRotation, targetRotation * tiltRotation, deltaTime * m_variableCam.m_returnSpeed);
+        m_variableCam.m_pivot.localRotation = targetRotation * tiltRotation;
     }
 }

@@ -24,6 +24,9 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
     private RayHitComparer m_RayHitComparer;  // variable to compare raycast hit distances
     private Vector3 m_originalPosition;
 
+    private Vector3 m_playerToCam;
+    public LayerMask m_layersToIgnore;
+
     private void Start()
     {
         // find the camera in the object hierarchy
@@ -33,8 +36,11 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
         m_OriginalDist = -m_Cam.localPosition.z;
         m_CurrentDist = m_OriginalDist;
 
+        m_playerToCam = m_Cam.position - (transform.position + transform.up);
+
         // create a new RayHitComparer
         m_RayHitComparer = new RayHitComparer();
+
     }
 
 
@@ -42,16 +48,21 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
     {
         if (m_protectionEnabled)
         {
+            LayerMask layersToCollide = ~m_layersToIgnore;
+
             // initially set the target distance
             float targetDist = m_OriginalDist;
 
-            m_Ray.origin = m_Pivot.position + m_Pivot.up * m_originalPosition.y + m_Pivot.forward * m_sphereCastRadius;
-            m_Ray.direction = -m_Pivot.forward;
+            m_playerToCam = m_Cam.position - (transform.position + transform.up);
+            //m_Ray.origin = m_Pivot.position + m_Pivot.up * m_originalPosition.y + m_Pivot.forward * m_sphereCastRadius;
+            //m_Ray.direction = -m_Pivot.forward;
+            m_Ray.origin = transform.position + transform.up;
+            m_Ray.direction = m_playerToCam;
             Debug.DrawRay(m_Ray.origin, m_Ray.direction, Color.cyan);
 
 
             // initial check to see if start of spherecast intersects anything
-            var cols = Physics.OverlapSphere(m_Ray.origin, m_sphereCastRadius);
+            var cols = Physics.OverlapSphere(m_Ray.origin, m_sphereCastRadius, layersToCollide);
 
             bool initialIntersect = false;
             bool hitSomething = false;
@@ -70,15 +81,18 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
             // if there is a collision
             if (initialIntersect)
             {
-                m_Ray.origin += m_Pivot.forward * m_sphereCastRadius;
+                m_Ray.origin += m_playerToCam.normalized * m_sphereCastRadius;
+                //m_Ray.origin += m_Pivot.forward * m_sphereCastRadius;
 
                 // do a raycast and gather all the intersections
-                m_Hits = Physics.RaycastAll(m_Ray, m_OriginalDist - m_sphereCastRadius);
+                m_Hits = Physics.RaycastAll(m_Ray, m_playerToCam.magnitude - m_sphereCastRadius, layersToCollide);
+                //m_Hits = Physics.RaycastAll(m_Ray, m_OriginalDist - m_sphereCastRadius, ignorePlayer);
             }
             else
             {
                 // if there was no collision do a sphere cast to see if there were any other collisions
-                m_Hits = Physics.SphereCastAll(m_Ray, m_sphereCastRadius, m_OriginalDist + m_sphereCastRadius);
+                m_Hits = Physics.SphereCastAll(m_Ray, m_sphereCastRadius, m_playerToCam.magnitude + m_sphereCastRadius, layersToCollide);
+                //m_Hits = Physics.SphereCastAll(m_Ray, m_sphereCastRadius, m_OriginalDist + m_sphereCastRadius, ignorePlayer);
             }
 
             // sort the collisions by distance
@@ -105,7 +119,8 @@ public class VariableCameraProtectFromWallClip : MonoBehaviour
             // visualise the cam clip effect in the editor
             if (hitSomething)
             {
-                Debug.DrawRay(m_Ray.origin, -m_Pivot.forward * (targetDist + m_sphereCastRadius), Color.red);
+                Debug.DrawRay(m_Ray.origin, -m_playerToCam * (targetDist + m_sphereCastRadius), Color.red);
+                //Debug.DrawRay(m_Ray.origin, -m_Pivot.forward * (targetDist + m_sphereCastRadius), Color.red);
             }
 
             // hit something so move the camera to a better position

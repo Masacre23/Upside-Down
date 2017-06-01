@@ -18,7 +18,7 @@ public class PlayerChanging : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
 
@@ -37,6 +37,8 @@ public class PlayerChanging : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_rotationFollowPlayer = false;
+        m_timeChanging = 0.0f;
         m_rigidBody.isKinematic = true;
         m_initialRotation = transform.rotation;
         m_finalRotation = Quaternion.FromToRotation(transform.up, m_player.m_gravityOnCharacter.m_gravity) * transform.rotation;

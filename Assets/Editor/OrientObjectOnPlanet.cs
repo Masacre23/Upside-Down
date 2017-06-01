@@ -6,23 +6,23 @@ using UnityEditor;
 public class OrientObjectOnPlanet : ScriptableWizard
 {
     
-    [MenuItem ("Additional Tools/Align radially with father")]
+    [MenuItem ("Additional Tools/Align Z radially with father")]
     static void AlignWithFather()
     {
         foreach (GameObject child in Selection.gameObjects)
         {
-            //Transform parentTransform = child.transform.parent;
+            Transform parentTransform = child.transform.parent;
             //if (parentTransform.tag == "Planet")
             //{
-            //    Vector3 localPosition = child.transform.localPosition;
+                Vector3 localPosition = child.transform.localPosition;
 
-            //    Vector3 radialPosition = child.transform.position - parentTransform.position;
-            //    Quaternion targetRotation = Quaternion.FromToRotation(child.transform.forward, radialPosition.normalized);
-            //    child.transform.rotation = targetRotation * child.transform.rotation;
+                Vector3 radialPosition = child.transform.position - parentTransform.position;
+                Quaternion targetRotation = Quaternion.FromToRotation(child.transform.forward, radialPosition.normalized);
+                child.transform.rotation = targetRotation * child.transform.rotation;
 
-            //    child.transform.localPosition = localPosition;
+                child.transform.localPosition = localPosition;
             //}
-            PlanetGravity.AlignWithFather(child);
+            //PlanetGravity.AlignWithFather(child);
         }
     }
 

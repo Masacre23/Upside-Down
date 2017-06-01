@@ -36,8 +36,8 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
     private bool m_playerDetected = false;
   
     
-    private float m_verticalDistance = 6.0f;
-    private float m_speedVertical = 2.0f;
+    private float m_verticalDistance = 10.0f;
+    private float m_speedVertical = 4.0f;
 
     // Use this for initialization
     void Start()
@@ -160,7 +160,8 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                 if (m_distanceTraveled >= m_verticalDistance)
                 {
                     m_distanceTraveled = 0;
-                    m_state = PlatformState.WAIT;
+                    m_playerDetected = false;
+                    m_state = PlatformState.STOP;
                 }
                 PlanetGravity.AlignWithFather(gameObject);
                 break;

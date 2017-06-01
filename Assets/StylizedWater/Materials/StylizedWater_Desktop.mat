@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: StylizedWater_Desktop
+  m_Shader: {fileID: 4800000, guid: 86282aca396e36c47943004c99dcacfd, type: 3}
+  m_ShaderKeywords: _EMISSION _USEINTERSECTIONHIGHLIGHT_ON _WORLDSPACETILING_ON
+  m_LightmapFlags: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _Normals
+      second:
+        m_Texture: {fileID: 947374229, guid: e3d849a71cf1896458f0932f079b66a3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Reflection
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Shadermap
+      second:
+        m_Texture: {fileID: -1511549886, guid: e3d849a71cf1896458f0932f079b66a3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _Depth
+      second: 30
+    - first:
+        name: _Depthdarkness
+      second: 0.5
+    - first:
+        name: _Fresnelexponent
+      second: 4
+    - first:
+        name: _Glossiness
+      second: 1
+    - first:
+        name: _HighlightPanning
+      second: 0
+    - first:
+        name: _RefractionAmount
+      second: 0.0553
+    - first:
+        name: _RimDistance
+      second: 0.047
+    - first:
+        name: _RimSize
+      second: 0.18
+    - first:
+        name: _Rimfalloff
+      second: 0.44
+    - first:
+        name: _Rimtiling
+      second: 10
+    - first:
+        name: _SurfaceHighlight
+      second: 0.05
+    - first:
+        name: _SurfaceHightlighttiling
+      second: 0.25
+    - first:
+        name: _Surfacehightlightsize
+      second: 0
+    - first:
+        name: _Tiling
+      second: 0.9
+    - first:
+        name: _Transparency
+      second: 0.891
+    - first:
+        name: _UseIntersectionHighlight
+      second: 1
+    - first:
+        name: _Wavesspeed
+      second: 0.75
+    - first:
+        name: _Wavesstrength
+      second: 0
+    - first:
+        name: _Wavetint
+      second: 0
+    - first:
+        name: _Worldspacetiling
+      second: 1
+    m_Colors:
+    - first:
+        name: _FresnelColor
+      second: {r: 1, g: 1, b: 1, a: 0.5019608}
+    - first:
+        name: _RimColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _WaterColor
+      second: {r: 0, g: 0.503546, b: 1, a: 1}

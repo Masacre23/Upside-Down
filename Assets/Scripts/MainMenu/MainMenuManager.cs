@@ -7,15 +7,20 @@ public class MainMenuManager : MonoBehaviour {
 	public EventSystem m_eventSysterm;
     public GameObject m_canvasLogo;
     public GameObject m_canvasMenu;
+    public GameObject m_panelButtons;
+    public GameObject m_panelAnyKey;
+    public VideoPlayer m_video;
 
     private GameObject m_selected;
     private bool showLogo = true;
+    private bool waitAnyKey = true;
     private float time = 0.0f;
 
     private void Start()
     {
         m_selected = m_eventSysterm.firstSelectedGameObject;
         showLogo = true;
+        waitAnyKey = true;
     }
 
     private void Update()
@@ -31,6 +36,15 @@ public class MainMenuManager : MonoBehaviour {
                 m_canvasMenu.SetActive(true);
             }
         }
+        else if (waitAnyKey)
+        {
+            if (Input.anyKey)
+            {
+                waitAnyKey = false;
+                m_panelAnyKey.SetActive(false);
+                m_panelButtons.SetActive(true);
+            }
+        }
         else
         {
             if (m_eventSysterm.currentSelectedGameObject != m_selected)
@@ -39,13 +53,18 @@ public class MainMenuManager : MonoBehaviour {
                     m_eventSysterm.SetSelectedGameObject(m_selected);
                 else
                     m_selected = m_eventSysterm.currentSelectedGameObject;
+                SoundEffects sound = m_selected.GetComponent<SoundEffects>();
+                if(sound != null)
+                {
+                    sound.PlaySound("Change");
+                }
             }
         }
         
     }
 
     public void PressPlayButton(){
-        Scenes.LoadScene(Scenes.Level1);
+        m_video.PlayVideo();
 	}
 
 	public void PreesQuitButton(){

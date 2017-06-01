@@ -19,18 +19,19 @@ public class FallenStone : MonoBehaviour {
 	void Start () {}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         switch (m_state)
         {
             case FallenStoneState.WAIT:
-                if (trigger.m_playerDetected)
+                if (trigger == null || trigger.m_playerDetected)
                     m_state = FallenStoneState.FALL_DOWN;
                 break;
             case FallenStoneState.FALL_DOWN:
                 Rigidbody rigidBody = GetComponent<Rigidbody>();
                 rigidBody.isKinematic = false;
-                Vector3 force = transform.parent.position - transform.position;
-                rigidBody.AddForce(force * stronge, ForceMode.Impulse);
+                Vector3 force = /*transform.position +*/ -transform.position.normalized *stronge;
+                //rigidBody.MovePosition(force); //* stronge);//, ForceMode.Impulse);
+                rigidBody.AddForce(force, ForceMode.Impulse);
                 break;
         }
         
