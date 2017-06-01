@@ -22,8 +22,10 @@ public class EnemyFollowing : EnemyStates
 
     public void Awake()
     {
-        m_prefabEffect = (GameObject)Resources.Load("Prefabs/Effects/CFX3_IceBall_A", typeof(GameObject));
+        if (!m_prefabEffect)
+            m_prefabEffect = (GameObject)Resources.Load("Prefabs/Effects/CFX3_IceBall_A", typeof(GameObject));  
     }
+
     public override void Start ()
     {
 		base.Start();
@@ -122,7 +124,7 @@ public class EnemyFollowing : EnemyStates
         if (Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            EffectsManager.Instance.GetEffect(m_prefabEffect, transform, transform);
+            EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
         }
     }
 }

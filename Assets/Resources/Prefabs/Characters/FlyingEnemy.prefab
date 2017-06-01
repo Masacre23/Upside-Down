@@ -42,6 +42,10 @@ GameObject:
   - component: {fileID: 114220547769913182}
   - component: {fileID: 114059902161348250}
   - component: {fileID: 114116944524061274}
+  - component: {fileID: 114031071417672054}
+  - component: {fileID: 114923331678482630}
+  - component: {fileID: 114034144185201352}
+  - component: {fileID: 114785301088951382}
   m_Layer: 10
   m_Name: FlyingEnemy
   m_TagString: FlyingEnemy
@@ -130,6 +134,28 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114031071417672054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300204459058772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 001229c1a5c0a20409a6faea395d87e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114034144185201352
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300204459058772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69616177be2e40f459e29de4a17033ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114059902161348250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -199,6 +225,31 @@ MonoBehaviour:
   m_isFloating: 0
   player: {fileID: 0}
   m_type: 1
+--- !u!114 &114785301088951382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300204459058772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9347f1606cfe224408fa4c94398dde1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114923331678482630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300204459058772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1680091377098c4e99f9286ecdecf2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canChange: 1
+  target: {x: 0, y: 0, z: 0}
+  m_prefabEffect: {fileID: 100006, guid: 0a974074542bec6489d8b87b9db24914, type: 2}
 --- !u!135 &135738437344931594
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -209,7 +260,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.88
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136573239416234974
 CapsuleCollider:
