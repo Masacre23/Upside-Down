@@ -36,7 +36,7 @@ public class EnemyFollowing : EnemyStates
 		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position);
 
         if(m_enemy.m_animator != null)
-		m_enemy.m_animator.SetFloat ("PlayerDistance", distance);
+		    m_enemy.m_animator.SetFloat ("PlayerDistance", distance);
 
         if (m_enemy.m_animator != null)
         {

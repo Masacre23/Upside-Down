@@ -57,6 +57,7 @@ class PlayerThrowing : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_markAimedObject = false;
         m_rigidBody.isKinematic = true;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");

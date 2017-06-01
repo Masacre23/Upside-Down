@@ -41,6 +41,7 @@ public class EnemyArea : MonoBehaviour
 			foreach(GameObject go in enemies)
 			{
                 Enemy enemy = go.GetComponent<Enemy>();
+                enemy.player = null;
                 enemy.m_currentState.OnExit();
                 enemy.m_currentState = enemy.m_Idle;
                 enemy.m_currentState.OnEnter();

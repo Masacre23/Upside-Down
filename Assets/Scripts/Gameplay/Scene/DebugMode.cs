@@ -225,7 +225,7 @@ public class DebugMode : MonoBehaviour {
 
         if (m_activeGravityCoord)
         {
-            Vector3 gravity = m_playerGravity.GetGravityVector();
+            Vector3 gravity = m_playerGravity.m_gravity;
             string textGravity = string.Format("X: {0:0.00}, Y: {1:0.00}, Z: {2:0.00}", gravity.x, gravity.y, gravity.z);
             GUI.Label(m_rectGravityInfo, textGravity, m_styleGravityInfo);
         }

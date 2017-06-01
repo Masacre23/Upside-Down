@@ -64,6 +64,7 @@ public class PlayerFloating : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_markAimedObject = false;
         m_startingPosition = m_player.transform.position;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING);
         //m_player.m_camController.SetAimLockOnTarget(true, "GravityWall");

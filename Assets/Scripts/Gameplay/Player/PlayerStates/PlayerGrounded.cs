@@ -23,11 +23,29 @@ public class PlayerGrounded : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        if (aimGravity)
+        RaycastHit target;
+        bool hasTarget = m_player.SetMarkedTarget(out target);
+
+        //if (aimGravity)
+        //{
+        //    m_player.m_currentState = m_player.m_floating;
+        //    m_player.SetFloatingPoint(m_floatingHeight);
+        //    ret = true;
+        //}
+        if (changeGravity)
         {
-            m_player.m_currentState = m_player.m_floating;
-            m_player.SetFloatingPoint(m_floatingHeight);
-            ret = true;
+            //if (hasTarget)
+            //{
+            //    m_player.m_playerGravity.ChangeGravityTo(target);
+            //    m_player.m_gravityOnCharacter.ChangeToAttractor();
+            //    m_player.m_rigidBody.velocity = Vector3.zero;
+            //    m_player.m_freezeMovement = true;
+            //    //m_player.m_currentState = m_player.m_changing;
+            //    m_player.m_currentState = m_player.m_onAir;
+            //    ret = true;
+            //}
+            //else
+                m_player.m_gravityOnCharacter.SwapPlanetAttractor();
         }
         else if (jumping)
         {
@@ -61,12 +79,14 @@ public class PlayerGrounded : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_markAimedObject = true;
         m_player.m_rotationFollowPlayer = true;
         m_player.m_reachedGround = true;
         m_player.m_freezeMovement = false;
 		EffectsManager.Instantiate (m_player.m_jumpClouds, transform.position, transform.rotation * m_player.m_jumpClouds.transform.rotation);
 	    m_player.m_runClouds.GetComponent<ParticleSystem> ().Play();
         m_player.m_jumpDirection = Vector3.zero;
+        m_player.m_rigidBody.velocity = Vector3.zero;
     }
 
     public override void OnExit()

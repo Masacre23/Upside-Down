@@ -21,6 +21,12 @@ public class EnemyIdle : EnemyStates {
             m_enemy.DamageManager(data);
         }
 
+        if (m_enemy.player)
+        {
+            ret = true;
+            m_enemy.m_currentState = m_enemy.m_Following;
+        }
+
 		return ret;
 	}
 

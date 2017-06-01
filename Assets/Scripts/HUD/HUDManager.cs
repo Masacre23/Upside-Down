@@ -34,8 +34,8 @@ public class HUDManager : MonoBehaviour {
         m_sight.fillAmount = m_floatTimeValue;
         m_energy.sprite = m_energySprites[m_energyValue];
         m_oxigen.fillAmount = m_oxigenValue;
-        m_plunger.sprite = m_plungersSprites[(int) ((1 - m_oxigenValue) * m_plungersSprites.Length)];
-        m_signAnimator.SetBool("PlanetGravity", m_playerGravity.m_gravityOnCharacter.IsPlanetGravity());
+        m_plunger.sprite = m_plungersSprites[(int) ((1 - m_oxigenValue) * (m_plungersSprites.Length - 1))];
+        m_signAnimator.SetBool("PlanetGravity", !m_playerGravity.m_gravityOnCharacter.m_getAttractorOnFeet);
     }
 
     public static void ShowLifePanel(bool showLifePanel)

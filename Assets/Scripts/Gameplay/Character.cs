@@ -72,9 +72,7 @@ public class Character : MonoBehaviour
         if (GroundCheck(ref hitInfo))
         {
             if(this is Player)
-            {
                 ((Player)this).m_tagGround = hitInfo.collider.tag;
-            }
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
             m_isGrounded = true;
             m_isJumping = false;
@@ -92,7 +90,7 @@ public class Character : MonoBehaviour
     //This function rotates the character so its Vector.up aligns with the direction of the attractor's gravity
     public void UpdateUp()
     {
-        Quaternion targetRot = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.GetGravityVector()) * transform.rotation;
+        Quaternion targetRot = Quaternion.FromToRotation(transform.up, m_gravityOnCharacter.m_gravity) * transform.rotation;
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, m_lerpSpeed * Time.fixedDeltaTime);
     }
 
@@ -100,7 +98,7 @@ public class Character : MonoBehaviour
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
     public virtual void Jump()
     {
-        Vector3 gravity = m_gravityOnCharacter.GetGravityVector();
+        Vector3 gravity = m_gravityOnCharacter.m_gravity;
         float fallVelocity = Vector3.Dot(gravity, m_rigidBody.velocity);
         m_rigidBody.velocity += gravity * (m_jumpForceVertical - fallVelocity);
         //m_rigidBody.velocity = up * m_jumpForceVertical;
@@ -136,10 +134,12 @@ public class Character : MonoBehaviour
     bool GroundCheck(ref RaycastHit hitInfo)
     {
         bool ret = false;
+        int ignoreWater = 1 << LayerMask.NameToLayer("Water");
+        ignoreWater = ~ignoreWater;
 
-        ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance);
+        ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
         if (!ret)
-            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance);
+            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
 
         return ret;
     }

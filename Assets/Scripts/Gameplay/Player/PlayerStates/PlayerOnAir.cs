@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerOnAir : PlayerStates
 {
+    public float m_oxigenDoubleJump = 20.0f;
     private bool m_doubleJump = false;
 
     public override void Start()
@@ -22,22 +23,40 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        if (jumping && !m_doubleJump)
+        RaycastHit target;
+        bool hasTarget = m_player.SetMarkedTarget(out target);
+
+        if (jumping && !m_doubleJump && m_player.m_oxigen.HasEnoughOxygen(m_oxigenDoubleJump))
         {
             m_player.Jump();
             m_doubleJump = true;
             m_player.m_doubleJumping = true;
-            m_player.m_oxigen.LostOxigen(20);
+            m_player.m_oxigen.LostOxigen(m_oxigenDoubleJump);
         }
-        if (m_player.m_reachedGround && aimGravity)
+        //if (m_player.m_reachedGround && aimGravity)
+        //{
+        //    m_player.m_currentState = m_player.m_floating;
+        //    m_player.SetFloatingPoint(0.0f);
+        //    ret = true;
+        //}
+        if (changeGravity)
         {
-            m_player.m_currentState = m_player.m_floating;
-            m_player.SetFloatingPoint(0.0f);
-            ret = true;
+            if (hasTarget)
+            {
+                m_player.m_playerGravity.ChangeGravityTo(target);
+                m_player.m_gravityOnCharacter.ChangeToAttractor();
+                m_player.m_rigidBody.velocity = Vector3.zero;
+                m_player.m_freezeMovement = true;
+                //m_player.m_currentState = m_player.m_changing;
+                m_player.m_currentState = m_player.m_onAir;
+                ret = true;
+            }
+            else
+                m_player.m_gravityOnCharacter.SwapPlanetAttractor();
         }
         else
         {
-            if (changeGravity && !m_player.m_gravityOnCharacter.IsChanging())
+            if (changeGravity && !m_player.m_gravityOnCharacter.m_changingToAttractor)
                 m_player.m_gravityOnCharacter.ReturnToPlanet();
             m_player.OnAir();
             m_player.UpdateUp();
@@ -54,6 +73,7 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnEnter()
     {
+        m_player.m_markAimedObject = true;
         m_doubleJump = false;   
     }
 

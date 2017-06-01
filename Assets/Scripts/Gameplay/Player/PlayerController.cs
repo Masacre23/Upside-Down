@@ -7,13 +7,19 @@ using UnityStandardAssets.CrossPlatformInput;
 //Input for debug mode should be dealt in DebugMode class. Input for menus should be dealt in LevelManager class.
 public class PlayerController : MonoBehaviour
 {
-    int count = 0;
+    Player m_player;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+        m_player = GetComponent<Player>();
 	}
 	
+    void Update()
+    {
+        
+    }
+
 	// Method to be called in order to deal with input from player
 	public void GetDirections (ref float axisHorizontal, ref float axisVertical, ref float camHorizontal, ref float camVertical)
     {

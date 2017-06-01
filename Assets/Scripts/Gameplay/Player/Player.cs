@@ -22,8 +22,14 @@ public class Player : Character
     bool m_returnCam;
 
     bool m_throwObjectButtonUp = true;
+    bool m_changeGravityButtonUp = true;
 
-    public bool m_negatePlayerInput;
+    public bool m_negatePlayerInput = false;
+
+    public bool m_savedPlayerInput = false;
+    public bool m_paused = false;
+    public bool m_justUnpaused = false;
+    public bool m_negateJump = false;
 
     //Variables regarding player state
     public PlayerStates m_currentState;
@@ -70,6 +76,8 @@ public class Player : Character
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
     public bool m_reachedGround = true;
+    public MarkObject m_markedTarget = null;
+    public bool m_markAimedObject = false;
 
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
@@ -96,52 +104,40 @@ public class Player : Character
         m_grounded = gameObject.GetComponent<PlayerGrounded>();
         if (!m_grounded)
             m_grounded = gameObject.AddComponent<PlayerGrounded>();
-
         m_onAir = gameObject.GetComponent<PlayerOnAir>();
         if (!m_onAir)
             m_onAir = gameObject.AddComponent<PlayerOnAir>();
-
         m_floating = gameObject.GetComponent<PlayerFloating>();
         if (!m_floating)
             m_floating = gameObject.AddComponent<PlayerFloating>();
-
         m_changing = gameObject.GetComponent<PlayerChanging>();
         if (!m_changing)
             m_changing = gameObject.AddComponent<PlayerChanging>();
-
         m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
         if (!m_aimToThrow)
             m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
-
         m_currentState = m_onAir;
 
         m_vulnerable = gameObject.GetComponent<PlayerVulnerable>();
         if (!m_vulnerable)
             m_vulnerable = gameObject.AddComponent<PlayerVulnerable>();
-
         m_invulnerable = gameObject.GetComponent<PlayerInvulnerable>();
         if (!m_invulnerable)
             m_invulnerable = gameObject.AddComponent<PlayerInvulnerable>();
-
         m_receivingDamage = gameObject.GetComponent<PlayerReceivingDamage>();
         if (!m_receivingDamage)
             m_receivingDamage = gameObject.AddComponent<PlayerReceivingDamage>();
-
         m_deadState = gameObject.GetComponent<PlayerDead>();
         if (!m_deadState)
             m_deadState = gameObject.AddComponent<PlayerDead>();
-
         m_playerDamageState = m_vulnerable;
-
         m_damageData = new DamageData();
-
         m_playerRespawn = gameObject.GetComponent<PlayerRespawn>();
 
         if (!(m_playerInput = GetComponent<PlayerController>()))
             m_playerInput = gameObject.AddComponent<PlayerController>();
         if (!(m_playerGravity = GetComponent<PlayerGravity>()))        
             m_playerGravity = gameObject.AddComponent<PlayerGravity>();
-
         if (!(m_oxigen = GetComponent<OxigenPlayer>()))
             m_oxigen = gameObject.AddComponent<OxigenPlayer>();
 
@@ -161,11 +157,8 @@ public class Player : Character
         }
 
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
-
         m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
-
         m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
-
         base.Awake();
     }
 
@@ -173,16 +166,12 @@ public class Player : Character
     public override void Start ()
     { 
         m_modelTransform = transform.FindChild("Model");
-
         m_freezeMovement = false;
         m_negatePlayerInput = false;
-
         base.Start();
 
         HUDManager.SetMaxEnergyValue(m_maxHealth);
-
         m_runSpeed = 2 * m_moveSpeed;
-
         m_rigidBodyTotal = Vector3.zero;
     }
 
@@ -203,31 +192,7 @@ public class Player : Character
     // First, it should read input from PlayerController in Update, since we need input every frame
     public override void Update()
     {
-        if (!m_negatePlayerInput)
-        {
-            m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
-
-            if (m_throwObjectButtonUp)
-            {
-                if (m_throwObjectButtonDown)
-                    m_throwObjectButtonUp = false;
-            }
-            else
-            {
-                if (m_throwObjectButtonDown)
-                    m_throwObjectButtonDown = false;
-                else
-                    m_throwObjectButtonUp = true;
-            }
-
-            if (m_throwObjectButtonDown)
-                m_throwObjectButtonUp = false;
-        }
-
-        m_playerStopped = false;
-
-        m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
+        ManageInput();
 
         PlayerStates previousState = m_currentState;
 		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimGravity, m_changeGravity, m_aimObject, m_throwObjectButtonDown, Time.deltaTime))
@@ -247,6 +212,9 @@ public class Player : Character
                 m_camController.RotateOnTarget(Time.fixedDeltaTime);
         }
 
+        if (!m_markAimedObject)
+            UnmarkTarget();
+
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
 
@@ -263,6 +231,12 @@ public class Player : Character
             m_playerDamageState.OnEnter(m_damageData);
         }
         m_damageData.ResetDamageData();
+
+        if (m_justUnpaused)
+        {
+            m_paused = false;
+            m_justUnpaused = false;
+        }
 
         m_doubleJumping = false;
         ResetInput();
@@ -283,17 +257,59 @@ public class Player : Character
     {
         base.FixedUpdate();
         HUDManager.ChangeEnergyValue(base.m_health);
-        if (m_oxigen.m_oxigen <= 0.0f)
-        {
-            m_damageData.m_damage = (int)m_health + 1;
-            m_damageData.m_recive = true;
-        }
+        //if (m_oxigen.m_oxigen <= 0.0f)
+        //{
+        //    m_damageData.m_damage = (int)m_health + 1;
+        //    m_damageData.m_recive = true;
+        //}
         //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
         //m_rigidBodyTotal = Vector3.zero;
         if (m_damageForceToApply)
         {
             m_rigidBody.AddForce(m_damageForce, ForceMode.VelocityChange);
             m_damageForceToApply = false;
+        }
+    }
+
+    //This function sets a marked target that the player is aiming
+    public bool SetMarkedTarget(out RaycastHit target)
+    {
+        bool ret = false;
+        int layer = 1 << LayerMask.NameToLayer("Terrain");
+        if (Physics.SphereCast(m_camController.m_camRay, 1.0f, out target, m_gravityRange, layer))
+        {
+            if (target.collider.tag == "GravityWall")
+            {
+                MarkObject newMarked = target.transform.GetComponent<MarkObject>();
+                if (newMarked && target.transform.gameObject != m_gravityOnCharacter.m_attractorGameObject)
+                {
+                    ret = true;
+                    if (newMarked != m_markedTarget)
+                    {
+                        UnmarkTarget();
+                        newMarked.BeginMarking();
+                        m_markedTarget = newMarked;
+                    }
+                }
+                else
+                    UnmarkTarget();
+            }
+            else
+                UnmarkTarget();
+        }
+        else
+            UnmarkTarget();
+
+        return ret;
+    }
+
+    //This function unmarks a target, if any
+    public void UnmarkTarget()
+    {
+        if (m_markedTarget != null)
+        {
+            m_markedTarget.StopMarking();
+            m_markedTarget = null;
         }
     }
 
@@ -528,7 +544,51 @@ public class Player : Character
         }
     }
 
-    void ResetInput()
+    private void ManageInput()
+    {
+        if (!m_negatePlayerInput && !m_paused)
+        {
+            m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
+            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
+
+            if (m_negateJump)
+                m_jumping = false;
+
+            if (m_throwObjectButtonUp)
+            {
+                if (m_throwObjectButtonDown)
+                    m_throwObjectButtonUp = false;
+            }
+            else
+            {
+                if (m_throwObjectButtonDown)
+                    m_throwObjectButtonDown = false;
+                else
+                    m_throwObjectButtonUp = true;
+            }
+            if (m_throwObjectButtonDown)
+                m_throwObjectButtonUp = false;
+
+            if (m_changeGravityButtonUp)
+            {
+                if (m_changeGravity)
+                    m_changeGravityButtonUp = false;
+            }
+            else
+            {
+                if (m_changeGravity)
+                    m_changeGravity = false;
+                else
+                    m_changeGravityButtonUp = true;
+            }
+            if (m_changeGravity)
+                m_changeGravityButtonUp = false;
+        }
+        m_playerStopped = false;
+        m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
+    }
+
+    private void ResetInput()
     {
         m_axisHorizontal = 0.0f;
         m_axisVertical = 0.0f;
@@ -559,6 +619,18 @@ public class Player : Character
             m_damageData.m_recive = true;
             m_damageData.m_damage = (int)m_health + 1;
         }
+    }
+
+    public void PausePlayer()
+    {
+        m_paused = true;
+        ResetInput();
+    }
+
+    public void UnpausePlayer()
+    {
+        m_justUnpaused = true;
+        ResetInput();
     }
 
 }

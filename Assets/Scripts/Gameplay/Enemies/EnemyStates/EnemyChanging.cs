@@ -52,7 +52,7 @@ public class EnemyChanging : EnemyStates {
 				//m_enemy.currentWall = hit.collider.gameObject;
 			}
 		}
-		finalRot = Quaternion.FromToRotation (transform.up, m_enemy.m_gravityOnCharacter.GetGravityVector()) * transform.rotation;
+		finalRot = Quaternion.FromToRotation (transform.up, m_enemy.m_gravityOnCharacter.m_gravity) * transform.rotation;
 	}
 
 	public override void OnExit()

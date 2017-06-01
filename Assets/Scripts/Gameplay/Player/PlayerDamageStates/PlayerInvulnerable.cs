@@ -46,6 +46,7 @@ public class PlayerInvulnerable : PlayerDamageStates
                 m_player.m_playerDamageState = m_player.m_deadState;
             else
             {
+                m_player.m_floatingObjects.DropAll();
                 m_player.m_playerRespawn.ReSpawn(m_player.m_checkPoint);
                 m_player.m_playerDamageState = m_player.m_invulnerable;
                 m_player.m_negatePlayerInput = true;

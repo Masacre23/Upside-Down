@@ -12,7 +12,8 @@ public class Dialogue : MonoBehaviour
     public float SecondsBetweenCharacters = 0.15f;
     public float CharacterRateMultiplier = 0.5f;
 
-    public KeyCode DialogueInput = KeyCode.Return;
+    //public KeyCode DialogueInput = KeyCode.Return;
+    public string m_inputNameButton = "Submit";
 
     private bool _isStringBeingRevealed = false;
     private bool _isDialoguePlaying = false;
@@ -74,7 +75,8 @@ public class Dialogue : MonoBehaviour
 
         while (true)
         {
-            if (Input.GetKeyDown(DialogueInput))
+            //if (Input.GetKeyDown(DialogueInput))
+            if (!playerManager.m_paused && Input.GetButtonDown(m_inputNameButton))
             {
                 break;
             }
@@ -86,7 +88,9 @@ public class Dialogue : MonoBehaviour
         _isEndOfDialogue = false;
         _isDialoguePlaying = false;
         this.gameObject.transform.parent.gameObject.SetActive(false);
+
         playerManager.m_negatePlayerInput = false;
+        playerManager.m_negateJump = false;
     }
 
     private IEnumerator DisplayString(string stringToDisplay)
@@ -124,7 +128,8 @@ public class Dialogue : MonoBehaviour
 
         while (true)
         {
-            if (Input.GetKeyDown(DialogueInput))
+            //if (Input.GetKeyDown(DialogueInput))
+            if (!playerManager.m_paused && Input.GetButtonDown(m_inputNameButton))
             {
                 break;
             }

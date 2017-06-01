@@ -8,13 +8,17 @@ using UnityEngine;
 public class GameObjectGravity : MonoBehaviour
 {
     [SerializeField] private float m_speedAutoExitAttractor = 10.0f;
+    [SerializeField] private float m_maxTimeGravity = 2.0f;
+    [SerializeField] private float m_maxDistanceFromAttractor = 8.0f;
+    private float m_timeGravity = 0.0f;
     [HideInInspector] public Rigidbody m_rigidBody;
-    [HideInInspector] Vector3 m_oldGravity;
     private RaycastHit m_attractor;
-    [SerializeField] private Vector3 m_gravity;
+    public GameObject m_attractorGameObject { get; private set; }
+    public Vector3 m_gravity { get; private set; }
     public List<Rigidbody> m_planets;
-    [SerializeField] private bool m_planetGravity;
-    [SerializeField] private bool m_changingToAttractor;
+    public bool m_planetGravity { get; private set; }
+    public bool m_getAttractorOnFeet { get; private set; }
+    public bool m_changingToAttractor { get; private set; }
     public float m_maxTimeTravelled = 0.5f;
 
     public bool m_ignoreGravity = false;
@@ -40,16 +44,39 @@ public class GameObjectGravity : MonoBehaviour
         m_planetGravity = true;
         m_changingToAttractor = false;
         m_impulseForce = Vector3.zero;
-	}
+        m_getAttractorOnFeet = false;
+        m_attractorGameObject = null;
+    }
 	
     public void Update()
     {
-        if (!m_changingToAttractor && !m_planetGravity)
+        //if (!m_planetGravity)
+        //{
+        //    m_timeGravity += Time.deltaTime;
+        //    if (!m_changingToAttractor)
+        //    {
+        //        float fallingVelocity = Vector3.Dot(m_rigidBody.velocity, m_gravity);
+        //        if (fallingVelocity < 0.0f && -fallingVelocity > m_speedAutoExitAttractor)
+        //        {
+        //            ReturnToPlanet();
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (m_timeGravity > m_maxTimeGravity)
+        //        {
+        //            m_timeGravity = 0.0f;
+        //            ReturnToPlanet();
+        //        }
+        //    }
+        //}
+
+        if (!m_planetGravity)
         {
-            float fallingVelocity = Vector3.Dot(m_rigidBody.velocity, m_gravity);
-            if (fallingVelocity < 0.0f && -fallingVelocity > m_speedAutoExitAttractor)
+            if ((transform.position - m_attractor.point).magnitude > m_maxDistanceFromAttractor)
             {
-                m_planetGravity = true;
+                m_rigidBody.velocity = Vector3.zero;
+                ReturnToPlanet();
             }
         }
     }
@@ -150,9 +177,10 @@ public class GameObjectGravity : MonoBehaviour
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet
     public void GravityOnFeet(RaycastHit hit)
     {
-        if (hit.collider.tag == "GravityWall")
+        if (hit.collider.tag == "GravityWall" && m_getAttractorOnFeet)
         {
             m_attractor = hit;
+            m_attractorGameObject = hit.transform.gameObject;
             m_gravity = hit.normal;
             m_planetGravity = false;
             m_changingToAttractor = false;
@@ -160,6 +188,7 @@ public class GameObjectGravity : MonoBehaviour
         else
         {
             m_planetGravity = true;
+            m_attractorGameObject = null;
         }
     }
 
@@ -167,6 +196,7 @@ public class GameObjectGravity : MonoBehaviour
     public void ChangeGravityToPoint(RaycastHit attractor, Vector3 objectPosition)
     {
         m_attractor = attractor;
+        m_attractorGameObject = attractor.transform.gameObject;
         m_gravity = (objectPosition - attractor.point).normalized;
     }
 
@@ -174,6 +204,7 @@ public class GameObjectGravity : MonoBehaviour
     public void ChangeToNormal(RaycastHit attractor)
     {
         m_attractor = attractor;
+        m_attractorGameObject = attractor.transform.gameObject;
         m_gravity = attractor.normal;
     }
 
@@ -181,12 +212,7 @@ public class GameObjectGravity : MonoBehaviour
     public void SetAttractor(RaycastHit attractor)
     {
         m_attractor = attractor;
-    }
-
-    //This function returns the attractor point gameobject
-    public GameObject GetAttractorGameObject()
-    {
-        return m_attractor.transform.gameObject;
+        m_attractorGameObject = attractor.transform.gameObject;
     }
 
     //This function is called to disable the gravity from attractors, and to return to the planet gravity
@@ -194,6 +220,8 @@ public class GameObjectGravity : MonoBehaviour
     {
         m_planetGravity = true;
         m_changingToAttractor = false;
+        m_attractorGameObject = null;
+        m_getAttractorOnFeet = false;
     }
 
     //This function is called when the player begins changing to an attractor
@@ -201,23 +229,16 @@ public class GameObjectGravity : MonoBehaviour
     {
         m_planetGravity = false;
         m_changingToAttractor = true;
+        m_getAttractorOnFeet = true;
     }
 
-    //This function is call to know if the player has initiated a change of gravity through aiming to a surface
-    public bool IsChanging()
+    //This function swap the current gravity attraction from planet to attractor and viceversa
+    public void SwapPlanetAttractor()
     {
-        return m_changingToAttractor;
-    }
-
-    public bool IsPlanetGravity()
-    {
-        return m_planetGravity;
-    }
-
-    //Returns the object gravity
-    public Vector3 GetGravityVector()
-    {
-        return m_gravity;
+        if (!m_getAttractorOnFeet)
+            m_getAttractorOnFeet = true;
+        else
+            ReturnToPlanet();
     }
 
     //This function is called when we want a object to float. Usually called when player is floating while changing gravity
