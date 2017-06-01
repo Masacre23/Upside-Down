@@ -21,7 +21,10 @@ public class SoundEffects : MonoBehaviour {
 
         m_audio = GetComponent<AudioSource>();
         if (!m_audio)
+        {
             m_audio = this.gameObject.AddComponent<AudioSource>();
+        }
+           
     }
 
     // Use this for initialization

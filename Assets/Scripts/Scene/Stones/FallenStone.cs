@@ -23,14 +23,15 @@ public class FallenStone : MonoBehaviour {
         switch (m_state)
         {
             case FallenStoneState.WAIT:
-                if (trigger.m_playerDetected)
+                if (trigger == null || trigger.m_playerDetected)
                     m_state = FallenStoneState.FALL_DOWN;
                 break;
             case FallenStoneState.FALL_DOWN:
                 Rigidbody rigidBody = GetComponent<Rigidbody>();
                 rigidBody.isKinematic = false;
-                Vector3 force = transform.position + -transform.position.normalized *stronge;
-                rigidBody.MovePosition(force); //* stronge);//, ForceMode.Impulse);
+                Vector3 force = /*transform.position +*/ -transform.position.normalized *stronge;
+                //rigidBody.MovePosition(force); //* stronge);//, ForceMode.Impulse);
+                rigidBody.AddForce(force, ForceMode.Impulse);
                 break;
         }
         

@@ -69,6 +69,6 @@ public class OxigenPlayer : MonoBehaviour
 
     public bool HasEnoughOxygen(float oxygenCost)
     {
-        return m_oxigen > oxygenCost;
+        return !(m_oxigen - oxygenCost < 0) || Mathf.Approximately(m_oxigen - oxygenCost, 0.0f);
     }
 }
