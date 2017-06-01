@@ -55,14 +55,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1300204459058772}
-  m_LocalRotation: {x: -0.49710667, y: 0.009334527, z: 0.01628907, w: 0.86748636}
-  m_LocalPosition: {x: -110.1163, y: 12.42, z: 207.73}
-  m_LocalScale: {x: 3.2737727, y: 3.0319793, z: 2.2642925}
+  m_LocalRotation: {x: 0.4574746, y: 0.24244525, z: 0.5647568, w: 0.64264077}
+  m_LocalPosition: {x: -12.932, y: -0.719, z: 26.137}
+  m_LocalScale: {x: 3.2737737, y: 3.0319805, z: 2.2642932}
   m_Children:
   - {fileID: 4673183869746310}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -59.629, y: 0, z: 2.151}
+  m_LocalEulerAnglesHint: {x: 18.309, y: 60.751003, z: 93.41}
 --- !u!4 &4673183869746310
 Transform:
   m_ObjectHideFlags: 1
@@ -160,11 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speedAutoExitAttractor: 10
+  m_maxTimeGravity: 2
+  m_maxDistanceFromAttractor: 8
   m_rigidBody: {fileID: 0}
-  m_gravity: {x: 0, y: 0, z: 0}
   m_planets: []
-  m_planetGravity: 0
-  m_changingToAttractor: 0
   m_maxTimeTravelled: 0.5
   m_ignoreGravity: 1
   m_getStrongestGravity: 1
@@ -179,8 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 914cb82ab3b58e442ba666c179895296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxHealth: 120
-  m_health: 120
+  m_maxHealth: 10
+  m_health: 10
   m_moveSpeed: 4
   m_jumpForceVertical: 4
   m_jumpForceHorizontal: 4
@@ -210,7 +209,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.88
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &136573239416234974
 CapsuleCollider:

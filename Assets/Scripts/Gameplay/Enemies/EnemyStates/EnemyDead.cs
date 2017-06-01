@@ -27,11 +27,15 @@ public class EnemyDead : EnemyStates
 
 	public override void OnEnter()
 	{
-        m_enemy.m_animator.SetBool("Dead", true);
+        if (m_enemy.m_type == Enemy.Types.SNAIL)
+            m_enemy.m_animator.SetBool("Dead", true);
+        else
+            this.gameObject.SetActive(false);
     }
 
 	public override void OnExit()
 	{
-        m_enemy.m_animator.SetBool("Dead", false);
+        if (m_enemy.m_type == Enemy.Types.SNAIL)
+            m_enemy.m_animator.SetBool("Dead", false);
     }
 }
