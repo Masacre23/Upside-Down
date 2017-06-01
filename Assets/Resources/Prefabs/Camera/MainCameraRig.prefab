@@ -68,6 +68,7 @@ GameObject:
   - component: {fileID: 114871674746164300}
   - component: {fileID: 114961703817148884}
   - component: {fileID: 81105716776870804}
+  - component: {fileID: 114734735032329548}
   m_Layer: 15
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -108,14 +109,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222552522042562}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: -108.1, y: -51.85, z: 157.9}
+  m_LocalRotation: {x: 0.84930795, y: 0.3532304, z: 0.19605438, w: -0.3398043}
+  m_LocalPosition: {x: 24.007122, y: -28.66655, z: 75.28855}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4597633026657924}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20463806256330170
 Camera:
   m_ObjectHideFlags: 1
@@ -283,6 +284,7 @@ MonoBehaviour:
   m_tiltMax: 75
   m_tiltMin: 45
   m_aimSpeed: 3
+  m_minAngleToTarget: 15
   m_camPosition: {x: 0, y: 1.3, z: 0}
 --- !u!114 &114503214664828404
 MonoBehaviour:
@@ -297,7 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_type: 0
   m_defaultTiltAngle: 45
-  m_tiltMax: 75
+  m_tiltMax: 60
   m_tiltMin: 45
   m_camPosition: {x: 0, y: 2, z: -5}
 --- !u!114 &114508691747097534
@@ -324,6 +326,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44cfb8707f9b3b74a86bb1b273d7252f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114734735032329548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620317497138314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b765e0b5af3bcf4a9deb5895e477da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetFactor: 0
+  offsetUnits: 0
+  _downsampleFactor: 4
+  _iterations: 2
+  _blurMinSpread: 0.65
+  _blurSpread: 0.25
+  _blurIntensity: 0.3
 --- !u!114 &114856520038537236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -382,19 +402,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 20463806256330170}
-  RollAngle: -180
-  RollQuataternion: {x: 0, y: 0, z: -1, w: -0.00000004371139}
+  RollAngle: -138.06204
+  RollQuataternion: {x: 0, y: 0, z: -0.9337743, w: 0.35786244}
   RollMatrix:
-    e00: -1
-    e01: -0.00000008742278
-    e02: -0
+    e00: -0.7438688
+    e01: 0.6683255
+    e02: 0
     e03: 0
-    e10: 0.00000008742278
-    e11: -1
-    e12: 0
+    e10: -0.6683255
+    e11: -0.7438688
+    e12: -0
     e13: 0
-    e20: 0
-    e21: -0
+    e20: -0
+    e21: 0
     e22: 1
     e23: 0
     e30: 0
@@ -403,8 +423,8 @@ MonoBehaviour:
     e33: 1
   DeltaPosition: {x: 0, y: 0, z: 0}
   Velocity: {x: 0, y: 0, z: 0}
-  OldRotation: {x: -0, y: -0, z: 1, w: 0}
-  OldPosition: {x: -108.1, y: -51.85, z: 157.9}
+  OldRotation: {x: 0.84930795, y: 0.3532304, z: 0.19605438, w: -0.3398043}
+  OldPosition: {x: 24.007122, y: -28.66655, z: 75.28855}
 --- !u!114 &114961703817148884
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -23,7 +23,7 @@ public class HUDManager : MonoBehaviour {
     private static float m_floatTimeValue = 0.0f;
     private static float m_maxEnergyValue = 120.0f;
     private static float m_oxigenValue = 1.0f;
-    private static int m_energyValue = 9;
+    private static int m_energyValue = 8;
     private static int m_energyMaxValue = 9;
 
     void Update ()
@@ -35,8 +35,8 @@ public class HUDManager : MonoBehaviour {
         m_energy.sprite = m_energySprites[m_energyValue];
         m_oxigen.fillAmount = m_oxigenValue;
 
-        int index = (int) (1 - m_oxigenValue) * (m_plungersSprites.Length - 1);
-        if (index > 0 && index < m_plungersSprites.Length)
+        int index = (int) ((1 - m_oxigenValue) * (m_plungersSprites.Length - 1));
+        if (index >= 0 && index < m_plungersSprites.Length)
             m_plunger.sprite = m_plungersSprites[index];
         m_signAnimator.SetBool("PlanetGravity", !m_playerGravity.m_gravityOnCharacter.m_getAttractorOnFeet);
     }
