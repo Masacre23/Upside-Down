@@ -31,7 +31,7 @@ public class Geyser : MonoBehaviour {
 		switch(m_state)
         {
             case GeyserState.STOP:
-                if (m_trigger.m_playerDetected)
+                if (m_trigger == null || m_trigger.m_playerDetected)
                 {
                     m_state = GeyserState.TROWING;
                     m_nextIndex = 0;
