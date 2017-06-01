@@ -34,7 +34,10 @@ public class HUDManager : MonoBehaviour {
         m_sight.fillAmount = m_floatTimeValue;
         m_energy.sprite = m_energySprites[m_energyValue];
         m_oxigen.fillAmount = m_oxigenValue;
-        m_plunger.sprite = m_plungersSprites[(int) ((1 - m_oxigenValue) * (m_plungersSprites.Length - 1))];
+
+        int index = (int) (1 - m_oxigenValue) * (m_plungersSprites.Length - 1);
+        if (index > 0 && index < m_plungersSprites.Length)
+            m_plunger.sprite = m_plungersSprites[index];
         m_signAnimator.SetBool("PlanetGravity", !m_playerGravity.m_gravityOnCharacter.m_getAttractorOnFeet);
     }
 

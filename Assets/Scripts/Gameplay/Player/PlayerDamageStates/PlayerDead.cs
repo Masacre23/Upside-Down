@@ -31,6 +31,9 @@ public class PlayerDead : PlayerDamageStates
         m_player.ChangeCurrentStateToOnAir();
         m_player.m_negatePlayerInput = true;
         m_player.m_animator.SetBool("Dead", true);
+
+        if (data.m_respawn)
+            OnExit(data);
     }
 
     public override void OnExit(DamageData data)

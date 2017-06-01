@@ -63,6 +63,7 @@ public class AudioManager : MonoBehaviour
     {
         AudioSource audioSource = m_audioSource1IsPlaying ? musicAudioSource2 : musicAudioSource1;
         audioSource.clip = music;
+        audioSource.loop = true;
         audioSource.volume = 0;
         audioSource.Play();
         m_secondChange = timeChanged;

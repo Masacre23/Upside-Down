@@ -24,7 +24,7 @@ public class VideoPlayer : MonoBehaviour {
             {
                 ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
                 Scenes.LoadScene(Scenes.Level1);
-                AudioManager.Instance().PlayMusic(m_gameMusic, 4.0f);
+                AudioManager.Instance().PlayMusic(m_gameMusic, 1.0f);
             }
         }
     }

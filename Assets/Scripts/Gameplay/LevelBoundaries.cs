@@ -14,5 +14,12 @@ public class LevelBoundaries : MonoBehaviour
             m_player.m_damageData.m_damage = 20;
             m_player.m_damageData.m_respawn = true;
         }
+        else
+        {
+            int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
+            int throwLayer = 1 << LayerMask.NameToLayer("ThrowableObject");
+            if (other.gameObject.layer == enemyLayer || other.gameObject.layer == throwLayer)
+                other.gameObject.SetActive(false);
+        }
     }
 }

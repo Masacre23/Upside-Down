@@ -8,8 +8,8 @@ public class PauseMenuManager : MonoBehaviour {
     //public KeyCode mPauseKey;
     public string m_pauseInputButton = "Pause";
     public GameObject mPausePanel;
-
     public EventSystem m_eventSysterm;
+    public AudioClip m_mainMenuClip;
 
     private GameObject m_selected;
 
@@ -59,6 +59,11 @@ public class PauseMenuManager : MonoBehaviour {
 
     public void Quit()
     {
+        Paused();
+        if (AudioManager.Instance())
+        {
+            AudioManager.Instance().PlayMusic(m_mainMenuClip, 1.0f);
+        }
         Scenes.LoadScene(Scenes.MainMenu);
     }
 }

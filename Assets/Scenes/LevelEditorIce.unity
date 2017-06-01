@@ -616,7 +616,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 28154.162
+  Age: 28614.797
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -639,6 +639,35 @@ Transform:
   m_PrefabParentObject: {fileID: 4835132909241564, guid: c5a9f7c7e7b2cb04392aebae1d7793fb,
     type: 2}
   m_PrefabInternal: {fileID: 324732742}
+--- !u!1 &44701049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 44701050}
+  m_Layer: 0
+  m_Name: DeadColliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &44701050
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 44701049}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 667684963}
+  m_Father: {fileID: 2020994034}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &45089081
 Prefab:
   m_ObjectHideFlags: 0
@@ -975,7 +1004,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73551800}
   m_LocalRotation: {x: 0, y: 0.9989706, z: -0, w: -0.04536288}
-  m_LocalPosition: {x: -174.28955, y: 0, z: 130.11304}
+  m_LocalPosition: {x: 115.22286, y: 0, z: -184.47206}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 689763396}
@@ -1043,7 +1072,7 @@ MonoBehaviour:
   Radius: 217.5
   Oblateness: 0
   Center: {x: 0, y: 0, z: 0}
-  Angle: 53946.742
+  Angle: 54868.01
   DegreesPerSecond: 2
 --- !u!1 &90362991
 GameObject:
@@ -1450,7 +1479,7 @@ Transform:
   - {fileID: 803158955}
   - {fileID: 1161703551}
   m_Father: {fileID: 2020994034}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &109906010
 Prefab:
@@ -3464,6 +3493,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114451858752273606, guid: e1692553d18705e4a866f49b076cd092,
+        type: 2}
+      propertyPath: fadePanel
+      value: 
+      objectReference: {fileID: 958744318}
     - target: {fileID: 114804540859633044, guid: e1692553d18705e4a866f49b076cd092,
         type: 2}
       propertyPath: p1
@@ -3484,13 +3518,7 @@ Prefab:
       propertyPath: p4
       value: 
       objectReference: {fileID: 497712528}
-    - target: {fileID: 114451858752273606, guid: e1692553d18705e4a866f49b076cd092,
-        type: 2}
-      propertyPath: fadePanel
-      value: 
-      objectReference: {fileID: 958744318}
-    m_RemovedComponents:
-    - {fileID: 114257778677461082, guid: e1692553d18705e4a866f49b076cd092, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1692553d18705e4a866f49b076cd092, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &321738883 stripped
@@ -8213,7 +8241,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 28154.162
+  Age: 28614.797
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -8680,6 +8708,60 @@ MonoBehaviour:
   m_trigger: {fileID: 0}
   m_timeBetweenGeyser: 0.2
   m_timeWait: 1
+--- !u!1 &667684962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 667684963}
+  - component: {fileID: 667684964}
+  - component: {fileID: 667684965}
+  m_Layer: 15
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667684963
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 667684962}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 44701050}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &667684964
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 667684962}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 65
+  m_Height: 200
+  m_Direction: 2
+  m_Center: {x: 20, y: 0, z: 30}
+--- !u!114 &667684965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 667684962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41877cf95b31d241b3345a49a505584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &669585287
 GameObject:
   m_ObjectHideFlags: 0
@@ -15035,6 +15117,11 @@ Prefab:
       propertyPath: mPauseKey
       value: 337
       objectReference: {fileID: 0}
+    - target: {fileID: 114946869420053442, guid: 2e723240b75ebb042a8b3f37b5f289b8,
+        type: 2}
+      propertyPath: m_mainMenuClip
+      value: 
+      objectReference: {fileID: 8300000, guid: b0866727ad3e3f2408830a0c27a5f099, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e723240b75ebb042a8b3f37b5f289b8, type: 2}
   m_IsPrefabParent: 0
@@ -19492,7 +19579,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 35187.266
+  Age: 35639.06
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -30398,6 +30485,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 44701050}
   - {fileID: 2072448914}
   - {fileID: 100436737}
   m_Father: {fileID: 0}
@@ -30920,7 +31008,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 28154.162
+  Age: 28614.797
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -31031,7 +31119,7 @@ Transform:
   - {fileID: 719563246}
   - {fileID: 510273173}
   m_Father: {fileID: 2020994034}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 26.745, y: -157.404, z: -73.235}
 --- !u!1 &2073733329 stripped
 GameObject:
