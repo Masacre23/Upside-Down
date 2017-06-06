@@ -9,7 +9,7 @@ public class CameraOnBack : CameraStates
     float m_tiltAngle = 0.0f;
 
     public float m_defaultTiltAngle = 45f;
-    public float m_tiltMax = 75f;                       // The maximum value of the x axis rotation of the pivot.
+    public float m_tiltMax = 60;                       // The maximum value of the x axis rotation of the pivot.
     public float m_tiltMin = 45f;
     public Vector3 m_camPosition = new Vector3(0.0f, 2.0f, -5.0f);
 
