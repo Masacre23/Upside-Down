@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TPP_Platformer_Camera : MonoBehaviour {
+public class PlanetCamera : MonoBehaviour {
 
     public GameObject target;
     public GameObject planet;
