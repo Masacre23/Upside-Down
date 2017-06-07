@@ -696,7 +696,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 31187.248
+  Age: 31213.643
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -1146,7 +1146,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73551800}
   m_LocalRotation: {x: 0, y: 0.9989706, z: -0, w: -0.04536288}
-  m_LocalPosition: {x: -207.90256, y: 0, z: -63.896606}
+  m_LocalPosition: {x: -176.62743, y: 0, z: 126.92124}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 689763396}
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   Radius: 217.5
   Oblateness: 0
   Center: {x: 0, y: 0, z: 0}
-  Angle: 60012.914
+  Angle: 60065.703
   DegreesPerSecond: 2
 --- !u!1 &90362991
 GameObject:
@@ -1395,6 +1395,10 @@ Prefab:
         type: 2}
       propertyPath: field of view
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222552522042562, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
@@ -8859,7 +8863,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 31187.248
+  Age: 31213.643
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -20456,7 +20460,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 38175.234
+  Age: 38201.508
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -22587,7 +22591,7 @@ GameObject:
   - component: {fileID: 1491600699}
   - component: {fileID: 1491600698}
   m_Layer: 0
-  m_Name: Camera (3)
+  m_Name: CamPlanet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22605,7 +22609,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1838125390}
-  offset: {x: -3, y: 2, z: 3}
+  planet: {fileID: 100436736}
+  offset: {x: 0, y: 5, z: 0}
   damping: 1
 --- !u!81 &1491600699
 AudioListener:
@@ -32322,7 +32327,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 31187.248
+  Age: 31213.643
   TimeScale: 1
   AutoRegenerate: 1
   groups:

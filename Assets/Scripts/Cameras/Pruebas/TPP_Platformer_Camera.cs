@@ -5,7 +5,10 @@ using UnityEngine;
 public class TPP_Platformer_Camera : MonoBehaviour {
 
     public GameObject target;
-    public Vector3 offset = new Vector3(-3, 2, 3);
+    public GameObject planet;
+    public Vector3 offset = new Vector3(0, 0, 0);
+    public bool lookat = true;
+    public float distance = 10;
     public float damping = 1.0f;
     // Use this for initialization
     void Start()
@@ -16,8 +19,11 @@ public class TPP_Platformer_Camera : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        Vector3 desiredPosition = target.transform.position + offset;
+        Vector3 dir = (planet.transform.position - transform.position).normalized;
+        Vector3 desiredPosition = target.transform.position + dir * -distance - offset;
         Vector3 position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
+        if(lookat)
+            transform.LookAt(target.transform);
         transform.position = position;
     }
 }
