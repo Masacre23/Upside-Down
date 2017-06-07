@@ -8,6 +8,7 @@ public class PlanetCamera : MonoBehaviour {
     public GameObject planet;
     public Vector3 offset = new Vector3(0, 0, 0);
     public bool lookat = true;
+    public float lookatY_offset = 0;
     public float distance = 10;
     public float damping = 1.0f;
     // Use this for initialization
@@ -24,6 +25,8 @@ public class PlanetCamera : MonoBehaviour {
         Vector3 position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
         if(lookat)
             transform.LookAt(target.transform);
+        else
+            transform.LookAt(new Vector3(planet.transform.position.x, planet.transform.position.y + lookatY_offset, planet.transform.position.z));
         transform.position = position;
     }
 }

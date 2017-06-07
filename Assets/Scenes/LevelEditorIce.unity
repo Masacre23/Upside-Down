@@ -696,7 +696,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 31213.643
+  Age: 31305.213
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -1146,7 +1146,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 73551800}
   m_LocalRotation: {x: 0, y: 0.9989706, z: -0, w: -0.04536288}
-  m_LocalPosition: {x: -176.62743, y: 0, z: 126.92124}
+  m_LocalPosition: {x: 169.40797, y: 0, z: -136.40817}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 689763396}
@@ -1214,7 +1214,7 @@ MonoBehaviour:
   Radius: 217.5
   Oblateness: 0
   Center: {x: 0, y: 0, z: 0}
-  Angle: 60065.703
+  Angle: 60248.844
   DegreesPerSecond: 2
 --- !u!1 &90362991
 GameObject:
@@ -1399,6 +1399,10 @@ Prefab:
     - target: {fileID: 1222552522042562, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1620317497138314, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
@@ -7077,7 +7081,7 @@ GameObject:
   - component: {fileID: 550966961}
   - component: {fileID: 550966960}
   - component: {fileID: 550966959}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: WaterFloor
   m_TagString: Liquid
   m_Icon: {fileID: 0}
@@ -7093,7 +7097,7 @@ Transform:
   m_GameObject: {fileID: 550966957}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 808440504}
   m_RootOrder: 2
@@ -8863,7 +8867,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 31213.643
+  Age: 31305.213
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -13562,6 +13566,54 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &937353874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 937353876}
+  - component: {fileID: 937353875}
+  m_Layer: 0
+  m_Name: CamPlanet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &937353875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 937353874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d93361ea66e5f0438af5562d8111dca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1838125390}
+  planet: {fileID: 100436736}
+  offset: {x: 0, y: 0, z: 0}
+  lookat: 1
+  lookatY_offset: 0
+  distance: 10
+  damping: 1
+--- !u!4 &937353876
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 937353874}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.2720828, y: -9.344453, z: 17.579554}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1491600703}
+  m_Father: {fileID: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &939212525 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4892541342852130, guid: b74eec61deb934240b30d047d3ee1a9c,
@@ -20460,7 +20512,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 38201.508
+  Age: 38292.117
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -22591,8 +22643,8 @@ GameObject:
   - component: {fileID: 1491600699}
   - component: {fileID: 1491600698}
   m_Layer: 0
-  m_Name: CamPlanet
-  m_TagString: Untagged
+  m_Name: Camera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22603,15 +22655,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1491600697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d93361ea66e5f0438af5562d8111dca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1838125390}
   planet: {fileID: 100436736}
-  offset: {x: 0, y: 5, z: 0}
-  damping: 1
+  offset: {x: 0, y: 0, z: 0}
+  lookat: 0
+  lookatY_offset: 0
+  distance: 10
+  damping: 4
 --- !u!81 &1491600699
 AudioListener:
   m_ObjectHideFlags: 0
@@ -22673,12 +22728,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1491600697}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2720828, y: -9.344453, z: 17.579554}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_Father: {fileID: 937353876}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1492790815
 Prefab:
@@ -32327,7 +32382,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 31213.643
+  Age: 31305.213
   TimeScale: 1
   AutoRegenerate: 1
   groups:
