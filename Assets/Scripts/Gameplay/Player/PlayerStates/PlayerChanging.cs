@@ -12,6 +12,9 @@ public class PlayerChanging : PlayerStates
     float m_totalDistanceToTarget;
     float m_currentDistanceToTarget;
 
+    float jumpInputHorizontal;
+    float jumpInputVertical;
+
     public override void Start()
     {
         base.Start();
@@ -24,6 +27,7 @@ public class PlayerChanging : PlayerStates
         bool ret = false;
 
         m_player.OnAir();
+        m_player.MoveOnAir(timeStep);
 
         m_currentDistanceToTarget = (m_targetPosition.point - transform.position).magnitude;
         float perc = 1 - (m_currentDistanceToTarget / m_totalDistanceToTarget);
@@ -34,7 +38,7 @@ public class PlayerChanging : PlayerStates
         if (!m_changedGravity && Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
         {
             //m_player.m_playerGravity.ChangeGravityTo(m_targetPosition);
-            m_player.m_gravityOnCharacter.ChangeToNormal(m_targetPosition);
+            m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
             m_player.m_gravityOnCharacter.ChangeToAttractor();
             m_player.m_rigidBody.velocity = Vector3.zero;
             m_changedGravity = true;
@@ -55,14 +59,12 @@ public class PlayerChanging : PlayerStates
 
     public override void OnEnter()
     {
-        
         m_player.m_negatePlayerInput = true;
-        m_player.Jump(0.0f, 0.0f);
         m_changedGravity = false;
 
-        m_initialRotation = Quaternion.LookRotation(m_player.m_modelTransform.forward, m_player.m_modelTransform.up) * m_player.m_modelTransform.localRotation;
-        Vector3 right = Vector3.Cross(m_player.m_modelTransform.up, m_player.m_modelTransform.forward);
-        m_finalRotation = Quaternion.LookRotation(Vector3.Cross(right, m_targetPosition.normal), m_targetPosition.normal) * m_player.m_modelTransform.localRotation;
+        m_initialRotation = transform.rotation;
+
+        m_finalRotation = Quaternion.FromToRotation(transform.up, m_targetPosition.normal) * transform.rotation;
 
         m_currentDistanceToTarget = (m_targetPosition.point - transform.position).magnitude;
     }

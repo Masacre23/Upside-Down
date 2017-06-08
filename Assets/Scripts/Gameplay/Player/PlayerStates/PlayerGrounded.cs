@@ -46,6 +46,7 @@ public class PlayerGrounded : PlayerStates
                     {
                         ((PlayerChanging)m_player.m_changing).SetChanging(hit);
                         m_player.m_currentState = m_player.m_changing;
+                        m_player.Jump(axisHorizontal, axisVertical);
                         ret = true;
                     }
                 }
