@@ -23,43 +23,36 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        RaycastHit target;
-        bool hasTarget = m_player.SetMarkedTarget(out target);
+        //RaycastHit target;
+        //bool hasTarget = m_player.SetMarkedTarget(out target);
 
         if (jumping && !m_doubleJump && m_player.m_oxigen.HasEnoughOxygen(m_oxigenDoubleJump))
         {
-            m_player.Jump();
+            m_player.Jump(axisHorizontal, axisVertical);
             m_doubleJump = true;
             m_player.m_doubleJumping = true;
             m_player.m_oxigen.LostOxigen(m_oxigenDoubleJump);
         }
-        //if (m_player.m_reachedGround && aimGravity)
+        //if (changeGravity)
         //{
-        //    m_player.m_currentState = m_player.m_floating;
-        //    m_player.SetFloatingPoint(0.0f);
-        //    ret = true;
+        //    if (hasTarget)
+        //    {
+        //        m_player.m_playerGravity.ChangeGravityTo(target);
+        //        m_player.m_gravityOnCharacter.ChangeToAttractor();
+        //        if (m_player.m_soundEffects != null)
+        //            m_player.m_soundEffects.PlaySound("NewGravity");
+        //        m_player.m_rigidBody.velocity = Vector3.zero;
+        //        m_player.m_freezeMovement = true;
+        //        m_player.m_currentState = m_player.m_onAir;
+        //        ret = true;
+        //    }
+        //    else
+        //        m_player.SwapGravity();
         //}
-        if (changeGravity)
-        {
-            if (hasTarget)
-            {
-                m_player.m_playerGravity.ChangeGravityTo(target);
-                m_player.m_gravityOnCharacter.ChangeToAttractor();
-                if (m_player.m_soundEffects != null)
-                    m_player.m_soundEffects.PlaySound("NewGravity");
-                m_player.m_rigidBody.velocity = Vector3.zero;
-                m_player.m_freezeMovement = true;
-                //m_player.m_currentState = m_player.m_changing;
-                m_player.m_currentState = m_player.m_onAir;
-                ret = true;
-            }
-            else
-                m_player.SwapGravity();
-        }
-        else
-        {
-            if (changeGravity && !m_player.m_gravityOnCharacter.m_changingToAttractor)
-                m_player.m_gravityOnCharacter.ReturnToPlanet();
+        //else
+        //{
+            //if (changeGravity && !m_player.m_gravityOnCharacter.m_changingToAttractor)
+            //    m_player.m_gravityOnCharacter.ReturnToPlanet();
             m_player.OnAir();
             m_player.UpdateUp();
             m_player.MoveOnAir(timeStep);
@@ -68,7 +61,7 @@ public class PlayerOnAir : PlayerStates
                 m_player.m_currentState = m_player.m_grounded;
                 ret = true;
             }
-        }
+        //}
 
         return ret;
     }

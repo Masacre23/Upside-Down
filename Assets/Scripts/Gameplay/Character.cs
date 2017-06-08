@@ -96,7 +96,7 @@ public class Character : MonoBehaviour
 
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public virtual void Jump()
+    public virtual void Jump(float inputHorizontal, float inputVertical)
     {
         Vector3 gravity = m_gravityOnCharacter.m_gravity;
         float fallVelocity = Vector3.Dot(gravity, m_rigidBody.velocity);

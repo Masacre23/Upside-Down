@@ -23,35 +23,39 @@ public class PlayerGrounded : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        RaycastHit target;
-        bool hasTarget = m_player.SetMarkedTarget(out target);
+        //RaycastHit target;
+        //bool hasTarget = m_player.SetMarkedTarget(out target);
 
-        //if (aimGravity)
+        //if (changeGravity)
         //{
-        //    m_player.m_currentState = m_player.m_floating;
-        //    m_player.SetFloatingPoint(m_floatingHeight);
-        //    ret = true;
+        //    m_player.SwapGravity();
         //}
-        if (changeGravity)
+        //else 
+        if (jumping)
         {
-            //if (hasTarget)
-            //{
-            //    m_player.m_playerGravity.ChangeGravityTo(target);
-            //    m_player.m_gravityOnCharacter.ChangeToAttractor();
-            //    m_player.m_rigidBody.velocity = Vector3.zero;
-            //    m_player.m_freezeMovement = true;
-            //    //m_player.m_currentState = m_player.m_changing;
-            //    m_player.m_currentState = m_player.m_onAir;
-            //    ret = true;
-            //}
-            //else
-                m_player.SwapGravity();
-        }
-        else if (jumping)
-        {
-            m_player.m_currentState = m_player.m_onAir;
-            m_player.Jump();
-            ret = true;
+            if (changeGravity)
+            {
+                GameObject nearestTarget = m_player.m_gravityTargets.GetNearestTarget(m_player.m_throwAimOrigin.position);
+                if (nearestTarget)
+                {
+                    int layerMask = 1 << nearestTarget.layer;
+                    Vector3 direction = nearestTarget.transform.position - m_player.m_throwAimOrigin.position;
+                    RaycastHit hit;
+                    Debug.DrawRay(m_player.m_throwAimOrigin.position, m_player.m_throwAimOrigin.forward * direction.magnitude, Color.blue);
+                    if (Physics.Raycast(m_player.m_throwAimOrigin.position, m_player.m_throwAimOrigin.forward, out hit, direction.magnitude, layerMask))
+                    {
+                        ((PlayerChanging)m_player.m_changing).SetChanging(hit);
+                        m_player.m_currentState = m_player.m_changing;
+                        ret = true;
+                    }
+                }
+            }
+            else
+            {
+                m_player.m_currentState = m_player.m_onAir;
+                m_player.Jump(axisHorizontal, axisVertical);
+                ret = true;
+            }
         }
         else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
         {

@@ -53,7 +53,7 @@ public class Player : Character
     [HideInInspector] public Vector3 m_damageForce;
 
     //General Info variables
-    Transform m_modelTransform;
+    public Transform m_modelTransform;
     [HideInInspector] public VariableCam m_camController;
     [HideInInspector] public PlayerGravity m_playerGravity;
 
@@ -72,12 +72,14 @@ public class Player : Character
     [HideInInspector] public Vector3 m_jumpDirection = Vector3.zero;
     private bool m_hasJumped = false;
     private Vector3 m_jumpVector;
+    private Vector3 m_jumpMovement;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 10.0f;
     public bool m_reachedGround = true;
     public MarkObject m_markedTarget = null;
     public bool m_markAimedObject = false;
+    [HideInInspector] public TargetDetectorByTag m_gravityTargets;
 
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
@@ -150,13 +152,15 @@ public class Player : Character
             m_camController = cameraFree.GetComponent<VariableCam>();
         m_rotationFollowPlayer = true;
 
-        GameObject m_detectorsEmpty = GameObject.Find("TargetDetectors");
-        if (!m_detectorsEmpty)
+        GameObject detectorsEmpty = GameObject.Find("TargetDetectors");
+        if (!detectorsEmpty)
         {
-            m_detectorsEmpty = new GameObject("TargetDetectors");
-            m_detectorsEmpty.transform.parent = transform;
-            m_detectorsEmpty.transform.localPosition = Vector3.zero;
+            detectorsEmpty = new GameObject("TargetDetectors");
+            detectorsEmpty.transform.parent = transform;
+            detectorsEmpty.transform.localPosition = Vector3.zero;
         }
+
+        m_gravityTargets = GetComponentInChildren<TargetDetectorByTag>();
 
         m_soundEffects = GetComponent<SoundEffects>();
 
@@ -336,21 +340,24 @@ public class Player : Character
 
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public override void Jump()
+    public override void Jump(float inputHorizontal, float inputVertical)
     {
         Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
-        Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+        Vector3 movement = inputHorizontal * Camera.main.transform.right + inputVertical * forward;
         movement.Normalize();
+
+        float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
 
         if (movement != Vector3.zero)
             m_modelTransform.rotation = Quaternion.LookRotation(movement, transform.up);
 
         m_hasJumped = true;
         m_jumpVector = Vector3.zero;
+        m_jumpMovement = Vector3.zero;
 
         //m_jumpVector = m_gravityOnCharacter.GetGravityVector() * m_jumpForceVertical;
         m_jumpVector = transform.up * m_jumpForceVertical;
-        m_jumpVector += movement.normalized * m_jumpForceHorizontal;
+        m_jumpMovement = movement.normalized * speed;
         m_jumpDirection = movement.normalized;
         m_isGrounded = false;
         m_isJumping = true;
@@ -377,7 +384,7 @@ public class Player : Character
             if (movement != Vector3.zero)
             {
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-                m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+                m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 20.0f * timeStep);
                 m_lastMovement = movement;
                 m_timeSliding = 0.0f;
             }
@@ -407,19 +414,19 @@ public class Player : Character
 
             //We need to ignore input in the direction of the jump
             Vector3 finalDirection = movement;
-            //float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
-            //if (forwardIntensity > 0.0f)
-            //    finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
+            float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
+            if (forwardIntensity > 0.0f)
+                finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
 
             float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
 
-            m_rigidBodyTotal += m_offset + finalDirection * speed * timeStep;
+            m_rigidBodyTotal += m_offset + (finalDirection * speed + m_jumpMovement) * timeStep;
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)
             {
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
-                m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 10.0f * timeStep);
+                m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 20.0f * timeStep);
                 m_lastMovement = movement;
                 m_timeSliding = 0.0f;
             }
@@ -593,20 +600,20 @@ public class Player : Character
             if (m_throwObjectButtonDown)
                 m_throwObjectButtonUp = false;
 
-            if (m_changeGravityButtonUp)
-            {
-                if (m_changeGravity)
-                    m_changeGravityButtonUp = false;
-            }
-            else
-            {
-                if (m_changeGravity)
-                    m_changeGravity = false;
-                else
-                    m_changeGravityButtonUp = true;
-            }
-            if (m_changeGravity)
-                m_changeGravityButtonUp = false;
+            //if (m_changeGravityButtonUp)
+            //{
+            //    if (m_changeGravity)
+            //        m_changeGravityButtonUp = false;
+            //}
+            //else
+            //{
+            //    if (m_changeGravity)
+            //        m_changeGravity = false;
+            //    else
+            //        m_changeGravityButtonUp = true;
+            //}
+            //if (m_changeGravity)
+            //    m_changeGravityButtonUp = false;
         }
         m_playerStopped = false;
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
