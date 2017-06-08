@@ -135,6 +135,7 @@ public class Character : MonoBehaviour
     {
         bool ret = false;
         int ignoreWater = 1 << LayerMask.NameToLayer("Water");
+        ignoreWater = ignoreWater | 1 << LayerMask.NameToLayer("GeneralTrigger");
         ignoreWater = ~ignoreWater;
 
         ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
