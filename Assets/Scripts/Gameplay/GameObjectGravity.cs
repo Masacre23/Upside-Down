@@ -18,7 +18,7 @@ public class GameObjectGravity : MonoBehaviour
     public List<Rigidbody> m_planets;
     public bool m_planetGravity { get; private set; }
     public bool m_getAttractorOnFeet { get; private set; }
-    public bool m_changingToAttractor { get; private set; }
+    public bool m_changingToAttractor { get; set; }
     public float m_maxTimeTravelled = 0.5f;
 
     public bool m_ignoreGravity = false;
@@ -54,37 +54,11 @@ public class GameObjectGravity : MonoBehaviour
 	
     public void Update()
     {
-        //if (!m_planetGravity)
-        //{
-        //    m_timeGravity += Time.deltaTime;
-        //    if (!m_changingToAttractor)
-        //    {
-        //        float fallingVelocity = Vector3.Dot(m_rigidBody.velocity, m_gravity);
-        //        if (fallingVelocity < 0.0f && -fallingVelocity > m_speedAutoExitAttractor)
-        //        {
-        //            ReturnToPlanet();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (m_timeGravity > m_maxTimeGravity)
-        //        {
-        //            m_timeGravity = 0.0f;
-        //            ReturnToPlanet();
-        //        }
-        //    }
-        //}
-
-        if (!m_planetGravity)
+        if (!m_changingToAttractor && !m_planetGravity)
         {
-            if ((transform.position - m_attractor.point).magnitude > m_maxDistanceFromAttractor)
+            if ((transform.position - m_attractor.point).sqrMagnitude > 1.0f)
             {
-                m_rigidBody.velocity = Vector3.zero;
                 ReturnToPlanet();
-                if (m_player)
-                {
-                    m_player.PlaySound("GravityChange");
-                }
             }
         }
     }
@@ -122,6 +96,17 @@ public class GameObjectGravity : MonoBehaviour
                 m_ignoreGravity = false;
             }
         }
+    }
+
+    public void UpdatePlanetGravity()
+    {
+        float strength = 0;
+        Vector3 gravity = Vector3.zero;
+        if (m_getStrongestGravity)
+            GetStrongestPlanetGravity(ref strength, ref gravity);
+        else
+            GetSumPlanetGravity(ref strength, ref gravity);
+        m_gravity = gravity;
     }
 
     //Get the strongest gravity among the planets currently affecting the object
@@ -165,21 +150,6 @@ public class GameObjectGravity : MonoBehaviour
     {
         return - mass / (25.0f * distance);
     }
-
-    //This function is called automatically when this object colliders begins to touch another collider.
-    //It's used so when the gameobject reaches it's attractor, it changes its current gravity for the attractor's normal.
-    //It's main importance regards objects falling (characters have it's own way to detect floors).
-    //private void OnCollisionEnter(Collision col)
-    //{
-    //    if (m_attractor.collider != null)
-    //    {
-    //        if (col.collider == m_attractor.collider)
-    //        {
-    //            m_gravity = m_attractor.normal;
-    //            m_planetGravity = false;
-    //        }
-    //    }
-    //}
 
     //This function sets the passed raycasthit as the current attractor for the game object
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet

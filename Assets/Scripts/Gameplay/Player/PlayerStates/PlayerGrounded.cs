@@ -14,7 +14,7 @@ public class PlayerGrounded : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
 
@@ -23,40 +23,30 @@ public class PlayerGrounded : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        //RaycastHit target;
-        //bool hasTarget = m_player.SetMarkedTarget(out target);
+        RaycastHit target;
+        bool hasTarget = m_player.GetGravityChangeTarget(out target);
 
-        //if (changeGravity)
-        //{
-        //    m_player.SwapGravity();
-        //}
-        //else 
         if (jumping)
         {
-            if (changeGravity)
+            if (!m_player.m_gravityOnCharacter.m_planetGravity)
             {
-                GameObject nearestTarget = m_player.m_gravityTargets.GetNearestTarget(m_player.m_throwAimOrigin.position);
-                if (nearestTarget)
-                {
-                    int layerMask = 1 << nearestTarget.layer;
-                    Vector3 direction = nearestTarget.transform.position - m_player.m_throwAimOrigin.position;
-                    RaycastHit hit;
-                    Debug.DrawRay(m_player.m_throwAimOrigin.position, m_player.m_throwAimOrigin.forward * direction.magnitude, Color.blue);
-                    if (Physics.Raycast(m_player.m_throwAimOrigin.position, m_player.m_throwAimOrigin.forward, out hit, direction.magnitude, layerMask))
-                    {
-                        ((PlayerChanging)m_player.m_changing).SetChanging(hit);
-                        m_player.m_currentState = m_player.m_changing;
-                        m_player.Jump(axisHorizontal, axisVertical);
-                        ret = true;
-                    }
-                }
+                m_player.PlaySound("NewGravity");
+                m_player.m_gravityOnCharacter.ReturnToPlanet();
+                m_player.m_gravityOnCharacter.UpdatePlanetGravity();
+                m_player.JumpInDirection(-m_player.m_gravityOnCharacter.m_gravity, 0.0f);
             }
             else
-            {
-                m_player.m_currentState = m_player.m_onAir;
                 m_player.Jump(axisHorizontal, axisVertical);
-                ret = true;
-            }
+
+            m_player.m_currentState = m_player.m_onAir;
+            ret = true;
+        }
+        else if (changeGravity && hasTarget)
+        {
+            m_player.PlaySound("GravityChange");
+            ((PlayerChanging)m_player.m_changing).SetChanging(target);
+            m_player.m_currentState = m_player.m_changing;
+            ret = true;
         }
         else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
         {
@@ -92,11 +82,13 @@ public class PlayerGrounded : PlayerStates
 	    m_player.m_runClouds.GetComponent<ParticleSystem> ().Play();
         m_player.m_jumpDirection = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
+        m_player.m_gravityOnCharacter.m_changingToAttractor = false;
     }
 
     public override void OnExit()
     {
 		m_player.m_runClouds.GetComponent<ParticleSystem> ().Stop();
         m_player.m_floatingObjects.UnsetTarget();
+        m_player.UnmarkTarget();
     }
 }

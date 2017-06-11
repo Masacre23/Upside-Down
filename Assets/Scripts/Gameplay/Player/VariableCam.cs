@@ -82,12 +82,14 @@ public class VariableCam : MonoBehaviour
 
     public void FollowTarget(float deltaTime)
     {
-        transform.position = Vector3.Lerp(transform.position, m_player.transform.position, deltaTime * m_moveSpeed);
+        //transform.position = Vector3.Lerp(transform.position, m_player.transform.position, deltaTime * m_moveSpeed);
+        transform.position = m_player.transform.position;
     }
 
     public void RotateOnTarget(float deltaTime)
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
+        transform.rotation = m_player.transform.rotation;
     } 
 
     public void SetCameraTransition(CameraStates.States finalState, bool alignView = false)

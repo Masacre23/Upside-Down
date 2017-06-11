@@ -11,9 +11,7 @@ public class PlayerChanging : PlayerStates
     RaycastHit m_targetPosition;
     float m_totalDistanceToTarget;
     float m_currentDistanceToTarget;
-
-    float jumpInputHorizontal;
-    float jumpInputVertical;
+    Vector3 m_directionChange;
 
     public override void Start()
     {
@@ -22,7 +20,7 @@ public class PlayerChanging : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
 
@@ -31,13 +29,12 @@ public class PlayerChanging : PlayerStates
 
         m_currentDistanceToTarget = (m_targetPosition.point - transform.position).magnitude;
         float perc = 1 - (m_currentDistanceToTarget / m_totalDistanceToTarget);
-        //m_currentDistanceToTarget -= 0.1f;
 
         m_player.transform.rotation = Quaternion.Lerp(m_initialRotation, m_finalRotation, perc);
 
         if (!m_changedGravity && Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
         {
-            //m_player.m_playerGravity.ChangeGravityTo(m_targetPosition);
+            //UpdateLanding();
             m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
             m_player.m_gravityOnCharacter.ChangeToAttractor();
             m_player.m_rigidBody.velocity = Vector3.zero;
@@ -46,7 +43,6 @@ public class PlayerChanging : PlayerStates
 
         if (m_changedGravity)
         {
-
             if (m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_grounded;
@@ -67,6 +63,10 @@ public class PlayerChanging : PlayerStates
         m_finalRotation = Quaternion.FromToRotation(transform.up, m_targetPosition.normal) * transform.rotation;
 
         m_currentDistanceToTarget = (m_targetPosition.point - transform.position).magnitude;
+
+        m_player.JumpInDirection(m_player.m_modelTransform.forward, 1.0f);
+
+        m_player.m_gravityOnCharacter.m_changingToAttractor = true;
     }
 
     public override void OnExit()
@@ -77,6 +77,23 @@ public class PlayerChanging : PlayerStates
     public void SetChanging(RaycastHit hitLocation)
     {
         m_targetPosition = hitLocation;
-        m_totalDistanceToTarget = (hitLocation.point - transform.position).magnitude;
+        m_directionChange = hitLocation.point - transform.position;
+        m_totalDistanceToTarget = m_directionChange.magnitude;
+    }
+
+    private void UpdateLanding()
+    {
+        int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+        RaycastHit target;
+        if (Physics.Raycast(m_player.transform.position, m_directionChange.normalized, out target, m_player.m_gravityRange, layerMask))
+        {
+            if (target.transform.gameObject == m_targetPosition.transform.gameObject)
+            {
+                m_targetPosition = target;
+                m_totalDistanceToTarget = (m_targetPosition.point - transform.position).magnitude;
+                m_initialRotation = transform.rotation;
+                m_finalRotation = Quaternion.FromToRotation(transform.up, m_targetPosition.normal) * transform.rotation;
+            }
+        }
     }
 }

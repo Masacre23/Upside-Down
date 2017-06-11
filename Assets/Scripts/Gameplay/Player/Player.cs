@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : Character
 {
 
+    public bool m_fixedCam = false;
     //Variables regarding player input control
     PlayerController m_playerInput;
     float m_axisHorizontal;
@@ -15,14 +16,12 @@ public class Player : Character
     float m_camVertical;
     bool m_jumping;
     bool m_pickObjects;
-    bool m_aimGravity;
     bool m_changeGravity;
     bool m_aimObject;
     bool m_throwObjectButtonDown;
     bool m_returnCam;
 
     bool m_throwObjectButtonUp = true;
-    bool m_changeGravityButtonUp = true;
 
     public bool m_negatePlayerInput = false;
 
@@ -75,7 +74,7 @@ public class Player : Character
     private Vector3 m_jumpMovement;
 
     //Variables regarding player's change of gravity
-    public float m_gravityRange = 10.0f;
+    public float m_gravityRange = 3.0f;
     public bool m_reachedGround = true;
     public MarkObject m_markedTarget = null;
     public bool m_markAimedObject = false;
@@ -86,6 +85,8 @@ public class Player : Character
     public float m_throwForce = 20.0f;
     public float m_angleEnemyDetection = 30.0f;
     [HideInInspector] public Transform m_throwAimOrigin;
+    [HideInInspector] public Transform m_lowAimOrigin;
+    [HideInInspector] public Transform m_highAimOrigin;
 
     //Variables regarding player picking up objects
     [HideInInspector] public FloatingAroundPlayer m_floatingObjects;
@@ -167,6 +168,8 @@ public class Player : Character
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
         m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
         m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
+        m_lowAimOrigin = GameObject.Find("LowAimRaycast").transform;
+        m_highAimOrigin = GameObject.Find("HighAimRaycast").transform;
         base.Awake();
     }
 
@@ -203,7 +206,7 @@ public class Player : Character
         ManageInput();
 
         PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimGravity, m_changeGravity, m_aimObject, m_throwObjectButtonDown, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_changeGravity, m_aimObject, m_throwObjectButtonDown, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -279,12 +282,36 @@ public class Player : Character
         }
     }
 
-    //This function sets a marked target that the player is aiming
-    public bool SetMarkedTarget(out RaycastHit target)
+    //This function looks for a gravity wall in front of the player
+    //It marks the target if someone is found (unmarking previous marked objects)
+    //If no one is found, it unmarks previous objects
+    public bool GetGravityChangeTarget(out RaycastHit target)
     {
         bool ret = false;
-        int layer = 1 << LayerMask.NameToLayer("Terrain");
-        if (Physics.SphereCast(m_camController.m_camRay, 1.0f, out target, m_gravityRange, layer))
+
+        //First look for a target in front of character (ThrowAimRaycast), 
+        // if not found look for one below (LowAimRaycast)
+        // if not found look for one up (HighAimRaycast)
+
+        ret = GetGravityWall(m_throwAimOrigin, out target);
+        if (!ret)
+            ret = GetGravityWall(m_lowAimOrigin, out target);
+        if (!ret)
+            ret = GetGravityWall(m_highAimOrigin, out target);
+
+        if (!ret)
+            UnmarkTarget();
+
+        return ret;
+    }
+
+    //This gets only one gravity wall, casting a raycast from and forward of Origin
+    private bool GetGravityWall(Transform origin, out RaycastHit target)
+    {
+        bool ret = false;
+
+        int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+        if (Physics.Raycast(origin.position, origin.forward, out target, m_gravityRange, layerMask))
         {
             if (target.collider.tag == "GravityWall")
             {
@@ -299,14 +326,8 @@ public class Player : Character
                         m_markedTarget = newMarked;
                     }
                 }
-                else
-                    UnmarkTarget();
             }
-            else
-                UnmarkTarget();
         }
-        else
-            UnmarkTarget();
 
         return ret;
     }
@@ -321,32 +342,22 @@ public class Player : Character
         }
     }
 
-    public void SwapGravity()
+    //This functions computes the direction of the jump from the player input
+    //Then calls the jump method in the computed direction
+    public override void Jump(float inputHorizontal, float inputVertical)
     {
-        if (m_gravityOnCharacter.m_getAttractorOnFeet)
-        {
-            m_gravityOnCharacter.ReturnToPlanet();
-            if (m_soundEffects != null)
-                m_soundEffects.PlaySound("GravityChange");
+        Vector3 forward = GetDirectionForward();
+        Vector3 movement = inputHorizontal * GetDirectionRight() + inputVertical * forward;
+        movement.Normalize();
 
-        }
-        else
-        {
-            m_gravityOnCharacter.ActivateAttractorOnFeet();
-            if (m_soundEffects != null)
-                m_soundEffects.PlaySound("NewGravity");
-        }
+        JumpInDirection(movement, m_inputSpeed);
     }
 
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public override void Jump(float inputHorizontal, float inputVertical)
+    public void JumpInDirection (Vector3 movement, float inputIntensity)
     {
-        Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
-        Vector3 movement = inputHorizontal * Camera.main.transform.right + inputVertical * forward;
-        movement.Normalize();
-
-        float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
+        float speed = GetSpeedFromInput(inputIntensity);
 
         if (movement != Vector3.zero)
             m_modelTransform.rotation = Quaternion.LookRotation(movement, transform.up);
@@ -371,11 +382,11 @@ public class Player : Character
     {
         if (!m_freezeMovement)
         {
-            Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
-            Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+            Vector3 forward = GetDirectionForward();
+            Vector3 movement = m_axisHorizontal * GetDirectionRight() + m_axisVertical * forward;
             movement.Normalize();
 
-            float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
+            float speed = GetSpeedFromInput(m_inputSpeed);
 
             //m_rigidBody.MovePosition(transform.position + m_offset + movement * speed * timeStep);
             m_rigidBodyTotal += m_offset + movement * speed * timeStep;
@@ -408,8 +419,8 @@ public class Player : Character
     {
         if (!m_freezeMovement)
         {
-            Vector3 forward = Vector3.Cross(Camera.main.transform.right, transform.up);
-            Vector3 movement = m_axisHorizontal * Camera.main.transform.right + m_axisVertical * forward;
+            Vector3 forward = GetDirectionForward();
+            Vector3 movement = m_axisHorizontal * GetDirectionRight() + m_axisVertical * forward;
             movement.Normalize();
 
             //We need to ignore input in the direction of the jump
@@ -418,7 +429,7 @@ public class Player : Character
             if (forwardIntensity > 0.0f)
                 finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
 
-            float speed = m_inputSpeed > 0.5 ? m_runSpeed : m_moveSpeed;
+            float speed = GetSpeedFromInput(m_inputSpeed);
 
             m_rigidBodyTotal += m_offset + (finalDirection * speed + m_jumpMovement) * timeStep;
             m_offset = Vector3.zero;
@@ -580,7 +591,7 @@ public class Player : Character
         if (!m_negatePlayerInput && !m_paused)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimGravity, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
+            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
 
             //if (m_negateJump)
             //    m_jumping = false;
@@ -600,20 +611,6 @@ public class Player : Character
             if (m_throwObjectButtonDown)
                 m_throwObjectButtonUp = false;
 
-            //if (m_changeGravityButtonUp)
-            //{
-            //    if (m_changeGravity)
-            //        m_changeGravityButtonUp = false;
-            //}
-            //else
-            //{
-            //    if (m_changeGravity)
-            //        m_changeGravity = false;
-            //    else
-            //        m_changeGravityButtonUp = true;
-            //}
-            //if (m_changeGravity)
-            //    m_changeGravityButtonUp = false;
         }
         m_playerStopped = false;
         m_inputSpeed = Mathf.Abs(m_axisHorizontal) + Mathf.Abs(m_axisVertical);
@@ -627,7 +624,6 @@ public class Player : Character
         m_camVertical = 0.0f;
         m_jumping = false;
         m_pickObjects = false;
-        m_aimGravity = false;
         m_changeGravity = false;
         m_aimObject = false;
         m_throwObjectButtonDown = false;
@@ -670,4 +666,41 @@ public class Player : Character
             m_soundEffects.PlaySound(name);
     }
 
+    private Vector3 GetDirectionRight()
+    {
+        //return Camera.main.transform.right;
+        if (m_fixedCam)
+        {
+            return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
+        }  
+        else
+        {
+            Vector3 forwardProjection = Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
+
+            //return Vector3.Cross(transform.up, Camera.main.transform.forward).normalized;
+            //return Camera.main.transform.right;
+            return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
+        }
+            
+    }
+
+    private Vector3 GetDirectionForward()
+    {
+        if (m_fixedCam)
+        {
+            return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
+        }
+        else
+        {
+            //return Vector3.Cross(Camera.main.transform.right, transform.up).normalized;
+            return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
+        }
+            
+
+    }
+
+    private float GetSpeedFromInput(float inputIntensity)
+    {
+        return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
+    }
 }
