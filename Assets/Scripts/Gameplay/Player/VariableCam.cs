@@ -32,6 +32,9 @@ public class VariableCam : MonoBehaviour
     public CameraStates m_transit;
 
     public VariableCameraProtectFromWallClip m_cameraProtection;
+    public CameraPlayerDetector m_playerDetector;
+
+    public bool m_followPlayer { set; get; }
 
     void Awake()
     {
@@ -63,6 +66,7 @@ public class VariableCam : MonoBehaviour
         GameObject player = GameObject.Find("Player");
         m_player = player.GetComponent<Player>();
         m_cameraProtection = GetComponent<VariableCameraProtectFromWallClip>();
+        m_playerDetector = GetComponentInChildren<CameraPlayerDetector>();
 
         m_camRay = new Ray(m_cam.transform.position, m_cam.transform.forward);
     }
@@ -76,20 +80,34 @@ public class VariableCam : MonoBehaviour
             m_currentState.OnEnter();
         }
 
+        if (m_followPlayer)
+        {
+            FollowTarget(deltaTime);
+            m_followPlayer = !CameraHasReachedPlayer();
+        }
+
+        if (!m_followPlayer && !m_playerDetector.m_playerInside)
+            m_followPlayer = true;
+
         m_camRay.origin = m_cam.transform.position;
         m_camRay.direction = m_cam.transform.forward;
     }
 
     public void FollowTarget(float deltaTime)
     {
-        //transform.position = Vector3.Lerp(transform.position, m_player.transform.position, deltaTime * m_moveSpeed);
-        transform.position = m_player.transform.position;
+        transform.position = Vector3.Lerp(transform.position, m_player.transform.position, deltaTime * m_moveSpeed);
+        //transform.position = m_player.transform.position;
+    }
+
+    public bool CameraHasReachedPlayer()
+    {
+        return Vector3.SqrMagnitude(transform.position - m_player.transform.position) < 0.1;
     }
 
     public void RotateOnTarget(float deltaTime)
     {
-        //transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
-        transform.rotation = m_player.transform.rotation;
+        transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
+        //transform.rotation = m_player.transform.rotation;
     } 
 
     public void SetCameraTransition(CameraStates.States finalState, bool alignView = false)

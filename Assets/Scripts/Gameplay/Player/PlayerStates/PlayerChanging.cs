@@ -13,6 +13,8 @@ public class PlayerChanging : PlayerStates
     float m_currentDistanceToTarget;
     Vector3 m_directionChange;
 
+    float m_timeJumping = 0.0f;
+
     public override void Start()
     {
         base.Start();
@@ -25,21 +27,11 @@ public class PlayerChanging : PlayerStates
         bool ret = false;
 
         m_player.OnAir();
-        m_player.MoveOnAir(timeStep);
 
         m_currentDistanceToTarget = (m_targetPosition.point - transform.position).magnitude;
         float perc = 1 - (m_currentDistanceToTarget / m_totalDistanceToTarget);
 
         m_player.transform.rotation = Quaternion.Lerp(m_initialRotation, m_finalRotation, perc);
-
-        if (!m_changedGravity && Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
-        {
-            //UpdateLanding();
-            m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
-            m_player.m_gravityOnCharacter.ChangeToAttractor();
-            m_player.m_rigidBody.velocity = Vector3.zero;
-            m_changedGravity = true;
-        }
 
         if (m_changedGravity)
         {
@@ -49,6 +41,20 @@ public class PlayerChanging : PlayerStates
                 ret = true;
             }
         }
+        else
+        {
+            m_player.MoveOnAir(timeStep);
+            m_timeJumping += timeStep;
+            if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 || m_timeJumping > 3.0f)
+            {
+                //UpdateLanding();
+                m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
+                m_player.m_gravityOnCharacter.ChangeToAttractor();
+                m_player.m_rigidBody.velocity = Vector3.zero;
+                m_player.m_jumpDirection = Vector3.zero;
+                m_changedGravity = true;
+            }
+        }  
 
         return ret;
     }
@@ -67,6 +73,7 @@ public class PlayerChanging : PlayerStates
         m_player.JumpInDirection(m_player.m_modelTransform.forward, 1.0f);
 
         m_player.m_gravityOnCharacter.m_changingToAttractor = true;
+        m_timeJumping = 0.0f;
     }
 
     public override void OnExit()

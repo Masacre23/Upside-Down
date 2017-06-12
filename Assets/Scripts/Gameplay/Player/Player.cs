@@ -220,7 +220,10 @@ public class Player : Character
         {
             m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, Time.deltaTime);
             if (m_rotationFollowPlayer)
-                m_camController.RotateOnTarget(Time.fixedDeltaTime);
+            {
+                //m_camController.FollowTarget(Time.deltaTime);
+                m_camController.RotateOnTarget(Time.deltaTime);
+            }   
         }
 
         if (!m_markAimedObject)
