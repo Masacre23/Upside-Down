@@ -1306,6 +1306,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 224565408350686174, guid: 00d7c9ac61cb7764fad681319f9cff4f,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -1444,6 +1449,36 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      value: 
+      objectReference: {fileID: 1090347351}
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114564558977083540, guid: 00d7c9ac61cb7764fad681319f9cff4f,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114818069455575718, guid: 00d7c9ac61cb7764fad681319f9cff4f, type: 2}
@@ -4915,7 +4950,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1850132719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5199,7 +5234,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 38081.81
+  Age: 38084.504
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1

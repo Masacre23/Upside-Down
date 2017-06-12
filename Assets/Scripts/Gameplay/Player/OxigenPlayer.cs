@@ -5,7 +5,7 @@ using UnityEngine;
 public class OxigenPlayer : MonoBehaviour
 {
 
-    public float m_maxOxigen = 100.0f;
+    public float m_maxOxigen = 1000.0f;
     public float m_oxigen = 0.0f;
 
     private float m_lostOxigen = 0;

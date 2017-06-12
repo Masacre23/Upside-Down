@@ -47,7 +47,7 @@ public class AudioManager : MonoBehaviour
             {
                 audioSource2.Stop();
                 audioSource2.volume = 0;
-                audioSource1.volume = 1;
+                audioSource1.volume = 0.2f;
                 m_changeAudioSource = false;
             }
 
