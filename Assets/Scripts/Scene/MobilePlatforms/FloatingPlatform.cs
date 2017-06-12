@@ -5,6 +5,7 @@ using UnityEngine;
 public class FloatingPlatform : MonoBehaviour {
 
     public float speed;
+    public int invert;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +22,8 @@ public class FloatingPlatform : MonoBehaviour {
         if(other.tag == "Player")
         {
             Vector3 distance = other.transform.position - this.transform.position;
-            this.transform.Rotate(new Vector3(0.0f, distance.x * speed * Time.deltaTime, 0.0f));
+            Debug.Log(distance.x * speed * Time.deltaTime * invert);
+            this.transform.Rotate(new Vector3(0.0f, distance.x * speed * Time.deltaTime * invert, 0.0f));
         }
     }
 }
