@@ -83,6 +83,7 @@ public class PlayerGrounded : PlayerStates
         m_player.m_jumpDirection = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
         m_player.m_gravityOnCharacter.m_changingToAttractor = false;
+        m_player.m_camController.m_followPlayer = true;
     }
 
     public override void OnExit()
@@ -90,5 +91,6 @@ public class PlayerGrounded : PlayerStates
 		m_player.m_runClouds.GetComponent<ParticleSystem> ().Stop();
         m_player.m_floatingObjects.UnsetTarget();
         m_player.UnmarkTarget();
+        m_player.m_rotationFollowPlayer = false;
     }
 }

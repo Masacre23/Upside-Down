@@ -23,9 +23,8 @@ public class CameraOnBack : CameraStates
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
     public override bool OnUpdate(float axisHorizontal, float axisVertical, bool returnCam, float timeStep)
     {
-        bool ret = false;
+        bool ret = false;  
 
-        m_variableCam.FollowTarget(timeStep);
         CameraRotation(axisHorizontal, axisVertical, timeStep);
 
         if (m_variableCam.m_changeCamOnPosition)
