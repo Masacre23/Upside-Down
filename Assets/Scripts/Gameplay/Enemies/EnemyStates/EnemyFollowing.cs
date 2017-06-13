@@ -90,16 +90,27 @@ public class EnemyFollowing : EnemyStates
 		Vector3 difference = target - transform.position;
 
 		float distanceToPlane = Vector3.Dot(transform.up, difference);
-		Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
+        Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
 
-		transform.LookAt(pointOnPlane, transform.up);
-		//Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
-		//transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
-	    
+        //Original
+        //transform.LookAt(pointOnPlane, transform.up);
+
+        //Pruebas
+        //Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
+        //transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp*2);
+        Quaternion rotationAngle = Quaternion.LookRotation(difference, transform.up);
+        Quaternion temp = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
+        transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+
         switch (m_enemy.m_type)
         {
             case Enemy.Types.SNAIL:
-                transform.position += transform.forward * speed * Time.deltaTime;
+                if(Physics.Raycast(transform.position, transform.forward, 1))
+                {
+                    transform.position += transform.right * speed * Time.deltaTime;
+                }
+                else
+                    transform.position += transform.forward * speed * Time.deltaTime;
                 break;
             case Enemy.Types.FLYING:
                 if(difference.sqrMagnitude < innerRadiusToPlayer )
