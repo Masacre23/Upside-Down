@@ -5,25 +5,15 @@ using UnityEngine;
 public class FloatingPlatform : MonoBehaviour {
 
     public float speed;
-    public int invert;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    private void OnTriggerStay(Collider other)
+    private void OnCollisionStay(Collision collision)
     {
-        if(other.tag == "Player")
+        
+        if (collision.collider.tag == "Player")
         {
-            Vector3 distance = other.transform.position - this.transform.position;
-            Debug.Log(distance.x * speed * Time.deltaTime * invert);
-            this.transform.Rotate(new Vector3(0.0f, distance.x * speed * Time.deltaTime * invert, 0.0f));
+            Vector3 distance = this.transform.InverseTransformPoint( collision.contacts[0].point);
+            Debug.Log(distance);
+            this.transform.Rotate(new Vector3(-distance.y * speed * Time.deltaTime, distance.x * speed * Time.deltaTime, 0.0f));
         }
     }
 }
