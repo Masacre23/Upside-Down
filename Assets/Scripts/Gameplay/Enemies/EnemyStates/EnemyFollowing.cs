@@ -105,7 +105,7 @@ public class EnemyFollowing : EnemyStates
         switch (m_enemy.m_type)
         {
             case Enemy.Types.SNAIL:
-                if(Physics.Raycast(transform.position, transform.forward, 1))
+                if(Physics.Raycast(transform.position, transform.forward + transform.right, 1))
                 {
                     transform.position += transform.right * speed * Time.deltaTime;
                 }
