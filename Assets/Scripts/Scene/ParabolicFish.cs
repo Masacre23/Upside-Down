@@ -45,7 +45,7 @@ public class ParabolicFish : MonoBehaviour {
                 }
                 break;
             case FishState.MOVE:
-                if (m_lastSpeed <= -m_YSpeed)
+                if (m_lastSpeed <= -m_YSpeed -20)
                 {
                     transform.position = m_initialVector;
                     m_lastSpeed = m_YSpeed;

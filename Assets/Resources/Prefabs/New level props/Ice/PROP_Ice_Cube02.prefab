@@ -23,10 +23,9 @@ GameObject:
   - component: {fileID: 23561111577326520}
   - component: {fileID: 64017353166895390}
   - component: {fileID: 65377434733340340}
-  - component: {fileID: 114045517108797344}
-  m_Layer: 8
-  m_Name: PROP_Ice_Cube01
-  m_TagString: GravityWall
+  m_Layer: 0
+  m_Name: PROP_Ice_Cube02
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -57,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: c9f91ae505b69e543801bb5543a3338b, type: 2}
+  - {fileID: 2100000, guid: a885c23d0f15f0441954d8e09e73be1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,19 +107,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.5, y: 3.5, z: 1}
   m_Center: {x: 0, y: 0, z: 1.69}
---- !u!114 &114045517108797344
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1463225161786154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d0e268770b8a1147bdf20afc40cabec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  seeThrough: 0
-  flashingStartColor: {r: 0, g: 1, b: 0.2965517, a: 1}
-  flashingEndColor: {r: 0.862069, g: 1, b: 0, a: 1}
-  flashingDelay: 0.5
-  flashingFrequency: 1
