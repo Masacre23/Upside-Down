@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23610223969542842}
   - component: {fileID: 135361612561170140}
   - component: {fileID: 114350870715375922}
+  - component: {fileID: 114195366110731588}
   m_Layer: 12
   m_Name: JumpedFish
   m_TagString: Untagged
@@ -81,6 +82,20 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1087760640475522}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &114195366110731588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1087760640475522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f78311d21cb5b224c85d38ad72f96309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_impactDamage: 20
+  m_forceMultiplier: 3
+  m_directionMovement: {x: 0, y: 0, z: 0}
 --- !u!114 &114350870715375922
 MonoBehaviour:
   m_ObjectHideFlags: 1

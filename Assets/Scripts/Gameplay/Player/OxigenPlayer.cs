@@ -17,7 +17,8 @@ public class OxigenPlayer : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        m_oxigen = 0.0f;
+        m_oxigen = m_maxOxigen;
+        //m_oxigen = 0.0f;
 	}
 	
 	// Update is called once per frame

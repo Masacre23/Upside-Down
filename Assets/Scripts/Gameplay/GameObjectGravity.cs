@@ -14,7 +14,7 @@ public class GameObjectGravity : MonoBehaviour
     [HideInInspector] public Rigidbody m_rigidBody;
     private RaycastHit m_attractor;
     public GameObject m_attractorGameObject { get; private set; }
-    [SerializeField] public Vector3 m_gravity { get; private set; }
+    public Vector3 m_gravity { get; private set; }
     public List<Rigidbody> m_planets;
     public bool m_planetGravity { get; private set; }
     public bool m_getAttractorOnFeet { get; private set; }
@@ -24,6 +24,8 @@ public class GameObjectGravity : MonoBehaviour
     public bool m_ignoreGravity = false;
     float m_timeTravelled;
     Vector3 m_impulseForce;
+
+    public bool m_inPlanetGravity = true;
 
     public bool m_getStrongestGravity = true;
 
@@ -35,14 +37,17 @@ public class GameObjectGravity : MonoBehaviour
     void Awake()
     {
         m_planets = new List<Rigidbody>();
+
+        m_rigidBody = GetComponent<Rigidbody>();
+        m_rigidBody.useGravity = false;
+        m_rigidBody.velocity = Vector3.zero;
+
+        m_gravity = Vector3.zero;
     }
 
 	// Use this for initialization
 	void Start ()
     {
-        m_rigidBody = GetComponent<Rigidbody>();
-        m_rigidBody.useGravity = false;
-        m_gravity = Vector3.zero;
         m_planetGravity = true;
         m_changingToAttractor = false;
         m_impulseForce = Vector3.zero;
@@ -50,10 +55,13 @@ public class GameObjectGravity : MonoBehaviour
         m_attractorGameObject = null;
 
         m_player = GetComponent<Player>();
+
+        m_inPlanetGravity = m_planetGravity;
     }
 	
     public void Update()
     {
+        m_inPlanetGravity = m_planetGravity;
         if (!m_changingToAttractor && !m_planetGravity)
         {
             if ((transform.position - m_attractor.point).sqrMagnitude > 1.0f)

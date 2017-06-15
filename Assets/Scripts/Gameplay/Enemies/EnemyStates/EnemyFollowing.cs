@@ -39,8 +39,8 @@ public class EnemyFollowing : EnemyStates
 
 		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position);
 
-        if(m_enemy.m_animator != null)
-		    m_enemy.m_animator.SetFloat ("PlayerDistance", distance);
+        if (m_enemy.m_animator != null)
+            m_enemy.m_animator.SetFloat("PlayerDistance", distance);
 
         if (m_enemy.m_animator != null)
         {
@@ -52,14 +52,14 @@ public class EnemyFollowing : EnemyStates
         else
             Move();
 
+        if (m_enemy.m_type == Enemy.Types.FLYING)
+            Attack();
+
         if (data.m_recive)
         {
             ret = true;
             m_enemy.DamageManager(data);
         }
-
-        if (m_enemy.m_type == Enemy.Types.FLYING)
-            Attack();
 
         return ret;
 	}

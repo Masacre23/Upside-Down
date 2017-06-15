@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 // This component handles basic orbiting around the parent GameObject
-//[ExecuteInEditMode]
+[ExecuteInEditMode]
 [AddComponentMenu(SgtHelper.ComponentMenuPrefix + "Simple Orbit")]
 public class SgtSimpleOrbit : MonoBehaviour
 {

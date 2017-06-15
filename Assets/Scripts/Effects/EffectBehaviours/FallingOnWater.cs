@@ -25,6 +25,15 @@ public class FallingOnWater : MonoBehaviour
             {
                 sound.PlaySound("SplashWater");
             }
+
+            if (other.tag == "Player")
+            {
+                Player player = other.GetComponent<Player>();
+                if (player.m_currentState == player.m_onAir)
+                {
+                    player.m_negatePlayerInput = true;
+                }
+            }
         } 
     }
 }

@@ -11,6 +11,8 @@ public class DialogueZone : MonoBehaviour
     Player m_playerManager;
     bool m_alreadyPlayed = false;
 
+    Dialogue m_currentDialogue;
+
     void Awake()
     {
         m_playerManager = GameObject.Find("Player").GetComponent<Player>();
@@ -26,6 +28,21 @@ public class DialogueZone : MonoBehaviour
             m_playerManager.m_negatePlayerInput = true;
             m_alreadyPlayed = true;
         }
+
+        if (m_alreadyPlayed && m_currentDialogue)
+        {
+            if (m_currentDialogue.DialogueHasEnded())
+            {
+                enabled = false;
+            }
+        }
+    }
+
+    public void SetNewDialog(GameObject newDialogue)
+    {
+        m_alreadyPlayed = false;
+        m_dialogue = newDialogue;
+        m_currentDialogue = m_dialogue.GetComponentInChildren<Dialogue>();
     }
 
     private void OnTriggerEnter(Collider other)

@@ -22,6 +22,7 @@ public class Enemy : Character {
     public bool m_isFloating = false;
 
     public GameObject player;
+    public bool m_isSleeping = false;
 
     public enum Types
     {
@@ -116,6 +117,7 @@ public class Enemy : Character {
             m_currentState = m_Following;
             player = col.gameObject;
             m_currentState.OnEnter();
+            m_isSleeping = false;
         }
 
         /*if (col.tag == "EnemyWall") 
@@ -131,6 +133,7 @@ public class Enemy : Character {
 
     public void DamageManager(DamageData data)
     {
+        m_isSleeping = false;
         m_health -= data.m_damage;
         if (m_health <= 0)
             m_currentState = m_Dead;

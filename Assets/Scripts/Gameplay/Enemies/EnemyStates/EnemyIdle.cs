@@ -21,7 +21,7 @@ public class EnemyIdle : EnemyStates {
             m_enemy.DamageManager(data);
         }
 
-        if (m_enemy.player)
+        if (m_enemy.player && !m_enemy.m_isSleeping)
         {
             ret = true;
             m_enemy.m_currentState = m_enemy.m_Following;
