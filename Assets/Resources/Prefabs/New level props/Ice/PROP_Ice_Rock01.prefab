@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114997028007756904}
   - component: {fileID: 114030277153125756}
   - component: {fileID: 82218686259109686}
+  - component: {fileID: 114656709012792408}
   m_Layer: 14
   m_Name: PROP_Ice_Rock01
   m_TagString: GravityAffected
@@ -42,8 +43,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1880500523228294}
   m_LocalRotation: {x: 0.10478384, y: 0.03691591, z: -0.99152255, w: 0.06738474}
-  m_LocalPosition: {x: -2.76, y: -1.018, z: 2.48}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1.736919}
+  m_LocalPosition: {x: -19.534075, y: 16.87128, z: -6.6122794}
+  m_LocalScale: {x: 2.5000029, y: 2.5000021, z: 1.7369189}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -135,7 +136,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -145,26 +146,26 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.1
-      value: 1
+      time: 0.025925927
+      value: 0.99999994
       inSlope: -10.0039835
       outSlope: -10.0039835
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.2
-      value: 0.42461058
+      time: 0.054938264
+      value: 0.1427924
       inSlope: -2.5009959
       outSlope: -2.5009959
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.3976744
-      value: 0.15747663
+      time: 0.098291695
+      value: 0.08020391
       inSlope: -0.62524897
       outSlope: -0.62524897
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.8023256
-      value: 0.027414327
+      time: 0.7961528
+      value: 0
       inSlope: -0.15631224
       outSlope: -0.15631224
       tangentMode: 0
@@ -227,7 +228,7 @@ MonoBehaviour:
   keys:
   - SplashWater
   sounds:
-  - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
+  - {fileID: 8300000, guid: a0443cd230002ad4d9da1b1888d04ab2, type: 3}
 --- !u!114 &114066949807331738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,10 +243,12 @@ MonoBehaviour:
   m_speedAutoExitAttractor: 10
   m_maxTimeGravity: 2
   m_maxDistanceFromAttractor: 8
-  m_rigidBody: {fileID: 0}
-  m_planets: []
+  m_rigidBody: {fileID: 54663745462195074}
+  m_planets:
+  - {fileID: 0}
   m_maxTimeTravelled: 0.5
   m_ignoreGravity: 0
+  m_inPlanetGravity: 1
   m_getStrongestGravity: 1
 --- !u!114 &114156339414107830
 MonoBehaviour:
@@ -265,6 +268,17 @@ MonoBehaviour:
   m_maxTimeFloating: 10
   m_rotationSpeed: 100
   m_canDamage: 0
+--- !u!114 &114656709012792408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1880500523228294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d4de287b46eb34e83a61e4f9115070, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114997028007756904
 MonoBehaviour:
   m_ObjectHideFlags: 1

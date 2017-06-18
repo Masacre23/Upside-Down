@@ -1853,8 +1853,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729762848425162}
-  m_LocalRotation: {x: 0.84930795, y: 0.3532304, z: 0.19605438, w: -0.3398043}
-  m_LocalPosition: {x: 24.007122, y: -28.66655, z: 75.28855}
+  m_LocalRotation: {x: 0.9235467, y: 0.30187094, z: 0.22683623, w: -0.066939585}
+  m_LocalPosition: {x: 11.97, y: -5.9, z: 85.06}
   m_LocalScale: {x: 1.5000055, y: 1.5000095, z: 1.5000125}
   m_Children:
   - {fileID: 4887672844943316}
@@ -1864,7 +1864,7 @@ Transform:
   - {fileID: 4847798413999178}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 8.190001, y: -266.083, z: 224.275}
+  m_LocalEulerAnglesHint: {x: -15.1050005, y: -203.08699, z: 146.901}
 --- !u!4 &4497642605432482
 Transform:
   m_ObjectHideFlags: 1
@@ -2530,7 +2530,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2646,7 +2646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1
-  m_oxigenDoubleJump: 20
+  m_oxigenDoubleJump: 0
 --- !u!114 &114147235209817406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2772,7 +2772,7 @@ MonoBehaviour:
   m_slideSpeed: 2
   m_doubleJumping: 0
   m_jumpDirection: {x: 0, y: 0, z: 0}
-  m_gravityRange: 12
+  m_gravityRange: 8
   m_reachedGround: 1
   m_markedTarget: {fileID: 0}
   m_markAimedObject: 0
@@ -2807,6 +2807,9 @@ MonoBehaviour:
   - FootStepLeft
   - GravityChange
   - NewGravity
+  - ThrowObjects
+  - FootStepRightLand
+  - FootStepLeftLand
   sounds:
   - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
   - {fileID: 8300000, guid: 312a77493515c9a4fbf97e093a672b8a, type: 3}
@@ -2814,6 +2817,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0584187f59b0a6042897b42f8076a76d, type: 3}
   - {fileID: 8300000, guid: a2d0f4911c6420e429b7ecb02e28bf5a, type: 3}
   - {fileID: 8300000, guid: 5361e19ae04ec2043b89b950b7047332, type: 3}
+  - {fileID: 8300000, guid: ef86254fc28c8f84f842a1bfd1647c66, type: 3}
+  - {fileID: 8300000, guid: ab61481414254a9459d2316819d83124, type: 3}
+  - {fileID: 8300000, guid: 7b17cb74ac83a1742b65ff8a2950b2ce, type: 3}
 --- !u!114 &114409505741689122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2874,7 +2880,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444fdfa64c7420345902c315654a40c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints: []
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   fadePanel: {fileID: 0}
 --- !u!114 &114773783744491016
 MonoBehaviour:

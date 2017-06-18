@@ -24,6 +24,9 @@ GameObject:
   - component: {fileID: 135361612561170140}
   - component: {fileID: 114350870715375922}
   - component: {fileID: 114195366110731588}
+  - component: {fileID: 82450258145412772}
+  - component: {fileID: 114439972430986318}
+  - component: {fileID: 54850861077385112}
   m_Layer: 12
   m_Name: JumpedFish
   m_TagString: Untagged
@@ -37,13 +40,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1087760640475522}
-  m_LocalRotation: {x: 0.7830132, y: 0.01297268, z: 0.07617005, w: -0.6171874}
-  m_LocalPosition: {x: 2.63, y: -5.47, z: -22.19}
+  m_LocalRotation: {x: 0.8881186, y: -0.031730242, z: -0.150771, w: -0.43302038}
+  m_LocalPosition: {x: -4.42, y: -14.73, z: -17.96}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -75.583, y: 155.49501, z: -162.781}
+  m_LocalEulerAnglesHint: {x: -1.0500001, y: 162.044, z: -173.815}
 --- !u!23 &23610223969542842
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -82,6 +85,119 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1087760640475522}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54850861077385112
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1087760640475522}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!82 &82450258145412772
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1087760640475522}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 5
+  MaxDistance: 20
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.040123455
+      value: 0.99545455
+      inSlope: -2.5009959
+      outSlope: -2.5009959
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.08162649
+      value: 0.2546694
+      inSlope: -9.894703
+      outSlope: -9.894703
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.15754563
+      value: 0.04416333
+      inSlope: -0.1184247
+      outSlope: -0.1184247
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.80617285
+      value: 0
+      inSlope: -0.15631224
+      outSlope: -0.15631224
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.9907407
+      value: 0
+      inSlope: -0.10003988
+      outSlope: -0.10003988
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!114 &114195366110731588
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,10 +224,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_initialPosition: {fileID: 4096976922914200}
-  m_XSpeed: 4
-  m_YSpeed: 20
-  m_gravity: 30
-  m_wait: 1.5
+  m_XSpeed: 10
+  m_YSpeed: 30
+  m_gravity: 100
+  m_wait: 0.4
+--- !u!114 &114439972430986318
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1087760640475522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f0588b83538c7d43b2dc23c4cf9ea7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys:
+  - SplashWater
+  - Bubbles
+  sounds:
+  - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
+  - {fileID: 8300000, guid: 7414b23eb555e3e4e9d5c510825bc331, type: 3}
 --- !u!135 &135361612561170140
 SphereCollider:
   m_ObjectHideFlags: 1

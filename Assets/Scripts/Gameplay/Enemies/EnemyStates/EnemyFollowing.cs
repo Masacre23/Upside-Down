@@ -75,12 +75,22 @@ public class EnemyFollowing : EnemyStates
 
 		radiusCollider = m_enemy.GetComponent<SphereCollider>().radius;
 		m_enemy.GetComponent<SphereCollider>().radius = 0;
+        SoundEffects sound = m_enemy.GetComponent<SoundEffects>();
+        if(sound != null)
+        {
+            sound.PlaySoundLoop("Walk");
+        }
 	}
 
 	public override void OnExit()
 	{
 		m_enemy.GetComponent<SphereCollider>().radius = radiusCollider;
-	}
+        SoundEffects sound = m_enemy.GetComponent<SoundEffects>();
+        if (sound != null)
+        {
+            sound.StopSoundLoop("Walk");
+        }
+    }
 
 	public void Move()
 	{

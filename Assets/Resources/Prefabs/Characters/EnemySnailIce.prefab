@@ -2582,14 +2582,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092291310857354}
-  m_LocalRotation: {x: 0.6741751, y: 0.2898081, z: 0.5945718, w: 0.32860872}
-  m_LocalPosition: {x: -1.48, y: -6.881, z: 10.817}
+  m_LocalRotation: {x: -0.36266708, y: 0.8769478, z: -0.31279317, w: -0.039944828}
+  m_LocalPosition: {x: -15.903, y: 12.22, z: -16.073}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4573166202298026}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 174.35, y: -85.56201, z: -51.752014}
+  m_LocalEulerAnglesHint: {x: 144.719, y: -371.076, z: -228.46701}
 --- !u!4 &4540267285914756
 Transform:
   m_ObjectHideFlags: 1
@@ -3376,7 +3376,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -3502,8 +3502,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keys:
   - SplashWater
+  - Walk
   sounds:
   - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
+  - {fileID: 8300000, guid: 5c8a2cf655c8f1b4b9a42bf4678a826c, type: 3}
 --- !u!114 &114666747388420396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3535,6 +3537,7 @@ MonoBehaviour:
   m_patrollingArea: {fileID: 0}
   m_isFloating: 0
   player: {fileID: 0}
+  m_isSleeping: 1
   m_type: 0
 --- !u!114 &114919453644291758
 MonoBehaviour:
@@ -3554,6 +3557,7 @@ MonoBehaviour:
   m_planets: []
   m_maxTimeTravelled: 0.5
   m_ignoreGravity: 0
+  m_inPlanetGravity: 1
   m_getStrongestGravity: 1
 --- !u!135 &135294875260527344
 SphereCollider:
