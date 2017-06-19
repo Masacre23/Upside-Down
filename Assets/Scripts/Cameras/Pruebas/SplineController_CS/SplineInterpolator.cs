@@ -140,72 +140,123 @@ public class SplineInterpolator : MonoBehaviour
 	bool lastDirection =true; //forward = true backward = false
 	float aceleration = 0;
 
-	void Update()
+/*	void Update()
 	{
 		if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
 			return;
 		
 		if (player != null) 
 		{
-			//if(distanceToPlayer < Vector3.Distance(transform.position, player.transform.position))
-			//	mCurrentTime += Time.deltaTime;
 
-			/*if (forward) {
-				mCurrentTime += Time.deltaTime;
-				lastDirection = true;
-				deceleration = 0;
-			} else if (backward) {
-				mCurrentTime -= Time.deltaTime;
-				lastDirection = false;
-				deceleration = 0;
-			} else {
-				deceleration += Time.deltaTime/10;
-				if (deceleration < Time.deltaTime) 
-				{
-					if (lastDirection)
-						mCurrentTime += Time.deltaTime / deceleration;
-					else
-						mCurrentTime -= Time.deltaTime / deceleration;
-				}
-			}*/
 			float product = Vector3.Dot (transform.up, player.transform.position - transform.position);
 			if (product > 2) {
 				if (aceleration < Time.deltaTime)
-					aceleration += Time.deltaTime / 50;
+					aceleration += Time.deltaTime * product;
 				//mCurrentTime += aceleration;
 				lastDirection = true;
 			} else if (product < -2) {
-				if (aceleration < Time.deltaTime)
-					aceleration -= Time.deltaTime / 50;
+				if (aceleration > Time.deltaTime)
+					aceleration -= Time.deltaTime * product;
 				//mCurrentTime += aceleration;
 				lastDirection = false;
 			} else {
 				if (lastDirection) {
 					if (aceleration > 0)
-						aceleration -= Time.deltaTime / 50;
+						aceleration -= Time.deltaTime;
 					else
 						aceleration = 0;
 				} else {
 					if (aceleration < 0)
-						aceleration += Time.deltaTime / 50;
+						aceleration += Time.deltaTime;
 					else
 						aceleration = 0;
 				}
 			}
 			mCurrentTime += aceleration;
+				
 		}
 	
 		if (mCurrentTime < 0) 
 		{
 			mCurrentIdx--;
 			mCurrentTime = 0;
-			if (mCurrentIdx < 0) 
+			if (mCurrentIdx < 1) 
 			{
 				mCurrentTime = mNodes [mCurrentIdx].Time;
-				mCurrentIdx = 0;
+				mCurrentIdx = 1;
 				//mCurrentTime = 10;
 			}
 		}
+
+		// We advance to next point in the path
+		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time)
+		{
+			if (mCurrentIdx < mNodes.Count - 3)
+			{
+				mCurrentIdx++;
+			}
+			else
+			{
+				if (mState != "Loop")
+				{
+					mState = "Stopped";
+
+					// We stop right in the end point
+					transform.position = mNodes[mNodes.Count - 2].Point;
+
+					if (mRotations)
+						transform.rotation = mNodes[mNodes.Count - 2].Rot;
+
+					// We call back to inform that we are ended
+					if (mOnEndCallback != null)
+						mOnEndCallback();
+				}
+				else
+				{
+					mCurrentIdx = 1;
+					mCurrentTime = 0;
+				}
+			}
+		}
+
+		if (mState != "Stopped")
+		{
+			// Calculates the t param between 0 and 1
+			float param = (mCurrentTime - mNodes[mCurrentIdx].Time) / (mNodes[mCurrentIdx + 1].Time - mNodes[mCurrentIdx].Time);
+
+			// Smooth the param
+			param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
+
+			transform.position = GetHermiteInternal(mCurrentIdx, param);
+
+			if (mRotations)
+			{
+				transform.rotation = GetSquad(mCurrentIdx, param);
+			}
+		}
+	}*/
+
+	void Update()
+	{
+		if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
+			return;
+
+		/*Vector3 dir1 = mNodes [mCurrentIdx].Point - player.transform.position;
+		Vector3 dir2 = mNodes [mCurrentIdx + 1].Point - player.transform.position;
+		float dist1 = dir1.magnitude;
+		float dist2 = dir2.magnitude;
+
+		float playerPercentage = dist1 / (dist1 + dist2);*/
+
+		Vector3 dir = mNodes [mCurrentIdx].Point - mNodes [mCurrentIdx + 1].Point;
+		float dist = Vector3.Distance(mNodes[mCurrentIdx].Point, mNodes[mCurrentIdx + 1].Point);
+		Vector3 posPath = Vector3.Cross (dir, player.transform.position);
+
+		//float distPath = (posPath - mNodes[mCurrentIdx].Point).magnitude;
+		float distPath = Vector3.Distance(mNodes[mCurrentIdx].Point, posPath);
+		float playerPercentage = distPath / dist;
+
+		mCurrentTime = mNodes [mCurrentIdx + 1].Time * playerPercentage;
 
 		// We advance to next point in the path
 		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time)
