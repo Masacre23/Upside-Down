@@ -241,25 +241,35 @@ public class SplineInterpolator : MonoBehaviour
 		if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
 			return;
 
-		/*Vector3 dir1 = mNodes [mCurrentIdx].Point - player.transform.position;
+        /*Vector3 dir1 = mNodes [mCurrentIdx].Point - player.transform.position;
 		Vector3 dir2 = mNodes [mCurrentIdx + 1].Point - player.transform.position;
 		float dist1 = dir1.magnitude;
 		float dist2 = dir2.magnitude;
 
 		float playerPercentage = dist1 / (dist1 + dist2);*/
 
-		Vector3 dir = mNodes [mCurrentIdx].Point - mNodes [mCurrentIdx + 1].Point;
+        /*Vector3 dir = mNodes [mCurrentIdx].Point - mNodes [mCurrentIdx + 1].Point;
 		float dist = Vector3.Distance(mNodes[mCurrentIdx].Point, mNodes[mCurrentIdx + 1].Point);
 		Vector3 posPath = Vector3.Cross (dir, player.transform.position);
 
 		//float distPath = (posPath - mNodes[mCurrentIdx].Point).magnitude;
 		float distPath = Vector3.Distance(mNodes[mCurrentIdx].Point, posPath);
-		float playerPercentage = distPath / dist;
+		float playerPercentage = distPath / dist;*/
+
+        
+        float distP1_P2 = Vector3.Distance(mNodes[mCurrentIdx].Point, mNodes[mCurrentIdx + 1].Point);
+        float distPlayer_P2 = Vector3.Distance(player.transform.position, mNodes[mCurrentIdx + 1].Point);
+        float distPlayer_P1 = Vector3.Distance(player.transform.position, mNodes[mCurrentIdx].Point);
+        float s = (distP1_P2 + distPlayer_P2 + distPlayer_P1) / 2;
+        float h = (2 / distP1_P2) * Mathf.Sqrt(s * (s - distPlayer_P2) * (s - distP1_P2) * (s - distPlayer_P1));
+        float finalDist = Mathf.Sqrt(distPlayer_P1 * distPlayer_P1 - h * h); //Pitagoras
+
+        float playerPercentage = finalDist / distP1_P2;
 
 		mCurrentTime = mNodes [mCurrentIdx + 1].Time * playerPercentage;
 
 		// We advance to next point in the path
-		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time)
+		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time || finalDist >= distP1_P2)
 		{
 			if (mCurrentIdx < mNodes.Count - 3)
 			{
