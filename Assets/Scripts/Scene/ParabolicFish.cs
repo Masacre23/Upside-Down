@@ -50,6 +50,11 @@ public class ParabolicFish : MonoBehaviour {
                     transform.position = m_initialVector;
                     m_lastSpeed = m_YSpeed;
                     m_state = FishState.WAIT;
+                    SoundEffects sound = GetComponent<SoundEffects>();
+                    if(sound != null)
+                    {
+                        sound.PlaySound("Bubbles");
+                    }
                 }
                 else
                 {

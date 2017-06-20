@@ -224,6 +224,11 @@ public class FloatingAroundPlayer : MonoBehaviour
     //This function actually throws a specific object in a specific direction with an specific force
     private void Throw(GameObject objectToThrow, Vector3 throwVector, float throwForce)
     {
+        SoundEffects soundEffects = m_player.GetComponent<SoundEffects>();
+        if (soundEffects != null)
+        {
+            soundEffects.PlaySound("ThrowObjects");
+        }
         ThrowableObject throwScript = objectToThrow.GetComponent<ThrowableObject>();
         if (throwScript)
             throwScript.ThrowObject(throwVector.normalized * throwForce);

@@ -45,4 +45,23 @@ public class SoundEffects : MonoBehaviour {
             m_audio.PlayOneShot(m_soundsEffects[sound], 1.0f);
         }
     }
+
+    public void PlaySoundLoop(string sound)
+    {
+        if (m_soundsEffects.ContainsKey(sound))
+        {
+            m_audio.clip = m_soundsEffects[sound];
+            m_audio.loop = true;
+            m_audio.Play();
+            m_audio.volume = 1.0f;
+        }
+    }
+
+    public void StopSoundLoop(string sound)
+    {
+        if (m_soundsEffects.ContainsKey(sound))
+        {
+            m_audio.Stop();
+        }
+    }
 }

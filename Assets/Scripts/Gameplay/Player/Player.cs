@@ -103,6 +103,7 @@ public class Player : Character
     float m_runSpeed;
 
     public SoundEffects m_soundEffects;
+    private bool m_InIce;
 
     public override void Awake()
     {
@@ -505,14 +506,19 @@ public class Player : Character
                     m_floatingObjects.UnsetTarget();
 
                 if (hasThrown)
+                {
                     m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
+                }
             }
             else
             {
                 m_floatingObjects.UnsetTarget();
                 if (hasThrown)
+                {
                     m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+                }
             }
+            
         }
         else
             m_floatingObjects.UnsetTarget();
@@ -589,6 +595,22 @@ public class Player : Character
         }
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        int terrain = LayerMask.NameToLayer("Terrain");
+        if (collision.collider.gameObject.layer == terrain)
+        {
+            if(collision.collider.tag == "Ice")
+            {
+                m_InIce = true;
+            }else
+            {
+                m_InIce = false;
+            }
+        }
+
+    }
+
     private void ManageInput()
     {
         if (!m_negatePlayerInput && !m_paused)
@@ -661,6 +683,17 @@ public class Player : Character
     {
         m_justUnpaused = true;
         ResetInput();
+    }
+
+    public void PlayFootStep(string right)
+    {
+        string footstep = right == "Right" ? "FootStepRight" : "FootStepLeft";
+        if (!m_InIce)
+        {
+            footstep += "Land";
+        }
+        if (m_soundEffects != null)
+            m_soundEffects.PlaySound(footstep);
     }
 
     public void PlaySound(string name)
