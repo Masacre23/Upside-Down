@@ -258,8 +258,11 @@ public class SplineInterpolator : MonoBehaviour
 
         
         float distP1_P2 = Vector3.Distance(mNodes[mCurrentIdx].Point, mNodes[mCurrentIdx + 1].Point);
+        Debug.DrawRay(mNodes[mCurrentIdx].Point, -(mNodes[mCurrentIdx].Point - mNodes[mCurrentIdx + 1].Point).normalized * 25, Color.green);
         float distPlayer_P2 = Vector3.Distance(player.transform.position, mNodes[mCurrentIdx + 1].Point);
+        Debug.DrawRay(player.transform.position, -(player.transform.position - mNodes[mCurrentIdx + 1].Point).normalized * 25, Color.green);
         float distPlayer_P1 = Vector3.Distance(player.transform.position, mNodes[mCurrentIdx].Point);
+        Debug.DrawRay(player.transform.position, -(player.transform.position - mNodes[mCurrentIdx].Point).normalized * 25, Color.green);
         float s = (distP1_P2 + distPlayer_P2 + distPlayer_P1) / 2;
         float h = (2 / distP1_P2) * Mathf.Sqrt(s * (s - distPlayer_P2) * (s - distP1_P2) * (s - distPlayer_P1));
         float finalDist = Mathf.Sqrt(distPlayer_P1 * distPlayer_P1 - h * h); //Pitagoras
@@ -269,7 +272,7 @@ public class SplineInterpolator : MonoBehaviour
 		mCurrentTime = mNodes [mCurrentIdx + 1].Time * playerPercentage;
 
 		// We advance to next point in the path
-		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time || finalDist >= distP1_P2)
+		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time || playerPercentage >= 0.9f)
 		{
 			if (mCurrentIdx < mNodes.Count - 3)
 			{
@@ -303,16 +306,20 @@ public class SplineInterpolator : MonoBehaviour
 		{
 			// Calculates the t param between 0 and 1
 			float param = (mCurrentTime - mNodes[mCurrentIdx].Time) / (mNodes[mCurrentIdx + 1].Time - mNodes[mCurrentIdx].Time);
-
+            param = playerPercentage;
 			// Smooth the param
 			param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
+            Debug.Log(param);
+			//transform.position = GetHermiteInternal(mCurrentIdx, param);
+            Vector3 desiredPosition = GetHermiteInternal(mCurrentIdx, param);
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime);
 
-			transform.position = GetHermiteInternal(mCurrentIdx, param);
-
-			if (mRotations)
+            if (mRotations)
 			{
-				transform.rotation = GetSquad(mCurrentIdx, param);
-			}
+				//transform.rotation = GetSquad(mCurrentIdx, param);
+                Quaternion desiredRotation = GetSquad(mCurrentIdx, param);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime);
+            }
 		}
 	}
 
