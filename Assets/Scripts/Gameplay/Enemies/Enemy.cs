@@ -118,6 +118,8 @@ public class Enemy : Character {
             player = col.gameObject;
             m_currentState.OnEnter();
             m_isSleeping = false;
+            m_animator.SetBool("Sleeping", false);
+            m_animator.speed = 1;
         }
 
         /*if (col.tag == "EnemyWall") 

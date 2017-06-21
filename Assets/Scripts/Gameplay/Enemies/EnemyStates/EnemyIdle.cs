@@ -8,7 +8,13 @@ public class EnemyIdle : EnemyStates {
     {
 		base.Start ();
 		m_type = States.IDLE;
-	}
+        if (m_enemy.m_isSleeping)
+        {
+            m_enemy.m_animator.SetBool("Sleeping", true);
+            m_enemy.m_animator.Play("Sleeping", -1, 0.3f);
+            m_enemy.m_animator.speed = 0;
+        }
+    }
 	
 	//Main enemy update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
 	public override bool OnUpdate (DamageData data)
@@ -27,13 +33,21 @@ public class EnemyIdle : EnemyStates {
             m_enemy.m_currentState = m_enemy.m_Following;
         }
 
-		return ret;
+        /*if (!m_enemy.m_isSleeping)
+        {
+            m_enemy.m_animator.SetBool("Sleeping", false);
+            m_enemy.m_animator.speed = 1;
+        }*/
+
+        return ret;
 	}
 
 	public override void OnEnter()
 	{
-        if(m_enemy.m_animator != null)
-		    m_enemy.m_animator.SetBool("PlayerDetected", false);
+        if (m_enemy.m_animator != null)
+        {
+            m_enemy.m_animator.SetBool("PlayerDetected", false);
+        }
 	}
 
 	public override void OnExit()
