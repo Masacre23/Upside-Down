@@ -37,13 +37,12 @@ public class EnemyFollowing : EnemyStates
     {
 		bool ret = false;
 
-		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position);
-
-        if (m_enemy.m_animator != null)
-            m_enemy.m_animator.SetFloat("PlayerDistance", distance);
+		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position); 
 
         if (m_enemy.m_animator != null)
         {
+            m_enemy.m_animator.SetFloat("PlayerDistance", distance);
+
             if (m_enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) // 1 is flying enemy
             {
                 Move();
@@ -108,18 +107,46 @@ public class EnemyFollowing : EnemyStates
         //Pruebas
         //Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
         //transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp*2);
-        Quaternion rotationAngle = Quaternion.LookRotation(difference, transform.up);
-        Quaternion temp = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
-        transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+        
 
         switch (m_enemy.m_type)
         {
             case Enemy.Types.SNAIL:
-                if(Physics.Raycast(transform.position, transform.forward + transform.right, 1))
+                Vector3 dir = difference.normalized;
+                RaycastHit hit;
+
+                //Check forward raycast
+                if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
+                    if (hit.transform != transform)
+                    {
+                        Debug.DrawLine(transform.position, hit.point, Color.red);
+                        dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
+                    }
+
+                Vector3 leftRay = transform.position - transform.right/2;
+                Vector3 rightRay = transform.position + transform.right/2;
+
+                if (Physics.Raycast(leftRay, transform.forward, out hit, 2))
+                    if (hit.transform != transform)
+                    {
+                        Debug.DrawLine(leftRay, hit.point, Color.red);
+                        dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
+                    }
+                if (Physics.Raycast(rightRay, transform.forward, out hit, 2))
+                    if (hit.transform != transform)
+                    {
+                        Debug.DrawLine(rightRay, hit.point, Color.red);
+                        dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
+                    }
+
+                Quaternion rotationAngle = Quaternion.LookRotation(dir, transform.up);
+                Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
+                transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+                /*if (Physics.Raycast(transform.position, transform.forward + transform.right, 1))
                 {
                     transform.position += transform.right * speed * Time.deltaTime;
                 }
-                else
+                else*/
                     transform.position += transform.forward * speed * Time.deltaTime;
                 break;
             case Enemy.Types.FLYING:
