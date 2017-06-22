@@ -74,6 +74,7 @@ public class EnemyFollowing : EnemyStates
 
 		radiusCollider = m_enemy.GetComponent<SphereCollider>().radius;
 		m_enemy.GetComponent<SphereCollider>().radius = 0;
+
         SoundEffects sound = m_enemy.GetComponent<SoundEffects>();
         if(sound != null)
         {
