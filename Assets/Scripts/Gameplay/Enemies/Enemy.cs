@@ -136,6 +136,8 @@ public class Enemy : Character {
     public void DamageManager(DamageData data)
     {
         m_isSleeping = false;
+        m_animator.SetBool("Sleeping", false);
+        m_animator.speed = 1;
         m_health -= data.m_damage;
         if (m_health <= 0)
             m_currentState = m_Dead;
