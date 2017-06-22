@@ -8,7 +8,7 @@ public class ForwardBackward : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		transform.parent.gameObject.GetComponent<SplineInterpolator> ().forward = forward;
-		transform.parent.gameObject.GetComponent<SplineInterpolator> ().backward = backward;
+		//transform.parent.gameObject.GetComponent<SplineInterpolator> ().forward = forward;
+		//transform.parent.gameObject.GetComponent<SplineInterpolator> ().backward = backward;
 	}
 }

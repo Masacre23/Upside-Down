@@ -133,12 +133,7 @@ public class SplineInterpolator : MonoBehaviour
 	float mCurrentTime;
 	int mCurrentIdx = 1;
 	public GameObject player;
-	//public float distanceToPlayer = 10;
-	//public float area = 2;
-	public bool forward = false;
-	public bool backward = false;
-	bool lastDirection =true; //forward = true backward = false
-	float aceleration = 0;
+	public float speed = 1;
 
 	void Update()
 	{
@@ -207,13 +202,13 @@ public class SplineInterpolator : MonoBehaviour
             Debug.Log(param);
 			//transform.position = GetHermiteInternal(mCurrentIdx, param);
             Vector3 desiredPosition = GetHermiteInternal(mCurrentIdx, param);
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime/2);
+            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * speed);
 
             if (mRotations)
 			{
 				//transform.rotation = GetSquad(mCurrentIdx, param);
                 Quaternion desiredRotation = GetSquad(mCurrentIdx, param);
-                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime/2);
+                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * speed);
             }
 		}
 	}
