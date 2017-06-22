@@ -47,7 +47,7 @@ public class PlayerChanging : PlayerStates
             m_timeJumping += timeStep;
             if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 || m_timeJumping > 3.0f)
             {
-                //UpdateLanding();
+                UpdateLanding();
                 m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
                 m_player.m_gravityOnCharacter.ChangeToAttractor();
                 m_player.m_rigidBody.velocity = Vector3.zero;

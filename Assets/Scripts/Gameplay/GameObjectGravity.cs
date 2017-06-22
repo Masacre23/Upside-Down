@@ -218,12 +218,6 @@ public class GameObjectGravity : MonoBehaviour
         m_getAttractorOnFeet = true;
     }
 
-    //This function swap the current gravity attraction from planet to attractor and viceversa
-    public void ActivateAttractorOnFeet()
-    {
-        m_getAttractorOnFeet = true;
-    }
-
     //This function is called when we want a object to float. Usually called when player is floating while changing gravity
     //or when an object is floating due the player throwing them.
     public void Float(Vector3 initialPosition, Vector3 finalPosition, float percentage)
