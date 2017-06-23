@@ -15,7 +15,8 @@ public class GameObjectGravity : MonoBehaviour
     private RaycastHit m_attractor;
     public GameObject m_attractorGameObject { get; private set; }
     public Vector3 m_gravity { get; private set; }
-    public List<Rigidbody> m_planets;
+    public List<PlanetGravity> m_planets;
+    //public List<Rigidbody> m_planets;
     public bool m_planetGravity { get; private set; }
     public bool m_getAttractorOnFeet { get; private set; }
     public bool m_changingToAttractor { get; set; }
@@ -36,7 +37,8 @@ public class GameObjectGravity : MonoBehaviour
 
     void Awake()
     {
-        m_planets = new List<Rigidbody>();
+        //m_planets = new List<Rigidbody>();
+        m_planets = new List<PlanetGravity>();
 
         m_rigidBody = GetComponent<Rigidbody>();
         m_rigidBody.useGravity = false;
@@ -120,13 +122,25 @@ public class GameObjectGravity : MonoBehaviour
     //Get the strongest gravity among the planets currently affecting the object
     private void GetStrongestPlanetGravity(ref float strength, ref Vector3 directionGravity)
     {
-        foreach (Rigidbody planet in m_planets)
-        {
-            Vector3 newGravity = transform.position - planet.transform.position;
-            float distance = newGravity.magnitude;
-            newGravity.Normalize();
+        //foreach (Rigidbody planet in m_planets)
+        //{
+        //    Vector3 newGravity = transform.position - planet.transform.position;
+        //    float distance = newGravity.magnitude;
+        //    newGravity.Normalize();
 
-            float newStrength = GravityStrength(planet.mass, distance);
+        //    float newStrength = GravityStrength(planet.mass, distance);
+        //    if (newStrength < strength)
+        //    {
+        //        strength = newStrength;
+        //        directionGravity = newGravity;
+        //    }
+        //}
+        foreach (PlanetGravity planet in m_planets)
+        {
+            Vector3 newGravity = Vector3.zero;
+            float newStrength = 0;
+            planet.GetDistanceAndGravityVector(transform.position, ref newGravity, ref newStrength);
+
             if (newStrength < strength)
             {
                 strength = newStrength;
@@ -139,12 +153,21 @@ public class GameObjectGravity : MonoBehaviour
     private void GetSumPlanetGravity(ref float strength, ref Vector3 directionGravity)
     {
         Vector3 gravity = Vector3.zero;
-        foreach (Rigidbody planet in m_planets)
+        //foreach (Rigidbody planet in m_planets)
+        //{
+        //    Vector3 newGravity = transform.position - planet.transform.position;
+        //    float distance = newGravity.magnitude;
+        //    newGravity.Normalize();
+        //    float newStrength = GravityStrength(planet.mass, distance);
+
+        //    gravity += newGravity * newStrength;
+        //}
+
+        foreach (PlanetGravity planet in m_planets)
         {
-            Vector3 newGravity = transform.position - planet.transform.position;
-            float distance = newGravity.magnitude;
-            newGravity.Normalize();
-            float newStrength = GravityStrength(planet.mass, distance);
+            Vector3 newGravity = Vector3.zero;
+            float newStrength = 0;
+            planet.GetDistanceAndGravityVector(transform.position, ref newGravity, ref newStrength);
 
             gravity += newGravity * newStrength;
         }

@@ -4,46 +4,52 @@ using UnityEngine;
 
 public class PlanetGravity : MonoBehaviour
 {
-    Rigidbody m_rigidBody;
+    protected Rigidbody m_rigidBody;
 
     void Start()
     {
         m_rigidBody = GetComponent<Rigidbody>();
-
-
     }
 
     void OnTriggerEnter(Collider other)
     {
         GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
+        //if (gravity)
+        //{
+        //    if (!gravity.m_planets.Contains(m_rigidBody))
+        //       gravity.m_planets.Add(m_rigidBody);
+        //}
         if (gravity)
         {
-            if (!gravity.m_planets.Contains(m_rigidBody))
-               gravity.m_planets.Add(m_rigidBody);
+            if (!gravity.m_planets.Contains(this))
+                gravity.m_planets.Add(this);
         }
     }
-
-    //void OnTriggerStay(Collider other)
-    //{
-    //    GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
-    //    if (gravity)
-    //    {
-    //        if (!gravity.m_planets.Contains(m_rigidBody))
-    //            gravity.m_planets.Add(m_rigidBody);
-    //    }
-    //}
 
     void OnTriggerExit(Collider other)
     {
         GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
+        //if (gravity)
+        //{
+        //    if (gravity.m_planets.Contains(m_rigidBody))
+        //    {
+        //        gravity.m_planets.Remove(m_rigidBody);
+        //        float magnitude = (other.transform.position - m_rigidBody.transform.position).magnitude;
+        //    }
+        //}
         if (gravity)
         {
-            if (gravity.m_planets.Contains(m_rigidBody))
+            if (gravity.m_planets.Contains(this))
             {
-                gravity.m_planets.Remove(m_rigidBody);
-                float magnitude = (other.transform.position - m_rigidBody.transform.position).magnitude;
+                gravity.m_planets.Remove(this);
+                //float magnitude = (other.transform.position - m_rigidBody.transform.position).magnitude;
             }
         }
+    }
+
+    public virtual void GetDistanceAndGravityVector(Vector3 position, ref Vector3 gravity, ref float distance)
+    {
+
     }
 
     public static void AlignWithFather(GameObject go)
