@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlanetGravity : MonoBehaviour
 {
-    protected Rigidbody m_rigidBody;
+    public SpherePlanetGravity m_sphere = null;
+    public CubePlanetGravity m_cube = null;
+    private Rigidbody m_rigidBody;
 
     void Start()
     {
         m_rigidBody = GetComponent<Rigidbody>();
+        if (m_sphere != null)
+        {
+            m_sphere.SetRigidBody(m_rigidBody);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -49,7 +55,14 @@ public class PlanetGravity : MonoBehaviour
 
     public virtual void GetDistanceAndGravityVector(Vector3 position, ref Vector3 gravity, ref float distance)
     {
-
+        if(m_sphere != null)
+        {
+            m_sphere.GetDistanceAndGravityVector(position, ref gravity, ref distance);
+        }
+        else
+        {
+            m_cube.GetDistanceAndGravityVector(position, ref gravity, ref distance);
+        }
     }
 
     public static void AlignWithFather(GameObject go)
