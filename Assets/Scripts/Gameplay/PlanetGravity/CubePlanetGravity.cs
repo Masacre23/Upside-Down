@@ -13,7 +13,7 @@ public class CubePlanetGravity:MonoBehaviour
         strengh = -m_strengh;
         gravity = m_up;
         if(gravity == Vector3.zero)
-            gravity = transform.up;
+            gravity = transform.forward;
         gravity.Normalize();
     }
 }
