@@ -41,6 +41,7 @@ public class EnemyFollowing : EnemyStates
 
         if (m_enemy.m_animator != null)
         {
+			m_enemy.m_animator.SetInteger("RandomAnimation", Random.Range(0, 2));
             m_enemy.m_animator.SetFloat("PlayerDistance", distance);
 
             if (m_enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) // 1 is flying enemy
