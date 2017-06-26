@@ -18,32 +18,32 @@ public class GravityWall : MonoBehaviour
         layerMask = 1 << m_gravityWall.layer;
 	}
 
-    void OnTriggerEnter(Collider col)
-    {
-        GameObjectGravity objectGravity = col.GetComponent<GameObjectGravity>();
-        if (objectGravity)
-        {
-            if (!objectGravity.m_planetGravity && !objectGravity.m_changingToAttractor)
-            {
-                RaycastHit target;
-                Vector3 direction = transform.position - col.transform.position;
-                if (Physics.Raycast(col.transform.position, direction.normalized, out target, direction.magnitude, layerMask))
-                {
-                    objectGravity.SetAttractor(target);
-                }
-            }
-        }
-    }
+    //void OnTriggerEnter(Collider col)
+    //{
+    //    GameObjectGravity objectGravity = col.GetComponent<GameObjectGravity>();
+    //    if (objectGravity)
+    //    {
+    //        if (!objectGravity.m_planetGravity && !objectGravity.m_changingToAttractor)
+    //        {
+    //            RaycastHit target;
+    //            Vector3 direction = transform.position - col.transform.position;
+    //            if (Physics.Raycast(col.transform.position, direction.normalized, out target, direction.magnitude, layerMask))
+    //            {
+    //                objectGravity.SetAttractor(target);
+    //            }
+    //        }
+    //    }
+    //}
 
-    void OnTriggerExit(Collider col)
-    {
-        GameObjectGravity objectGravity = col.GetComponent<GameObjectGravity>();
-        if (objectGravity)
-        {
-            if (!objectGravity.m_planetGravity && objectGravity.m_attractorGameObject == m_gravityWall)
-            {
-                objectGravity.ReturnToPlanet();
-            }
-        }
-    }
+    //void OnTriggerExit(Collider col)
+    //{
+    //    GameObjectGravity objectGravity = col.GetComponent<GameObjectGravity>();
+    //    if (objectGravity)
+    //    {
+    //        if (!objectGravity.m_planetGravity && objectGravity.m_attractorGameObject == m_gravityWall)
+    //        {
+    //            objectGravity.ReturnToPlanet();
+    //        }
+    //    }
+    //}
 }

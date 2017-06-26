@@ -113,12 +113,12 @@ public class Player : Character
         m_onAir = gameObject.GetComponent<PlayerOnAir>();
         if (!m_onAir)
             m_onAir = gameObject.AddComponent<PlayerOnAir>();
-        m_floating = gameObject.GetComponent<PlayerFloating>();
-        if (!m_floating)
-            m_floating = gameObject.AddComponent<PlayerFloating>();
-        m_changing = gameObject.GetComponent<PlayerChanging>();
-        if (!m_changing)
-            m_changing = gameObject.AddComponent<PlayerChanging>();
+        //m_floating = gameObject.GetComponent<PlayerFloating>();
+        //if (!m_floating)
+        //    m_floating = gameObject.AddComponent<PlayerFloating>();
+        //m_changing = gameObject.GetComponent<PlayerChanging>();
+        //if (!m_changing)
+        //    m_changing = gameObject.AddComponent<PlayerChanging>();
         m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
         if (!m_aimToThrow)
             m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
@@ -462,15 +462,6 @@ public class Player : Character
         m_animator.SetBool("Jump", m_isJumping);
         m_animator.SetBool("DoubleJump", m_doubleJumping);
         m_animator.SetBool("Throwing", m_currentState == m_aimToThrow);
-    }
-
-    public void SetFloatingPoint(float height)
-    {
-        PlayerFloating floating = (PlayerFloating)m_floating;
-
-        floating.m_floatingPoint = transform.position + transform.up * height;
-
-        m_groundCheckDistance = 0.1f;
     }
 
     public void PickObjects()

@@ -19,7 +19,7 @@ public class PlanetGravity : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
+        GameObjectGravity1 gravity = other.GetComponent<GameObjectGravity1>();
         //if (gravity)
         //{
         //    if (!gravity.m_planets.Contains(m_rigidBody))
@@ -34,7 +34,7 @@ public class PlanetGravity : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
+        GameObjectGravity1 gravity = other.GetComponent<GameObjectGravity1>();
         //if (gravity)
         //{
         //    if (gravity.m_planets.Contains(m_rigidBody))

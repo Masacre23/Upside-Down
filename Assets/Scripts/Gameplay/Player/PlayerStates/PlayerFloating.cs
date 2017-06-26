@@ -28,7 +28,7 @@ public class PlayerFloating : PlayerStates
         float perc = m_timeFloating / m_risingTime;
         if (perc > 1.0f)
             perc = 1.0f;
-        m_player.m_gravityOnCharacter.Float(m_startingPosition, m_floatingPoint, perc);
+        //m_player.m_gravityOnCharacter.Float(m_startingPosition, m_floatingPoint, perc);
 
         if (m_timeFloating > m_maxTimeFloating)
         {
@@ -45,8 +45,8 @@ public class PlayerFloating : PlayerStates
                 ret = true;
                 if (legalTarget)
                 {
-                    m_player.m_playerGravity.ChangeGravityTo(target);
-                    m_player.m_gravityOnCharacter.ChangeToAttractor();
+                    //m_player.m_playerGravity.ChangeGravityTo(target);
+                    //m_player.m_gravityOnCharacter.ChangeToAttractor();
                     m_player.m_currentState = m_player.m_onAir;
                 }      
                 else

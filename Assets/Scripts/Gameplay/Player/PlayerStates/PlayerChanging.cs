@@ -48,8 +48,8 @@ public class PlayerChanging : PlayerStates
             if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 || m_timeJumping > 3.0f)
             {
                 UpdateLanding();
-                m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
-                m_player.m_gravityOnCharacter.ChangeToAttractor();
+                //m_player.m_gravityOnCharacter.ChangeGravityToPoint(m_targetPosition, transform.position);
+                //m_player.m_gravityOnCharacter.ChangeToAttractor();
                 m_player.m_rigidBody.velocity = Vector3.zero;
                 m_player.m_jumpDirection = Vector3.zero;
                 m_changedGravity = true;
@@ -72,7 +72,7 @@ public class PlayerChanging : PlayerStates
 
         m_player.JumpInDirection(m_player.m_modelTransform.forward, 1.0f);
 
-        m_player.m_gravityOnCharacter.m_changingToAttractor = true;
+        //m_player.m_gravityOnCharacter.m_changingToAttractor = true;
         m_timeJumping = 0.0f;
     }
 

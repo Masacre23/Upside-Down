@@ -38,7 +38,7 @@ public class HUDManager : MonoBehaviour {
         int index = (int) ((1 - m_oxigenValue) * (m_plungersSprites.Length - 1));
         if (index >= 0 && index < m_plungersSprites.Length)
             m_plunger.sprite = m_plungersSprites[index];
-        m_signAnimator.SetBool("PlanetGravity", !m_playerGravity.m_gravityOnCharacter.m_getAttractorOnFeet);
+        //m_signAnimator.SetBool("PlanetGravity", !m_playerGravity.m_gravityOnCharacter.m_getAttractorOnFeet);
     }
 
     public static void ShowLifePanel(bool showLifePanel)

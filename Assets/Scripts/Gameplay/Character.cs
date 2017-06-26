@@ -51,7 +51,7 @@ public class Character : MonoBehaviour
     public virtual void Restart()
     {
         m_rigidBody.velocity = Vector3.zero;
-        m_gravityOnCharacter.ReturnToPlanet();
+        //m_gravityOnCharacter.ReturnToPlanet();
     }
 
     public virtual void Update()
@@ -77,11 +77,13 @@ public class Character : MonoBehaviour
             m_isGrounded = true;
             m_isJumping = false;
             m_gravityOnCharacter.m_getStrongestGravity = true;
+            m_gravityOnCharacter.m_onAir = false;
         }
         else
         {
             m_isGrounded = false;
             m_gravityOnCharacter.m_getStrongestGravity = false;
+            m_gravityOnCharacter.m_onAir = true;
         }
 
         return m_isGrounded;
