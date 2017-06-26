@@ -41,11 +41,13 @@ public class EnemyFollowing : EnemyStates
 
         if (m_enemy.m_animator != null)
         {
-			m_enemy.m_animator.SetInteger("RandomAnimation", Random.Range(0, 2));
+			//m_enemy.m_animator.SetInteger("RandomAnimation", Random.Range(0, 2));
+			m_enemy.m_animator.speed = Random.Range(1, 3);
             m_enemy.m_animator.SetFloat("PlayerDistance", distance);
 
             if (m_enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) // 1 is flying enemy
             {
+				m_enemy.m_animator.speed = 1;
                 Move();
             }
         }
@@ -118,7 +120,7 @@ public class EnemyFollowing : EnemyStates
                 RaycastHit hit;
 
                 //Check forward raycast
-                if (Physics.Raycast(transform.position, transform.forward, out hit, 2))
+               /* if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f))
                     if (hit.transform != transform)
                     {
                         Debug.DrawLine(transform.position, hit.point, Color.red);
@@ -128,19 +130,19 @@ public class EnemyFollowing : EnemyStates
                 Vector3 leftRay = transform.position - transform.right/2;
                 Vector3 rightRay = transform.position + transform.right/2;
 
-                if (Physics.Raycast(leftRay, transform.forward, out hit, 2))
+                if (Physics.Raycast(leftRay, transform.forward, out hit, 0.5f))
                     if (hit.transform != transform)
                     {
                         Debug.DrawLine(leftRay, hit.point, Color.red);
                         dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
                     }
-                if (Physics.Raycast(rightRay, transform.forward, out hit, 2))
+                if (Physics.Raycast(rightRay, transform.forward, out hit, 0.5f))
                     if (hit.transform != transform)
                     {
                         Debug.DrawLine(rightRay, hit.point, Color.red);
                         dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
                     }
-
+*/
                 Quaternion rotationAngle = Quaternion.LookRotation(dir, transform.up);
                 Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
                 transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
