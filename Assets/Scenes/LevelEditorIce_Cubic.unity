@@ -34783,6 +34783,33 @@ Transform:
   m_PrefabParentObject: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e,
     type: 2}
   m_PrefabInternal: {fileID: 785358294}
+--- !u!1 &1195774279 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100006, guid: 6b22982f867a83a4893e8623adf9f662, type: 3}
+  m_PrefabInternal: {fileID: 2000252484}
+--- !u!114 &1195774283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1195774279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea54bf911c79e35468dde40e9304cd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &1195774284
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1195774279}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 25, y: 25, z: 25}
+  m_Center: {x: -0.0000009536743, y: 0, z: 0}
 --- !u!1 &1196813440
 GameObject:
   m_ObjectHideFlags: 0
@@ -38704,7 +38731,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 96552.95
+  Age: 96632.55
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -56368,6 +56395,10 @@ Prefab:
     - target: {fileID: 400172, guid: 6b22982f867a83a4893e8623adf9f662, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 100006, guid: 6b22982f867a83a4893e8623adf9f662, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6b22982f867a83a4893e8623adf9f662, type: 3}
