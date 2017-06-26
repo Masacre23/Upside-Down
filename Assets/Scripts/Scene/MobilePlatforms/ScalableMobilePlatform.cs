@@ -16,12 +16,14 @@ public class ScalableMobilePlatform : MonoBehaviour {
     public float m_maxSize = 1.0f;
     public float m_growthRate = 0.2f;
     public float m_lifeTime = 1.0f;
+    public float m_deadTime = 1.0f;
     public Vector3 m_direction = new Vector3(1.0f, 0.0f, 0.0f);
 
     private Vector3 m_scale;
     private Vector3 m_position;
     private float m_time = 0.0f;
     private float m_timeWaited = 0.0f;
+    private PlatformScalableState m_lastState = PlatformScalableState.LIVING;
     private PlatformScalableState m_state = PlatformScalableState.GROWING;
 
     // Use this for initialization
@@ -44,14 +46,22 @@ public class ScalableMobilePlatform : MonoBehaviour {
                 if (m_scale.x > m_maxSize)
                 {
                     transform.localScale = new Vector3(m_maxSize, m_maxSize, m_maxSize);
+                    m_lastState = m_state;
                     m_state = PlatformScalableState.LIVING;
                 }
                 break;
             case PlatformScalableState.LIVING:
                 m_time += Time.deltaTime;
-                if(m_time > m_lifeTime)
+                if(m_lastState == PlatformScalableState.GROWING && m_time > m_lifeTime)
                 {
                     m_state = PlatformScalableState.DISAPPEARING;
+                    m_lastState = PlatformScalableState.LIVING;
+                    m_time = 0;
+                }
+                else if(m_lastState == PlatformScalableState.DISAPPEARING && m_time > m_deadTime)
+                {
+                    m_state = PlatformScalableState.GROWING;
+                    m_lastState = PlatformScalableState.LIVING;
                     m_time = 0;
                 }
                 break;
@@ -62,7 +72,8 @@ public class ScalableMobilePlatform : MonoBehaviour {
                 {
                     transform.localScale = new Vector3(m_minSize, m_minSize, m_minSize);
                     transform.position = m_position;
-                    m_state = PlatformScalableState.GROWING;
+                    m_lastState = m_state;
+                    m_state = PlatformScalableState.LIVING;
                 }
                 break;
         }

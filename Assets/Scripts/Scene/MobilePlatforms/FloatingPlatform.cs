@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class FloatingPlatform : MonoBehaviour {
 
+    //Define Enum
+    public enum DirectionUp { X, Y, Z, NOT_X, NOT_Y, NOT_Z };
+
+    //This is what you need to show in the inspector.
+    public DirectionUp m_up = DirectionUp.Z;
     public float m_speed;
 
     bool m_hasPlayer = false;
@@ -19,7 +24,27 @@ public class FloatingPlatform : MonoBehaviour {
     {
         if (m_hasPlayer)
         {
-            transform.Rotate(new Vector3(-m_distanceCenter.y * m_speed * Time.deltaTime, m_distanceCenter.x * m_speed * Time.deltaTime, 0.0f));
+            switch (m_up)
+            {
+                case DirectionUp.X:
+                    transform.Rotate(new Vector3(0.0f, -m_distanceCenter.z * m_speed * Time.deltaTime, m_distanceCenter.y * m_speed * Time.deltaTime));
+                    break;
+                case DirectionUp.Y:
+                    transform.Rotate(new Vector3(m_distanceCenter.z * m_speed * Time.deltaTime, 0.0f, -m_distanceCenter.x * m_speed * Time.deltaTime));
+                    break;
+                case DirectionUp.Z:
+                    transform.Rotate(new Vector3(-m_distanceCenter.y * m_speed * Time.deltaTime, m_distanceCenter.x * m_speed * Time.deltaTime, 0.0f));
+                    break;
+                case DirectionUp.NOT_X:
+                    transform.Rotate(new Vector3(0.0f, m_distanceCenter.z * m_speed * Time.deltaTime, -m_distanceCenter.y * m_speed * Time.deltaTime));
+                    break;
+                case DirectionUp.NOT_Y:
+                    transform.Rotate(new Vector3(-m_distanceCenter.z * m_speed * Time.deltaTime,  0.0f, m_distanceCenter.x * m_speed * Time.deltaTime));
+                    break;
+                case DirectionUp.NOT_Z:
+                    transform.Rotate(new Vector3(m_distanceCenter.y * m_speed * Time.deltaTime, -m_distanceCenter.x * m_speed * Time.deltaTime, 0.0f));
+                    break;
+            }
         }
         else
         {
@@ -48,7 +73,6 @@ public class FloatingPlatform : MonoBehaviour {
         if (collision.collider.tag == "Player")
         {
             m_distanceCenter = transform.InverseTransformPoint(collision.contacts[0].point);
-            Debug.Log(m_distanceCenter);
         }
     }
 }
