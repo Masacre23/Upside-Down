@@ -25,7 +25,7 @@ public class OneDirectionAttractor : GravityAttractor
     public override void GetDistanceAndGravityVector(Vector3 position, ref Vector3 gravity, ref float distance)
     {
         gravity = m_gravityNormal;
-        distance = Vector3.Dot(position - transform.position, m_gravityNormal);
+        distance = Mathf.Abs(Vector3.Dot(position - transform.position, m_gravityNormal));
     }
 
     public override float GetDistance(Vector3 position)
