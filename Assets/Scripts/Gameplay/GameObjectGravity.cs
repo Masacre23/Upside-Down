@@ -32,6 +32,7 @@ public class GameObjectGravity : MonoBehaviour
     static float m_gravityStrength = -19.0f;
 
     Player m_player;
+    public Vector3 test;
 
     void Awake()
     {
@@ -56,6 +57,7 @@ public class GameObjectGravity : MonoBehaviour
 
     public void Update()
     {
+        test = m_gravity;
         if (m_onGravityWall && !m_getStrongestGravity)
         {
             m_timeOnGravityWallGravity += Time.deltaTime;
@@ -153,7 +155,10 @@ public class GameObjectGravity : MonoBehaviour
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet
     public void GravityOnFeet(RaycastHit hit)
     {
-        m_attractorGameObject = hit.transform.gameObject;
+        //m_attractorGameObject = hit.transform.gameObject;
+        AttractorProperties attractorProperties = hit.transform.gameObject.GetComponent<AttractorProperties>();
+        if (attractorProperties)
+            m_attractorGameObject = attractorProperties.m_attractor;
 
         if (hit.collider.tag == "GravityWall")
         {

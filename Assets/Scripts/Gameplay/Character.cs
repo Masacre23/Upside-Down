@@ -10,7 +10,6 @@ public class Character : MonoBehaviour
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
     public float m_jumpForceVertical = 4.0f;
-    public float m_jumpForceHorizontal = 4.0f;
     public float m_lerpSpeed = 10.0f;
 
     [HideInInspector] public Animator m_animator;
@@ -103,8 +102,6 @@ public class Character : MonoBehaviour
         Vector3 gravity = m_gravityOnCharacter.m_gravity;
         float fallVelocity = Vector3.Dot(gravity, m_rigidBody.velocity);
         m_rigidBody.velocity += gravity * (m_jumpForceVertical - fallVelocity);
-        //m_rigidBody.velocity = up * m_jumpForceVertical;
-        //m_rigidBody.velocity += forward.normalized * m_jumpForceHorizontal;
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
