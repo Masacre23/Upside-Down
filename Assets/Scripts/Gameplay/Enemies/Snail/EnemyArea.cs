@@ -5,12 +5,10 @@ using UnityEngine;
 public class EnemyArea : MonoBehaviour
 {
 	List<GameObject> enemies;
-	SphereCollider area;
 
 	void Awake()
 	{
 		enemies = new List<GameObject> ();
-		area = GetComponent<SphereCollider> ();
 		//ScanForItems();
 	}
 
