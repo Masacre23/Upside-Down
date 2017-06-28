@@ -129,4 +129,15 @@ public class ThrowableObject : MonoBehaviour
 
         m_rotationRandomVector = Vector3.zero;
     }
+
+    void OnCollisionEnter(Collision col)
+    {
+        SoundEffects sound = GetComponent<SoundEffects>();
+        if (sound != null)
+        {
+            sound.PlaySound("HitSomething");
+        }
+    }
+
+
 }

@@ -80,7 +80,14 @@ public class FloatingAroundPlayer : MonoBehaviour
     {
         List<Collider> detectedObjects = new List<Collider>(Physics.OverlapSphere(detectionOrigin, m_objectDetectionRadius, m_layersPicking));
         detectedObjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(detectionOrigin, a.transform.position).CompareTo(Vector3.Distance(detectionOrigin, b.transform.position)); });
-
+        if(detectedObjects.Count > 0)
+        {
+            SoundEffects sound = m_player.GetComponent<SoundEffects>();
+            if (sound != null)
+            {
+                sound.PlaySound("GetObjects");
+            }
+        }
         for (int i = 0; i < detectedObjects.Count; i++)
         {
             int indexTransform = m_pickedObjects.Count;

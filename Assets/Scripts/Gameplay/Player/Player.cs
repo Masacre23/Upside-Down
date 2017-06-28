@@ -468,7 +468,10 @@ public class Player : Character
     public void PickObjects()
     {
         if (m_floatingObjects.CanPickMoreObjects())
+        {
             m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
+        }
+            
     }
 
     public void ThrowObjectsThirdPerson(bool hasThrown)

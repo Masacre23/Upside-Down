@@ -23,7 +23,13 @@ public class Collectable : MonoBehaviour {
     private void OnTriggerEnter(Collider col)
     {
         int player = LayerMask.NameToLayer("Player");
-        if (col.gameObject.layer == player)
+        if (col.gameObject.layer == player) {
+            SoundEffects sound = col.gameObject.GetComponent<SoundEffects>();
+            if (sound != null)
+            {
+                sound.PlaySound("Collectable");
+            }
             m_player = col.gameObject.GetComponent<Player>();
+        }
     }
 }
