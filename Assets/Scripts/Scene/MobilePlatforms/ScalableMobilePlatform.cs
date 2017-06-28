@@ -7,6 +7,7 @@ enum PlatformScalableState
     GROWING,
     LIVING,
     DISAPPEARING,
+    STOP,
 }
 
 public class ScalableMobilePlatform : MonoBehaviour {
@@ -18,13 +19,15 @@ public class ScalableMobilePlatform : MonoBehaviour {
     public float m_lifeTime = 1.0f;
     public float m_deadTime = 1.0f;
     public Vector3 m_direction = new Vector3(1.0f, 0.0f, 0.0f);
+    public bool m_startWithTrigger = true;
 
     private Vector3 m_scale;
     private Vector3 m_position;
     private float m_time = 0.0f;
     private float m_timeWaited = 0.0f;
-    private PlatformScalableState m_lastState = PlatformScalableState.LIVING;
-    private PlatformScalableState m_state = PlatformScalableState.GROWING;
+    private bool m_start = true;
+    private PlatformScalableState m_lastState = PlatformScalableState.DISAPPEARING;
+    private PlatformScalableState m_state = PlatformScalableState.STOP;
 
     // Use this for initialization
     void Start()
@@ -40,6 +43,13 @@ public class ScalableMobilePlatform : MonoBehaviour {
         transform.Translate(m_direction * m_speed * Time.deltaTime);
         switch (m_state)
         {
+            case PlatformScalableState.STOP:
+                if(!m_startWithTrigger || m_start)
+                {
+                    m_state = PlatformScalableState.LIVING;
+                    m_start = false;
+                }
+                break;
             case PlatformScalableState.GROWING:
                 m_scale += (new Vector3(1.0f, 1.0f, 1.0f) * m_growthRate * Time.deltaTime);
                 transform.localScale = m_scale;
@@ -73,9 +83,14 @@ public class ScalableMobilePlatform : MonoBehaviour {
                     transform.localScale = new Vector3(m_minSize, m_minSize, m_minSize);
                     transform.position = m_position;
                     m_lastState = m_state;
-                    m_state = PlatformScalableState.LIVING;
+                    m_state = PlatformScalableState.STOP;
                 }
                 break;
         }
+    }
+
+    public void StartGrowing()
+    {
+        m_start = true;
     }
 }

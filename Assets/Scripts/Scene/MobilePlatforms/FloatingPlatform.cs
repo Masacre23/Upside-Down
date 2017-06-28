@@ -24,25 +24,28 @@ public class FloatingPlatform : MonoBehaviour {
     {
         if (m_hasPlayer)
         {
+            float xValue = Mathf.Sign(m_distanceCenter.x) * Mathf.Pow(m_distanceCenter.x * 10, 2)/10;
+            float yValue = Mathf.Sign(m_distanceCenter.y) * Mathf.Pow(m_distanceCenter.y * 10, 2)/10;
+            float zValue = Mathf.Sign(m_distanceCenter.z) * Mathf.Pow(m_distanceCenter.z * 10, 2)/10;
             switch (m_up)
             {
                 case DirectionUp.X:
-                    transform.Rotate(new Vector3(0.0f, -m_distanceCenter.z * m_speed * Time.deltaTime, m_distanceCenter.y * m_speed * Time.deltaTime));
+                    transform.Rotate(new Vector3(0.0f, -zValue * m_speed * Time.deltaTime, yValue * m_speed * Time.deltaTime));
                     break;
                 case DirectionUp.Y:
-                    transform.Rotate(new Vector3(m_distanceCenter.z * m_speed * Time.deltaTime, 0.0f, -m_distanceCenter.x * m_speed * Time.deltaTime));
+                    transform.Rotate(new Vector3(zValue * m_speed * Time.deltaTime, 0.0f, -xValue * m_speed * Time.deltaTime));
                     break;
                 case DirectionUp.Z:
-                    transform.Rotate(new Vector3(-m_distanceCenter.y * m_speed * Time.deltaTime, m_distanceCenter.x * m_speed * Time.deltaTime, 0.0f));
+                    transform.Rotate(new Vector3(-yValue * m_speed * Time.deltaTime, xValue* m_speed * Time.deltaTime, 0.0f));
                     break;
                 case DirectionUp.NOT_X:
-                    transform.Rotate(new Vector3(0.0f, m_distanceCenter.z * m_speed * Time.deltaTime, -m_distanceCenter.y * m_speed * Time.deltaTime));
+                    transform.Rotate(new Vector3(0.0f, zValue * m_speed * Time.deltaTime, -yValue * m_speed * Time.deltaTime));
                     break;
                 case DirectionUp.NOT_Y:
-                    transform.Rotate(new Vector3(-m_distanceCenter.z * m_speed * Time.deltaTime,  0.0f, m_distanceCenter.x * m_speed * Time.deltaTime));
+                    transform.Rotate(new Vector3(-zValue * m_speed * Time.deltaTime,  0.0f, xValue * m_speed * Time.deltaTime));
                     break;
                 case DirectionUp.NOT_Z:
-                    transform.Rotate(new Vector3(m_distanceCenter.y * m_speed * Time.deltaTime, -m_distanceCenter.x * m_speed * Time.deltaTime, 0.0f));
+                    transform.Rotate(new Vector3(yValue * m_speed * Time.deltaTime, -xValue * m_speed * Time.deltaTime, 0.0f));
                     break;
             }
         }

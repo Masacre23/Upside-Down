@@ -5599,6 +5599,7 @@ GameObject:
   - component: {fileID: 131578123}
   - component: {fileID: 131578122}
   - component: {fileID: 131578124}
+  - component: {fileID: 131578125}
   m_Layer: 21
   m_Name: PROP_Ice_FlyingIsland105
   m_TagString: Untagged
@@ -5673,6 +5674,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300122, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!114 &131578125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 131578120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895fa615547c5f448ab675109d61f313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_up: 4
+  m_speed: 100
 --- !u!1 &133366807
 GameObject:
   m_ObjectHideFlags: 0
@@ -7211,6 +7225,7 @@ GameObject:
   - component: {fileID: 176514931}
   - component: {fileID: 176514933}
   - component: {fileID: 176514934}
+  - component: {fileID: 176514935}
   m_Layer: 21
   m_Name: PROP_Cloud027
   m_TagString: Untagged
@@ -7297,6 +7312,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 1460359510}
+--- !u!114 &176514935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 176514929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 2
+  m_lifeTime: 2
+  m_deadTime: 0
+  m_direction: {x: 0, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1 &178510859
 GameObject:
   m_ObjectHideFlags: 0
@@ -11748,6 +11782,7 @@ GameObject:
   - component: {fileID: 273385868}
   - component: {fileID: 273385867}
   - component: {fileID: 273385869}
+  - component: {fileID: 273385870}
   m_Layer: 21
   m_Name: PROP_Ice_FlyingIsland107
   m_TagString: Untagged
@@ -11822,6 +11857,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300130, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!114 &273385870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 273385865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895fa615547c5f448ab675109d61f313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_up: 0
+  m_speed: 300
 --- !u!1 &275431091
 GameObject:
   m_ObjectHideFlags: 0
@@ -13334,6 +13382,7 @@ GameObject:
   - component: {fileID: 306988282}
   - component: {fileID: 306988284}
   - component: {fileID: 306988285}
+  - component: {fileID: 306988286}
   m_Layer: 21
   m_Name: PROP_Cloud030
   m_TagString: Untagged
@@ -13420,6 +13469,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 349997579}
+--- !u!114 &306988286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 306988280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 2
+  m_lifeTime: 1.5
+  m_deadTime: 0
+  m_direction: {x: 0, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1 &307051091
 GameObject:
   m_ObjectHideFlags: 0
@@ -17385,7 +17453,9 @@ GameObject:
   - component: {fileID: 385784710}
   - component: {fileID: 385784712}
   - component: {fileID: 385784711}
-  m_Layer: 0
+  - component: {fileID: 385784714}
+  - component: {fileID: 385784713}
+  m_Layer: 13
   m_Name: Agua
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17445,6 +17515,29 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 385784709}
   m_Mesh: {fileID: 4300162, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!65 &385784713
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385784709}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 7.8, y: 7.8, z: 7.8}
+  m_Center: {x: 0, y: -0.00000023841864, z: -0.00000023841864}
+--- !u!114 &385784714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385784709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea54bf911c79e35468dde40e9304cd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &385852368
 GameObject:
   m_ObjectHideFlags: 0
@@ -19171,6 +19264,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 424196115}
+  - component: {fileID: 424196117}
+  - component: {fileID: 424196116}
   m_Layer: 0
   m_Name: Tomato
   m_TagString: Untagged
@@ -19194,6 +19289,29 @@ Transform:
   m_Father: {fileID: 1383905043}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &424196116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424196114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af6469a9728716459b7613bf0dcc1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &424196117
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424196114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &425015558
 GameObject:
   m_ObjectHideFlags: 0
@@ -25555,6 +25673,7 @@ GameObject:
   - component: {fileID: 562098665}
   - component: {fileID: 562098664}
   - component: {fileID: 562098666}
+  - component: {fileID: 562098667}
   m_Layer: 21
   m_Name: PROP_Ice_FlyingIsland110
   m_TagString: Untagged
@@ -25629,6 +25748,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4301414, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!114 &562098667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 562098662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895fa615547c5f448ab675109d61f313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_up: 0
+  m_speed: 300
 --- !u!1 &562949723
 GameObject:
   m_ObjectHideFlags: 0
@@ -28934,6 +29066,7 @@ GameObject:
   - component: {fileID: 617327466}
   - component: {fileID: 617327465}
   - component: {fileID: 617327467}
+  - component: {fileID: 617327468}
   m_Layer: 21
   m_Name: PROP_Ice_FlyingIsland103
   m_TagString: Untagged
@@ -29008,6 +29141,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300120, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!114 &617327468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 617327463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895fa615547c5f448ab675109d61f313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_up: 4
+  m_speed: 150
 --- !u!1 &619787567
 GameObject:
   m_ObjectHideFlags: 0
@@ -37273,6 +37419,7 @@ GameObject:
   - component: {fileID: 720821819}
   - component: {fileID: 720821818}
   - component: {fileID: 720821820}
+  - component: {fileID: 720821821}
   m_Layer: 21
   m_Name: PROP_Ice_FlyingIsland109
   m_TagString: Untagged
@@ -37347,6 +37494,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300524, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!114 &720821821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 720821816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895fa615547c5f448ab675109d61f313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_up: 4
+  m_speed: 100
 --- !u!1001 &722711189
 Prefab:
   m_ObjectHideFlags: 0
@@ -44218,6 +44378,7 @@ GameObject:
   - component: {fileID: 879073432}
   - component: {fileID: 879073434}
   - component: {fileID: 879073435}
+  - component: {fileID: 879073436}
   m_Layer: 21
   m_Name: PROP_Cloud029
   m_TagString: Untagged
@@ -44304,6 +44465,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 531627143}
+--- !u!114 &879073436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 879073430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 2
+  m_lifeTime: 1.5
+  m_deadTime: 0
+  m_direction: {x: 0, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1 &879497045
 GameObject:
   m_ObjectHideFlags: 0
@@ -64592,6 +64772,7 @@ GameObject:
   - component: {fileID: 1278599524}
   - component: {fileID: 1278599523}
   - component: {fileID: 1278599525}
+  - component: {fileID: 1278599526}
   m_Layer: 21
   m_Name: PROP_Ice_FlyingIsland101
   m_TagString: Untagged
@@ -64666,6 +64847,19 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300072, guid: 46fc081c751ceac41868700269156c9f, type: 3}
+--- !u!114 &1278599526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1278599521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895fa615547c5f448ab675109d61f313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_up: 4
+  m_speed: 200
 --- !u!1001 &1280352525
 Prefab:
   m_ObjectHideFlags: 0
@@ -66252,6 +66446,7 @@ GameObject:
   - component: {fileID: 1322746321}
   - component: {fileID: 1322746323}
   - component: {fileID: 1322746324}
+  - component: {fileID: 1322746325}
   m_Layer: 21
   m_Name: PROP_Cloud031
   m_TagString: Untagged
@@ -66338,6 +66533,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 1586106103}
+--- !u!114 &1322746325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1322746319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 2
+  m_lifeTime: 3
+  m_deadTime: 0
+  m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 0
 --- !u!1001 &1324158680
 Prefab:
   m_ObjectHideFlags: 0
@@ -66943,7 +67157,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 97156.58
+  Age: 97540.64
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -75408,6 +75622,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1547094105}
   - component: {fileID: 1547094104}
+  - component: {fileID: 1547094106}
+  - component: {fileID: 1547094107}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -75440,6 +75656,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1547094106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1547094103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5619ed0684cde428146b14558f2afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_clouds:
+  - {fileID: 1646731174}
+  - {fileID: 2048825699}
+  - {fileID: 176514935}
+  m_frecuency: 1
+  m_period: 2
+--- !u!114 &1547094107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1547094103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d5619ed0684cde428146b14558f2afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_clouds:
+  - {fileID: 879073436}
+  - {fileID: 306988286}
+  m_frecuency: 0.2
+  m_period: 1.6
 --- !u!1 &1550121243
 GameObject:
   m_ObjectHideFlags: 0
@@ -80219,6 +80468,7 @@ GameObject:
   - component: {fileID: 1646731170}
   - component: {fileID: 1646731172}
   - component: {fileID: 1646731173}
+  - component: {fileID: 1646731174}
   m_Layer: 21
   m_Name: PROP_Cloud025
   m_TagString: Untagged
@@ -80305,6 +80555,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 340846864}
+--- !u!114 &1646731174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1646731168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 2
+  m_lifeTime: 2
+  m_deadTime: 0
+  m_direction: {x: 0, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1 &1647982321
 GameObject:
   m_ObjectHideFlags: 0
@@ -85218,6 +85487,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1745822891}
+  - component: {fileID: 1745822893}
+  - component: {fileID: 1745822892}
   m_Layer: 0
   m_Name: Cheese
   m_TagString: Untagged
@@ -85240,6 +85511,29 @@ Transform:
   m_Father: {fileID: 1383905043}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1745822892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745822890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af6469a9728716459b7613bf0dcc1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &1745822893
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1745822890}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1746393922
 GameObject:
   m_ObjectHideFlags: 0
@@ -98744,6 +99038,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 2001241878}
+  - component: {fileID: 2001241880}
+  - component: {fileID: 2001241879}
   m_Layer: 0
   m_Name: Seta001
   m_TagString: Untagged
@@ -98767,6 +99063,29 @@ Transform:
   m_Father: {fileID: 1383905043}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2001241879
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2001241877}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2001241880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2001241877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3af6469a9728716459b7613bf0dcc1ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2002608856
 GameObject:
   m_ObjectHideFlags: 0
@@ -99513,6 +99832,7 @@ GameObject:
   - component: {fileID: 2024687700}
   - component: {fileID: 2024687702}
   - component: {fileID: 2024687703}
+  - component: {fileID: 2024687704}
   m_Layer: 21
   m_Name: PROP_Cloud028
   m_TagString: Untagged
@@ -99599,6 +99919,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 1671370187}
+--- !u!114 &2024687704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2024687698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 1
+  m_lifeTime: 0.5
+  m_deadTime: 0.5
+  m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 0
 --- !u!1 &2026281492
 GameObject:
   m_ObjectHideFlags: 0
@@ -101357,6 +101696,7 @@ GameObject:
   - component: {fileID: 2048825695}
   - component: {fileID: 2048825697}
   - component: {fileID: 2048825698}
+  - component: {fileID: 2048825699}
   m_Layer: 21
   m_Name: PROP_Cloud026
   m_TagString: Untagged
@@ -101443,6 +101783,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attractor: {fileID: 524598869}
+--- !u!114 &2048825699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2048825693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_speed: 0
+  m_minSize: 0
+  m_maxSize: 1
+  m_growthRate: 2
+  m_lifeTime: 2
+  m_deadTime: 0
+  m_direction: {x: 0, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1 &2050060560
 GameObject:
   m_ObjectHideFlags: 0
