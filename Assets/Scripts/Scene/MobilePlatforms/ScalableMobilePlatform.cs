@@ -12,6 +12,7 @@ enum PlatformScalableState
 
 public class ScalableMobilePlatform : MonoBehaviour {
 
+    public float m_delayTimeStart = 0.0f;
     public float m_speed = 0.2f;
     public float m_minSize = 0.01f;
     public float m_maxSize = 1.0f;
@@ -28,6 +29,7 @@ public class ScalableMobilePlatform : MonoBehaviour {
     private bool m_start = true;
     private PlatformScalableState m_lastState = PlatformScalableState.DISAPPEARING;
     private PlatformScalableState m_state = PlatformScalableState.STOP;
+    private bool m_running = true;
 
     // Use this for initialization
     void Start()
@@ -35,58 +37,76 @@ public class ScalableMobilePlatform : MonoBehaviour {
         m_position = transform.position;
         m_scale = new Vector3(m_minSize, m_minSize, m_minSize);
         transform.localScale = m_scale;
+
+        if (m_delayTimeStart > 0.0f)
+        {
+            m_running = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(m_direction * m_speed * Time.deltaTime);
-        switch (m_state)
+        if (m_running)
         {
-            case PlatformScalableState.STOP:
-                if(!m_startWithTrigger || m_start)
-                {
-                    m_state = PlatformScalableState.LIVING;
-                    m_start = false;
-                }
-                break;
-            case PlatformScalableState.GROWING:
-                m_scale += (new Vector3(1.0f, 1.0f, 1.0f) * m_growthRate * Time.deltaTime);
-                transform.localScale = m_scale;
-                if (m_scale.x > m_maxSize)
-                {
-                    transform.localScale = new Vector3(m_maxSize, m_maxSize, m_maxSize);
-                    m_lastState = m_state;
-                    m_state = PlatformScalableState.LIVING;
-                }
-                break;
-            case PlatformScalableState.LIVING:
-                m_time += Time.deltaTime;
-                if(m_lastState == PlatformScalableState.GROWING && m_time > m_lifeTime)
-                {
-                    m_state = PlatformScalableState.DISAPPEARING;
-                    m_lastState = PlatformScalableState.LIVING;
-                    m_time = 0;
-                }
-                else if(m_lastState == PlatformScalableState.DISAPPEARING && m_time > m_deadTime)
-                {
-                    m_state = PlatformScalableState.GROWING;
-                    m_lastState = PlatformScalableState.LIVING;
-                    m_time = 0;
-                }
-                break;
-            case PlatformScalableState.DISAPPEARING:
-                m_scale -= (new Vector3(1.0f, 1.0f, 1.0f) * m_growthRate * Time.deltaTime);
-                transform.localScale = m_scale;
-                if (m_scale.x < m_minSize)
-                {
-                    transform.localScale = new Vector3(m_minSize, m_minSize, m_minSize);
-                    transform.position = m_position;
-                    m_lastState = m_state;
-                    m_state = PlatformScalableState.STOP;
-                }
-                break;
+            transform.Translate(m_direction * m_speed * Time.deltaTime);
+            switch (m_state)
+            {
+                case PlatformScalableState.STOP:
+                    if (!m_startWithTrigger || m_start)
+                    {
+                        m_state = PlatformScalableState.LIVING;
+                        m_start = false;
+                    }
+                    break;
+                case PlatformScalableState.GROWING:
+                    m_scale += (new Vector3(1.0f, 1.0f, 1.0f) * m_growthRate * Time.deltaTime);
+                    transform.localScale = m_scale;
+                    if (m_scale.x > m_maxSize)
+                    {
+                        transform.localScale = new Vector3(m_maxSize, m_maxSize, m_maxSize);
+                        m_lastState = m_state;
+                        m_state = PlatformScalableState.LIVING;
+                    }
+                    break;
+                case PlatformScalableState.LIVING:
+                    m_time += Time.deltaTime;
+                    if (m_lastState == PlatformScalableState.GROWING && m_time > m_lifeTime)
+                    {
+                        m_state = PlatformScalableState.DISAPPEARING;
+                        m_lastState = PlatformScalableState.LIVING;
+                        m_time = 0;
+                    }
+                    else if (m_lastState == PlatformScalableState.DISAPPEARING && m_time > m_deadTime)
+                    {
+                        m_state = PlatformScalableState.GROWING;
+                        m_lastState = PlatformScalableState.LIVING;
+                        m_time = 0;
+                    }
+                    break;
+                case PlatformScalableState.DISAPPEARING:
+                    m_scale -= (new Vector3(1.0f, 1.0f, 1.0f) * m_growthRate * Time.deltaTime);
+                    transform.localScale = m_scale;
+                    if (m_scale.x < m_minSize)
+                    {
+                        transform.localScale = new Vector3(m_minSize, m_minSize, m_minSize);
+                        transform.position = m_position;
+                        m_lastState = m_state;
+                        m_state = PlatformScalableState.STOP;
+                    }
+                    break;
+            }
         }
+        else
+        {
+            m_time += Time.deltaTime;
+            if (m_time > m_delayTimeStart)
+            {
+                m_running = true;
+                m_time = 0.0f;
+            }
+        }
+        
     }
 
     public void StartGrowing()

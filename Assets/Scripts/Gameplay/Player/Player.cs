@@ -69,9 +69,9 @@ public class Player : Character
     private Vector3 m_rigidBodyTotal = Vector3.zero;
     [HideInInspector] public bool m_doubleJumping = false;
     [HideInInspector] public Vector3 m_jumpDirection = Vector3.zero;
+    [HideInInspector] public Vector3 m_jumpMovement;
     private bool m_hasJumped = false;
     private Vector3 m_jumpVector;
-    private Vector3 m_jumpMovement;
 
     //Variables regarding player's change of gravity
     public float m_gravityRange = 3.0f;
@@ -97,6 +97,7 @@ public class Player : Character
 	//Effects
 	public GameObject m_jumpClouds;
 	public GameObject m_runClouds;
+    public Transform m_smoke;
 
     [HideInInspector] public Dictionary<string, TargetDetector> m_targetsDetectors;
     float m_inputSpeed;
@@ -370,7 +371,6 @@ public class Player : Character
         m_jumpVector = Vector3.zero;
         m_jumpMovement = Vector3.zero;
 
-        //m_jumpVector = m_gravityOnCharacter.GetGravityVector() * m_jumpForceVertical;
         m_jumpVector = transform.up * m_jumpForceVertical;
         m_jumpMovement = movement.normalized * speed;
         m_jumpDirection = movement.normalized;
@@ -462,6 +462,7 @@ public class Player : Character
         m_animator.SetBool("Jump", m_isJumping);
         m_animator.SetBool("DoubleJump", m_doubleJumping);
         m_animator.SetBool("Throwing", m_currentState == m_aimToThrow);
+        m_animator.SetFloat("Test", m_groundCheckDistance);
     }
 
     public void PickObjects()

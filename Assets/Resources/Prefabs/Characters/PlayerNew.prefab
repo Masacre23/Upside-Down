@@ -912,6 +912,8 @@ GameObject:
   - component: {fileID: 114534685319535690}
   - component: {fileID: 114242620553205534}
   - component: {fileID: 114990917235696790}
+  - component: {fileID: 114456109158668472}
+  - component: {fileID: 114542790693465752}
   m_Layer: 9
   m_Name: PlayerNew
   m_TagString: Player
@@ -1852,9 +1854,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729762848425162}
-  m_LocalRotation: {x: 0.9235467, y: 0.30187094, z: 0.22683623, w: -0.066939585}
-  m_LocalPosition: {x: 11.97, y: -5.9, z: 85.06}
-  m_LocalScale: {x: 1.5000055, y: 1.5000095, z: 1.5000125}
+  m_LocalRotation: {x: 0.01799496, y: 0.5585039, z: -0.050391834, w: -0.82777435}
+  m_LocalPosition: {x: 2.01, y: 5.45, z: -0.58}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4887672844943316}
   - {fileID: 4357155951777932}
@@ -1863,7 +1865,7 @@ Transform:
   - {fileID: 4847798413999178}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -15.1050005, y: -203.08699, z: 146.901}
+  m_LocalEulerAnglesHint: {x: -181.518, y: -247.93701, z: -174.056}
 --- !u!4 &4497642605432482
 Transform:
   m_ObjectHideFlags: 1
@@ -2728,9 +2730,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxHealth: 160
   m_health: 160
-  m_moveSpeed: 2
-  m_jumpForceVertical: 8
-  m_jumpForceHorizontal: 2
+  m_moveSpeed: 1.5
+  m_jumpForceVertical: 6
   m_lerpSpeed: 10
   m_animator: {fileID: 0}
   m_gravityOnCharacter: {fileID: 0}
@@ -2831,6 +2832,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 3
+--- !u!114 &114456109158668472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1729762848425162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1102b78b8528dd84d9c570aad8bacf04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_rigidBody: {fileID: 0}
+  m_attractorGameObject: {fileID: 0}
+  m_planetsGravity: []
+  m_objectsGravity: []
+  m_maxTimeTravelled: 0.5
+  m_maxTimeOnGravityWallGravity: 1
+  m_ignoreGravity: 0
+  m_onGravityWall: 0
+  m_onAir: 0
+  m_getStrongestGravity: 1
+  test: {x: 0, y: 0, z: 0}
 --- !u!114 &114523268297378786
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2856,6 +2879,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1
+--- !u!114 &114542790693465752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1729762848425162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2cef91eafdcc048b3ce80f888adf49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_effects: []
 --- !u!114 &114641258716032542
 MonoBehaviour:
   m_ObjectHideFlags: 1

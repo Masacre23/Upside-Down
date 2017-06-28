@@ -52,7 +52,7 @@ public class EffectsOnAnimation : MonoBehaviour
                         if (m_effects[i].m_onParent)
                             EffectsManager.Instance.GetEffect(m_effects[i].m_effectPrefab, m_effects[i].m_emitter);
                         else
-                            EffectsManager.Instance.GetEffect(m_effects[i].m_effectPrefab, m_effects[i].m_emitter.position);
+                            EffectsManager.Instance.GetEffect(m_effects[i].m_effectPrefab, m_effects[i].m_emitter);
 
                         m_effects[i].m_instantiated = true;
                         m_effects[i].m_timeInstantiated = normalizedTime;
