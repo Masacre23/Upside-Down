@@ -4988,6 +4988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_delayTimeStart: 0
   m_speed: 0
   m_minSize: 0
   m_maxSize: 1
@@ -4995,6 +4996,7 @@ MonoBehaviour:
   m_lifeTime: 2
   m_deadTime: 1
   m_direction: {x: 0, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!64 &235900295
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -20387,6 +20389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_delayTimeStart: 0
   m_speed: 0
   m_minSize: 0
   m_maxSize: 1
@@ -20394,6 +20397,7 @@ MonoBehaviour:
   m_lifeTime: 1
   m_deadTime: 1
   m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1 &872371836
 GameObject:
   m_ObjectHideFlags: 0
@@ -33275,6 +33279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_delayTimeStart: 0
   m_speed: 0
   m_minSize: 0.01
   m_maxSize: 1
@@ -33282,6 +33287,7 @@ MonoBehaviour:
   m_lifeTime: 1
   m_deadTime: 1
   m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!114 &1153259482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33293,6 +33299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_delayTimeStart: 0
   m_speed: 0
   m_minSize: 0
   m_maxSize: 1
@@ -33300,6 +33307,7 @@ MonoBehaviour:
   m_lifeTime: 1
   m_deadTime: 1
   m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!65 &1153259483
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38781,7 +38789,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 97004.08
+  Age: 97010.37
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -41779,21 +41787,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114401269923096900, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: keys.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114401269923096900, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: sounds.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114749159527951996, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: spawnPoints.Array.size
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
       propertyPath: m_LocalPosition.x
       value: 59.3
@@ -41826,10 +41819,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 9
       objectReference: {fileID: 0}
-    - target: {fileID: 1729762848425162, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
+    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
+        type: 2}
+      propertyPath: p1
+      value: 
+      objectReference: {fileID: 1633700210}
+    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
+        type: 2}
+      propertyPath: p2
+      value: 
+      objectReference: {fileID: 565697322}
+    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
+        type: 2}
+      propertyPath: p3
+      value: 
+      objectReference: {fileID: 1222748418}
+    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
+        type: 2}
+      propertyPath: p4
+      value: 
+      objectReference: {fileID: 1163496726}
     - target: {fileID: 114749159527951996, guid: c0aa55a0416028540829ebd21f60a420,
         type: 2}
       propertyPath: spawnPoints.Array.data[0]
@@ -41855,88 +41864,9 @@ Prefab:
       propertyPath: fadePanel
       value: 
       objectReference: {fileID: 500058123}
-    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: p1
-      value: 
-      objectReference: {fileID: 1633700210}
-    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: p2
-      value: 
-      objectReference: {fileID: 565697322}
-    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: p3
-      value: 
-      objectReference: {fileID: 1222748418}
-    - target: {fileID: 114147235209817406, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: p4
-      value: 
-      objectReference: {fileID: 1163496726}
-    - target: {fileID: 119066749055729664, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: m_Orthographic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114352965689222932, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: m_gravityRange
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -249.336
-      objectReference: {fileID: 0}
-    - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -120.651
-      objectReference: {fileID: 0}
-    - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -201.84601
-      objectReference: {fileID: 0}
-    - target: {fileID: 114130690568158180, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: m_oxigenDoubleJump
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4464118457182118, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114352965689222932, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: m_moveSpeed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1729762848425162, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114401269923096900, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: keys.Array.data[9]
-      value: Scream
-      objectReference: {fileID: 0}
-    - target: {fileID: 114401269923096900, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: sounds.Array.data[9]
-      value: 
-      objectReference: {fileID: 8300000, guid: 23d2aed2c78d6e549a03291706def206, type: 3}
-    - target: {fileID: 82307709191153090, guid: c0aa55a0416028540829ebd21f60a420,
-        type: 2}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+      propertyPath: m_Name
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0aa55a0416028540829ebd21f60a420, type: 2}
@@ -54577,6 +54507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_delayTimeStart: 0
   m_speed: 0
   m_minSize: 0
   m_maxSize: 1
@@ -54584,6 +54515,7 @@ MonoBehaviour:
   m_lifeTime: 2
   m_deadTime: 0.5
   m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1001 &1988015313
 Prefab:
   m_ObjectHideFlags: 0
@@ -61195,6 +61127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d4e91a3247ebd4480dbd5c1a38a85c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_delayTimeStart: 0
   m_speed: 0
   m_minSize: 0
   m_maxSize: 1
@@ -61202,6 +61135,7 @@ MonoBehaviour:
   m_lifeTime: 4
   m_deadTime: 1
   m_direction: {x: 1, y: 0, z: 0}
+  m_startWithTrigger: 1
 --- !u!1001 &2147141168
 Prefab:
   m_ObjectHideFlags: 0

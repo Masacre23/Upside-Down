@@ -594,16 +594,16 @@ public class Player : Character
 
     private void OnCollisionStay(Collision collision)
     {
-        int terrain = LayerMask.NameToLayer("Terrain");
+        int terrain = LayerMask.NameToLayer("Floor");
         if (collision.collider.gameObject.layer == terrain)
         {
-            if(collision.collider.tag == "Ice")
-            {
+            //if(collision.collider.tag == "Ice")
+            //{
                 m_InIce = true;
-            }else
-            {
-                m_InIce = false;
-            }
+            //}else
+            //{
+            //    m_InIce = false;
+            //} TODO: Esteban.
         }
 
     }
