@@ -913,7 +913,6 @@ GameObject:
   - component: {fileID: 114242620553205534}
   - component: {fileID: 114990917235696790}
   - component: {fileID: 114456109158668472}
-  - component: {fileID: 114542790693465752}
   m_Layer: 9
   m_Name: PlayerNew
   m_TagString: Player
@@ -1619,13 +1618,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1730330715827228}
-  m_LocalRotation: {x: 0.7159015, y: 0.083186544, z: 0.07249065, w: -0.68942744}
-  m_LocalPosition: {x: 0.0010262965, y: -0.045253955, z: 0.0024872143}
-  m_LocalScale: {x: 0.6666668, y: 0.666667, z: 0.66666704}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4464118457182118}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -87.687004, y: 195.678, z: -208.321}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!4 &4307785896770916
 Transform:
   m_ObjectHideFlags: 1
@@ -1865,7 +1864,7 @@ Transform:
   - {fileID: 4847798413999178}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -181.518, y: -247.93701, z: -174.056}
+  m_LocalEulerAnglesHint: {x: -249.336, y: -120.651, z: -201.84601}
 --- !u!4 &4497642605432482
 Transform:
   m_ObjectHideFlags: 1
@@ -2513,7 +2512,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729762848425162}
   serializedVersion: 2
-  m_Mass: 50
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -2570,7 +2569,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -2730,7 +2729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_maxHealth: 160
   m_health: 160
-  m_moveSpeed: 1.5
+  m_moveSpeed: 2
   m_jumpForceVertical: 6
   m_lerpSpeed: 10
   m_animator: {fileID: 0}
@@ -2772,6 +2771,7 @@ MonoBehaviour:
   m_slideSpeed: 2
   m_doubleJumping: 0
   m_jumpDirection: {x: 0, y: 0, z: 0}
+  m_jumpMovement: {x: 0, y: 0, z: 0}
   m_gravityRange: 8
   m_reachedGround: 1
   m_markedTarget: {fileID: 0}
@@ -2788,6 +2788,7 @@ MonoBehaviour:
   m_jumpClouds: {fileID: 1720592957757330, guid: af69c11a6b8fc49469697602b5d4dedc,
     type: 2}
   m_runClouds: {fileID: 1730330715827228}
+  m_smoke: {fileID: 4307719282888688}
   m_soundEffects: {fileID: 0}
 --- !u!114 &114401269923096900
 MonoBehaviour:
@@ -2810,6 +2811,8 @@ MonoBehaviour:
   - ThrowObjects
   - FootStepRightLand
   - FootStepLeftLand
+  - Scream
+  - Fall
   sounds:
   - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
   - {fileID: 8300000, guid: 312a77493515c9a4fbf97e093a672b8a, type: 3}
@@ -2820,6 +2823,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ef86254fc28c8f84f842a1bfd1647c66, type: 3}
   - {fileID: 8300000, guid: ab61481414254a9459d2316819d83124, type: 3}
   - {fileID: 8300000, guid: 7b17cb74ac83a1742b65ff8a2950b2ce, type: 3}
+  - {fileID: 8300000, guid: 9f80c0787aeae224bac31ac93bf56e68, type: 3}
+  - {fileID: 8300000, guid: 06c070299d391ee42923641e20f83b39, type: 3}
 --- !u!114 &114409505741689122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2879,18 +2884,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_type: 1
---- !u!114 &114542790693465752
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1729762848425162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f2cef91eafdcc048b3ce80f888adf49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_effects: []
 --- !u!114 &114641258716032542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3175,7 +3168,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -716503118
+  randomSeed: 992826661
   InitialModule:
     serializedVersion: 3
     enabled: 1
