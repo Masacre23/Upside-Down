@@ -1853,8 +1853,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1729762848425162}
-  m_LocalRotation: {x: 0.01799496, y: 0.5585039, z: -0.050391834, w: -0.82777435}
-  m_LocalPosition: {x: 2.01, y: 5.45, z: -0.58}
+  m_LocalRotation: {x: 0.010775626, y: 0.351255, z: 0.004459422, w: -0.93620723}
+  m_LocalPosition: {x: 1.249, y: 5.392, z: -0.654}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4887672844943316}
@@ -1864,7 +1864,7 @@ Transform:
   - {fileID: 4847798413999178}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -249.336, y: -120.651, z: -201.84601}
+  m_LocalEulerAnglesHint: {x: -178.664, y: -221.131, z: -180.045}
 --- !u!4 &4497642605432482
 Transform:
   m_ObjectHideFlags: 1
@@ -2540,7 +2540,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -2788,6 +2788,7 @@ MonoBehaviour:
   m_jumpClouds: {fileID: 1720592957757330, guid: af69c11a6b8fc49469697602b5d4dedc,
     type: 2}
   m_runClouds: {fileID: 1730330715827228}
+  m_hit: {fileID: 100002, guid: f09009d97ea202942987bc6927f232a5, type: 2}
   m_smoke: {fileID: 4307719282888688}
   m_soundEffects: {fileID: 0}
 --- !u!114 &114401269923096900
@@ -2815,6 +2816,7 @@ MonoBehaviour:
   - Fall
   - Collectable
   - GetObjects
+  - Dead
   sounds:
   - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
   - {fileID: 8300000, guid: 312a77493515c9a4fbf97e093a672b8a, type: 3}
@@ -2829,6 +2831,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 06c070299d391ee42923641e20f83b39, type: 3}
   - {fileID: 8300000, guid: c02a6953c9a13cb4c9e4228b7bc3b97b, type: 3}
   - {fileID: 8300000, guid: 5361e19ae04ec2043b89b950b7047332, type: 3}
+  - {fileID: 8300000, guid: 5366d1f1eaf00d54ab8865646e251a06, type: 3}
 --- !u!114 &114409505741689122
 MonoBehaviour:
   m_ObjectHideFlags: 1
