@@ -102,6 +102,7 @@ public class Player : Character
     public Transform m_smoke;
 
     [HideInInspector] public Dictionary<string, TargetDetector> m_targetsDetectors;
+    [HideInInspector] public EnemyDetectorByLayer m_enemyDetector;
     float m_inputSpeed;
     float m_runSpeed;
 
@@ -171,6 +172,7 @@ public class Player : Character
 
         m_targetsDetectors = new Dictionary<string, TargetDetector>();
         m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
+        m_enemyDetector = GetComponentInChildren<EnemyDetectorByLayer>();
         m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
         m_lowAimOrigin = GameObject.Find("LowAimRaycast").transform;
         m_highAimOrigin = GameObject.Find("HighAimRaycast").transform;
@@ -187,6 +189,7 @@ public class Player : Character
 
         m_runSpeed = 2 * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
+
     }
 
     public override void Restart()
@@ -478,57 +481,55 @@ public class Player : Character
 
     public void ThrowObjectsThirdPerson(bool hasThrown)
     {
-        if (m_floatingObjects.HasObjectsToThrow())
+        GameObject targetEnemy = FixingOnEnemy(m_throwAimOrigin, m_angleEnemyDetection);
+
+        RaycastHit targetHit;
+        bool hasTarget = false;
+        if (targetEnemy != null)
         {
-            GameObject targetEnemy = FixingOnEnemy(m_throwAimOrigin, m_angleEnemyDetection);
-
-            RaycastHit targetHit;
-            bool hasTarget = false;
-            if (targetEnemy != null)
-            {
-                Vector3 toEnemy = targetEnemy.transform.position - m_throwAimOrigin.position;
-                hasTarget = Physics.Raycast(m_throwAimOrigin.position, toEnemy.normalized, out targetHit, m_throwDetectionRange);
-            }
-            else
-            {
-                hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
-                Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
-            }
-
-            if (hasTarget)
-            {
-                if (targetEnemy)
-                    m_floatingObjects.SetTarget(targetHit.point);
-                else
-                    m_floatingObjects.UnsetTarget();
-
-                if (hasThrown)
-                {
-                    m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
-                    m_throwAnimation = true;
-                }
-            }
-            else
-            {
-                m_floatingObjects.UnsetTarget();
-                if (hasThrown)
-                {
-                    m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
-                    m_throwAnimation = true;
-                }
-            }
-            
+            Vector3 toEnemy = targetEnemy.transform.position - m_throwAimOrigin.position;
+            hasTarget = Physics.Raycast(m_throwAimOrigin.position, toEnemy.normalized, out targetHit, m_throwDetectionRange);
         }
         else
+        {
+            hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
+            Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
+        }
+
+        if (hasTarget)
+        {
+            if (targetEnemy)
+                m_floatingObjects.SetTarget(targetHit.collider.gameObject.transform.position);
+            //m_floatingObjects.SetTarget(targetHit.point);
+            else
+                m_floatingObjects.UnsetTarget();
+
+            if (hasThrown)
+            {
+                m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
+                m_throwAnimation = true;
+            }
+        }
+        else
+        {
             m_floatingObjects.UnsetTarget();
+            if (hasThrown)
+            {
+                m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+                m_throwAnimation = true;
+            }
+        }
+            
     }
 
     public GameObject FixingOnEnemy(Transform origin, float angleDetection)
     {
         GameObject closestTarget = null;
         float closestDistance = 10000.0f;
-        foreach (GameObject target in m_targetsDetectors["Enemy"].m_targets)
+        //foreach (GameObject target in m_targetsDetectors["Enemy"].m_targets)
+        foreach (Enemy enemy in m_enemyDetector.m_enemies)
         {
+            GameObject target = enemy.gameObject;
             if (!m_floatingObjects.EnemyIsFloating(target))
             {
                 Vector3 toTarget = target.transform.position - origin.position;

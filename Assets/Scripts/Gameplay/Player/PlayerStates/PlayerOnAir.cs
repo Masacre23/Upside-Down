@@ -23,15 +23,15 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        if (jumping && !m_doubleJump && m_player.m_oxigen.HasEnoughOxygen(m_oxigenDoubleJump))
-        {
-            m_player.Jump(axisHorizontal, axisVertical);
-            m_doubleJump = true;
-            m_player.m_doubleJumping = true;
-            m_player.m_oxigen.LostOxigen(m_oxigenDoubleJump);
-        }
-        else
-        {
+        //if (jumping && !m_doubleJump && m_player.m_oxigen.HasEnoughOxygen(m_oxigenDoubleJump))
+        //{
+        //    m_player.Jump(axisHorizontal, axisVertical);
+        //    m_doubleJump = true;
+        //    m_player.m_doubleJumping = true;
+        //    m_player.m_oxigen.LostOxigen(m_oxigenDoubleJump);
+        //}
+        //else
+        //{
             m_player.OnAir();
             m_player.UpdateUp();
             m_player.MoveOnAir(timeStep);
@@ -40,7 +40,7 @@ public class PlayerOnAir : PlayerStates
                 m_player.m_currentState = m_player.m_grounded;
                 ret = true;
             }
-        }
+        //}
 
         return ret;
     }

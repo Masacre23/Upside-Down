@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyArea : MonoBehaviour
 {
-	List<GameObject> enemies;
+	List<Enemy> enemies;
+    int layerEnemy;
 
 	void Awake()
 	{
-		enemies = new List<GameObject> ();
+		enemies = new List<Enemy>();
+        layerEnemy = LayerMask.NameToLayer("Enemy");
 		//ScanForItems();
 	}
 
@@ -16,9 +18,8 @@ public class EnemyArea : MonoBehaviour
 	{
 		if (col.tag == "Player") 
 		{
-			foreach(GameObject go in enemies)
+			foreach(Enemy enemy in enemies)
 			{
-                Enemy enemy = go.GetComponent<Enemy>();
                 enemy.player = col.gameObject;
                 if (!enemy.m_isSleeping)
                 {
@@ -29,9 +30,10 @@ public class EnemyArea : MonoBehaviour
              }
 		}
 
-        if (col.tag == "EnemySnail" && col.name != "CenterSpineFather" || col.tag == "FlyingEnemy")
+        if (col.tag == "EnemySnail" && col.name != "CenterSpineFather")
         {
-            enemies.Add(col.gameObject);
+            Enemy enemy = col.GetComponent<Enemy>();
+            enemies.Add(enemy);
         }
     }
 
@@ -39,9 +41,8 @@ public class EnemyArea : MonoBehaviour
 	{
 		if (col.tag == "Player") 
 		{
-			foreach(GameObject go in enemies)
+			foreach (Enemy enemy in enemies)
 			{
-                Enemy enemy = go.GetComponent<Enemy>();
                 enemy.player = null;
                 enemy.m_currentState.OnExit();
                 enemy.m_currentState = enemy.m_Idle;

@@ -30,20 +30,25 @@ public class PlayerGrounded : PlayerStates
             m_player.m_currentState = m_player.m_onAir;
             ret = true;
         }
-        else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
-        {
-            m_player.m_currentState = m_player.m_aimToThrow;
-            ret = true;
-        }
+        //else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
+        //{
+        //    m_player.m_currentState = m_player.m_aimToThrow;
+        //    ret = true;
+        //}
         else
         {
             m_player.UpdateUp();
             m_player.Move(timeStep);
-            m_player.ThrowObjectsThirdPerson(throwing);
-            if (pickObjects)
+            //m_player.ThrowObjectsThirdPerson(throwing);
+            if (m_player.m_floatingObjects.HasObjectsToThrow())
+                m_player.ThrowObjectsThirdPerson(pickObjects);
+            else
             {
-                m_player.PickObjects();
+                m_player.m_floatingObjects.UnsetTarget();
+                if (pickObjects)
+                    m_player.PickObjects();
             }
+                
             if (!m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_onAir;
