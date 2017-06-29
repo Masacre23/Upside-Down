@@ -35,6 +35,8 @@ public class GameOver : MonoBehaviour {
             AudioManager audioManager = AudioManager.Instance();
             if (audioManager && m_mainMenuClip)
                 audioManager.PlayMusic(m_mainMenuClip, 0.5f);
+            HUDManager.ShowGameOverPanel(false);
+            HUDManager.ShowWinPanel(false);
             Scenes.LoadScene(Scenes.MainMenu);
         }
         if (CrossPlatformInputManager.GetButtonDown("Jump"))

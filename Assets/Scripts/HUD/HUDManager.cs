@@ -20,11 +20,23 @@ public class HUDManager : MonoBehaviour {
     private static bool m_showGravityPanel = false;
     private static bool m_isGreen = false;
     private static bool m_changeLife = false;
+    private static bool m_gainLife = false;
     private static bool m_newCollectable = false;
     private static bool m_showGameOverPanel = false;
     private static bool m_showWinPanel = false;
     private static float[] m_fillAmount = { 1.0f, 0.667f, 0.334f, 0 };
     private static Sprite m_newCollectableSprite;
+
+    void Start()
+    {
+        m_showGravityPanel = false;
+        m_isGreen = false;
+        m_changeLife = false;
+        m_gainLife = false;
+        m_newCollectable = false;
+        m_showGameOverPanel = false;
+        m_showWinPanel = false;
+    }
 
     void Update ()
     {
@@ -54,6 +66,15 @@ public class HUDManager : MonoBehaviour {
                 if (m_lifeIndex < m_fillAmount.Length)
                     m_imageLife.fillAmount = m_fillAmount[m_lifeIndex];
             }
+            if (m_gainLife)
+            {
+                m_gainLife = false;
+                --m_lifeIndex;
+                if (m_lifeIndex < m_lifeSprites.Length)
+                    m_imageLife.sprite = m_lifeSprites[m_lifeIndex];
+                if (m_lifeIndex < m_fillAmount.Length)
+                    m_imageLife.fillAmount = m_fillAmount[m_lifeIndex];
+            }
             if (m_newCollectable)
             {
                 m_newCollectable = false;
@@ -77,6 +98,11 @@ public class HUDManager : MonoBehaviour {
     public static void LostLife()
     {
         m_changeLife = true;
+    }
+
+    public static void GainLife()
+    {
+        m_gainLife = true;
     }
 
     public static void GetCollectable(Sprite sprite)

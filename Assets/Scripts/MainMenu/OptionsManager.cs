@@ -10,7 +10,12 @@ public class OptionsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        AudioManager audio = AudioManager.Instance();
+        if (audio != null)
+        {
+            m_musicVolume.value = audio.m_musicVolume;
+            m_effectsVolume.value = audio.m_soundVolume;
+        }
 	}
 	
 	// Update is called once per frame

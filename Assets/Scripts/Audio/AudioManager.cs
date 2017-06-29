@@ -4,12 +4,13 @@ using System.Collections;
 public class AudioManager : MonoBehaviour
 {
     public float m_soundVolume = 1.0f;
+    public float m_musicVolume = 0.1f;
 
     AudioSource musicAudioSource1;
     AudioSource musicAudioSource2;
     static AudioManager instance;
     bool isMute;
-    float m_musicVolume = 0.1f;
+    
     bool m_audioSource1IsPlaying;
     bool m_changeAudioSource = false;
     float m_secondChange;
