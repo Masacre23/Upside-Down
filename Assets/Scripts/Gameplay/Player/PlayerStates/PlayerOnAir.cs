@@ -53,10 +53,5 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnExit()
     {
-        SoundEffects sound = GetComponent<SoundEffects>();
-        if (sound != null)
-        {
-            sound.PlaySound("Fall");
-        }
     }
 }

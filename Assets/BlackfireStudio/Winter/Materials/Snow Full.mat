@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Snow Full
-  m_Shader: {fileID: 4800000, guid: 6b0539804dd76c14ab5d2bf3daedd291, type: 3}
+  m_Shader: {fileID: 4800000, guid: aa001dd877bc2b44bb80bfbdfc7b4a4d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -77,11 +77,20 @@ Material:
         name: _Coverage
       second: 0.5
     - first:
+        name: _Density
+      second: 0.95
+    - first:
+        name: _DensityStatic
+      second: 4
+    - first:
         name: _Depth
       second: 0.08928572
     - first:
         name: _Glitter
       second: 3.2142856
+    - first:
+        name: _Power
+      second: 0.2
     - first:
         name: _RampPower
       second: 1
@@ -94,6 +103,9 @@ Material:
     - first:
         name: _Specular
       second: 5
+    - first:
+        name: _Speed
+      second: 3
     - first:
         name: _Spread
       second: 1
@@ -110,3 +122,6 @@ Material:
     - first:
         name: _Direction
       second: {r: 0, g: 1, b: 0, a: 1}
+    - first:
+        name: _SpecularColor
+      second: {r: 1, g: 1, b: 1, a: 0}

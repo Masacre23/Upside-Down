@@ -130,8 +130,8 @@ public class Character : MonoBehaviour
         ignoreWater = ~ignoreWater;
 
         ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
-        if (!ret)
-            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
+        //if (!ret)
+        //    ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
 
         return ret;
     }

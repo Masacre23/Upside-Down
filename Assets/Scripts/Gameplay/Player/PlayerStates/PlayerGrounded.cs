@@ -60,13 +60,17 @@ public class PlayerGrounded : PlayerStates
         m_player.m_rotationFollowPlayer = true;
         m_player.m_reachedGround = true;
         m_player.m_freezeMovement = false;
-        EffectsManager.Instance.GetEffect(m_player.m_jumpClouds, m_player.m_smoke);
-        //EffectsManager.Instantiate(m_player.m_jumpClouds, transform.position, transform.rotation * m_player.m_jumpClouds.transform.rotation);
-        m_player.m_runClouds.GetComponent<ParticleSystem> ().Play();
+        
         m_player.m_jumpDirection = Vector3.zero;
         m_player.m_jumpMovement = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
         m_player.m_camController.m_followPlayer = true;
+
+        EffectsManager.Instance.GetEffect(m_player.m_jumpClouds, m_player.m_smoke);
+        m_player.m_runClouds.GetComponent<ParticleSystem>().Play();
+
+        if (m_player.m_soundEffects)
+            m_player.m_soundEffects.PlaySound("Fall");
     }
 
     public override void OnExit()
