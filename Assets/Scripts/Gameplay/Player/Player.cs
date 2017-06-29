@@ -562,13 +562,19 @@ public class Player : Character
 		{
 			if (col.gameObject.tag != "FlyingEnemy") //If is snail
 			{ 
-				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
-                {
+				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
 					if (m_soundEffects != null) {
-                        m_soundEffects.PlaySound ("Scream");
+						m_soundEffects.PlaySound ("Scream");
 					}
 					m_damageData.m_recive = true;
 					m_damageData.m_damage = 20;
+				} else if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
+				{
+					RaycastHit hit;
+					if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
+						if(hit.collider.gameObject.tag == "EnemySnail")
+							col.transform.GetComponentInParent<Enemy> ().m_animator.SetBool ("Stunned", true);
+					}
 				}
 			} 
 			else 
