@@ -16,11 +16,17 @@ public class MainMenuManager : MonoBehaviour {
     private bool waitAnyKey = true;
     private float time = 0.0f;
 
+    private static bool firstTime = true;
     private void Start()
     {
         m_selected = m_eventSysterm.firstSelectedGameObject;
-        showLogo = true;
-        waitAnyKey = true;
+        showLogo = firstTime;
+        m_canvasLogo.SetActive(showLogo);
+        m_canvasMenu.SetActive(!showLogo);
+        m_panelButtons.SetActive(!showLogo);
+        waitAnyKey = firstTime;
+        m_panelAnyKey.SetActive(waitAnyKey);
+        firstTime = false;
     }
 
     private void Update()

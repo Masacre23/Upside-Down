@@ -44,7 +44,8 @@ public class PlayerDead : PlayerDamageStates
 
     public override void OnExit(DamageData data)
     {
-        Scenes.LoadScene(Scenes.GameOver);
+        //Scenes.LoadScene(Scenes.GameOver);
+        HUDManager.ShowGameOverPanel(true);
         m_player.m_animator.SetBool("Dead", false);
     }
 }
