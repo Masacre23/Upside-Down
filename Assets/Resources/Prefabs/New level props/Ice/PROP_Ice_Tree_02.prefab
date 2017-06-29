@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4819895278787624}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: joint3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +34,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4747618349316110}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: joint4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,7 +50,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4319092971521628}
   - component: {fileID: 137946398165053270}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: PROP_Ice_Tree01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4549640960637372}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: joint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4354043259569386}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: joint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4609363842230272}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: joint6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4605460155812720}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: joint5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,8 +126,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4843867998372442}
   - component: {fileID: 95614633495518892}
-  - component: {fileID: 65826370573793394}
-  m_Layer: 0
+  - component: {fileID: 64585084360257734}
+  m_Layer: 20
   m_Name: PROP_Ice_Tree_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,17 +236,17 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1991328012011022}
-  m_LocalRotation: {x: 0.72136855, y: -0, z: -0.08558208, w: 0.68724316}
-  m_LocalPosition: {x: 3.062713, y: -1.4422593, z: 25.815508}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_Children:
   - {fileID: 4549640960637372}
   - {fileID: 4319092971521628}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &65826370573793394
-BoxCollider:
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!64 &64585084360257734
+MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -255,8 +255,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.403896, y: 2.761894, z: 1.291874}
-  m_Center: {x: 0.0572103, y: 1.354111, z: -0.04962064}
+  m_Convex: 1
+  m_InflateMesh: 0
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 0}
 --- !u!95 &95614633495518892
 Animator:
   serializedVersion: 3
