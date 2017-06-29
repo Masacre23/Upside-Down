@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
     AudioSource musicAudioSource2;
     static AudioManager instance;
     bool isMute;
-    float m_musicVolume = 1.0f;
+    float m_musicVolume = 0.1f;
     bool m_audioSource1IsPlaying;
     bool m_changeAudioSource = false;
     float m_secondChange;
