@@ -23,7 +23,6 @@ public class PlayerFloating : PlayerStates
     public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
-        HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_maxTimeFloating));
 
         float perc = m_timeFloating / m_risingTime;
         if (perc > 1.0f)

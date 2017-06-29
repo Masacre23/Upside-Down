@@ -184,7 +184,6 @@ public class Player : Character
         m_negatePlayerInput = false;
         base.Start();
 
-        HUDManager.SetMaxEnergyValue(m_maxHealth);
         m_runSpeed = 2 * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
     }
@@ -275,7 +274,6 @@ public class Player : Character
     public override void FixedUpdate ()
     {
         base.FixedUpdate();
-        HUDManager.ChangeEnergyValue(base.m_health);
         //if (m_oxigen.m_oxigen <= 0.0f)
         //{
         //    m_damageData.m_damage = (int)m_health + 1;
@@ -569,13 +567,19 @@ public class Player : Character
 		{
 			if (col.gameObject.tag != "FlyingEnemy") //If is snail
 			{ 
-				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
-                {
+				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
 					if (m_soundEffects != null) {
-                        m_soundEffects.PlaySound ("Scream");
+						m_soundEffects.PlaySound ("Scream");
 					}
 					m_damageData.m_recive = true;
 					m_damageData.m_damage = 20;
+				} else if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
+				{
+					RaycastHit hit;
+					if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
+						if(hit.collider.gameObject.tag == "EnemySnail")
+							col.transform.GetComponentInParent<Enemy> ().m_animator.SetBool ("Stunned", true);
+					}
 				}
 			} 
 			else 

@@ -14,11 +14,13 @@ public class EnemyFollowing : EnemyStates
     public GameObject m_prefabEffect;
 
     //Flying enemy
-    private float nextFire;
-    private float fireRate = 2;
-    private float innerRadiusToPlayer = 10;
-    private float outterRadiusToPlayer = 20;
-    //private GameObject planet;
+ //   private float nextFire;
+ //   private float fireRate = 2;
+
+	public float stunnedTime = 5;
+	float timer ;
+	private float nextAttack;
+	public float attackRate = 2;
 
     public void Awake()
     {
@@ -39,23 +41,42 @@ public class EnemyFollowing : EnemyStates
 
 		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position); 
 
-        if (m_enemy.m_animator != null)
-        {
+       // if (m_enemy.m_animator != null)
+      //  {
 			//m_enemy.m_animator.SetInteger("RandomAnimation", Random.Range(0, 2));
 			m_enemy.m_animator.speed = Random.Range(1, 3);
             m_enemy.m_animator.SetFloat("PlayerDistance", distance);
 
-            if (m_enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Walk")) // 1 is flying enemy
-            {
+			AnimatorStateInfo info = m_enemy.m_animator.GetCurrentAnimatorStateInfo (0);
+			if (info.IsName ("Walk")) 
+			{
+				m_enemy.m_animator.SetBool ("CanAttack", false);
 				m_enemy.m_animator.speed = 1;
-                Move();
-            }
-        }
-        else
-            Move();
+				Move ();
+				Attack ();
+			} else if (info.IsName ("Stunned")) 
+			{
+			if (info.normalizedTime % 1 > 0.3f) 
+				{
+				if (timer < stunnedTime && m_enemy.m_animator.GetBool("Stunned")) 
+					{
+						m_enemy.m_animator.speed = 0;
+						timer += Time.deltaTime;
+					}
+					else 
+					{
+						timer = 0;
+						m_enemy.m_animator.speed = 1;
+						m_enemy.m_animator.SetBool ("Stunned", false);
+					}
+				}
+			}
+      //  }
+      //  else
+       //     Move();
 
-        if (m_enemy.m_type == Enemy.Types.FLYING)
-            Attack();
+        //if (m_enemy.m_type == Enemy.Types.FLYING)
+        //    Attack();
 
         if (data.m_recive)
         {
@@ -106,12 +127,7 @@ public class EnemyFollowing : EnemyStates
         Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
 
         //Original
-        //transform.LookAt(pointOnPlane, transform.up);
-
-        //Pruebas
-        //Quaternion rotationAngle = Quaternion.LookRotation (pointOnPlane, transform.up);
-        //transform.rotation = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp*2);
-        
+        //transform.LookAt(pointOnPlane, transform.up);        
 
         switch (m_enemy.m_type)
         {
@@ -171,12 +187,12 @@ public class EnemyFollowing : EnemyStates
         }
 	}
 
-    public void Attack() // Only for flying enemy
+    public void Attack()
     {
-        if (Time.time > nextFire)
-        {
-            nextFire = Time.time + fireRate;
-            EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
-        }
+		if (Time.time > nextAttack) 
+		{
+			nextAttack = Time.time + attackRate;
+			m_enemy.m_animator.SetBool ("CanAttack", true);
+		}			
     }
 }
