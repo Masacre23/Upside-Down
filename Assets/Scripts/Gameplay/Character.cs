@@ -25,6 +25,9 @@ public class Character : MonoBehaviour
 
     protected bool m_isGrounded;
 
+	//Effects
+	public GameObject m_prefabHit1;
+
     public virtual void Awake()
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
@@ -34,6 +37,8 @@ public class Character : MonoBehaviour
             m_animator = GetComponent<Animator>();
         else
 			m_animator = transform.GetChild(0).GetComponent<Animator> ();
+
+		m_prefabHit1 = (GameObject)Resources.Load("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
     }
 
     // Use this for initialization
