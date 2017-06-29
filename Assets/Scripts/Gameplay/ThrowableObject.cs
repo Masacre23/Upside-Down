@@ -65,12 +65,11 @@ public class ThrowableObject : MonoBehaviour
             if (m_rigidBody.velocity.magnitude < m_minVelocityDamage)
             {
                 m_canDamage = false;
+                if (m_trail)
+                    m_trail.enabled = false;
             }
         }
-        if(m_rigidBody.velocity.magnitude == 0 && m_trail.enabled)
-        {
-            m_trail.enabled = false;
-        }
+
 	}
 
     void FixedUpdate()
@@ -92,10 +91,8 @@ public class ThrowableObject : MonoBehaviour
         m_canDamage = true;
 
         m_objectGravity.m_ignoreGravity = true;
-        if(m_trail != null)
-        {
+        if (m_trail)
             m_trail.enabled = true;
-        }
     }
 
     // This function should be called when an object begins to float around the character
