@@ -26,8 +26,9 @@ public class Collectable : MonoBehaviour {
         }
         transform.Translate(new Vector3(0.0f, 0.0f, m_velocity * Time.deltaTime * m_speed));
         //transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + m_velocity * Time.deltaTime * m_speed);
+        float last_velocity = m_velocity;
         m_velocity += m_aceleration * Time.deltaTime;
-        if(m_velocity > 1.0 || m_velocity < -1.0)
+        if((m_velocity >= 1.0 && last_velocity < 1.0f) || (m_velocity <= -1.0 && last_velocity > -1.0))
         {
             m_aceleration = -m_aceleration;
         }
