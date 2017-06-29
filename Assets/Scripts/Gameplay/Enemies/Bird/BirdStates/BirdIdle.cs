@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BirdIdle : BirdStates {
 
+	int damp = 2;
+
 	public override void Start ()
 	{
 		base.Start ();
@@ -25,6 +27,7 @@ public class BirdIdle : BirdStates {
 		{
 			ret = true;
 			m_bird.m_currentState = m_bird.m_Attacking;
+			m_bird.m_Attacking.OnEnter ();
 		}
 
 		Fly ();
@@ -34,7 +37,10 @@ public class BirdIdle : BirdStates {
 
 	void Fly()
 	{
-		//transform
+		Quaternion rotationAngle = Quaternion.LookRotation(transform.forward + transform.right, transform.up);
+		Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
+		transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+		transform.position += transform.forward * m_bird.m_moveSpeed * Time.deltaTime;
 	}
 
 	public override void OnEnter()
