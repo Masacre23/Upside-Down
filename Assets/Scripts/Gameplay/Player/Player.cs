@@ -470,7 +470,10 @@ public class Player : Character
     public void PickObjects()
     {
         if (m_floatingObjects.CanPickMoreObjects())
+        {
             m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
+        }
+            
     }
 
     public void ThrowObjectsThirdPerson(bool hasThrown)
@@ -557,8 +560,18 @@ public class Player : Character
         int enemy = LayerMask.NameToLayer("Enemy");
         if (col.collider.gameObject.layer == enemy) 
 		{
-			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
-			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo(0).IsName ("Attack"))
+			if (col.gameObject.tag != "FlyingEnemy") //If is snail
+			{ 
+				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
+                {
+					if (m_soundEffects != null) {
+                        m_soundEffects.PlaySound ("Scream");
+					}
+					m_damageData.m_recive = true;
+					m_damageData.m_damage = 20;
+				}
+			} 
+			else 
 			{
                 if(m_soundEffects != null)
                     m_soundEffects.PlaySound("Scream");
