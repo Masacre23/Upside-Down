@@ -6,6 +6,7 @@ public class Collectable : MonoBehaviour {
 
     public float m_speed = 0.2f;
     public Sprite m_sprite;
+    public GameObject m_prefabEffect;
 
     private Player m_player = null;
     private float m_aceleration = 2.0f;
@@ -38,6 +39,7 @@ public class Collectable : MonoBehaviour {
     {
         int player = LayerMask.NameToLayer("Player");
         if (col.gameObject.layer == player) {
+            EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
             SoundEffects sound = col.gameObject.GetComponent<SoundEffects>();
             if (sound != null)
             {
