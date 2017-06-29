@@ -6,6 +6,7 @@ public class Collectable : MonoBehaviour {
 
     public float m_speed = 0.2f;
     public Sprite m_sprite;
+    public GameObject m_prefabEffect;
 
     private Player m_player = null;
     private float m_aceleration = 2.0f;
@@ -26,8 +27,9 @@ public class Collectable : MonoBehaviour {
         }
         transform.Translate(new Vector3(0.0f, 0.0f, m_velocity * Time.deltaTime * m_speed));
         //transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, transform.localPosition.z + m_velocity * Time.deltaTime * m_speed);
+        float last_velocity = m_velocity;
         m_velocity += m_aceleration * Time.deltaTime;
-        if(m_velocity > 1.0 || m_velocity < -1.0)
+        if((m_velocity >= 1.0 && last_velocity < 1.0f) || (m_velocity <= -1.0 && last_velocity > -1.0))
         {
             m_aceleration = -m_aceleration;
         }
@@ -37,6 +39,7 @@ public class Collectable : MonoBehaviour {
     {
         int player = LayerMask.NameToLayer("Player");
         if (col.gameObject.layer == player) {
+            EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
             SoundEffects sound = col.gameObject.GetComponent<SoundEffects>();
             if (sound != null)
             {

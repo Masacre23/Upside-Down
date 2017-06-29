@@ -8,10 +8,13 @@ public class Teleport : MonoBehaviour
     public Transform m_thisLocationSpawning;
 
     int playerLayer;
+    private SoundEffects sounds;
 
 	void Start ()
     {
         playerLayer = LayerMask.NameToLayer("Player");
+        sounds = GetComponent<SoundEffects>();
+        sounds.PlaySoundLoop("Idle");
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -22,8 +25,11 @@ public class Teleport : MonoBehaviour
             Player player = other.gameObject.GetComponent<Player>();
             player.m_negatePlayerInput = true;
 
-            if(player.m_playerRespawn)
+            if (player.m_playerRespawn)
+            {
                 player.m_playerRespawn.ReSpawn(destinyPosition);
+                sounds.PlaySound("Pass");
+            }
         }
     }
 }

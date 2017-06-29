@@ -98,6 +98,7 @@ public class Player : Character
 	//Effects
 	public GameObject m_jumpClouds;
 	public GameObject m_runClouds;
+    public GameObject m_hit;
     public Transform m_smoke;
 
     [HideInInspector] public Dictionary<string, TargetDetector> m_targetsDetectors;
@@ -568,7 +569,8 @@ public class Player : Character
 			if (col.gameObject.tag != "FlyingEnemy") //If is snail
 			{ 
 				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
-					if (m_soundEffects != null) {
+                    EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
+                    if (m_soundEffects != null) {
 						m_soundEffects.PlaySound ("Scream");
 					}
 					m_damageData.m_recive = true;
@@ -596,7 +598,8 @@ public class Player : Character
 			} 
 			else 
 			{
-                if(m_soundEffects != null)
+                EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
+                if (m_soundEffects != null)
                     m_soundEffects.PlaySound("Scream");
                 m_damageData.m_recive = true;
                 m_damageData.m_damage = 20;
