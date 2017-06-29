@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerPlatform : MonoBehaviour {
+public class TriggerPlatform : MonoBehaviour
+{
 
     [HideInInspector] public bool m_playerDetected = false;
 

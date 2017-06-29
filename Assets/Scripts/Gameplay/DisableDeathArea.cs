@@ -14,11 +14,11 @@ public class DisableDeathArea : MonoBehaviour {
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            m_object.SetActive(true);
-        }
-    }
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (other.tag == "Player")
+    //    {
+    //        m_object.SetActive(true);
+    //    }
+    //}
 }
