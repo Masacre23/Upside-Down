@@ -46,5 +46,8 @@ public class FallingOnWaterCubic : MonoBehaviour
         if (sound)
             sound.PlaySound("SplashWater");
 
+        if (other.gameObject.layer == LayerMask.NameToLayer("ThrowableObject"))
+            other.gameObject.SetActive(false);
+
     }
 }

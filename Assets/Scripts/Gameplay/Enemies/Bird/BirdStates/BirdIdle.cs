@@ -39,7 +39,7 @@ public class BirdIdle : BirdStates {
 	{
 		Quaternion rotationAngle = Quaternion.LookRotation(transform.forward + transform.right, transform.up);
 		Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
-		transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+		transform.rotation = new Quaternion(temp.x, temp.y, temp.z, temp.w);
 		transform.position += transform.forward * m_bird.m_moveSpeed * Time.deltaTime;
 	}
 

@@ -22,6 +22,7 @@ public class Player : Character
     bool m_returnCam;
 
     bool m_throwObjectButtonUp = true;
+    bool m_throwAnimation = false;
 
     public bool m_negatePlayerInput = false;
 
@@ -461,8 +462,8 @@ public class Player : Character
         m_animator.SetBool("Grounded", m_isGrounded);
         m_animator.SetBool("Jump", m_isJumping);
         m_animator.SetBool("DoubleJump", m_doubleJumping);
-        m_animator.SetBool("Throwing", m_currentState == m_aimToThrow);
-        m_animator.SetFloat("Test", m_groundCheckDistance);
+        m_animator.SetBool("Throwing", m_throwAnimation || (m_currentState == m_aimToThrow));
+        m_throwAnimation = false;
     }
 
     public void PickObjects()
@@ -503,6 +504,7 @@ public class Player : Character
                 if (hasThrown)
                 {
                     m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
+                    m_throwAnimation = true;
                 }
             }
             else
@@ -511,6 +513,7 @@ public class Player : Character
                 if (hasThrown)
                 {
                     m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+                    m_throwAnimation = true;
                 }
             }
             
@@ -529,8 +532,12 @@ public class Player : Character
             {
                 Vector3 toTarget = target.transform.position - origin.position;
                 float distance = toTarget.sqrMagnitude;
-                float thisAngle = Vector3.Angle(origin.forward, toTarget);
-                if (thisAngle < angleDetection && distance < closestDistance)
+
+                RaycastHit hit;
+                bool hasHit = Physics.Raycast(origin.position, toTarget.normalized, out hit, toTarget.magnitude);
+                //float thisAngle = Vector3.Angle(origin.forward, toTarget);
+                //if (thisAngle < angleDetection && distance < closestDistance)
+                if (distance < closestDistance && hasHit && hit.transform.gameObject == target)
                 {
                     closestDistance = distance;
                     closestTarget = target;
@@ -560,13 +567,19 @@ public class Player : Character
 		{
 			if (col.gameObject.tag != "FlyingEnemy") //If is snail
 			{ 
-				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
-                {
+				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
 					if (m_soundEffects != null) {
-                        m_soundEffects.PlaySound ("Scream");
+						m_soundEffects.PlaySound ("Scream");
 					}
 					m_damageData.m_recive = true;
 					m_damageData.m_damage = 20;
+				} else if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
+				{
+					RaycastHit hit;
+					if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
+						if(hit.collider.gameObject.tag == "EnemySnail")
+							col.transform.GetComponentInParent<Enemy> ().m_animator.SetBool ("Stunned", true);
+					}
 				}
 			} 
 			else 

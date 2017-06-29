@@ -148,6 +148,8 @@ public class FloatingAroundPlayer : MonoBehaviour
     public void ThrowObjectToTarget(RaycastHit target, Transform playerOrigin, float throwForce)
     {
         Vector3 playerToTarget = target.point - playerOrigin.position;
+
+        m_player.RotateModel(playerToTarget.normalized);
         //We need to know which object is the one throwed:
         GameObject objectToThrow = null;
         //First, we check if the object is closer to the target than the player
@@ -179,6 +181,7 @@ public class FloatingAroundPlayer : MonoBehaviour
         Vector3 playerToTarget = playerOrigin.forward * maxAimLength;
         Vector3 finalPosition = playerOrigin.position + playerToTarget;
 
+        m_player.RotateModel(playerToTarget.normalized);
         //We need to know which object is the one throwed:
         GameObject objectToThrow = null;
         //First, we check if the object is closer to the target than the player
