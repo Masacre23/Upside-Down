@@ -62,7 +62,6 @@ class PlayerThrowing : PlayerStates
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");
         HUDManager.ShowGravityPanel(true);
-        HUDManager.ChangeFloatTime(1.0f);
     }
 
     public override void OnExit()

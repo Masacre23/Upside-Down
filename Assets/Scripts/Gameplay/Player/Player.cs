@@ -183,7 +183,6 @@ public class Player : Character
         m_negatePlayerInput = false;
         base.Start();
 
-        HUDManager.SetMaxEnergyValue(m_maxHealth);
         m_runSpeed = 2 * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
     }
@@ -274,7 +273,6 @@ public class Player : Character
     public override void FixedUpdate ()
     {
         base.FixedUpdate();
-        HUDManager.ChangeEnergyValue(base.m_health);
         //if (m_oxigen.m_oxigen <= 0.0f)
         //{
         //    m_damageData.m_damage = (int)m_health + 1;

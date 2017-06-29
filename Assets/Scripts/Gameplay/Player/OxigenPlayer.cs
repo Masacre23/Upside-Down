@@ -49,7 +49,6 @@ public class OxigenPlayer : MonoBehaviour
         if (m_oxigen > m_maxOxigen)
             m_oxigen = m_maxOxigen;
 
-        HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
     }
 
     public void LostOxigen(float oxigen)
