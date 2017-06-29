@@ -28,6 +28,8 @@ public class ThrowableObject : MonoBehaviour
     float m_timeFloating = 0.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
 
+	public GameObject m_prefabHit1;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -37,6 +39,8 @@ public class ThrowableObject : MonoBehaviour
         m_trail = GetComponent<TrailRenderer>();
 
         m_realTimeFloating = m_maxTimeFloating;
+
+		m_prefabHit1 = (GameObject)Resources.Load ("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
 	}
 	
 	// Update is called once per frame
@@ -150,6 +154,8 @@ public class ThrowableObject : MonoBehaviour
         if (sound != null)
         {
             sound.PlaySound("HitSomething");
+			if(transform.tag != "EnemySnail")
+				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
         }
     }
 
