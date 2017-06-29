@@ -555,17 +555,26 @@ public class Player : Character
         int enemy = LayerMask.NameToLayer("Enemy");
         if (col.collider.gameObject.layer == enemy) 
 		{
-			//if (col.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
-			if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo(0).IsName ("Attack"))
+			if (col.gameObject.tag != "FlyingEnemy") //If is snail
+			{ 
+				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
+					SoundEffects sound = GetComponent<SoundEffects> ();
+					if (sound != null) {
+						sound.PlaySound ("Scream");
+					}
+					m_damageData.m_recive = true;
+					m_damageData.m_damage = 20;
+				}
+			} 
+			else 
 			{
-                SoundEffects sound = GetComponent<SoundEffects>();
-                if(sound != null)
-                {
-                    sound.PlaySound("Scream");
-                }
-                m_damageData.m_recive = true;
-                m_damageData.m_damage = 20;
-            }
+				SoundEffects sound = GetComponent<SoundEffects> ();
+				if (sound != null) {
+					sound.PlaySound ("Scream");
+				}
+				m_damageData.m_recive = true;
+				m_damageData.m_damage = 20;
+			}
 		}
 
         int harmfulObject = LayerMask.NameToLayer("HarmfulObject");

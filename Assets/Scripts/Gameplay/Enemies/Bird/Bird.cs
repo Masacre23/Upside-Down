@@ -14,7 +14,7 @@ public class Bird : Character {
 	public DamageData m_damageData;
 
 	//General variables
-	public int m_speed = 2;
+	//public int m_speed = 2;
 	public GameObject player;
 
 	public override void Awake()
@@ -77,7 +77,10 @@ public class Bird : Character {
 
 	void OnTriggerEnter(Collider col)
 	{
-		
+		if (col.tag == "Player") 
+		{
+			player = col.gameObject;
+		}
 	}
 
 	public void DamageManager(DamageData data)
