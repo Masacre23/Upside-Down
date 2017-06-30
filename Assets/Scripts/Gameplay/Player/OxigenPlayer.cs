@@ -5,7 +5,7 @@ using UnityEngine;
 public class OxigenPlayer : MonoBehaviour
 {
 
-    public float m_maxOxigen = 100.0f;
+    public float m_maxOxigen = 1000.0f;
     public float m_oxigen = 0.0f;
 
     private float m_lostOxigen = 0;
@@ -17,7 +17,8 @@ public class OxigenPlayer : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        m_oxigen = 0.0f;
+        m_oxigen = m_maxOxigen;
+        //m_oxigen = 0.0f;
 	}
 	
 	// Update is called once per frame
@@ -48,7 +49,6 @@ public class OxigenPlayer : MonoBehaviour
         if (m_oxigen > m_maxOxigen)
             m_oxigen = m_maxOxigen;
 
-        HUDManager.ChangeOxigen(m_oxigen / m_maxOxigen);
     }
 
     public void LostOxigen(float oxigen)

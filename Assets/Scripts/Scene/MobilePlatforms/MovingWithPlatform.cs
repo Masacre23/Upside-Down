@@ -23,7 +23,6 @@ public class MovingWithPlatform : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-
         if (col.tag == "Player")
         {
             position = transform.position;

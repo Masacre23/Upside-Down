@@ -41,7 +41,8 @@ public class PlayerInvulnerable : PlayerDamageStates
         if (data.m_recive && data.m_respawn)
         {
             m_player.ChangeCurrentStateToOnAir();
-            m_player.m_health -= data.m_damage;
+            //m_player.m_health -= data.m_damage;
+            //HUDManager.LostLife();
             if (m_player.m_health <= 0)
                 m_player.m_playerDamageState = m_player.m_deadState;
             else
@@ -49,7 +50,9 @@ public class PlayerInvulnerable : PlayerDamageStates
                 m_player.m_floatingObjects.DropAll();
                 m_player.m_playerRespawn.ReSpawn(m_player.m_checkPoint);
                 m_player.m_playerDamageState = m_player.m_invulnerable;
+
                 m_player.m_negatePlayerInput = true;
+                m_player.m_soundEffects = null;
             }
             ret = true;
         }

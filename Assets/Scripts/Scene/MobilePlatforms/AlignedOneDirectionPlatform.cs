@@ -8,6 +8,7 @@ enum PlatformAlignedState
     WAIT,
     MOVE,
     RETURN,
+    NONE,
 }
 
 public class AlignedOneDirectionPlatform : MonoBehaviour {
@@ -58,10 +59,14 @@ public class AlignedOneDirectionPlatform : MonoBehaviour {
                     distanceToMove = m_speed * Time.deltaTime;
                 m_distanceTraveled += distanceToMove;
                 transform.Translate(m_sense * m_direction * distanceToMove);
-                if (m_distanceTraveled >= m_distance && m_boomerang)
+                if (m_distanceTraveled >= m_distance)
                 {
                     m_distanceTraveled = 0;
-                    m_state = PlatformAlignedState.WAIT;
+                    if (m_boomerang)
+                        m_state = PlatformAlignedState.WAIT;
+                    else
+                        m_state = PlatformAlignedState.NONE;
+
                 }
                 PlanetGravity.AlignWithFather(gameObject);
                 break;

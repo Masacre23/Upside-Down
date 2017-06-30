@@ -10,7 +10,6 @@ public class Character : MonoBehaviour
     public float m_moveSpeed = 4.0f;
     float m_turnSpeed;
     public float m_jumpForceVertical = 4.0f;
-    public float m_jumpForceHorizontal = 4.0f;
     public float m_lerpSpeed = 10.0f;
 
     [HideInInspector] public Animator m_animator;
@@ -20,11 +19,14 @@ public class Character : MonoBehaviour
     [HideInInspector] public float m_capsuleHeight;
 
     protected float m_groundCheckDistance;
-    protected float m_defaultGroundCheckDistance = 0.25f;
+    protected float m_defaultGroundCheckDistance = 0.30f;
 
     protected bool m_isJumping = false;
 
     protected bool m_isGrounded;
+
+	//Effects
+	public GameObject m_prefabHit1;
 
     public virtual void Awake()
     {
@@ -35,6 +37,8 @@ public class Character : MonoBehaviour
             m_animator = GetComponent<Animator>();
         else
 			m_animator = transform.GetChild(0).GetComponent<Animator> ();
+
+		m_prefabHit1 = (GameObject)Resources.Load("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
     }
 
     // Use this for initialization
@@ -51,7 +55,7 @@ public class Character : MonoBehaviour
     public virtual void Restart()
     {
         m_rigidBody.velocity = Vector3.zero;
-        m_gravityOnCharacter.ReturnToPlanet();
+        //m_gravityOnCharacter.ReturnToPlanet();
     }
 
     public virtual void Update()
@@ -77,11 +81,13 @@ public class Character : MonoBehaviour
             m_isGrounded = true;
             m_isJumping = false;
             m_gravityOnCharacter.m_getStrongestGravity = true;
+            m_gravityOnCharacter.m_onAir = false;
         }
         else
         {
             m_isGrounded = false;
             m_gravityOnCharacter.m_getStrongestGravity = false;
+            m_gravityOnCharacter.m_onAir = true;
         }
 
         return m_isGrounded;
@@ -96,13 +102,11 @@ public class Character : MonoBehaviour
 
     //This function deals with the jump of the character
     //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public virtual void Jump()
+    public virtual void Jump(float inputHorizontal, float inputVertical)
     {
         Vector3 gravity = m_gravityOnCharacter.m_gravity;
         float fallVelocity = Vector3.Dot(gravity, m_rigidBody.velocity);
         m_rigidBody.velocity += gravity * (m_jumpForceVertical - fallVelocity);
-        //m_rigidBody.velocity = up * m_jumpForceVertical;
-        //m_rigidBody.velocity += forward.normalized * m_jumpForceHorizontal;
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
@@ -117,16 +121,8 @@ public class Character : MonoBehaviour
     //It controls the detection of the floor. If the character is going up, the detection is small in order to avoid being unable to jump.
     public void OnAir()
     {
-        //m_groundCheckDistance = Vector3.Dot(m_rigidBody.velocity, transform.up) < 0 ? m_defaultGroundCheckDistance : 0.01f;
-
         if (Vector3.Dot(m_rigidBody.velocity, transform.up) < 0)
-        {
             m_groundCheckDistance = m_defaultGroundCheckDistance;
-            //if (!m_gravityOnCharacter.m_changingToAttractor)
-            //{
-            //    m_gravityOnCharacter.m_planetGravity = true;
-            //}
-        }
         else
             m_groundCheckDistance = 0.01f;
     }
@@ -135,11 +131,12 @@ public class Character : MonoBehaviour
     {
         bool ret = false;
         int ignoreWater = 1 << LayerMask.NameToLayer("Water");
+        ignoreWater = ignoreWater | 1 << LayerMask.NameToLayer("GeneralTrigger");
         ignoreWater = ~ignoreWater;
 
         ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
-        if (!ret)
-            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
+        //if (!ret)
+        //    ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
 
         return ret;
     }

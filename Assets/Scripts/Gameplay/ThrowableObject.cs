@@ -10,12 +10,15 @@ public class ThrowableObject : MonoBehaviour
     public float m_floatingSpeed = 10.0f;
     public float m_maxTimeFloating = 10.0f;
     public float m_rotationSpeed = 100.0f;
+    public GameObject m_aura;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
     Collider m_collider;
     Transform m_floatingPoint;
     FloatingAroundPlayer m_targetPlayer;
+    TrailRenderer m_trail;
+   
 
     [HideInInspector] public bool m_canDamage = false;
     bool m_applyThrownForce = false;
@@ -25,14 +28,19 @@ public class ThrowableObject : MonoBehaviour
     float m_timeFloating = 0.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
 
+	public GameObject m_prefabHit1;
+
 	// Use this for initialization
 	void Start ()
     {
         m_objectGravity = GetComponent<GameObjectGravity>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
+        m_trail = GetComponent<TrailRenderer>();
 
         m_realTimeFloating = m_maxTimeFloating;
+
+		m_prefabHit1 = (GameObject)Resources.Load ("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
 	}
 	
 	// Update is called once per frame
@@ -61,8 +69,11 @@ public class ThrowableObject : MonoBehaviour
             if (m_rigidBody.velocity.magnitude < m_minVelocityDamage)
             {
                 m_canDamage = false;
+                if (m_trail)
+                    m_trail.enabled = false;
             }
         }
+
 	}
 
     void FixedUpdate()
@@ -84,6 +95,8 @@ public class ThrowableObject : MonoBehaviour
         m_canDamage = true;
 
         m_objectGravity.m_ignoreGravity = true;
+        if (m_trail)
+            m_trail.enabled = true;
     }
 
     // This function should be called when an object begins to float around the character
@@ -109,6 +122,9 @@ public class ThrowableObject : MonoBehaviour
         m_rotationRandomVector = new Vector3(Random.value, Random.value, Random.value).normalized;
 
         m_timeFloating = 0.0f;
+
+        if (m_aura != null)
+            m_aura.SetActive(true);
     }
 
     //This function should be called when an object stop floating around the character
@@ -128,5 +144,20 @@ public class ThrowableObject : MonoBehaviour
             m_collider.enabled = true;
 
         m_rotationRandomVector = Vector3.zero;
+        if (m_aura != null)
+            m_aura.SetActive(false);
     }
+
+    void OnCollisionEnter(Collision col)
+    {
+        SoundEffects sound = GetComponent<SoundEffects>();
+        if (sound != null)
+        {
+            sound.PlaySound("HitSomething");
+			if(transform.tag != "EnemySnail")
+				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
+        }
+    }
+
+
 }

@@ -80,7 +80,14 @@ public class FloatingAroundPlayer : MonoBehaviour
     {
         List<Collider> detectedObjects = new List<Collider>(Physics.OverlapSphere(detectionOrigin, m_objectDetectionRadius, m_layersPicking));
         detectedObjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(detectionOrigin, a.transform.position).CompareTo(Vector3.Distance(detectionOrigin, b.transform.position)); });
-
+        if(detectedObjects.Count > 0)
+        {
+            SoundEffects sound = m_player.GetComponent<SoundEffects>();
+            if (sound != null)
+            {
+                sound.PlaySound("GetObjects");
+            }
+        }
         for (int i = 0; i < detectedObjects.Count; i++)
         {
             int indexTransform = m_pickedObjects.Count;
@@ -141,6 +148,8 @@ public class FloatingAroundPlayer : MonoBehaviour
     public void ThrowObjectToTarget(RaycastHit target, Transform playerOrigin, float throwForce)
     {
         Vector3 playerToTarget = target.point - playerOrigin.position;
+
+        m_player.RotateModel(playerToTarget.normalized);
         //We need to know which object is the one throwed:
         GameObject objectToThrow = null;
         //First, we check if the object is closer to the target than the player
@@ -172,6 +181,7 @@ public class FloatingAroundPlayer : MonoBehaviour
         Vector3 playerToTarget = playerOrigin.forward * maxAimLength;
         Vector3 finalPosition = playerOrigin.position + playerToTarget;
 
+        m_player.RotateModel(playerToTarget.normalized);
         //We need to know which object is the one throwed:
         GameObject objectToThrow = null;
         //First, we check if the object is closer to the target than the player
@@ -224,6 +234,11 @@ public class FloatingAroundPlayer : MonoBehaviour
     //This function actually throws a specific object in a specific direction with an specific force
     private void Throw(GameObject objectToThrow, Vector3 throwVector, float throwForce)
     {
+        SoundEffects soundEffects = m_player.GetComponent<SoundEffects>();
+        if (soundEffects != null)
+        {
+            soundEffects.PlaySound("ThrowObjects");
+        }
         ThrowableObject throwScript = objectToThrow.GetComponent<ThrowableObject>();
         if (throwScript)
             throwScript.ThrowObject(throwVector.normalized * throwForce);

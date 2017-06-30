@@ -20,15 +20,14 @@ public class PlayerFloating : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
-        HUDManager.ChangeFloatTime(1 - (m_timeFloating / m_maxTimeFloating));
 
         float perc = m_timeFloating / m_risingTime;
         if (perc > 1.0f)
             perc = 1.0f;
-        m_player.m_gravityOnCharacter.Float(m_startingPosition, m_floatingPoint, perc);
+        //m_player.m_gravityOnCharacter.Float(m_startingPosition, m_floatingPoint, perc);
 
         if (m_timeFloating > m_maxTimeFloating)
         {
@@ -45,14 +44,14 @@ public class PlayerFloating : PlayerStates
                 ret = true;
                 if (legalTarget)
                 {
-                    m_player.m_playerGravity.ChangeGravityTo(target);
-                    m_player.m_gravityOnCharacter.ChangeToAttractor();
+                    //m_player.m_playerGravity.ChangeGravityTo(target);
+                    //m_player.m_gravityOnCharacter.ChangeToAttractor();
                     m_player.m_currentState = m_player.m_onAir;
                 }      
                 else
                     m_player.m_currentState = m_player.m_onAir;
             }
-            else if (aimGravity || jumping)
+            else if (jumping)
             {
                 ret = true;
                 m_player.m_currentState = m_player.m_onAir;

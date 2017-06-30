@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class GameOver : MonoBehaviour {
 
     public float m_waitTime;
     public AudioClip m_gameOverClip;
     public AudioClip m_mainMenuClip;
+    public AudioClip m_gameClip;
 
     private float m_time;
 	// Use this for initialization
@@ -28,5 +30,23 @@ public class GameOver : MonoBehaviour {
                 audioManager.PlayMusic(m_mainMenuClip, 0.5f);
             Scenes.LoadScene(Scenes.MainMenu);
         }
-	}
+        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+        {
+            AudioManager audioManager = AudioManager.Instance();
+            if (audioManager && m_mainMenuClip)
+                audioManager.PlayMusic(m_mainMenuClip, 0.5f);
+            HUDManager.ShowGameOverPanel(false);
+            HUDManager.ShowWinPanel(false);
+            Scenes.LoadScene(Scenes.MainMenu);
+        }
+        if (CrossPlatformInputManager.GetButtonDown("Jump"))
+        {
+            AudioManager audioManager = AudioManager.Instance();
+            if (audioManager && m_mainMenuClip)
+                audioManager.PlayMusic(m_gameClip, 0.5f);
+            HUDManager.ShowGameOverPanel(false);
+            HUDManager.ShowWinPanel(false);
+            Scenes.LoadScene(Scenes.Level1);
+        }
+    }
 }

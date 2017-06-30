@@ -145,6 +145,8 @@ public class PlayerDebugMode : MonoBehaviour {
                     m_playerClass.m_health += 20;
                     if (m_playerClass.m_health > m_playerClass.m_maxHealth)
                         m_playerClass.m_health = m_playerClass.m_maxHealth;
+                    else
+                        HUDManager.GainLife();
                 }
             }
             if (Input.GetKeyDown(KeyCode.Alpha7))

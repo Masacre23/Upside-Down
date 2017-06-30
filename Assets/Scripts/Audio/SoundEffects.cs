@@ -40,9 +40,36 @@ public class SoundEffects : MonoBehaviour {
 
     public void PlaySound(string sound)
     {
-        if(m_soundsEffects.ContainsKey(sound))
+        AudioManager manager = AudioManager.Instance();
+        float volume = 1.0f;
+        if (manager != null)
+            volume = manager.m_soundVolume;
+        if (m_soundsEffects.ContainsKey(sound))
         {
-            m_audio.PlayOneShot(m_soundsEffects[sound], 1.0f);
+            m_audio.PlayOneShot(m_soundsEffects[sound], volume);
+        }
+    }
+
+    public void PlaySoundLoop(string sound)
+    {
+        AudioManager manager = AudioManager.Instance();
+        float volume = 1.0f;
+        if (manager != null)
+            volume = manager.m_soundVolume;
+        if (m_soundsEffects.ContainsKey(sound))
+        {
+            m_audio.clip = m_soundsEffects[sound];
+            m_audio.loop = true;
+            m_audio.Play();
+            m_audio.volume = volume;
+        }
+    }
+
+    public void StopSoundLoop(string sound)
+    {
+        if (m_soundsEffects.ContainsKey(sound))
+        {
+            m_audio.Stop();
         }
     }
 }

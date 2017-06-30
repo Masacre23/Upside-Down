@@ -3,11 +3,14 @@ using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
+    public float m_soundVolume = 1.0f;
+    public float m_musicVolume = 0.1f;
 
     AudioSource musicAudioSource1;
     AudioSource musicAudioSource2;
     static AudioManager instance;
     bool isMute;
+    
     bool m_audioSource1IsPlaying;
     bool m_changeAudioSource = false;
     float m_secondChange;
@@ -41,13 +44,13 @@ public class AudioManager : MonoBehaviour
         {
             AudioSource audioSource1 = m_audioSource1IsPlaying ? musicAudioSource1 : musicAudioSource2;
             AudioSource audioSource2 = m_audioSource1IsPlaying ? musicAudioSource2 : musicAudioSource1;
-            audioSource1.volume += Time.deltaTime / m_secondChange;
-            audioSource2.volume -= Time.deltaTime / m_secondChange;
-            if(audioSource2.volume < 0)
+            audioSource1.volume += Time.deltaTime / m_secondChange * m_musicVolume;
+            audioSource2.volume -= Time.deltaTime / m_secondChange * m_musicVolume;
+            if(audioSource2.volume <= 0 || audioSource1.volume >= m_musicVolume)
             {
                 audioSource2.Stop();
                 audioSource2.volume = 0;
-                audioSource1.volume = 1;
+                audioSource1.volume = m_musicVolume;
                 m_changeAudioSource = false;
             }
 
@@ -69,5 +72,17 @@ public class AudioManager : MonoBehaviour
         m_secondChange = timeChanged;
         m_audioSource1IsPlaying = !m_audioSource1IsPlaying;
         m_changeAudioSource = true;
+    }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        m_musicVolume = volume;
+        AudioSource audioSource = m_audioSource1IsPlaying ? musicAudioSource1 : musicAudioSource2;
+        audioSource.volume = m_musicVolume;
+    }
+
+    public void ChangeEffectsVolume(float volume)
+    {
+        m_soundVolume = volume;
     }
 }

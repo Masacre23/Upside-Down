@@ -32,13 +32,20 @@ public class PlayerDead : PlayerDamageStates
         m_player.m_negatePlayerInput = true;
         m_player.m_animator.SetBool("Dead", true);
 
+        if (m_player.m_soundEffects)
+        {
+            m_player.m_soundEffects.StopSoundLoop("Scream");
+            m_player.m_soundEffects.PlaySound("Dead");
+        }
+            
         if (data.m_respawn)
             OnExit(data);
     }
 
     public override void OnExit(DamageData data)
     {
-        Scenes.LoadScene(Scenes.GameOver);
+        //Scenes.LoadScene(Scenes.GameOver);
+        HUDManager.ShowGameOverPanel(true);
         m_player.m_animator.SetBool("Dead", false);
     }
 }

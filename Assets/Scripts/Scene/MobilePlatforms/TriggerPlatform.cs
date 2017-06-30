@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerPlatform : MonoBehaviour {
+public class TriggerPlatform : MonoBehaviour
+{
 
-    public bool m_playerDetected = false;
+    [HideInInspector] public bool m_playerDetected = false;
 
     void OnTriggerEnter(Collider col)
     {

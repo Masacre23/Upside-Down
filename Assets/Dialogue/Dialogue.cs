@@ -159,4 +159,9 @@ public class Dialogue : MonoBehaviour
 
         ContinueIcon.SetActive(true);
     }
+
+    public bool DialogueHasEnded()
+    {
+        return _isEndOfDialogue;
+    }
 }

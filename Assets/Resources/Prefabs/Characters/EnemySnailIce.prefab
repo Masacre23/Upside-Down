@@ -187,6 +187,7 @@ GameObject:
   - component: {fileID: 54564652599057642}
   - component: {fileID: 135294875260527344}
   - component: {fileID: 136241918495405060}
+  - component: {fileID: 65241620231756986}
   - component: {fileID: 114666747388420396}
   - component: {fileID: 114193801501227358}
   - component: {fileID: 114919453644291758}
@@ -2582,14 +2583,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092291310857354}
-  m_LocalRotation: {x: 0.6741751, y: 0.2898081, z: 0.5945718, w: 0.32860872}
-  m_LocalPosition: {x: -1.48, y: -6.881, z: 10.817}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.6962732, y: 0.64480114, z: -0.26739556, w: -0.16713694}
+  m_LocalPosition: {x: -4.62, y: 0.71, z: 1.86}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 4573166202298026}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 174.35, y: -85.56201, z: -51.752014}
+  m_LocalEulerAnglesHint: {x: 144.719, y: -371.076, z: -277.928}
 --- !u!4 &4540267285914756
 Transform:
   m_ObjectHideFlags: 1
@@ -3344,6 +3345,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65241620231756986
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092291310857354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.38, y: 0.01, z: 0.6}
+  m_Center: {x: -0.07, y: 0.55, z: -0.12}
 --- !u!65 &65558759414981684
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -3376,7 +3389,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 10
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -3386,28 +3399,28 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0.1
-      value: 1
+      time: 0.03271462
+      value: 0.9931677
       inSlope: -10.0039835
       outSlope: -10.0039835
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.18604651
+      time: 0.10716021
       value: 0.4143302
-      inSlope: -2.5009959
-      outSlope: -2.5009959
+      inSlope: -3.5440164
+      outSlope: -3.5440164
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.3906977
-      value: 0.13006231
-      inSlope: -0.62524897
-      outSlope: -0.62524897
+      time: 0.35357472
+      value: 0.07882008
+      inSlope: -0.38798892
+      outSlope: -0.38798892
       tangentMode: 0
     - serializedVersion: 2
-      time: 0.7976744
-      value: 0.023987537
-      inSlope: -0.15631224
-      outSlope: -0.15631224
+      time: 0.7883937
+      value: 0.01032294
+      inSlope: -0.03121151
+      outSlope: -0.03121151
       tangentMode: 0
     - serializedVersion: 2
       time: 0.9976744
@@ -3488,6 +3501,7 @@ MonoBehaviour:
   m_floatingSpeed: 10
   m_maxTimeFloating: 10
   m_rotationSpeed: 100
+  m_aura: {fileID: 0}
   m_canDamage: 0
 --- !u!114 &114487566056504750
 MonoBehaviour:
@@ -3502,8 +3516,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keys:
   - SplashWater
+  - Walk
   sounds:
   - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
+  - {fileID: 8300000, guid: 5c8a2cf655c8f1b4b9a42bf4678a826c, type: 3}
 --- !u!114 &114666747388420396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3519,7 +3535,6 @@ MonoBehaviour:
   m_health: 10
   m_moveSpeed: 4
   m_jumpForceVertical: 4
-  m_jumpForceHorizontal: 4
   m_lerpSpeed: 10
   m_animator: {fileID: 95058456309787788}
   m_gravityOnCharacter: {fileID: 0}
@@ -3531,10 +3546,10 @@ MonoBehaviour:
   m_Following: {fileID: 0}
   m_ReceivingDamage: {fileID: 0}
   m_Dead: {fileID: 0}
-  m_speed: 2
-  m_patrollingArea: {fileID: 0}
+  m_speed: 1
   m_isFloating: 0
   player: {fileID: 0}
+  m_isSleeping: 1
   m_type: 0
 --- !u!114 &114919453644291758
 MonoBehaviour:
@@ -3547,14 +3562,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1102b78b8528dd84d9c570aad8bacf04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speedAutoExitAttractor: 10
-  m_maxTimeGravity: 2
-  m_maxDistanceFromAttractor: 8
   m_rigidBody: {fileID: 0}
-  m_planets: []
+  m_attractorGameObject: {fileID: 0}
+  m_planetsGravity: []
+  m_objectsGravity: []
   m_maxTimeTravelled: 0.5
+  m_maxTimeOnGravityWallGravity: 1
   m_ignoreGravity: 0
+  m_onGravityWall: 0
+  m_onAir: 0
   m_getStrongestGravity: 1
+  test: {x: 0, y: 0, z: 0}
 --- !u!135 &135294875260527344
 SphereCollider:
   m_ObjectHideFlags: 1

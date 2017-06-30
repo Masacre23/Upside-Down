@@ -14,7 +14,7 @@ public class PlayerGrounded : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimGravity, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
     {
         bool ret = false;
 
@@ -23,50 +23,32 @@ public class PlayerGrounded : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        RaycastHit target;
-        bool hasTarget = m_player.SetMarkedTarget(out target);
+        if (jumping)
+        {
+            m_player.Jump(axisHorizontal, axisVertical);
 
-        //if (aimGravity)
+            m_player.m_currentState = m_player.m_onAir;
+            ret = true;
+        }
+        //else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
         //{
-        //    m_player.m_currentState = m_player.m_floating;
-        //    m_player.SetFloatingPoint(m_floatingHeight);
+        //    m_player.m_currentState = m_player.m_aimToThrow;
         //    ret = true;
         //}
-        if (changeGravity)
-        {
-            //if (hasTarget)
-            //{
-            //    m_player.m_playerGravity.ChangeGravityTo(target);
-            //    m_player.m_gravityOnCharacter.ChangeToAttractor();
-            //    m_player.m_rigidBody.velocity = Vector3.zero;
-            //    m_player.m_freezeMovement = true;
-            //    //m_player.m_currentState = m_player.m_changing;
-            //    m_player.m_currentState = m_player.m_onAir;
-            //    ret = true;
-            //}
-            //else
-                m_player.SwapGravity();
-        }
-        else if (jumping)
-        {
-            m_player.m_currentState = m_player.m_onAir;
-            m_player.Jump();
-            ret = true;
-        }
-        else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
-        {
-            m_player.m_currentState = m_player.m_aimToThrow;
-            ret = true;
-        }
         else
         {
             m_player.UpdateUp();
             m_player.Move(timeStep);
-            m_player.ThrowObjectsThirdPerson(throwing);
-            if (pickObjects)
+            //m_player.ThrowObjectsThirdPerson(throwing);
+            if (m_player.m_floatingObjects.HasObjectsToThrow())
+                m_player.ThrowObjectsThirdPerson(pickObjects);
+            else
             {
-                m_player.PickObjects();
+                m_player.m_floatingObjects.UnsetTarget();
+                if (pickObjects)
+                    m_player.PickObjects();
             }
+                
             if (!m_player.CheckGroundStatus())
             {
                 m_player.m_currentState = m_player.m_onAir;
@@ -83,15 +65,24 @@ public class PlayerGrounded : PlayerStates
         m_player.m_rotationFollowPlayer = true;
         m_player.m_reachedGround = true;
         m_player.m_freezeMovement = false;
-		EffectsManager.Instantiate (m_player.m_jumpClouds, transform.position, transform.rotation * m_player.m_jumpClouds.transform.rotation);
-	    m_player.m_runClouds.GetComponent<ParticleSystem> ().Play();
+        
         m_player.m_jumpDirection = Vector3.zero;
+        m_player.m_jumpMovement = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
+        m_player.m_camController.m_followPlayer = true;
+
+        EffectsManager.Instance.GetEffect(m_player.m_jumpClouds, m_player.m_smoke);
+        m_player.m_runClouds.GetComponent<ParticleSystem>().Play();
+
+        if (m_player.m_soundEffects)
+            m_player.m_soundEffects.PlaySound("Fall");
     }
 
     public override void OnExit()
     {
-		m_player.m_runClouds.GetComponent<ParticleSystem> ().Stop();
+        m_player.m_runClouds.GetComponent<ParticleSystem>().Stop();
         m_player.m_floatingObjects.UnsetTarget();
+        m_player.UnmarkTarget();
+        m_player.m_rotationFollowPlayer = false;
     }
 }
