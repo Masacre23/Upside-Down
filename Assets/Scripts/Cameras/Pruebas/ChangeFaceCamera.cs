@@ -8,16 +8,20 @@ public class ChangeFaceCamera : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		if(col.tag == "Player")
-			Camera.main.transform.parent = GameObject.Find ("Player").transform;
+		if (col.tag == "Player") 
+		{
+			Camera.main.transform.parent = null;
+			//if (Camera.main.GetComponent<IsometricCamera> ().actualPoint != numPoint)
+				Camera.main.GetComponent<IsometricCamera> ().actualPoint = numPoint;
+			//else
+			//	Camera.main.GetComponent<IsometricCamera> ().actualPoint--;
+		}
+
 	}
 
 	void OnTriggerExit(Collider col)
 	{
-		if (col.tag == "Player") 
-		{
-			Camera.main.transform.parent = null;
-			Camera.main.GetComponent<IsometricCamera> ().actualPoint = numPoint;
-		}
+		if(col.tag == "Player")
+			Camera.main.transform.parent = GameObject.Find ("Player").transform;
 	}
 }
