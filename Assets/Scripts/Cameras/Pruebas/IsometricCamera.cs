@@ -8,6 +8,7 @@ public class IsometricCamera : MonoBehaviour {
 	public GameObject player;
 	public GameObject[] lerpPoints;
 	public int actualPoint;
+	public Vector3 dir;
 
 	public int zoom = 2;
 	public int normal = 60;
@@ -33,21 +34,13 @@ public class IsometricCamera : MonoBehaviour {
 		m_lookAngleY = Mathf.Lerp(m_lookAngleY, y, m_turnSpeed * Time.deltaTime);
 
 		transform.LookAt (player.transform.position + transform.right * m_lookAngleX + transform.up * m_lookAngleY, player.transform.up);
-		if(actualPoint != -1 && transform.parent == null)
+		if(actualPoint != -1 && transform.parent == null && dir == Vector3.zero)
 			transform.position = Vector3.Lerp (transform.position, lerpPoints [actualPoint].transform.position, Time.deltaTime);
 
+		if (dir != Vector3.zero)
+			transform.position = Vector3.Lerp (transform.position, player.transform.position + dir * 5 + player.transform.up * 5, Time.deltaTime);
+		
 		FOV = normal - Vector3.Distance (transform.position, player.transform.position) * zoom + 10;
 		GetComponent<Camera> ().fieldOfView = FOV;
-
-		/*float x = CrossPlatformInputManager.GetAxis("Mouse X");
-		float y = CrossPlatformInputManager.GetAxis("Mouse Y");
-		m_lookAngle += x * m_turnSpeed;
-		m_tiltAngle -= y * m_turnSpeed;
-		m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_tiltMin, m_tiltMax);
-
-		Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
-		Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-
-		transform.rotation = targetRotation * tiltRotation;*/
 	}
 }
