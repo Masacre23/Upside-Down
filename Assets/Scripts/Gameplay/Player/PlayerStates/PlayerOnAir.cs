@@ -14,7 +14,7 @@ public class PlayerOnAir : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimingObject, float timeStep)
     {
         bool ret = false;
 
@@ -23,24 +23,14 @@ public class PlayerOnAir : PlayerStates
         else
             m_player.m_playerStopped = false;
 
-        //if (jumping && !m_doubleJump && m_player.m_oxigen.HasEnoughOxygen(m_oxigenDoubleJump))
-        //{
-        //    m_player.Jump(axisHorizontal, axisVertical);
-        //    m_doubleJump = true;
-        //    m_player.m_doubleJumping = true;
-        //    m_player.m_oxigen.LostOxigen(m_oxigenDoubleJump);
-        //}
-        //else
-        //{
-            m_player.OnAir();
-            m_player.UpdateUp();
-            m_player.MoveOnAir(timeStep);
-            if (m_player.CheckGroundStatus())
-            {
-                m_player.m_currentState = m_player.m_grounded;
-                ret = true;
-            }
-        //}
+        m_player.OnAir();
+        m_player.UpdateUp();
+        m_player.MoveOnAir(timeStep);
+        if (m_player.CheckGroundStatus())
+        {
+            m_player.m_currentState = m_player.m_grounded;
+            ret = true;
+        }
 
         return ret;
     }

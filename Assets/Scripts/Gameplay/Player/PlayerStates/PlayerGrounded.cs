@@ -14,7 +14,7 @@ public class PlayerGrounded : PlayerStates
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public override bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimingObject, float timeStep)
     {
         bool ret = false;
 
@@ -30,16 +30,10 @@ public class PlayerGrounded : PlayerStates
             m_player.m_currentState = m_player.m_onAir;
             ret = true;
         }
-        //else if (aimingObject && m_player.m_floatingObjects.HasObjectsToThrow())
-        //{
-        //    m_player.m_currentState = m_player.m_aimToThrow;
-        //    ret = true;
-        //}
         else
         {
             m_player.UpdateUp();
             m_player.Move(timeStep);
-            //m_player.ThrowObjectsThirdPerson(throwing);
             if (m_player.m_floatingObjects.HasObjectsToThrow())
                 m_player.ThrowObjectsThirdPerson(pickObjects);
             else

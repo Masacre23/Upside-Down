@@ -8,11 +8,7 @@ public class PlayerStates : MonoBehaviour
     {
         GROUNDED,
         ONAIR,
-        THROWING,
-        FLOATING,
-        CHANGING,
-        DAMAGED,
-        DEAD
+        THROWING
     }
 
     public States m_type;
@@ -29,7 +25,7 @@ public class PlayerStates : MonoBehaviour
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-    public virtual bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool changeGravity, bool aimingObject, bool throwing, float timeStep)
+    public virtual bool OnUpdate(float axisHorizontal, float axisVertical, bool jumping, bool pickObjects, bool aimingObject, float timeStep)
     {
         return false;
     }

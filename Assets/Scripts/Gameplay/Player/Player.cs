@@ -16,12 +16,9 @@ public class Player : Character
     float m_camVertical;
     bool m_jumping;
     bool m_pickObjects;
-    bool m_changeGravity;
     bool m_aimObject;
-    bool m_throwObjectButtonDown;
     bool m_returnCam;
 
-    bool m_throwObjectButtonUp = true;
     bool m_throwAnimation = false;
 
     public bool m_negatePlayerInput = false;
@@ -29,15 +26,12 @@ public class Player : Character
     public bool m_savedPlayerInput = false;
     public bool m_paused = false;
     public bool m_justUnpaused = false;
-    public bool m_negateJump = false;
 
     //Variables regarding player state
     public PlayerStates m_currentState;
     [HideInInspector] public PlayerStates m_grounded;
     [HideInInspector] public PlayerStates m_onAir;
     [HideInInspector] public PlayerStates m_aimToThrow;
-    [HideInInspector] public PlayerStates m_floating;
-    [HideInInspector] public PlayerStates m_changing;
 
     //Variables regarding player damage state
     public PlayerDamageStates m_playerDamageState;
@@ -117,12 +111,6 @@ public class Player : Character
         m_onAir = gameObject.GetComponent<PlayerOnAir>();
         if (!m_onAir)
             m_onAir = gameObject.AddComponent<PlayerOnAir>();
-        //m_floating = gameObject.GetComponent<PlayerFloating>();
-        //if (!m_floating)
-        //    m_floating = gameObject.AddComponent<PlayerFloating>();
-        //m_changing = gameObject.GetComponent<PlayerChanging>();
-        //if (!m_changing)
-        //    m_changing = gameObject.AddComponent<PlayerChanging>();
         m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
         if (!m_aimToThrow)
             m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
@@ -214,7 +202,7 @@ public class Player : Character
         ManageInput();
 
         PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_changeGravity, m_aimObject, m_throwObjectButtonDown, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -292,56 +280,6 @@ public class Player : Character
         }
     }
 
-    //This function looks for a gravity wall in front of the player
-    //It marks the target if someone is found (unmarking previous marked objects)
-    //If no one is found, it unmarks previous objects
-    public bool GetGravityChangeTarget(out RaycastHit target)
-    {
-        bool ret = false;
-
-        //First look for a target in front of character (ThrowAimRaycast), 
-        // if not found look for one below (LowAimRaycast)
-        // if not found look for one up (HighAimRaycast)
-
-        ret = GetGravityWall(m_throwAimOrigin, out target);
-        if (!ret)
-            ret = GetGravityWall(m_lowAimOrigin, out target);
-        if (!ret)
-            ret = GetGravityWall(m_highAimOrigin, out target);
-
-        if (!ret)
-            UnmarkTarget();
-
-        return ret;
-    }
-
-    //This gets only one gravity wall, casting a raycast from and forward of Origin
-    private bool GetGravityWall(Transform origin, out RaycastHit target)
-    {
-        bool ret = false;
-
-        int layerMask = 1 << LayerMask.NameToLayer("Terrain");
-        if (Physics.Raycast(origin.position, origin.forward, out target, m_gravityRange, layerMask))
-        {
-            if (target.collider.tag == "GravityWall")
-            {
-                MarkObject newMarked = target.transform.GetComponent<MarkObject>();
-                if (newMarked && target.transform.gameObject != m_gravityOnCharacter.m_attractorGameObject)
-                {
-                    ret = true;
-                    if (newMarked != m_markedTarget)
-                    {
-                        UnmarkTarget();
-                        newMarked.BeginMarking();
-                        m_markedTarget = newMarked;
-                    }
-                }
-            }
-        }
-
-        return ret;
-    }
-
     //This function unmarks a target, if any
     public void UnmarkTarget()
     {
@@ -360,14 +298,8 @@ public class Player : Character
         Vector3 movement = inputHorizontal * GetDirectionRight() + inputVertical * forward;
         movement.Normalize();
 
-        JumpInDirection(movement, m_inputSpeed);
-    }
-
-    //This function deals with the jump of the character
-    //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public void JumpInDirection (Vector3 movement, float inputIntensity)
-    {
-        float speed = GetSpeedFromInput(inputIntensity);
+        //float speed = GetSpeedFromInput(m_inputSpeed);
+        float speed = m_runSpeed;
 
         if (movement != Vector3.zero)
             m_modelTransform.rotation = Quaternion.LookRotation(movement, transform.up);
@@ -377,8 +309,8 @@ public class Player : Character
         m_jumpMovement = Vector3.zero;
 
         m_jumpVector = transform.up * m_jumpForceVertical;
-        m_jumpMovement = movement.normalized * speed;
-        m_jumpDirection = movement.normalized;
+        m_jumpMovement = movement * speed;
+        m_jumpDirection = movement;
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
@@ -652,25 +584,7 @@ public class Player : Character
         if (!m_negatePlayerInput && !m_paused)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
-
-            //if (m_negateJump)
-            //    m_jumping = false;
-
-            if (m_throwObjectButtonUp)
-            {
-                if (m_throwObjectButtonDown)
-                    m_throwObjectButtonUp = false;
-            }
-            else
-            {
-                if (m_throwObjectButtonDown)
-                    m_throwObjectButtonDown = false;
-                else
-                    m_throwObjectButtonUp = true;
-            }
-            if (m_throwObjectButtonDown)
-                m_throwObjectButtonUp = false;
+            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimObject, ref m_returnCam);
 
         }
         m_playerStopped = false;
@@ -685,9 +599,7 @@ public class Player : Character
         m_camVertical = 0.0f;
         m_jumping = false;
         m_pickObjects = false;
-        m_changeGravity = false;
         m_aimObject = false;
-        m_throwObjectButtonDown = false;
         m_returnCam = false;
     }
 
