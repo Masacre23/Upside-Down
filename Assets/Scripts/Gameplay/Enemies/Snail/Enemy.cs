@@ -95,6 +95,7 @@ public class Enemy : Character {
                 throwableObject.m_canDamage = false;
                 m_damageData.m_recive = true;
                 m_damageData.m_damage = 50;
+				CalculateDirection (col.gameObject, this.gameObject);
             }
         }
 
@@ -151,4 +152,77 @@ public class Enemy : Character {
                 m_currentState = m_ReceivingDamage;
         }
     }
+
+	public enum HitDirection { None, Top, Bottom, Forward, Back, Left, Right }
+	public HitDirection hitDirection = HitDirection.None;
+	public Vector3 MyNormal;
+	void CalculateDirection( GameObject Object, GameObject ObjectHit ){
+
+		//hitDirection = HitDirection.None;
+		/*RaycastHit MyRayHit;
+		Vector3 direction = ( Object.transform.position - ObjectHit.transform.position ).normalized;
+		Ray MyRay = new Ray( ObjectHit.transform.position, direction );
+
+		if ( Physics.Raycast( MyRay, out MyRayHit ) ){
+
+			if ( MyRayHit.collider != null ){
+
+				MyNormal = MyRayHit.normal;
+				MyNormal = MyRayHit.transform.TransformDirection( MyNormal );
+
+				if( MyNormal == MyRayHit.transform.up ){ hitDirection = HitDirection.Top; }
+				if( MyNormal == -MyRayHit.transform.up ){ hitDirection = HitDirection.Bottom; }
+				if( MyNormal == MyRayHit.transform.forward ){ hitDirection = HitDirection.Forward; }
+				if( MyNormal == -MyRayHit.transform.forward ){ hitDirection = HitDirection.Back; }
+				if( MyNormal == MyRayHit.transform.right ){ hitDirection = HitDirection.Right; }
+				if( MyNormal == -MyRayHit.transform.right ){ hitDirection = HitDirection.Left; }
+			}    
+		}*/
+		RaycastHit MyRayHit;
+		Vector3 direction = ( Object.transform.position - ObjectHit.transform.position ).normalized;
+		Ray MyRay = new Ray( ObjectHit.transform.position, direction );
+
+		if (Physics.Raycast (MyRay, out MyRayHit)) {
+			Vector3 localPoint = MyRayHit.transform.InverseTransformPoint (MyRayHit.point);
+			Vector3 localDir = localPoint.normalized;
+
+			float upDot = Vector3.Dot(localDir, Vector3.up);
+			float fwdDot = Vector3.Dot(localDir, Vector3.forward);
+			float rightDot = Vector3.Dot(localDir, Vector3.right);
+
+			float upPower = Mathf.Abs(upDot);
+			float fwdPower = Mathf.Abs(fwdDot);
+			float rightPower = Mathf.Abs(rightDot);
+
+			if (upPower > fwdPower) 
+			{
+				if (upPower > rightPower) 
+				{
+					if (upDot > 0)
+						hitDirection = HitDirection.Top;
+					else
+						hitDirection = HitDirection.Bottom;
+				} else 
+				{
+					if (rightDot > 0)
+						hitDirection = HitDirection.Right;
+					else
+						hitDirection = HitDirection.Left;
+				}
+			} else if (fwdPower > rightPower) 
+			{
+				if (fwdDot > 0)
+					hitDirection = HitDirection.Forward;
+				else
+					hitDirection = HitDirection.Back;
+			} else 
+			{
+				if (rightDot > 0)
+					hitDirection = HitDirection.Right;
+				else
+					hitDirection = HitDirection.Left;
+			}
+		}
+
+	}
 }

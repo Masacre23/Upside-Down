@@ -11,73 +11,45 @@ public class EnemyFollowing : EnemyStates
 	float radiusCollider;
 	float capsuleRadius;
 	public Vector3 target;
-    public GameObject m_prefabEffect;
-
-    //Flying enemy
- //   private float nextFire;
- //   private float fireRate = 2;
 
 	public float stunnedTime = 5;
 	float timer ;
 	private float nextAttack;
 	public float attackRate = 2;
 
-    public void Awake()
-    {
-        if (!m_prefabEffect)
-            m_prefabEffect = (GameObject)Resources.Load("Prefabs/Effects/CFX3_IceBall_A", typeof(GameObject));  
-    }
-
     public override void Start ()
     {
 		base.Start();
         m_type = States.FOLLOWING;
-        //planet = transform.parent.gameObject;
     }
 
 	public override bool OnUpdate (DamageData data)
     {
 		bool ret = false;
-
 		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position); 
 
-       // if (m_enemy.m_animator != null)
-      //  {
-			//m_enemy.m_animator.SetInteger("RandomAnimation", Random.Range(0, 2));
-			m_enemy.m_animator.speed = Random.Range(1, 3);
-            m_enemy.m_animator.SetFloat("PlayerDistance", distance);
+		m_enemy.m_animator.speed = Random.Range(1, 3);
+        m_enemy.m_animator.SetFloat("PlayerDistance", distance);
 
-			AnimatorStateInfo info = m_enemy.m_animator.GetCurrentAnimatorStateInfo (0);
-			if (info.IsName ("Walk")) 
+		AnimatorStateInfo info = m_enemy.m_animator.GetCurrentAnimatorStateInfo (0);
+		if (info.IsName ("Walk")) 
+		{
+			m_enemy.m_animator.SetBool ("CanAttack", false);
+			m_enemy.m_animator.speed = 1;
+			Move ();
+			Attack ();
+		} else if (info.IsName ("Stunned")) 
+		{
+			if (timer < stunnedTime && m_enemy.m_animator.GetBool("Stunned")) 
 			{
-				m_enemy.m_animator.SetBool ("CanAttack", false);
-				m_enemy.m_animator.speed = 1;
-				Move ();
-				Attack ();
-			} else if (info.IsName ("Stunned")) 
-			{
-			if (info.normalizedTime % 1 > 0.3f) 
-				{
-				if (timer < stunnedTime && m_enemy.m_animator.GetBool("Stunned")) 
-					{
-						m_enemy.m_animator.speed = 0;
-						timer += Time.deltaTime;
-					}
-					else 
-					{
-						timer = 0;
-						m_enemy.m_animator.speed = 1;
-						m_enemy.m_animator.SetBool ("Stunned", false);
-					}
-				}
+				timer += Time.deltaTime;
 			}
-      //  }
-      //  else
-       //     Move();
-
-        //if (m_enemy.m_type == Enemy.Types.FLYING)
-        //    Attack();
-
+			else 
+			{
+				timer = 0;
+				m_enemy.m_animator.SetBool ("Stunned", false);
+			}
+		}
         if (data.m_recive)
         {
             ret = true;

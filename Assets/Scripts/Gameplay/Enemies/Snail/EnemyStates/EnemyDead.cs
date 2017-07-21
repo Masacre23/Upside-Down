@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDead : EnemyStates
 {
-    string m_animationName = "Death";
+   // string m_animationName = "Death";
 
     public override void Start ()
     {
@@ -27,8 +27,11 @@ public class EnemyDead : EnemyStates
 
 	public override void OnEnter()
 	{
-        if (m_enemy.m_type == Enemy.Types.SNAIL)
-            m_enemy.m_animator.SetBool("Dead", true);
+		if (m_enemy.m_type == Enemy.Types.SNAIL) 
+		{
+			m_enemy.m_animator.SetInteger ("HitDirection", (int)m_enemy.hitDirection);
+			m_enemy.m_animator.SetBool ("Dead", true);
+		}
         else
             this.gameObject.SetActive(false);
     }

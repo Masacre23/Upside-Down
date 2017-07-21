@@ -1261,7 +1261,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4558765381140110}
-  - component: {fileID: 65558759414981684}
   m_Layer: 10
   m_Name: CenterSpineFather
   m_TagString: EnemySnail
@@ -2584,8 +2583,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1092291310857354}
   m_LocalRotation: {x: -0.6962732, y: 0.64480114, z: -0.26739556, w: -0.16713694}
-  m_LocalPosition: {x: -4.62, y: 0.71, z: 1.86}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: -4.658, y: 1.079, z: 1.295}
+  m_LocalScale: {x: 0.7000002, y: 0.7000007, z: 0.70000076}
   m_Children:
   - {fileID: 4573166202298026}
   m_Father: {fileID: 0}
@@ -3353,22 +3352,10 @@ BoxCollider:
   m_GameObject: {fileID: 1092291310857354}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 0.38, y: 0.01, z: 0.6}
-  m_Center: {x: -0.07, y: 0.55, z: -0.12}
---- !u!65 &65558759414981684
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1732029360561496}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.01, z: 0.1}
-  m_Center: {x: -0.02, y: 0.16, z: -0.1}
+  m_Size: {x: 0.67, y: 1, z: 0.7}
+  m_Center: {x: -0.07, y: 0, z: -0.07}
 --- !u!82 &82861667742098438
 AudioSource:
   m_ObjectHideFlags: 1
@@ -3503,6 +3490,7 @@ MonoBehaviour:
   m_rotationSpeed: 100
   m_aura: {fileID: 0}
   m_canDamage: 0
+  m_prefabHit1: {fileID: 0}
 --- !u!114 &114487566056504750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3541,6 +3529,7 @@ MonoBehaviour:
   m_rigidBody: {fileID: 0}
   m_capsule: {fileID: 0}
   m_capsuleHeight: 0
+  m_prefabHit1: {fileID: 0}
   m_currentState: {fileID: 0}
   m_Idle: {fileID: 0}
   m_Following: {fileID: 0}
@@ -3593,7 +3582,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 1092291310857354}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.4
   m_Height: 0
   m_Direction: 1
