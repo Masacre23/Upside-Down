@@ -5,8 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Scenes : MonoBehaviour {
     public static readonly int MainMenu = 0;
-    public static readonly int GameOver = 1;
-    public static readonly int Level1 = 2;
+    public static readonly int Level1 = 1;
 
     [SerializeField] GameObject cameras;
 	[SerializeField] GameObject gameoverPanel;

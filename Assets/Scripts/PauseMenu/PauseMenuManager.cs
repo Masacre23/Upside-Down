@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PauseMenuManager : MonoBehaviour {
 
@@ -27,8 +28,9 @@ public class PauseMenuManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         //if (Input.GetKeyDown(mPauseKey))
-        if (Input.GetButtonDown(m_pauseInputButton))
+        if (CrossPlatformInputManager.GetButtonDown(m_pauseInputButton))
         {
+            
             Paused();
             if (mIsPaused)
                 m_player.PausePlayer();
