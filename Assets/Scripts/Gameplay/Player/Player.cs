@@ -499,39 +499,9 @@ public class Player : Character
         int enemy = LayerMask.NameToLayer("Enemy");
         if (col.collider.gameObject.layer == enemy) 
 		{
-			if (col.gameObject.tag != "FlyingEnemy") //If is snail
-			{ 
-				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
-                    EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
-                    if (m_soundEffects != null) {
-						m_soundEffects.PlaySound ("Scream");
-					}
-					m_damageData.m_recive = true;
-					m_damageData.m_damage = 20;
-
-					Vector3 diff = transform.position - col.transform.position;
-					float distance = diff.magnitude;
-					Vector3 dir = diff / distance;
-
-					RaycastHit hit;
-					if (Physics.Raycast (transform.position, dir, out hit, 1f)) {
-						EffectsManager.Instance.GetEffect (m_prefabHit1, col.transform.position + transform.up/2 + col.transform.forward/2, transform.up, null);
-					}
-				} else if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
-				{
-					RaycastHit hit;
-					if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
-						if (hit.collider.gameObject.tag == "EnemySnail") 
-						{
-							col.transform.GetComponentInParent<Enemy> ().m_animator.SetBool ("Stunned", true);
-							EffectsManager.Instance.GetEffect(m_prefabHit1, hit.point, transform.up, null);
-						}
-					}
-				}
-			} 
-			else 
+			if (col.gameObject.tag == "FlyingEnemy") 
 			{
-                EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
+				EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
                 if (m_soundEffects != null)
                     m_soundEffects.PlaySound("Scream");
                 m_damageData.m_recive = true;
@@ -576,6 +546,16 @@ public class Player : Character
             //    m_InIce = false;
             //} TODO: Esteban.
         }
+
+		/* ENEMY STUFF
+		* 
+		* We detect wich collider of the enemy are we hitting
+		*
+		*/
+		if (collision.collider.tag == "EnemyAuxCollider") 
+		{
+			collision.collider.transform.parent.transform.parent.GetComponent<Enemy> ().m_activeCollider = collision.collider;
+		}
 
     }
 

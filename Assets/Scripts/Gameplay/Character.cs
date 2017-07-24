@@ -45,8 +45,10 @@ public class Character : MonoBehaviour
     public virtual void Start ()
     {
         m_rigidBody = GetComponent<Rigidbody>();
-        m_capsule = GetComponent<CapsuleCollider>();
-        m_capsuleHeight = m_capsule.height;
+		if (tag == "Player") {
+			m_capsule = GetComponent<CapsuleCollider> ();
+			m_capsuleHeight = m_capsule.height;
+		}
 
         m_rigidBody.freezeRotation = true;
         m_health = m_maxHealth;

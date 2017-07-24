@@ -17,6 +17,8 @@ public class Enemy : Character {
     public DamageData m_damageData;
 
     //General variables
+	public Collider m_headCol;
+	public Collider m_activeCollider;
     public int m_speed = 2;
     public bool m_isFloating = false;
 
@@ -80,6 +82,13 @@ public class Enemy : Character {
             m_currentState.OnEnter();
         }
 
+		if(m_activeCollider == m_headCol)
+		{
+			if(!m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
+				m_animator.SetBool ("Stunned", true);
+			m_activeCollider = null;
+		}
+
         UpdateUp();
 
         m_damageData.ResetDamageData();
@@ -98,6 +107,41 @@ public class Enemy : Character {
 				CalculateDirection (col.gameObject, this.gameObject);
             }
         }
+
+		if (col.gameObject.tag == "Player") 
+		{
+			if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
+			{
+				/*EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
+			if (m_soundEffects != null) {
+				m_soundEffects.PlaySound ("Scream");
+			}*/
+
+				col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
+				col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
+
+				Vector3 diff = transform.position - col.transform.position;
+				float distance = diff.magnitude;
+				Vector3 dir = diff / distance;
+
+				RaycastHit hit;
+				if (Physics.Raycast (transform.position, dir, out hit, 1f)) {
+					EffectsManager.Instance.GetEffect (m_prefabHit1, col.transform.position + transform.up / 2 + col.transform.forward / 2, transform.up, null);
+				}
+			}
+			else //if(m_activeCollider == m_headCol)/*if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) */
+			{
+				/*RaycastHit hit;
+				if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
+					if (hit.collider.gameObject.tag == "EnemySnail") 
+					{*/
+					//	m_animator.SetBool ("Stunned", true);
+					/*	EffectsManager.Instance.GetEffect(m_prefabHit1, hit.point, transform.up, null);
+					}
+				}*/
+			}
+			//Debug.Log (col.);
+		}
 
         int harmfulTerrain = LayerMask.NameToLayer("HarmfulTerrain");
         if (col.collider.gameObject.layer == harmfulTerrain)
