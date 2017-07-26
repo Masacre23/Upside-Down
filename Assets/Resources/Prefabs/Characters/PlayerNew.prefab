@@ -2323,7 +2323,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1663633632639188}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.877, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4464118457182118}
@@ -2737,18 +2737,16 @@ MonoBehaviour:
   m_rigidBody: {fileID: 0}
   m_capsule: {fileID: 0}
   m_capsuleHeight: 0
+  m_prefabHit1: {fileID: 0}
   m_fixedCam: 0
   m_negatePlayerInput: 0
   m_savedPlayerInput: 0
   m_paused: 0
   m_justUnpaused: 0
-  m_negateJump: 0
   m_currentState: {fileID: 0}
   m_grounded: {fileID: 0}
   m_onAir: {fileID: 0}
   m_aimToThrow: {fileID: 0}
-  m_floating: {fileID: 0}
-  m_changing: {fileID: 0}
   m_playerDamageState: {fileID: 0}
   m_vulnerable: {fileID: 0}
   m_invulnerable: {fileID: 0}
@@ -2790,6 +2788,7 @@ MonoBehaviour:
   m_runClouds: {fileID: 1730330715827228}
   m_hit: {fileID: 100002, guid: f09009d97ea202942987bc6927f232a5, type: 2}
   m_smoke: {fileID: 4307719282888688}
+  m_enemyDetector: {fileID: 0}
   m_soundEffects: {fileID: 0}
 --- !u!114 &114401269923096900
 MonoBehaviour:
@@ -2965,11 +2964,11 @@ Projector:
   m_Enabled: 1
   serializedVersion: 2
   m_NearClipPlane: 0.1
-  m_FarClipPlane: 10
+  m_FarClipPlane: 30
   m_FieldOfView: 30
   m_AspectRatio: 1
   m_Orthographic: 1
-  m_OrthographicSize: 1
+  m_OrthographicSize: 0.5
   m_Material: {fileID: 2100000, guid: e30ff3588e719f34bbf0c66f22d97487, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
