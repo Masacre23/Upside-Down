@@ -6,8 +6,6 @@ using UnityEngine;
 //It inherits from Character.
 public class Player : Character
 {
-
-    public bool m_fixedCam = false;
     //Variables regarding player input control
     PlayerController m_playerInput;
     float m_axisHorizontal;
@@ -31,6 +29,7 @@ public class Player : Character
     public PlayerStates m_currentState;
     [HideInInspector] public PlayerStates m_grounded;
     [HideInInspector] public PlayerStates m_onAir;
+    [HideInInspector] public PlayerCarrying m_carrying;
     [HideInInspector] public PlayerStates m_aimToThrow;
 
     //Variables regarding player damage state
@@ -49,12 +48,11 @@ public class Player : Character
     //General Info variables
     public Transform m_modelTransform;
     [HideInInspector] public VariableCam m_camController;
-    [HideInInspector] public PlayerGravity m_playerGravity;
 
     //Variables regarding player movement
     public bool m_freezeMovement;
     public bool m_rotationFollowPlayer;
-    public bool m_playerStopped = false;
+    [HideInInspector] public bool m_playerStopped = false;
     public Vector3 m_offset = Vector3.zero;
     public Vector3 m_lastMovement = Vector3.zero;
     public string m_tagGround = "";
@@ -71,8 +69,6 @@ public class Player : Character
     //Variables regarding player's change of gravity
     public float m_gravityRange = 3.0f;
     public bool m_reachedGround = true;
-    public MarkObject m_markedTarget = null;
-    public bool m_markAimedObject = false;
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
 
     //Variables regarding player's throw of objects
@@ -80,11 +76,9 @@ public class Player : Character
     public float m_throwForce = 20.0f;
     public float m_angleEnemyDetection = 30.0f;
     [HideInInspector] public Transform m_throwAimOrigin;
-    [HideInInspector] public Transform m_lowAimOrigin;
-    [HideInInspector] public Transform m_highAimOrigin;
 
     //Variables regarding player picking up objects
-    [HideInInspector] public FloatingAroundPlayer m_floatingObjects;
+    [HideInInspector] public PickedObject m_pickedObject;
 
     //Variables regarding player's health and oxigen
     [HideInInspector] public OxigenPlayer m_oxigen;
@@ -95,7 +89,6 @@ public class Player : Character
     public GameObject m_hit;
     public Transform m_smoke;
 
-    [HideInInspector] public Dictionary<string, TargetDetector> m_targetsDetectors;
     [HideInInspector] public EnemyDetectorByLayer m_enemyDetector;
     float m_inputSpeed;
     float m_runSpeed;
@@ -111,6 +104,9 @@ public class Player : Character
         m_onAir = gameObject.GetComponent<PlayerOnAir>();
         if (!m_onAir)
             m_onAir = gameObject.AddComponent<PlayerOnAir>();
+        m_carrying = gameObject.GetComponent<PlayerCarrying>();
+        if (!m_carrying)
+            m_carrying = gameObject.AddComponent<PlayerCarrying>();
         m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
         if (!m_aimToThrow)
             m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
@@ -134,8 +130,6 @@ public class Player : Character
 
         if (!(m_playerInput = GetComponent<PlayerController>()))
             m_playerInput = gameObject.AddComponent<PlayerController>();
-        if (!(m_playerGravity = GetComponent<PlayerGravity>()))        
-            m_playerGravity = gameObject.AddComponent<PlayerGravity>();
         if (!(m_oxigen = GetComponent<OxigenPlayer>()))
             m_oxigen = gameObject.AddComponent<OxigenPlayer>();
 
@@ -158,12 +152,9 @@ public class Player : Character
 
         m_soundEffects = GetComponent<SoundEffects>();
 
-        m_targetsDetectors = new Dictionary<string, TargetDetector>();
-        m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
+        m_pickedObject = GetComponent<PickedObject>();
         m_enemyDetector = GetComponentInChildren<EnemyDetectorByLayer>();
         m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
-        m_lowAimOrigin = GameObject.Find("LowAimRaycast").transform;
-        m_highAimOrigin = GameObject.Find("HighAimRaycast").transform;
         base.Awake();
     }
 
@@ -222,9 +213,6 @@ public class Player : Character
             }   
         }
 
-        if (!m_markAimedObject)
-            UnmarkTarget();
-
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
 
@@ -252,7 +240,7 @@ public class Player : Character
         ResetInput();
     }
 
-    public void ChangeCurrentStateToOnAir()
+    public void ChangeStateOnDamage()
     {
         PlayerStates previousState = m_currentState;
         m_currentState = m_onAir;
@@ -277,16 +265,6 @@ public class Player : Character
         {
             m_rigidBody.AddForce(m_damageForce, ForceMode.VelocityChange);
             m_damageForceToApply = false;
-        }
-    }
-
-    //This function unmarks a target, if any
-    public void UnmarkTarget()
-    {
-        if (m_markedTarget != null)
-        {
-            m_markedTarget.StopMarking();
-            m_markedTarget = null;
         }
     }
 
@@ -402,13 +380,16 @@ public class Player : Character
         m_throwAnimation = false;
     }
 
-    public void PickObjects()
+    public bool PickObjects()
     {
-        if (m_floatingObjects.CanPickMoreObjects())
+        bool pickedAny = false;
+
+        if (m_pickedObject.CanPickMoreObjects())
         {
-            m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
+            pickedAny = m_pickedObject.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
         }
-            
+
+        return pickedAny;           
     }
 
     public void ThrowObjectsThirdPerson(bool hasThrown)
@@ -431,23 +412,22 @@ public class Player : Character
         if (hasTarget)
         {
             if (targetEnemy)
-                m_floatingObjects.SetTarget(targetHit.collider.gameObject.transform.position);
-            //m_floatingObjects.SetTarget(targetHit.point);
+                m_pickedObject.SetTarget(targetHit.collider.gameObject.transform.position);
             else
-                m_floatingObjects.UnsetTarget();
+                m_pickedObject.UnsetTarget();
 
             if (hasThrown)
             {
-                m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
+                m_pickedObject.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
                 m_throwAnimation = true;
             }
         }
         else
         {
-            m_floatingObjects.UnsetTarget();
+            m_pickedObject.UnsetTarget();
             if (hasThrown)
             {
-                m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+                m_pickedObject.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
                 m_throwAnimation = true;
             }
         }
@@ -458,11 +438,10 @@ public class Player : Character
     {
         GameObject closestTarget = null;
         float closestDistance = 10000.0f;
-        //foreach (GameObject target in m_targetsDetectors["Enemy"].m_targets)
         foreach (Enemy enemy in m_enemyDetector.m_enemies)
         {
             GameObject target = enemy.gameObject;
-            if (!m_floatingObjects.EnemyIsFloating(target))
+            if (!m_pickedObject.EnemyIsFloating(target))
             {
                 Vector3 toTarget = target.transform.position - origin.position;
                 float distance = toTarget.sqrMagnitude;
@@ -632,39 +611,24 @@ public class Player : Character
 
     private Vector3 GetDirectionRight()
     {
-        //return Camera.main.transform.right;
-        if (m_fixedCam)
-        {
-            return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
-        }  
-        else
-        {
-            Vector3 forwardProjection = Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
-
-            //return Vector3.Cross(transform.up, Camera.main.transform.forward).normalized;
-            //return Camera.main.transform.right;
-            return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
-        }
-            
+        return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
     }
 
     private Vector3 GetDirectionForward()
     {
-        if (m_fixedCam)
-        {
-            return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
-        }
-        else
-        {
-            //return Vector3.Cross(Camera.main.transform.right, transform.up).normalized;
-            return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
-        }
-            
-
+        return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
     }
 
     private float GetSpeedFromInput(float inputIntensity)
     {
         return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
+    }
+
+    public void CheckPlayerStopped(float axisHorizontal, float axisVertical)
+    {
+        if (axisHorizontal == 0.0f && axisVertical == 0.0f)
+            m_playerStopped = true;
+        else
+            m_playerStopped = false;
     }
 }

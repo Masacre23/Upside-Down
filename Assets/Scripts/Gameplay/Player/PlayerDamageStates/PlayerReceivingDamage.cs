@@ -28,8 +28,8 @@ public class PlayerReceivingDamage : PlayerDamageStates
 
     public override void OnEnter(DamageData data)
     {
-        m_player.m_floatingObjects.DropAll();
-        m_player.ChangeCurrentStateToOnAir();
+        m_player.m_pickedObject.Drop();
+        m_player.ChangeStateOnDamage();
         m_player.m_negatePlayerInput = true;
         m_player.m_animator.SetBool("Damaged", true);
 

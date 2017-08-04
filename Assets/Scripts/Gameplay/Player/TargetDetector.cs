@@ -24,11 +24,11 @@ public class TargetDetector : MonoBehaviour {
         {
             case "Enemy":
                 SetUpCollider(new Vector3(0, m_player.m_capsuleHeight / 2, 0), 4.0f);
-                m_player.m_targetsDetectors.Add(m_tag, this);
+                //m_player.m_targetsDetectors.Add(m_tag, this);
                 break;
             case "GravityWall":
                 SetUpCollider(new Vector3(0, m_player.m_capsuleHeight / 2, 0), m_player.m_gravityRange);
-                m_player.m_targetsDetectors.Add(m_tag, this);
+                //m_player.m_targetsDetectors.Add(m_tag, this);
                 break;
             default:
                 break;

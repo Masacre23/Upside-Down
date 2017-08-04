@@ -8,7 +8,8 @@ public class PlayerStates : MonoBehaviour
     {
         GROUNDED,
         ONAIR,
-        THROWING
+        THROWING,
+        CARRYING
     }
 
     public States m_type;

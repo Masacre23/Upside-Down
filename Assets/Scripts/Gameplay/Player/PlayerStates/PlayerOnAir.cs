@@ -18,17 +18,18 @@ public class PlayerOnAir : PlayerStates
     {
         bool ret = false;
 
-        if (axisHorizontal == 0.0f && axisVertical == 0.0f)
-            m_player.m_playerStopped = true;
-        else
-            m_player.m_playerStopped = false;
+        m_player.CheckPlayerStopped(axisHorizontal, axisVertical);
 
         m_player.OnAir();
         m_player.UpdateUp();
         m_player.MoveOnAir(timeStep);
         if (m_player.CheckGroundStatus())
         {
-            m_player.m_currentState = m_player.m_grounded;
+            if (m_player.m_pickedObject.HasObjectsToThrow())
+                m_player.m_currentState = m_player.m_carrying;
+            else
+                m_player.m_currentState = m_player.m_grounded;
+
             ret = true;
         }
 
@@ -37,11 +38,17 @@ public class PlayerOnAir : PlayerStates
 
     public override void OnEnter()
     {
-        m_player.m_markAimedObject = true;
-        m_doubleJump = false;   
+        m_doubleJump = false;
+
+        m_player.m_runClouds.GetComponent<ParticleSystem>().Stop();
     }
 
     public override void OnExit()
     {
+        EffectsManager.Instance.GetEffect(m_player.m_jumpClouds, m_player.m_smoke);
+        m_player.m_runClouds.GetComponent<ParticleSystem>().Play();
+
+        if (m_player.m_soundEffects)
+            m_player.m_soundEffects.PlaySound("Fall");
     }
 }

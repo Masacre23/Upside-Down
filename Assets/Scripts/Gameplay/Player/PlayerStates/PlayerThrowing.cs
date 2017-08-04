@@ -21,7 +21,7 @@ class PlayerThrowing : PlayerStates
             m_player.m_currentState = m_player.m_grounded;
             ret = true;
         }
-        else if (!m_player.m_floatingObjects.HasObjectsToThrow())
+        else if (!m_player.m_pickedObject.HasObjectsToThrow())
         {
             m_player.m_currentState = m_player.m_grounded;
             ret = true;
@@ -44,9 +44,9 @@ class PlayerThrowing : PlayerStates
             if (pickObjects)
             {
                 if (hasTarget)
-                    m_player.m_floatingObjects.ThrowObjectToTarget(targetHit, Camera.main.transform, m_player.m_throwForce);
+                    m_player.m_pickedObject.ThrowObjectToTarget(targetHit, Camera.main.transform, m_player.m_throwForce);
                 else
-                    m_player.m_floatingObjects.ThrowObjectToDirection(Camera.main.transform, m_player.m_throwDetectionRange, m_player.m_throwForce);
+                    m_player.m_pickedObject.ThrowObjectToDirection(Camera.main.transform, m_player.m_throwDetectionRange, m_player.m_throwForce);
             }
 
 
@@ -57,7 +57,6 @@ class PlayerThrowing : PlayerStates
 
     public override void OnEnter()
     {
-        m_player.m_markAimedObject = false;
         m_rigidBody.isKinematic = true;
         m_player.m_camController.SetCameraTransition(CameraStates.States.AIMING, true);
         m_player.m_camController.SetAimLockOnTarget(true, "Enemy");

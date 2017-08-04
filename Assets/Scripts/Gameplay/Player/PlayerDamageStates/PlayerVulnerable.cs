@@ -26,7 +26,7 @@ public class PlayerVulnerable : PlayerDamageStates
             {
                 if (data.m_respawn)
                 {
-                    m_player.m_floatingObjects.DropAll();
+                    m_player.m_pickedObject.Drop();
                     m_player.m_playerRespawn.ReSpawn(m_player.m_checkPoint);
                     m_player.m_playerDamageState = m_player.m_invulnerable;
 

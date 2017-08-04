@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class ThrowableObject : MonoBehaviour
 {
-    public bool m_floatLimitless = true;
     public bool m_canBePicked = true;
     public bool m_isFloating = false;
     public float m_floatingSpeed = 10.0f;
-    public float m_maxTimeFloating = 10.0f;
     public float m_rotationSpeed = 100.0f;
     public GameObject m_aura;
 
@@ -16,7 +14,10 @@ public class ThrowableObject : MonoBehaviour
     Rigidbody m_rigidBody;
     Collider m_collider;
     Transform m_floatingPoint;
-    FloatingAroundPlayer m_targetPlayer;
+
+    FloatingAroundPlayer m_targetPlayer = null;
+    PickedObject m_playerPicked = null;
+
     TrailRenderer m_trail;
    
 
@@ -24,8 +25,6 @@ public class ThrowableObject : MonoBehaviour
     bool m_applyThrownForce = false;
     Vector3 m_thrownForce = Vector3.zero;
     float m_minVelocityDamage = 2.0f;
-    float m_realTimeFloating = 10.0f;
-    float m_timeFloating = 0.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
 
 	public GameObject m_prefabHit1;
@@ -37,8 +36,6 @@ public class ThrowableObject : MonoBehaviour
         m_rigidBody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
         m_trail = GetComponent<TrailRenderer>();
-
-        m_realTimeFloating = m_maxTimeFloating;
 
 		m_prefabHit1 = (GameObject)Resources.Load ("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
 	}
@@ -53,14 +50,6 @@ public class ThrowableObject : MonoBehaviour
 
             //Random rotation of the object within itself
             transform.Rotate(m_rotationRandomVector * m_rotationSpeed * Time.deltaTime);
-
-            // Checking if the object should fall
-            if (!m_floatLimitless)
-            {
-                m_timeFloating += Time.deltaTime;
-                if (m_timeFloating > m_maxTimeFloating)
-                    StopFloating();
-            } 
         }
 
         //Checks if the object can damage to enemies. When its velocity falls below a certain value, it stops to deal damage if collided.
@@ -88,7 +77,10 @@ public class ThrowableObject : MonoBehaviour
     //This function should be called when the object is thrown
     public void ThrowObject(Vector3 throwForce)
     {
-        StopFloating();
+        if (m_playerPicked)
+            StopCarried();
+        else if (m_targetPlayer)
+            StopFloating();
 
         m_thrownForce = throwForce;
         m_applyThrownForce = true;
@@ -108,11 +100,6 @@ public class ThrowableObject : MonoBehaviour
         m_isFloating = true;
         m_canBePicked = false;
 
-        if (timeFloating != 0.0f)
-            m_realTimeFloating = m_maxTimeFloating;
-        else
-            m_realTimeFloating = timeFloating;
-
         if (m_rigidBody)
             m_rigidBody.isKinematic = true;
 
@@ -121,9 +108,26 @@ public class ThrowableObject : MonoBehaviour
 
         m_rotationRandomVector = new Vector3(Random.value, Random.value, Random.value).normalized;
 
-        m_timeFloating = 0.0f;
-
         if (m_aura != null)
+            m_aura.SetActive(true);
+    }
+
+    // This function is called when the object is picked by the player
+    public void BeginCarried(Transform floatingPoint, PickedObject player)
+    {
+        m_floatingPoint = floatingPoint;
+        m_playerPicked = player;
+
+        m_isFloating = true;
+        m_canBePicked = false;
+
+        if (m_rigidBody)
+            m_rigidBody.isKinematic = true;
+
+        if (m_collider)
+            m_collider.enabled = false;
+
+        if (m_aura)
             m_aura.SetActive(true);
     }
 
@@ -144,6 +148,26 @@ public class ThrowableObject : MonoBehaviour
             m_collider.enabled = true;
 
         m_rotationRandomVector = Vector3.zero;
+        if (m_aura != null)
+            m_aura.SetActive(false);
+    }
+
+    //This function should be called when the object stop been carried by the player
+    public void StopCarried()
+    {
+        m_playerPicked.FreeSpace();
+        m_playerPicked = null;
+        m_floatingPoint = null;
+
+        m_isFloating = false;
+        m_canBePicked = true;
+
+        if (m_rigidBody)
+            m_rigidBody.isKinematic = false;
+
+        if (m_collider)
+            m_collider.enabled = true;
+
         if (m_aura != null)
             m_aura.SetActive(false);
     }
