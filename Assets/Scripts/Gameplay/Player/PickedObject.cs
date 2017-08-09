@@ -74,7 +74,8 @@ public class PickedObject : MonoBehaviour
     //This function is called to drop the carried object
     public void Drop()
     {
-        m_pickedObject.StopCarried();
+        if (m_pickedObject)
+            m_pickedObject.StopCarried();
     }
 
     //This function is called to throw an object to a target
