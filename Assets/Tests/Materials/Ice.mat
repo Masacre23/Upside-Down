@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: AtlasTexture1080
-  m_Shader: {fileID: 4800000, guid: 48dca5b99d113b8d11006bab44295342, type: 3}
+  m_Name: Ice
+  m_Shader: {fileID: 4800000, guid: 74ccc17b3d0721b4fa54e90a0ae08505, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -17,24 +17,6 @@ Material:
     m_TexEnvs:
     - first:
         name: _BumpMap
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _BumpTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _ColorRamp
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _CoverageTex
       second:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -58,12 +40,6 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
-        name: _DiffuseTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
         name: _EmissionMap
       second:
         m_Texture: {fileID: 0}
@@ -72,7 +48,7 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 620f4a77258ceaf43b58eddd9d8fb588, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -99,34 +75,16 @@ Material:
         m_Texture: {fileID: 2800000, guid: 75fede9daeec8f749b22db82e5d66164, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _SpecGlossMap
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
-        name: _ToonShade
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
       second: 1
-    - first:
-        name: _Coverage
-      second: 0
     - first:
         name: _Cutoff
       second: 0.5
     - first:
         name: _DetailNormalMapScale
       second: 1
-    - first:
-        name: _DiffuseThreshold
-      second: 0.1
     - first:
         name: _DstBlend
       second: 0
@@ -135,13 +93,10 @@ Material:
       second: 1
     - first:
         name: _Glossiness
-      second: 0.24
+      second: 0.5
     - first:
         name: _GlossyReflections
       second: 1
-    - first:
-        name: _LitOutlineThickness
-      second: 0.1
     - first:
         name: _Metallic
       second: 0
@@ -152,32 +107,11 @@ Material:
         name: _OcclusionStrength
       second: 1
     - first:
-        name: _Outline
-      second: 0.005
-    - first:
-        name: _OutlineThickness
-      second: 0.1
-    - first:
         name: _Parallax
       second: 0.02
     - first:
-        name: _RandomHeight
-      second: 0.5
-    - first:
-        name: _RandomSpeed
-      second: 0.5
-    - first:
-        name: _Refraction
-      second: 0
-    - first:
         name: _RimBrightness
-      second: 3
-    - first:
-        name: _Shininess
-      second: 5.01
-    - first:
-        name: _Smooth
-      second: 0
+      second: 3.2
     - first:
         name: _SmoothnessTextureChannel
       second: 0
@@ -188,48 +122,21 @@ Material:
         name: _SrcBlend
       second: 1
     - first:
-        name: _Transparency
-      second: 0
-    - first:
         name: _UVSec
       second: 0
-    - first:
-        name: _UnlitOutlineThickness
-      second: 0.4
-    - first:
-        name: _WaveHeight
-      second: 0.5
-    - first:
-        name: _WaveLength
-      second: 0.5
-    - first:
-        name: _WaveSpeed
-      second: 1
     - first:
         name: _ZWrite
       second: 1
     m_Colors:
     - first:
-        name: _BaseColor
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
         name: _BottomColor
-      second: {r: 0.23, g: 0, b: 0.95, a: 1}
+      second: {r: 0, g: 0.19270581, b: 0.75735295, a: 1}
     - first:
         name: _Color
-      second: {r: 0.2827587, g: 1, b: 0, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
-        name: _OutlineColor
-      second: {r: 0, g: 0, b: 0, a: 1}
-    - first:
-        name: _SpecColor
-      second: {r: 1, g: 1, b: 1, a: 1}
-    - first:
         name: _TColor
-      second: {r: 0.26989618, g: 0.5190074, b: 0.7647059, a: 1}
-    - first:
-        name: _UnlitColor
-      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      second: {r: 0.27735728, g: 0.6078705, b: 0.99264705, a: 1}
