@@ -35,11 +35,13 @@ public class EnemyDead : EnemyStates
 		/*foreach(Collider c in GetComponents<Collider> ()) {
 			c.enabled = true;
 		}*/
-
 		if (m_enemy.m_type == Enemy.Types.SNAIL) 
 		{
 			m_enemy.m_animator.SetInteger ("HitDirection", (int)m_enemy.hitDirection);
 			m_enemy.m_animator.SetBool ("Dead", true);
+			m_enemy.m_renderer.material = m_enemy.m_transparentMat;
+			m_enemy.m_rendererShell.material = m_enemy.m_transparentMat;
+			m_enemy.m_renderer.sharedMaterial.SetFloat ("_DisAmount", 0);
 		}
         else
             this.gameObject.SetActive(false);

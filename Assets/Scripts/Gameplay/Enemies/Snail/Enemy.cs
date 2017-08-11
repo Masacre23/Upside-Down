@@ -16,6 +16,8 @@ public class Enemy : Character {
 
     public DamageData m_damageData;
 	public Renderer m_renderer;
+	public Renderer m_rendererShell;
+	public Material m_transparentMat;
 
     //General variables
 	public Collider m_headCol;
