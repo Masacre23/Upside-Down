@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyDead : EnemyStates
 {
    // string m_animationName = "Death";
+	float counter;
 
     public override void Start ()
     {
@@ -21,12 +22,20 @@ public class EnemyDead : EnemyStates
         //{
         //    OnExit(data);
         //}
+		counter += Time.deltaTime/10;
+		m_enemy.m_renderer.sharedMaterial.SetFloat("_DisAmount", counter);
+		if (counter > 1)
+			gameObject.SetActive (false);
 
         return ret;
 	}
 
 	public override void OnEnter()
 	{
+		/*foreach(Collider c in GetComponents<Collider> ()) {
+			c.enabled = true;
+		}*/
+
 		if (m_enemy.m_type == Enemy.Types.SNAIL) 
 		{
 			m_enemy.m_animator.SetInteger ("HitDirection", (int)m_enemy.hitDirection);

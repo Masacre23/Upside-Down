@@ -15,6 +15,7 @@ public class Enemy : Character {
     // [HideInInspector] public EnemyStates m_Attacking;
 
     public DamageData m_damageData;
+	public Renderer m_renderer;
 
     //General variables
 	public Collider m_headCol;
@@ -99,7 +100,8 @@ public class Enemy : Character {
         if (col.rigidbody)
         {
             ThrowableObject throwableObject = col.rigidbody.GetComponent<ThrowableObject>();
-            if (throwableObject && throwableObject.m_canDamage)
+           // if (throwableObject && throwableObject.m_canDamage)
+			if (throwableObject)
             {
                 throwableObject.m_canDamage = false;
                 m_damageData.m_recive = true;

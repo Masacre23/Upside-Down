@@ -191,47 +191,52 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.5
+      value: -4.748
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.0974112
+      value: -0.487
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.3126346
+      value: 0.553
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0.6962732
+      value: 0.0029833822
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalRotation.y
-      value: 0.64480114
+      value: 0.072492756
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.26739556
+      value: -0.7458471
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_LocalRotation.w
-      value: -0.16713694
+      value: -0.6621541
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 114666747388420396, guid: 3e776c534b4751b4091f37866a0f790e,
+        type: 2}
+      propertyPath: m_renderer
+      value: 
+      objectReference: {fileID: 384273383}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.7000002
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 174.02
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.7000007
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -545.797
       objectReference: {fileID: 0}
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.70000076
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -443.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
@@ -9125,7 +9130,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4277234188610980, guid: e1e3d22ded51e814b8989c28b6f7bc86, type: 2}
       propertyPath: m_LocalScale.y
-      value: 1.8730773
+      value: 1.2949463
       objectReference: {fileID: 0}
     - target: {fileID: 65952344902371580, guid: e1e3d22ded51e814b8989c28b6f7bc86,
         type: 2}
@@ -9135,6 +9140,10 @@ Prefab:
     - target: {fileID: 1552717592123852, guid: e1e3d22ded51e814b8989c28b6f7bc86, type: 2}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1552717592123852, guid: e1e3d22ded51e814b8989c28b6f7bc86, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1e3d22ded51e814b8989c28b6f7bc86, type: 2}
@@ -19617,6 +19626,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9eeadce24afb56a42a808ceda6fb066e, type: 2}
   m_IsPrefabParent: 0
+--- !u!137 &384273383 stripped
+SkinnedMeshRenderer:
+  m_PrefabParentObject: {fileID: 137836444227204408, guid: 3e776c534b4751b4091f37866a0f790e,
+    type: 2}
+  m_PrefabInternal: {fileID: 4715458}
 --- !u!1 &385048084
 GameObject:
   m_ObjectHideFlags: 0
@@ -37950,7 +37964,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 76688.75
+  Age: 77217.67
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -75172,7 +75186,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 116900.305
+  Age: 117429.23
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
