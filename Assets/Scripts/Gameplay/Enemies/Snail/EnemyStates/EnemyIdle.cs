@@ -13,6 +13,7 @@ public class EnemyIdle : EnemyStates {
             m_enemy.m_animator.SetBool("Sleeping", true);
             m_enemy.m_animator.Play("Sleeping", -1, 0.3f);
             m_enemy.m_animator.speed = 0;
+			this.gameObject.transform.GetChild (2).gameObject.SetActive (true);
         }
     }
 	
@@ -52,6 +53,6 @@ public class EnemyIdle : EnemyStates {
 
 	public override void OnExit()
 	{
-		
+		this.gameObject.transform.GetChild (2).gameObject.SetActive (false);
 	}
 }
