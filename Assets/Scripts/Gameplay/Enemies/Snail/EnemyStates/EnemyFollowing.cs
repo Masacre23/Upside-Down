@@ -48,6 +48,7 @@ public class EnemyFollowing : EnemyStates
 			{
 				timer = 0;
 				m_enemy.m_animator.SetBool ("Stunned", false);
+				this.gameObject.transform.GetChild (3).gameObject.GetComponent<ParticleSystem> ().Stop ();
 			}
 		}
         if (data.m_recive)

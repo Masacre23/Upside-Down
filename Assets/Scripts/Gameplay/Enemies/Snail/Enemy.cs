@@ -87,8 +87,12 @@ public class Enemy : Character {
 
 		if(m_activeCollider == m_headCol)
 		{
-			if(!m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack"))
+			if (!m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
+			{
 				m_animator.SetBool ("Stunned", true);
+				this.gameObject.transform.GetChild (3).gameObject.SetActive (true);
+				this.gameObject.transform.GetChild (3).gameObject.GetComponent<ParticleSystem> ().Play ();
+			}
 			m_activeCollider = null;
 		}
 
