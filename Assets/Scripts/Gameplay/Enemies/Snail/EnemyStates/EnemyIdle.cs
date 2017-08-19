@@ -53,7 +53,7 @@ public class EnemyIdle : EnemyStates {
 
 	public override void OnExit()
 	{
-		this.gameObject.transform.GetChild (2).gameObject.SetActive (false);
+		this.gameObject.transform.GetChild (2).gameObject.GetComponent<ParticleSystem> ().Stop();
 		this.gameObject.transform.GetChild (1).gameObject.SetActive (true);
 	}
 }

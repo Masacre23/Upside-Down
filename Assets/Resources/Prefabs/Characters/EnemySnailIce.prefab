@@ -1349,7 +1349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1813791885960380
 GameObject:
   m_ObjectHideFlags: 1
@@ -2983,7 +2983,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1807669901780226}
   m_LocalRotation: {x: -0.7071068, y: -0.000000014901161, z: -0.000000045634806, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0.74, z: -0}
+  m_LocalPosition: {x: 0.122, y: 1.063, z: 0}
   m_LocalScale: {x: 1.0000001, y: 0.9999994, z: 0.9999994}
   m_Children: []
   m_Father: {fileID: 4520130863248390}
@@ -3708,7 +3708,7 @@ SphereCollider:
   m_GameObject: {fileID: 1092291310857354}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -11764,7 +11764,7 @@ ParticleSystem:
   serializedVersion: 5
   lengthInSec: 5
   speed: 1
-  looping: 0
+  looping: 1
   prewarm: 0
   playOnAwake: 1
   autoRandomSeed: 1
@@ -11815,7 +11815,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 2
+      scalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -11986,7 +11986,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 0.15
+      scalar: 0.25
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -12025,7 +12025,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     startSizeY:
-      scalar: 0.33
+      scalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -12338,7 +12338,7 @@ ParticleSystem:
     cntmax1: 30
     cntmax2: 30
     cntmax3: 30
-    time0: 3
+    time0: 0
     time1: 0
     time2: 0
     time3: 0
