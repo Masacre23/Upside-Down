@@ -6,7 +6,7 @@ public class EnemyFollowing : EnemyStates
 {
 
 	int speed;
-	int damp = 6;
+	int damp = 2;
 	public bool canChange = true;
 	float radiusCollider;
 	float capsuleRadius;
@@ -104,9 +104,9 @@ public class EnemyFollowing : EnemyStates
 
         switch (m_enemy.m_type)
         {
-            case Enemy.Types.SNAIL:
-                Vector3 dir = difference.normalized;
-                RaycastHit hit;
+		case Enemy.Types.SNAIL:
+			Vector3 dir = difference.normalized;
+			RaycastHit hit;
 
                 //Check forward raycast
                /* if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f))
@@ -132,31 +132,16 @@ public class EnemyFollowing : EnemyStates
                         dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
                     }
 */
-                Quaternion rotationAngle = Quaternion.LookRotation(dir, transform.up);
-                Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
-                transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+			Quaternion rotationAngle = Quaternion.LookRotation (dir, transform.up);
+            Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
+            transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
                 /*if (Physics.Raycast(transform.position, transform.forward + transform.right, 1))
                 {
                     transform.position += transform.right * speed * Time.deltaTime;
                 }
                 else*/
-                    transform.position += transform.forward * speed * Time.deltaTime;
-                break;
-          /*  case Enemy.Types.FLYING:
-                if(difference.sqrMagnitude < innerRadiusToPlayer )
-                    transform.position -= transform.forward * speed * Time.deltaTime;
-                else if(difference.sqrMagnitude > outterRadiusToPlayer)
-                    transform.position += transform.forward * speed * Time.deltaTime;
-
-                float distance_playerY = (m_enemy.player.transform.position - planet.transform.position + m_enemy.player.transform.up).sqrMagnitude;
-                float distance_enemyY = (transform.position - planet.transform.position).sqrMagnitude;
-
-                if(distance_playerY > distance_enemyY && distance_playerY - distance_enemyY > speed)
-                    transform.position += transform.up * speed * Time.deltaTime;
-                else if (distance_playerY < distance_enemyY && distance_enemyY - distance_playerY  > speed)
-                    transform.position -= transform.up * speed * Time.deltaTime;
-
-                break;*/
+             transform.position += transform.forward * speed * Time.deltaTime;
+             break;
         }
 	}
 
