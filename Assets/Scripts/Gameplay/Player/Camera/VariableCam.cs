@@ -15,8 +15,7 @@ public class VariableCam : MonoBehaviour
     public float m_targetLockDistance = 0.5f;
     public float m_targetBreakLock = 0.15f;
 
-    public bool m_changeCamOnPosition = false;
-    public float m_timeBetweenChanges = 0.5f;
+    public float m_defaultTimeBetweenChanges = 0.5f;
 
     public Ray m_camRay;
 
@@ -27,9 +26,9 @@ public class VariableCam : MonoBehaviour
     public Transform m_cam;
 
     public CameraStates m_currentState;
-    public CameraStates m_onBack;
-    public CameraStates m_aiming;
-    public CameraStates m_transit;
+    [HideInInspector] public CameraStates m_onBack;
+    [HideInInspector] public CameraStates m_transit;
+    [HideInInspector] public CameraStates m_onFixedPoint;
 
     public VariableCameraProtectFromWallClip m_cameraProtection;
     public CameraPlayerDetector m_playerDetector;
@@ -47,11 +46,9 @@ public class VariableCam : MonoBehaviour
         m_onBack = GetComponent<CameraOnBack>();
         if (!m_onBack)
             m_onBack = gameObject.AddComponent<CameraOnBack>();
-
-        m_aiming = GetComponent<CameraAiming>();
-        if (!m_aiming)
-            m_aiming = gameObject.AddComponent<CameraAiming>();
-
+        m_onFixedPoint = GetComponent<CameraFixed>();
+        if (!m_onFixedPoint)
+            m_onFixedPoint = gameObject.AddComponent<CameraFixed>();
         m_transit = GetComponent<CameraTransiting>();
         if (!m_transit)
             m_transit = gameObject.AddComponent<CameraTransiting>();
@@ -110,41 +107,30 @@ public class VariableCam : MonoBehaviour
         //transform.rotation = m_player.transform.rotation;
     } 
 
-    public void SetCameraTransition(CameraStates.States finalState, bool alignView = false)
+    //This function creates a transition from current camera to onBack camera
+    public void SetCameraOnBack(float transitionTime = 0.0f)
     {
         CameraTransiting transitingCam = (CameraTransiting)m_transit;
-        Quaternion rotationPivot;
-
         transitingCam.ResetTime();
-        switch (finalState)
-        {
-            case CameraStates.States.BACK:
-                CameraOnBack onBack = (CameraOnBack)m_onBack;
-                rotationPivot = Quaternion.Euler(onBack.m_defaultTiltAngle, m_model.localRotation.eulerAngles.y, 0);
-                transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, rotationPivot);
-                m_changeCamOnPosition = true;
-                break;
-            case CameraStates.States.AIMING:
-                CameraAiming aiming = (CameraAiming)m_aiming;
-                if (alignView)
-                    rotationPivot = Quaternion.Euler(0, m_pivot.localRotation.eulerAngles.y, 0);
-                else
-                    rotationPivot = Quaternion.Euler(m_pivot.localRotation.eulerAngles.x, m_pivot.localRotation.eulerAngles.y, 0);
-                transitingCam.SetTransitionValues(m_aiming, aiming.m_camPosition, rotationPivot);
-                m_changeCamOnPosition = true;
-                break;
-            default:
-                break;
-        }
+
+        CameraOnBack onBack = (CameraOnBack)m_onBack;
+        Quaternion rotationPivot = Quaternion.Euler(onBack.m_defaultTiltAngle, m_model.localRotation.eulerAngles.y, 0);
+        transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, Quaternion.identity, rotationPivot, transitionTime);
+        m_currentState.EnableCameraChange();
     }
 
-    public void SetAimLockOnTarget(bool isLocked, string tagToLock)
+    //This function creates a transition from current camera to Fixed camera
+    public void SetCameraOnFixed(Transform camPosition, float transitionTime = 0.0f)
     {
-        ((CameraAiming)m_aiming).SetTargetLock(isLocked, tagToLock);
+        CameraTransiting transitingCam = (CameraTransiting)m_transit;
+        transitingCam.ResetTime();
+
+        CameraFixed fixedCam = (CameraFixed)m_onFixedPoint;
+        Quaternion rotationCam = camPosition.rotation;
+        
+        transitingCam.SetTransitionValues(m_onFixedPoint, camPosition.position, rotationCam, Quaternion.identity, transitionTime);
+        fixedCam.SetTransform(camPosition.position, rotationCam);
+        m_currentState.EnableCameraChange();
     }
 
-    public void UnsetAimLockOnTarget()
-    {
-        ((CameraAiming)m_aiming).SetTargetLock(false, null);
-    }
 }

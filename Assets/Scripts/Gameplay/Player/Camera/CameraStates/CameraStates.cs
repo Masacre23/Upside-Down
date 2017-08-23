@@ -7,12 +7,13 @@ public class CameraStates : MonoBehaviour {
     public enum States
     {
         BACK,
-        AIMING,
-        TRANSIT
+        TRANSIT,
+        FIXED
     }
 
     public States m_type;
     protected VariableCam m_variableCam;
+    protected bool m_changeCamState = false;
 
     // Use this for initialization
     public virtual void Start()
@@ -32,5 +33,10 @@ public class CameraStates : MonoBehaviour {
 
     public virtual void OnExit()
     {
+    }
+
+    public void EnableCameraChange()
+    {
+        m_changeCamState = true;
     }
 }

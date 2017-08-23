@@ -27,14 +27,14 @@ public class CameraOnBack : CameraStates
 
         CameraRotation(axisHorizontal, axisVertical, timeStep);
 
-        if (m_variableCam.m_changeCamOnPosition)
+        if (m_changeCamState)
         {
             m_variableCam.m_currentState = m_variableCam.m_transit;
             ret = true;
         }
         else if (returnCam)
         {
-            m_variableCam.SetCameraTransition(m_type);
+            m_variableCam.SetCameraOnBack();
             m_variableCam.m_currentState = m_variableCam.m_transit;
             ret = true;
         }
@@ -45,7 +45,7 @@ public class CameraOnBack : CameraStates
                 m_returnTime += timeStep;
                 if (m_returnTime > m_variableCam.m_maxReturnTime)
                 {
-                    m_variableCam.SetCameraTransition(m_type);
+                    m_variableCam.SetCameraOnBack();
                     m_variableCam.m_currentState = m_variableCam.m_transit;
                     ret = true;
                 }
@@ -60,7 +60,7 @@ public class CameraOnBack : CameraStates
     public override void OnEnter()
     {
         m_returnTime = m_variableCam.m_maxReturnTime;
-        m_variableCam.m_changeCamOnPosition = false;
+        m_changeCamState = false;
         m_variableCam.m_cameraProtection.SetProtection(true);
         m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
         m_tiltAngle = m_defaultTiltAngle;
@@ -69,7 +69,7 @@ public class CameraOnBack : CameraStates
     public override void OnExit()
     {
         m_returnTime = 0.0f;
-        m_variableCam.m_changeCamOnPosition = false;
+        m_changeCamState = false;
         m_variableCam.m_cameraProtection.SetProtection(false);
         m_lookAngle = m_variableCam.m_model.localRotation.eulerAngles.y;
         m_tiltAngle = m_defaultTiltAngle;

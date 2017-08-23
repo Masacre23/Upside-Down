@@ -9,6 +9,7 @@ public class CameraTransiting : CameraStates {
 
     float m_time;
     float m_addedTime;
+    float m_timeBetweenChanges = 0.5f;
 
     Vector3 m_initialPosition;
     Vector3 m_targetPosition;
@@ -33,9 +34,9 @@ public class CameraTransiting : CameraStates {
         bool ret = false;
 
         m_variableCam.FollowTarget(timeStep);
-        
+
         m_time += timeStep;
-        float perc = m_time / (m_variableCam.m_timeBetweenChanges - m_addedTime);
+        float perc = m_time / (m_timeBetweenChanges - m_addedTime);
 
         Quaternion newPivotRotation = Quaternion.Slerp(m_initialRotationPivot, m_targetRotationPivot, perc);
         m_variableCam.m_pivot.localRotation = newPivotRotation;
@@ -60,7 +61,6 @@ public class CameraTransiting : CameraStates {
         m_time = 0.0f;
         m_addedTime = 0.0f;
         m_transitionStopped = false;
-        m_targetRotationCamera = Quaternion.identity;
         //m_sphereCam.enabled = true;
     }
 
@@ -71,17 +71,25 @@ public class CameraTransiting : CameraStates {
 
     public void ResetTime()
     {
-        m_addedTime = m_variableCam.m_timeBetweenChanges - m_time;
+        m_addedTime = m_timeBetweenChanges - m_time;
         m_time = 0.0f;
     }
 
-    public void SetTransitionValues(CameraStates finalState, Vector3 targetPosition, Quaternion targetRotationPivot)
+    public void SetTransitionValues(CameraStates finalState, Vector3 targetPosition, Quaternion targetRotationCamera, Quaternion targetRotationPivot, float changeTotalTime = 0.0f)
     {
         m_initialRotationCamera = m_variableCam.m_cam.localRotation;
         m_initialRotationPivot = m_variableCam.m_pivot.localRotation;
         m_initialPosition = m_variableCam.m_cam.localPosition;
+
         m_finalState = finalState;
-        m_targetPosition = targetPosition;
+        m_targetRotationCamera = targetRotationCamera;
         m_targetRotationPivot = targetRotationPivot;
+        m_targetPosition = targetPosition;
+
+        if (changeTotalTime > 0.0f)
+            m_timeBetweenChanges = changeTotalTime;
+        else
+            m_timeBetweenChanges = m_variableCam.m_defaultTimeBetweenChanges;
+        
     }
 }

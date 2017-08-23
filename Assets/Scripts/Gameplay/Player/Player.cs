@@ -30,7 +30,6 @@ public class Player : Character
     [HideInInspector] public PlayerStates m_grounded;
     [HideInInspector] public PlayerStates m_onAir;
     [HideInInspector] public PlayerCarrying m_carrying;
-    [HideInInspector] public PlayerStates m_aimToThrow;
 
     //Variables regarding player damage state
     public PlayerDamageStates m_playerDamageState;
@@ -107,9 +106,7 @@ public class Player : Character
         m_carrying = gameObject.GetComponent<PlayerCarrying>();
         if (!m_carrying)
             m_carrying = gameObject.AddComponent<PlayerCarrying>();
-        m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
-        if (!m_aimToThrow)
-            m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
+
         m_currentState = m_onAir;
 
         m_vulnerable = gameObject.GetComponent<PlayerVulnerable>();
@@ -376,7 +373,7 @@ public class Player : Character
         m_animator.SetBool("Grounded", m_isGrounded);
         m_animator.SetBool("Jump", m_isJumping);
         m_animator.SetBool("DoubleJump", m_doubleJumping);
-        m_animator.SetBool("Throwing", m_throwAnimation || (m_currentState == m_aimToThrow));
+        m_animator.SetBool("Throwing", m_throwAnimation );
         m_throwAnimation = false;
     }
 
