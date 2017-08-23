@@ -24,7 +24,7 @@ public class HUDManager : MonoBehaviour {
     private static bool m_newCollectable = false;
     private static bool m_showGameOverPanel = false;
     private static bool m_showWinPanel = false;
-    private static float[] m_fillAmount = { 1.0f, 0.667f, 0.334f, 0 };
+    private static float[] m_fillAmount = { 1.0f, 1.0f, 1.0f, 1.0f };
     private static Sprite m_newCollectableSprite;
 
     void Start()
