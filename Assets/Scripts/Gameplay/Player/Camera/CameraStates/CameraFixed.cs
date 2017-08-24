@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class CameraFixed : CameraStates
 {
-    Vector3 m_position = Vector3.zero;
-    Quaternion m_rotation = Quaternion.identity;
+    public Vector3 m_position { get; private set; }
+    public Quaternion m_rotation { get; private set; }
 
     public override void Start()
     {
+        m_position = Vector3.zero;
+        m_rotation = Quaternion.identity;
+
         base.Start();
         m_type = States.FIXED;
     }
@@ -32,8 +35,8 @@ public class CameraFixed : CameraStates
         m_changeCamState = false;
         m_variableCam.m_cameraProtection.SetProtection(true);
 
-        m_variableCam.m_cam.localRotation = m_rotation;
-        m_variableCam.m_cam.localPosition = m_position;
+        m_variableCam.m_cam.rotation = m_rotation;
+        m_variableCam.m_cam.position = m_position;
     }
 
     public override void OnExit()
