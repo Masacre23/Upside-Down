@@ -26,23 +26,23 @@ public class Dialogue : MonoBehaviour
     //this.gameObject.transform.parent.gameObject.SetActive(false);
     // playerManager.m_negatePlayerInput = false;
     // Use this for initialization
-    void Start ()
+	public void Start()
 	{
-	    _textComponent = GetComponent<Text>();
-	    _textComponent.text = "";
+		_textComponent = GetComponent<Text>();
+		_textComponent.text = "";
 
-        HideIcons();
+		HideIcons();
 
-        playerManager = GameObject.Find("Player").GetComponent<Player>();
-        _isDialoguePlaying = true;
-        StartCoroutine(StartDialogue());
-    }
+		playerManager = GameObject.Find("Player").GetComponent<Player>();
+		_isDialoguePlaying = true;
+		StartCoroutine(StartDialogue());
+	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
 	   /* if (Input.GetKeyDown(KeyCode.Return))
-	    {
+	    //{
 	        if (!_isDialoguePlaying)
 	        {
                 _isDialoguePlaying = true;

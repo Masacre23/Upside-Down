@@ -6,6 +6,7 @@ public class DialogueZone : MonoBehaviour
 {
     string m_inputNameButton = "Activate";
     public GameObject m_dialogue;
+	public GameObject m_buttonA;
 
     bool m_playerInside = false;
     Player m_playerManager;
@@ -25,6 +26,9 @@ public class DialogueZone : MonoBehaviour
         if (!m_alreadyPlayed && m_playerInside && !m_playerManager.m_paused && Input.GetButtonDown(m_inputNameButton))
         {
             m_dialogue.SetActive(true);
+			//m_dialogue.GetComponent<Dialogue> ().StopAllCoroutines ();
+			//m_dialogue.GetComponent<Dialogue> ().Start ();
+			m_buttonA.SetActive (false);
             m_playerManager.m_negatePlayerInput = true;
             m_alreadyPlayed = true;
         }
@@ -47,13 +51,19 @@ public class DialogueZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
-            m_playerInside = true;
+		if (other.tag == "Player") 
+		{
+			m_buttonA.SetActive (true);
+			m_playerInside = true;
+		}
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
-            m_playerInside = false; 
+		if (other.tag == "Player") 
+		{
+			m_buttonA.SetActive (false);
+			m_playerInside = false; 
+		}
     }
 }
