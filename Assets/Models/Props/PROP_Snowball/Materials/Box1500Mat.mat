@@ -8,8 +8,13 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Box1500Mat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+<<<<<<< HEAD
   m_ShaderKeywords: 
   m_LightmapFlags: 5
+=======
+  m_ShaderKeywords: _EMISSION _NORMALMAP
+  m_LightmapFlags: 1
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
   m_CustomRenderQueue: -1
   stringTagMap: {}
   m_SavedProperties:
@@ -18,7 +23,11 @@ Material:
     - first:
         name: _BumpMap
       second:
+<<<<<<< HEAD
         m_Texture: {fileID: 0}
+=======
+        m_Texture: {fileID: 2800000, guid: 27aec5e23442e854393a614f079b974f, type: 3}
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -69,10 +78,23 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+<<<<<<< HEAD
     m_Floats:
     - first:
         name: _BumpScale
       second: 1
+=======
+    - first:
+        name: _Ramp
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _BumpScale
+      second: -3.87
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
     - first:
         name: _Cutoff
       second: 0.5
@@ -80,6 +102,12 @@ Material:
         name: _DetailNormalMapScale
       second: 1
     - first:
+<<<<<<< HEAD
+=======
+        name: _DiffuseThreshold
+      second: 0.1
+    - first:
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
         name: _DstBlend
       second: 0
     - first:
@@ -87,11 +115,21 @@ Material:
       second: 1
     - first:
         name: _Glossiness
+<<<<<<< HEAD
       second: 0.5
+=======
+      second: 0.47
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
     - first:
         name: _GlossyReflections
       second: 1
     - first:
+<<<<<<< HEAD
+=======
+        name: _LitOutlineThickness
+      second: 0.1
+    - first:
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
         name: _Metallic
       second: 0
     - first:
@@ -104,6 +142,12 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
+<<<<<<< HEAD
+=======
+        name: _Shininess
+      second: 10
+    - first:
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
         name: _SmoothnessTextureChannel
       second: 0
     - first:
@@ -116,12 +160,34 @@ Material:
         name: _UVSec
       second: 0
     - first:
+<<<<<<< HEAD
+=======
+        name: _UnlitOutlineThickness
+      second: 0.4
+    - first:
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac
         name: _ZWrite
       second: 1
     m_Colors:
     - first:
         name: _Color
+<<<<<<< HEAD
       second: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+=======
+      second: {r: 0.741, g: 0.97794116, b: 0.86399233, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 0.3455882, g: 0.3455882, b: 0.3455882, a: 1}
+    - first:
+        name: _OutlineColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SpecColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _UnlitColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+>>>>>>> 961d5d3d215388ffc13cb7e846f361f14b8cd4ac

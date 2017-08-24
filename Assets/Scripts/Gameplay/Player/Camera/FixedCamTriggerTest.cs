@@ -22,7 +22,7 @@ public class FixedCamTriggerTest : MonoBehaviour
         if (m_playerInside && other.tag == "Player")
         {
             m_playerInside = false;
-            other.GetComponent<Player>().m_camController.SetCameraOnBack();
+            other.GetComponent<Player>().m_camController.SetCameraOnBack(m_transitionTime);
         }
     }
 

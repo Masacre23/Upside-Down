@@ -114,8 +114,7 @@ public class VariableCam : MonoBehaviour
         transitingCam.ResetTime();
 
         CameraOnBack onBack = (CameraOnBack)m_onBack;
-        Quaternion rotationPivot = Quaternion.Euler(onBack.m_defaultTiltAngle, m_model.localRotation.eulerAngles.y, 0);
-        transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, Quaternion.identity, rotationPivot, transitionTime);
+        transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, Quaternion.identity, onBack.m_savedPivotQuaternion, true, transitionTime);
         m_currentState.EnableCameraChange();
     }
 
@@ -126,10 +125,9 @@ public class VariableCam : MonoBehaviour
         transitingCam.ResetTime();
 
         CameraFixed fixedCam = (CameraFixed)m_onFixedPoint;
-        Quaternion rotationCam = camPosition.rotation;
         
-        transitingCam.SetTransitionValues(m_onFixedPoint, camPosition.position, rotationCam, Quaternion.identity, transitionTime);
-        fixedCam.SetTransform(camPosition.position, rotationCam);
+        transitingCam.SetTransitionValues(m_onFixedPoint, camPosition.position, camPosition.rotation, m_pivot.rotation, false, transitionTime);
+        fixedCam.SetTransform(camPosition.position, camPosition.rotation);
         m_currentState.EnableCameraChange();
     }
 
