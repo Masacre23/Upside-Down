@@ -6,7 +6,7 @@ public class EnemyFollowing : EnemyStates
 {
 
 	int speed;
-	int damp = 2;
+	int damp = 4;
 	public bool canChange = true;
 	float radiusCollider;
 	float capsuleRadius;
@@ -34,7 +34,10 @@ public class EnemyFollowing : EnemyStates
 		AnimatorStateInfo info = m_enemy.m_animator.GetCurrentAnimatorStateInfo (0);
 		if (info.IsName ("Walk")) 
 		{
-			m_enemy.m_animator.SetBool ("CanAttack", false);
+			m_enemy.m_animator.SetBool ("CanAttack", false); 
+			RaycastHit hit;
+			if(Physics.Raycast(transform.position, transform.forward, out hit, 0.5f) && hit.collider.tag == "Player") // Delete it if you want to add attack rate
+				m_enemy.m_animator.SetBool ("CanAttack", true);
 			m_enemy.m_animator.speed = 1;
 			Move ();
 			Attack ();
@@ -93,19 +96,27 @@ public class EnemyFollowing : EnemyStates
 	{
 		//Vector3 target = m_enemy.player.transform.position;
 		target = m_enemy.player.transform.position;
-
+		 
 		Vector3 difference = target - transform.position;
 
 		float distanceToPlane = Vector3.Dot(transform.up, difference);
         Vector3 pointOnPlane = target - (transform.up * distanceToPlane);
 
-        //Original
-        //transform.LookAt(pointOnPlane, transform.up);        
+        //Prueba
+		Quaternion origRot = transform.rotation;
+		//Original
+        transform.LookAt(pointOnPlane, transform.up);
+		//Prueba
+		Quaternion actualRot = transform.rotation;
 
-        switch (m_enemy.m_type)
+		transform.rotation = Quaternion.Slerp (origRot, actualRot, Time.deltaTime * damp);
+		transform.position += transform.forward * speed * Time.deltaTime;
+
+        /*switch (m_enemy.m_type)
         {
 		case Enemy.Types.SNAIL:
 			Vector3 dir = difference.normalized;
+			//Vector3 dir = pointOnPlane.normalized;
 			RaycastHit hit;
 
                 //Check forward raycast
@@ -132,17 +143,17 @@ public class EnemyFollowing : EnemyStates
                         dir += (Vector3.Cross(hit.normal, transform.right) + Vector3.Cross(hit.normal, transform.up)) * speed;
                     }
 */
-			Quaternion rotationAngle = Quaternion.LookRotation (dir, transform.up);
+			/*Quaternion rotationAngle = Quaternion.LookRotation (dir, transform.up);
             Quaternion temp = Quaternion.Slerp(transform.rotation, rotationAngle, Time.deltaTime * damp);
-            transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);
+			transform.rotation = new Quaternion(transform.rotation.x, temp.y, transform.rotation.z, temp.w);*/
                 /*if (Physics.Raycast(transform.position, transform.forward + transform.right, 1))
                 {
                     transform.position += transform.right * speed * Time.deltaTime;
                 }
                 else*/
-             transform.position += transform.forward * speed * Time.deltaTime;
-             break;
-        }
+          //   transform.position += transform.forward * speed * Time.deltaTime;
+      //       break;
+      //  }
 	}
 
     public void Attack()
