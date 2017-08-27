@@ -70,13 +70,6 @@ public class VariableCam : MonoBehaviour
 
     public void OnUpdate(float axisX, float axisY, bool moveCamBehind, float deltaTime)
     {
-        CameraStates previousState = m_currentState;
-        if (m_currentState.OnUpdate(axisX, axisY, moveCamBehind, deltaTime))
-        {
-            previousState.OnExit();
-            m_currentState.OnEnter();
-        }
-
         if (m_followPlayer)
         {
             FollowTarget(deltaTime);
@@ -85,6 +78,13 @@ public class VariableCam : MonoBehaviour
 
         if (!m_followPlayer && !m_playerDetector.m_playerInside)
             m_followPlayer = true;
+
+        CameraStates previousState = m_currentState;
+        if (m_currentState.OnUpdate(axisX, axisY, moveCamBehind, deltaTime))
+        {
+            previousState.OnExit();
+            m_currentState.OnEnter();
+        }
 
         m_camRay.origin = m_cam.transform.position;
         m_camRay.direction = m_cam.transform.forward;
@@ -114,7 +114,7 @@ public class VariableCam : MonoBehaviour
         transitingCam.ResetTime();
 
         CameraOnBack onBack = (CameraOnBack)m_onBack;
-        transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, Quaternion.identity, onBack.m_savedPivotQuaternion, true, transitionTime);
+        transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, onBack.m_pivotPosition, Quaternion.identity, onBack.m_savedPivotQuaternion, true, transitionTime);
         m_currentState.EnableCameraChange();
     }
 
@@ -125,8 +125,8 @@ public class VariableCam : MonoBehaviour
         transitingCam.ResetTime();
 
         CameraFixed fixedCam = (CameraFixed)m_onFixedPoint;
-        
-        transitingCam.SetTransitionValues(m_onFixedPoint, camPosition.position, camPosition.rotation, m_pivot.rotation, false, transitionTime);
+
+        transitingCam.SetTransitionValues(m_onFixedPoint, Vector3.zero, camPosition.position, Quaternion.identity, camPosition.rotation, false, transitionTime);
         fixedCam.SetTransform(camPosition.position, camPosition.rotation);
         m_currentState.EnableCameraChange();
     }

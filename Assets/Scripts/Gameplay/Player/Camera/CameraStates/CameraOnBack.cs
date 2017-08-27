@@ -12,6 +12,7 @@ public class CameraOnBack : CameraStates
     public float m_tiltMax = 60;                       // The maximum value of the x axis rotation of the pivot.
     public float m_tiltMin = 45f;
     public Vector3 m_camPosition = new Vector3(0.0f, 2.0f, -5.0f);
+    [HideInInspector] public Vector3 m_pivotPosition { get; private set; }
     public float m_transitionToBackTime = 0.5f;
 
     [HideInInspector] public Quaternion m_savedPivotQuaternion = Quaternion.identity;
@@ -21,6 +22,8 @@ public class CameraOnBack : CameraStates
         base.Start();
         m_type = States.BACK;
         m_tiltAngle = m_defaultTiltAngle;
+
+        m_pivotPosition = Vector3.zero;
     }
 
     //Main camera update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
@@ -32,7 +35,8 @@ public class CameraOnBack : CameraStates
 
         if (m_changeCamState)
         {
-            m_savedPivotQuaternion = m_variableCam.m_pivot.localRotation;
+            //m_savedPivotQuaternion = m_variableCam.m_pivot.localRotation;
+            m_savedPivotQuaternion = Quaternion.Euler(m_defaultTiltAngle, m_variableCam.m_model.localRotation.eulerAngles.y, 0);
             m_variableCam.m_currentState = m_variableCam.m_transit;
             ret = true;
         }

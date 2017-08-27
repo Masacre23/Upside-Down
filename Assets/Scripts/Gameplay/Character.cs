@@ -64,6 +64,10 @@ public class Character : MonoBehaviour
     {
     }
 
+    public virtual void LateUpdate()
+    {
+    }
+
     // We use FixedUpdate since we will be dealing with forces
     // This method should control character's movements
     public virtual void FixedUpdate()

@@ -21,6 +21,9 @@ public class CameraFixed : CameraStates
     {
         bool ret = false;
 
+        m_variableCam.m_pivot.position = m_position;
+        m_variableCam.m_pivot.rotation = m_rotation;
+
         if (m_changeCamState)
         {
             m_variableCam.m_currentState = m_variableCam.m_transit;
@@ -34,9 +37,6 @@ public class CameraFixed : CameraStates
     {
         m_changeCamState = false;
         m_variableCam.m_cameraProtection.SetProtection(true);
-
-        m_variableCam.m_cam.rotation = m_rotation;
-        m_variableCam.m_cam.position = m_position;
     }
 
     public override void OnExit()

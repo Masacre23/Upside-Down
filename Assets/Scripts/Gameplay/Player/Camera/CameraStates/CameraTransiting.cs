@@ -11,10 +11,12 @@ public class CameraTransiting : CameraStates {
     float m_addedTime;
     float m_timeBetweenChanges = 0.5f;
 
-    bool m_localTransforms = false;
+    bool m_localPivotTransforms = false;
     bool m_changeWithoutTransition = false;
-    Vector3 m_initialPosition;
-    Vector3 m_targetPosition;
+    Vector3 m_initialCamPosition;
+    Vector3 m_targetCamPosition;
+    Vector3 m_initialPivotPosition;
+    Vector3 m_targetPivotPosition;
     Quaternion m_initialRotationPivot;
     Quaternion m_targetRotationPivot;
     Quaternion m_initialRotationCamera;
@@ -39,18 +41,19 @@ public class CameraTransiting : CameraStates {
 
         if (m_changeWithoutTransition)
         {
-            if (m_localTransforms)
+            if (m_localPivotTransforms)
             {
                 m_variableCam.m_pivot.localRotation = m_targetRotationPivot;
-                m_variableCam.m_cam.localRotation = m_targetRotationCamera;
-                m_variableCam.m_cam.localPosition = m_targetPosition;
+                m_variableCam.m_pivot.localPosition = m_targetPivotPosition;
             }
             else
             {
                 m_variableCam.m_pivot.rotation = m_targetRotationPivot;
-                m_variableCam.m_cam.rotation = m_targetRotationCamera;
-                m_variableCam.m_cam.position = m_targetPosition;
+                m_variableCam.m_pivot.position = m_targetPivotPosition;
             }
+
+            m_variableCam.m_cam.localRotation = m_targetRotationCamera;
+            m_variableCam.m_cam.localPosition = m_targetCamPosition;
 
             m_variableCam.m_currentState = m_finalState;
             ret = true;
@@ -62,20 +65,22 @@ public class CameraTransiting : CameraStates {
 
             Quaternion newPivotRotation = Quaternion.Slerp(m_initialRotationPivot, m_targetRotationPivot, perc);
             Quaternion newCameraRotation = Quaternion.Slerp(m_initialRotationCamera, m_targetRotationCamera, perc);
-            Vector3 newPosition = Vector3.Lerp(m_initialPosition, m_targetPosition, perc);
+            Vector3 newPosition = Vector3.Lerp(m_initialCamPosition, m_targetCamPosition, perc);
+            Vector3 newPositionPivot = Vector3.Lerp(m_initialPivotPosition, m_targetPivotPosition, perc);
 
-            if (m_localTransforms)
+            if (m_localPivotTransforms)
             {
                 m_variableCam.m_pivot.localRotation = newPivotRotation;
-                m_variableCam.m_cam.localRotation = newCameraRotation;
-                m_variableCam.m_cam.localPosition = newPosition;
+                m_variableCam.m_pivot.localPosition = newPositionPivot;
             }
             else
             {
                 m_variableCam.m_pivot.rotation = newPivotRotation;
-                m_variableCam.m_cam.rotation = newCameraRotation;
-                m_variableCam.m_cam.position = newPosition;
+                m_variableCam.m_pivot.position = newPositionPivot;
             }
+
+            m_variableCam.m_cam.localRotation = newCameraRotation;
+            m_variableCam.m_cam.localPosition = newPosition;
 
             if (perc >= 1.0f)
             {
@@ -106,26 +111,28 @@ public class CameraTransiting : CameraStates {
         m_time = 0.0f;
     }
 
-    public void SetTransitionValues(CameraStates finalState, Vector3 targetPosition, Quaternion targetRotationCamera, Quaternion targetRotationPivot, bool localPositions, float changeTotalTime)
+    public void SetTransitionValues(CameraStates finalState, Vector3 targetCamPosition, Vector3 targetPivotPosition, Quaternion targetRotationCamera, Quaternion targetRotationPivot, bool localPivotPositions, float changeTotalTime)
     {
-        m_localTransforms = localPositions;
-        if (m_localTransforms)
+        m_localPivotTransforms = localPivotPositions;
+        if (m_localPivotTransforms)
         {
-            m_initialRotationCamera = m_variableCam.m_cam.localRotation;
             m_initialRotationPivot = m_variableCam.m_pivot.localRotation;
-            m_initialPosition = m_variableCam.m_cam.localPosition;
+            m_initialPivotPosition = m_variableCam.m_pivot.localPosition;
         }
         else
         {
-            m_initialRotationCamera = m_variableCam.m_cam.rotation;
             m_initialRotationPivot = m_variableCam.m_pivot.rotation;
-            m_initialPosition = m_variableCam.m_cam.position;
+            m_initialPivotPosition = m_variableCam.m_pivot.position;
         }
+
+        m_initialRotationCamera = m_variableCam.m_cam.localRotation;
+        m_initialCamPosition = m_variableCam.m_cam.localPosition;
 
         m_finalState = finalState;
         m_targetRotationCamera = targetRotationCamera;
         m_targetRotationPivot = targetRotationPivot;
-        m_targetPosition = targetPosition;
+        m_targetCamPosition = targetCamPosition;
+        m_targetPivotPosition = targetPivotPosition;
 
         if (changeTotalTime > 0.0f)
         {

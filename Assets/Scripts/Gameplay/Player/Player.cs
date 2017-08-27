@@ -200,16 +200,6 @@ public class Player : Character
 
         UpdateAnimator();
 
-        if (m_camController)
-        {
-            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, Time.deltaTime);
-            if (m_rotationFollowPlayer)
-            {
-                //m_camController.FollowTarget(Time.deltaTime);
-                m_camController.RotateOnTarget(Time.deltaTime);
-            }   
-        }
-
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
 
@@ -234,6 +224,20 @@ public class Player : Character
         }
 
         m_doubleJumping = false;
+    }
+
+    public override void LateUpdate()
+    {
+        if (m_camController)
+        {
+            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, Time.deltaTime);
+            if (m_rotationFollowPlayer)
+            {
+                //m_camController.FollowTarget(Time.deltaTime);
+                m_camController.RotateOnTarget(Time.deltaTime);
+            }
+        }
+
         ResetInput();
     }
 
