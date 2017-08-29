@@ -14,6 +14,8 @@ public class DialogueZone : MonoBehaviour
 
     Dialogue m_currentDialogue;
 
+	public bool instantPlay = false;
+
     void Awake()
     {
         m_playerManager = GameObject.Find("Player").GetComponent<Player>();
@@ -23,7 +25,7 @@ public class DialogueZone : MonoBehaviour
     void Update ()
     {
         //if (Input.GetKeyDown(KeyCode.Return) && playerInside && !b)
-        if (!m_alreadyPlayed && m_playerInside && !m_playerManager.m_paused && Input.GetButtonDown(m_inputNameButton))
+		if (!m_alreadyPlayed && m_playerInside && !m_playerManager.m_paused && (Input.GetButtonDown(m_inputNameButton) || instantPlay))
         {
             m_dialogue.SetActive(true);
 			//m_dialogue.GetComponent<Dialogue> ().StopAllCoroutines ();

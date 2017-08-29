@@ -8,6 +8,9 @@ public class Dialogue : MonoBehaviour
     private Text _textComponent;
 
     public string[] DialogueStrings;
+	public int[] indexCameras;
+	public Camera[] DialogueCamera;
+	bool activeCameras = false;
 
     public float SecondsBetweenCharacters = 0.15f;
     public float CharacterRateMultiplier = 0.5f;
@@ -23,6 +26,7 @@ public class Dialogue : MonoBehaviour
     public GameObject StopIcon;
 
     Player playerManager;
+
     //this.gameObject.transform.parent.gameObject.SetActive(false);
     // playerManager.m_negatePlayerInput = false;
     // Use this for initialization
@@ -36,6 +40,9 @@ public class Dialogue : MonoBehaviour
 		playerManager = GameObject.Find("Player").GetComponent<Player>();
 		_isDialoguePlaying = true;
 		StartCoroutine(StartDialogue());
+
+		if (DialogueCamera.Length != 0)
+			activeCameras = true;
 	}
 	
 	// Update is called once per frame
@@ -62,6 +69,12 @@ public class Dialogue : MonoBehaviour
             if (!_isStringBeingRevealed)
             {
                 _isStringBeingRevealed = true;
+				if (activeCameras) 
+				{
+					DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
+					DialogueCamera [indexCameras [currentDialogueIndex]].gameObject.SetActive (true);
+				}
+
                 StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
 
                 if (currentDialogueIndex >= dialogueLength)
@@ -78,12 +91,14 @@ public class Dialogue : MonoBehaviour
             //if (Input.GetKeyDown(DialogueInput))
             if (!playerManager.m_paused && Input.GetButtonDown(m_inputNameButton))
             {
+				
                 break;
             }
 
             yield return 0;
         }
 
+		DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
         HideIcons();
         _isEndOfDialogue = false;
         _isDialoguePlaying = false;
