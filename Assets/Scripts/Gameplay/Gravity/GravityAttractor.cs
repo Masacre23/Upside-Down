@@ -45,29 +45,13 @@ public class GravityAttractor : MonoBehaviour
     {
         GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
         if (gravity)
-        {
-            if (m_type == GravityType.PLANET)
-            {
-                if (!gravity.m_planetsGravity.Contains(this))
-                    gravity.m_planetsGravity.Add(this);
-            }
-            else
-            {
-                if (!gravity.m_objectsGravity.Contains(this))
-                    gravity.m_objectsGravity.Add(this);
-            }
-        }
+            gravity.AddAttractor(this);
     }
 
     void OnTriggerExit(Collider other)
     {
         GameObjectGravity gravity = other.GetComponent<GameObjectGravity>();
         if (gravity)
-        {
-            if (gravity.m_planetsGravity.Contains(this))
-                gravity.m_planetsGravity.Remove(this);
-            else if (gravity.m_objectsGravity.Contains(this))
-                gravity.m_objectsGravity.Remove(this);
-        }
+            gravity.RemoveAttractor(this);
     }
 }
