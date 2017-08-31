@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Text))]
 public class Dialogue : MonoBehaviour
 {
     private Text _textComponent;
 
+	public int bossEvent = -1; //if -1 means no event
     public string[] DialogueStrings;
 	public int[] indexCameras;
 	public Camera[] DialogueCamera;
@@ -73,6 +75,8 @@ public class Dialogue : MonoBehaviour
 				{
 					DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
 					DialogueCamera [indexCameras [currentDialogueIndex]].gameObject.SetActive (true);
+					if (bossEvent == currentDialogueIndex)
+						GameObject.Find ("Boss").GetComponent<BossScene> ().enabled = true;
 				}
 
                 StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
@@ -99,6 +103,8 @@ public class Dialogue : MonoBehaviour
         }
 
 		DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
+		if (bossEvent != -1)
+			SceneManager.LoadScene (2);
         HideIcons();
         _isEndOfDialogue = false;
         _isDialoguePlaying = false;

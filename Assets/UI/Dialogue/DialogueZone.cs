@@ -55,7 +55,8 @@ public class DialogueZone : MonoBehaviour
     {
 		if (other.tag == "Player") 
 		{
-			m_buttonA.SetActive (true);
+			if(!instantPlay)
+				m_buttonA.SetActive (true);
 			m_playerInside = true;
 		}
     }
