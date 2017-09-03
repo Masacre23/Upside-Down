@@ -49,11 +49,13 @@ public class PlayerCarrying : PlayerStates
         m_player.m_jumpMovement = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
         m_player.m_camController.m_followPlayer = true;
+        m_player.m_animator.SetBool("Charging", true);
     }
 
     public override void OnExit()
     {
         m_player.m_pickedObject.UnsetTarget();
         m_player.m_rotationFollowPlayer = false;
+        m_player.m_animator.SetBool("Charging", false);
     }
 }

@@ -46,10 +46,10 @@ public class ThrowableObject : MonoBehaviour
         if (m_isFloating)
         {
             //Moving the object to the floating point position
-            transform.position = Vector3.Lerp(transform.position, m_floatingPoint.position, m_floatingSpeed * Time.deltaTime);
+            //transform.position = Vector3.Lerp(transform.position, m_floatingPoint.position, m_floatingSpeed * Time.deltaTime);
 
             //Random rotation of the object within itself
-            transform.Rotate(m_rotationRandomVector * m_rotationSpeed * Time.deltaTime);
+            //transform.Rotate(m_rotationRandomVector * m_rotationSpeed * Time.deltaTime);
         }
 
         //Checks if the object can damage to enemies. When its velocity falls below a certain value, it stops to deal damage if collided.
@@ -115,6 +115,8 @@ public class ThrowableObject : MonoBehaviour
     // This function is called when the object is picked by the player
     public void BeginCarried(Transform floatingPoint, PickedObject player)
     {
+        transform.position = floatingPoint.position;
+        transform.parent = floatingPoint;
         m_floatingPoint = floatingPoint;
         m_playerPicked = player;
 
@@ -134,6 +136,7 @@ public class ThrowableObject : MonoBehaviour
     //This function should be called when an object stop floating around the character
     public void StopFloating()
     {
+        transform.parent = null;
         m_targetPlayer.FreeSpace(m_floatingPoint);
         m_targetPlayer = null;
         m_floatingPoint = null;
@@ -155,6 +158,7 @@ public class ThrowableObject : MonoBehaviour
     //This function should be called when the object stop been carried by the player
     public void StopCarried()
     {
+        transform.parent = null;
         m_playerPicked.FreeSpace();
         m_playerPicked = null;
         m_floatingPoint = null;
