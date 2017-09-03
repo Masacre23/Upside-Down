@@ -29,7 +29,7 @@ public class PickedObject : MonoBehaviour
 
         m_player = GameObject.Find("Player").GetComponent<Player>();
 
-        if (m_pickedObjectPosition)
+        if (!m_pickedObjectPosition)
             m_pickedObjectPosition = GameObject.Find("PickedObjectPosition").transform;
 	}
 	
