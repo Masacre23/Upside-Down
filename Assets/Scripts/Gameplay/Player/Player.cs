@@ -288,8 +288,8 @@ public class Player : Character
         m_jumpMovement = Vector3.zero;
 
         m_jumpVector = transform.up * m_jumpForceVertical;
-        m_jumpMovement = movement * speed;
-        m_jumpDirection = movement;
+        m_jumpMovement = transform.InverseTransformDirection(movement * speed);
+        m_jumpDirection = transform.InverseTransformDirection(movement);
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
@@ -343,15 +343,18 @@ public class Player : Character
             Vector3 movement = m_axisHorizontal * GetDirectionRight() + m_axisVertical * forward;
             movement.Normalize();
 
+            Vector3 jumpDirection = transform.TransformDirection(m_jumpDirection);
+            Vector3 jumpMovement = transform.TransformDirection(m_jumpMovement);
+
             //We need to ignore input in the direction of the jump
             Vector3 finalDirection = movement;
-            float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
+            float forwardIntensity = Vector3.Dot(movement, jumpDirection);
             if (forwardIntensity > 0.0f)
-                finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
+                finalDirection -= Vector3.Dot(movement, jumpDirection) * jumpDirection;
 
             float speed = GetSpeedFromInput(m_inputSpeed);
 
-            m_rigidBodyTotal += m_offset + (finalDirection * speed + m_jumpMovement) * timeStep;
+            m_rigidBodyTotal += m_offset + (finalDirection * speed + jumpMovement) * timeStep;
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)
