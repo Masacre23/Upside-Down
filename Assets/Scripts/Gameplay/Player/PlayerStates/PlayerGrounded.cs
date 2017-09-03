@@ -20,7 +20,7 @@ public class PlayerGrounded : PlayerStates
 
         m_player.CheckPlayerStopped(axisHorizontal, axisVertical);
 
-        if (jumping)
+        if (jumping || m_player.m_jumpOnEnemy)
         {
             m_player.Jump(axisHorizontal, axisVertical);
 
@@ -53,9 +53,8 @@ public class PlayerGrounded : PlayerStates
     public override void OnEnter()
     {
         m_player.m_rotationFollowPlayer = true;
-        m_player.m_reachedGround = true;
         m_player.m_freezeMovement = false;
-        
+
         m_player.m_jumpDirection = Vector3.zero;
         m_player.m_jumpMovement = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;

@@ -42,7 +42,6 @@ public class PlayerCarrying : PlayerStates
     public override void OnEnter()
     {
         m_player.m_rotationFollowPlayer = true;
-        m_player.m_reachedGround = true;
         m_player.m_freezeMovement = false;
         
         m_player.m_jumpDirection = Vector3.zero;

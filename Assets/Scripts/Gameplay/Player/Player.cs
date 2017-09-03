@@ -65,9 +65,9 @@ public class Player : Character
     private bool m_hasJumped = false;
     private Vector3 m_jumpVector;
 
+    public bool m_jumpOnEnemy { get; private set; }
+
     //Variables regarding player's change of gravity
-    public float m_gravityRange = 3.0f;
-    public bool m_reachedGround = true;
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
 
     //Variables regarding player's throw of objects
@@ -166,6 +166,7 @@ public class Player : Character
         m_runSpeed = 2 * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
 
+        m_jumpOnEnemy = false;
     }
 
     public override void Restart()
@@ -273,9 +274,18 @@ public class Player : Character
     //Then calls the jump method in the computed direction
     public override void Jump(float inputHorizontal, float inputVertical)
     {
-        Vector3 forward = GetDirectionForward();
-        Vector3 movement = inputHorizontal * GetDirectionRight() + inputVertical * forward;
-        movement.Normalize();
+        Vector3 movement = Vector3.zero;
+        if (m_jumpOnEnemy)
+        {
+            m_jumpOnEnemy = false;
+            movement = m_modelTransform.forward;
+        }
+        else
+        {
+            Vector3 forward = GetDirectionForward();
+            movement = inputHorizontal * GetDirectionRight() + inputVertical * forward;
+            movement.Normalize();
+        }
 
         //float speed = GetSpeedFromInput(m_inputSpeed);
         float speed = m_runSpeed;
@@ -365,6 +375,33 @@ public class Player : Character
                 m_timeSliding = 0.0f;
             }
         }
+    }
+
+    // This function is similar to Character.CheckGroundStatus, but also checks if the player is falling on an enemy in order to produce a jump
+    public bool CheckGroundAndEnemyStatus()
+    {
+        RaycastHit hitInfo = new RaycastHit();
+        Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
+        if (GroundCheck(ref hitInfo))
+        {
+            if (hitInfo.transform.tag == "EnemySnail")
+                m_jumpOnEnemy = true;
+
+            m_tagGround = hitInfo.collider.tag;
+            m_gravityOnCharacter.GravityOnFeet(hitInfo);
+            m_isGrounded = true;
+            m_isJumping = false;
+            m_gravityOnCharacter.m_getStrongestGravity = true;
+            m_gravityOnCharacter.m_onAir = false;
+        }
+        else
+        {
+            m_isGrounded = false;
+            m_gravityOnCharacter.m_getStrongestGravity = false;
+            m_gravityOnCharacter.m_onAir = true;
+        }
+
+        return m_isGrounded;
     }
 
     public void RotateModel(Vector3 forward)

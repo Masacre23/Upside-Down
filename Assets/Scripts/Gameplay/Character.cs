@@ -133,7 +133,7 @@ public class Character : MonoBehaviour
             m_groundCheckDistance = 0.01f;
     }
 
-    bool GroundCheck(ref RaycastHit hitInfo)
+    protected bool GroundCheck(ref RaycastHit hitInfo)
     {
         bool ret = false;
         int ignoreWater = 1 << LayerMask.NameToLayer("Water");
