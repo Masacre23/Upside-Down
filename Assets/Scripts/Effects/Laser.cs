@@ -33,6 +33,7 @@ public class Laser : MonoBehaviour {
 					laser.enabled = true;
 					if (particleTime >= particleRate) 
 					{
+                        impactEffect.Play();
 						impactEffect.Emit (1);
 						particleTime = 0;
 					}
@@ -42,7 +43,7 @@ public class Laser : MonoBehaviour {
 				} else 
 				{
 					laser.enabled = false;
-					impactEffect.Stop ();
+				//	impactEffect.Stop ();
 				}
 			}
 			else 
