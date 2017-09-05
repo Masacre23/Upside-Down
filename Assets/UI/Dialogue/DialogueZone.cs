@@ -15,12 +15,22 @@ public class DialogueZone : MonoBehaviour
     Dialogue m_currentDialogue;
 
 	public bool instantPlay = false;
+	public DialogueZone extraDialogue;
+
+	public bool firstTimeEnabled = true;
 
     void Awake()
     {
         m_playerManager = GameObject.Find("Player").GetComponent<Player>();
     }
 
+	void OnEnable()
+	{
+		if (firstTimeEnabled)
+			firstTimeEnabled = false;
+		else
+			m_buttonA.SetActive (true);
+	}
     // Update is called once per frame
     void Update ()
     {
@@ -35,11 +45,16 @@ public class DialogueZone : MonoBehaviour
             m_alreadyPlayed = true;
         }
 
-        if (m_alreadyPlayed && m_currentDialogue)
+       // if (m_alreadyPlayed && m_currentDialogue)
+		if (m_alreadyPlayed)
         {
-            if (m_currentDialogue.DialogueHasEnded())
+           // if (m_currentDialogue.DialogueHasEnded())
+			if(!m_dialogue.activeInHierarchy)
             {
-                enabled = false;
+				if (extraDialogue != null) {
+					extraDialogue.enabled = true;
+				}
+				enabled = false;
             }
         }
     }
@@ -53,7 +68,7 @@ public class DialogueZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-		if (other.tag == "Player") 
+		if (other.tag == "Player" && !m_alreadyPlayed) 
 		{
 			if(!instantPlay)
 				m_buttonA.SetActive (true);
@@ -63,7 +78,7 @@ public class DialogueZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-		if (other.tag == "Player") 
+		if (other.tag == "Player" && !m_alreadyPlayed) 
 		{
 			m_buttonA.SetActive (false);
 			m_playerInside = false; 

@@ -101,8 +101,8 @@ public class Dialogue : MonoBehaviour
 
             yield return 0;
         }
-
-		DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
+		if(activeCameras)
+			DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
 		if (bossEvent != -1)
 			SceneManager.LoadScene (2);
         HideIcons();
