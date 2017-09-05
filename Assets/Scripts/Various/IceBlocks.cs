@@ -19,13 +19,15 @@ public class IceBlocks : MonoBehaviour {
 	void FixedUpdate () {
 		if (!down) 
 		{
-			time += Time.deltaTime;
-			if (time < maxTime)
+			if (time < maxTime) 
+			{
+				time += Time.deltaTime;
 				transform.Translate (direcction * Time.deltaTime * speed);
+			}
 		} else 
 		{
 			time -= Time.deltaTime;
-			if (time > 0)
+			if (time > 0.0f)
 				transform.Translate (-direcction * Time.deltaTime * speed);
 		}
 	}
