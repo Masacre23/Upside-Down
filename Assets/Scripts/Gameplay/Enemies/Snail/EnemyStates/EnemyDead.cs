@@ -42,6 +42,14 @@ public class EnemyDead : EnemyStates
 			m_enemy.m_renderer.material = m_enemy.m_transparentMat;
 			m_enemy.m_rendererShell.material = m_enemy.m_transparentMat;
 			m_enemy.m_renderer.sharedMaterial.SetFloat ("_DisAmount", 0);
+
+			EnemyArea ea = m_enemy.m_enemyArea.GetComponent<EnemyArea> ();
+			ea.numEnemies--;
+			if (ea.numEnemies == 0 && ea.iceBlocks) 
+			{
+				ea.iceBlocks.transform.GetChild(0).GetComponent<IceBlocks> ().down = true;
+				ea.iceBlocks.transform.GetChild(1).GetComponent<IceBlocks> ().down = true;
+			}
 		}
         else
             this.gameObject.SetActive(false);

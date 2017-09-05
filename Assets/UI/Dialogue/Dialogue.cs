@@ -28,6 +28,7 @@ public class Dialogue : MonoBehaviour
     public GameObject StopIcon;
 
     Player playerManager;
+	public GameObject startEvent;
 
     //this.gameObject.transform.parent.gameObject.SetActive(false);
     // playerManager.m_negatePlayerInput = false;
@@ -45,6 +46,9 @@ public class Dialogue : MonoBehaviour
 
 		if (DialogueCamera.Length != 0)
 			activeCameras = true;
+
+		if (startEvent)
+			startEvent.SetActive (true);
 	}
 	
 	// Update is called once per frame

@@ -6,11 +6,13 @@ public class EnemyArea : MonoBehaviour
 {
 	List<Enemy> enemies;
     int layerEnemy;
+	public GameObject iceBlocks;
+	public int numEnemies;
 
 	void Awake()
 	{
 		enemies = new List<Enemy>();
-        layerEnemy = LayerMask.NameToLayer("Enemy");
+        layerEnemy = LayerMask.NameToLayer("EnemySnailIce");
 		//ScanForItems();
 	}
 
@@ -21,6 +23,7 @@ public class EnemyArea : MonoBehaviour
 			foreach(Enemy enemy in enemies)
 			{
                 enemy.player = col.gameObject;
+				enemy.m_enemyArea = this.gameObject;
                 if (!enemy.m_isSleeping)
                 {
                     enemy.m_currentState.OnExit();
@@ -28,6 +31,8 @@ public class EnemyArea : MonoBehaviour
                     enemy.m_currentState.OnEnter();
                 }
              }
+			if (iceBlocks)
+				iceBlocks.SetActive (true);
 		}
 
         if (col.tag == "EnemySnail" && col.name != "CenterSpineFather")

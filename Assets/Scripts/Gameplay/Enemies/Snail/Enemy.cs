@@ -27,6 +27,7 @@ public class Enemy : Character {
 
     public GameObject player;
     public bool m_isSleeping = false;
+	public GameObject m_enemyArea;
 
     public enum Types
     {
