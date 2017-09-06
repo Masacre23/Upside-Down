@@ -10,12 +10,12 @@ public class BossScene : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		transform.GetChild (0).gameObject.SetActive (true);
 	}
 
 	void FixedUpdate () {
 		time += Time.deltaTime;
 		if(time < maxTime)
-			transform.Translate (-transform.up * Time.deltaTime * speed);
+			transform.Translate (-Vector3.up * Time.deltaTime * speed);
 	}
 }
