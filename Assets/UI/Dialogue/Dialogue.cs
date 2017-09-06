@@ -21,7 +21,7 @@ public class Dialogue : MonoBehaviour
     public string m_inputNameButton = "Activate";
 
     private bool _isStringBeingRevealed = false;
-    private bool _isDialoguePlaying = false;
+	public bool _isDialoguePlaying = false;
     private bool _isEndOfDialogue = false;
 
     public GameObject ContinueIcon;
@@ -30,6 +30,7 @@ public class Dialogue : MonoBehaviour
     Player playerManager;
 	public GameObject startEvent;
 
+	public GameObject m_zone;
     //this.gameObject.transform.parent.gameObject.SetActive(false);
     // playerManager.m_negatePlayerInput = false;
     // Use this for initialization
@@ -50,12 +51,12 @@ public class Dialogue : MonoBehaviour
 		if (startEvent)
 			startEvent.SetActive (true);
 	}
-	
+		
 	// Update is called once per frame
 	void Update () 
 	{
-	   /* if (Input.GetKeyDown(KeyCode.Return))
-	    //{
+		/*if (Input.GetButtonDown(m_inputNameButton))
+	    {
 	        if (!_isDialoguePlaying)
 	        {
                 _isDialoguePlaying = true;
@@ -69,7 +70,7 @@ public class Dialogue : MonoBehaviour
     {
         int dialogueLength = DialogueStrings.Length;
         int currentDialogueIndex = 0;
-
+		_isDialoguePlaying = true;
         while (currentDialogueIndex < dialogueLength || !_isStringBeingRevealed)
         {
             if (!_isStringBeingRevealed)
@@ -112,9 +113,11 @@ public class Dialogue : MonoBehaviour
         HideIcons();
         _isEndOfDialogue = false;
         _isDialoguePlaying = false;
-        this.gameObject.transform.parent.gameObject.SetActive(false);
+		_isStringBeingRevealed = false;
 
         playerManager.m_negatePlayerInput = false;
+		this.gameObject.transform.parent.gameObject.SetActive(false);
+		//m_zone.GetComponent<DialogueZone> ().m_alreadyPlayed = false;
         //playerManager.m_negateJump = false;
     }
 

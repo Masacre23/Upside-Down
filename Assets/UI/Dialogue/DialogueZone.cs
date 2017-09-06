@@ -10,7 +10,7 @@ public class DialogueZone : MonoBehaviour
 
     bool m_playerInside = false;
     Player m_playerManager;
-    bool m_alreadyPlayed = false;
+    public bool m_alreadyPlayed = false;
 
     Dialogue m_currentDialogue;
 
@@ -19,9 +19,12 @@ public class DialogueZone : MonoBehaviour
 
 	public bool firstTimeEnabled = true;
 
+	bool firstTime = true;
+
     void Awake()
     {
         m_playerManager = GameObject.Find("Player").GetComponent<Player>();
+		//m_currentDialogue = m_dialogue.GetComponent<Dialogue> ();
     }
 
 	void OnEnable()
@@ -37,19 +40,25 @@ public class DialogueZone : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.Return) && playerInside && !b)
 		if (!m_alreadyPlayed && m_playerInside && !m_playerManager.m_paused && (Input.GetButtonDown(m_inputNameButton) || instantPlay))
         {
-            m_dialogue.SetActive(true);
+			
+			m_dialogue.SetActive (true);
 			//m_dialogue.GetComponent<Dialogue> ().StopAllCoroutines ();
 			//m_dialogue.GetComponent<Dialogue> ().Start ();
+			if (!firstTime) 
+			{
+				m_dialogue.GetComponentInChildren<Dialogue> ().Start ();
+			}
 			m_buttonA.SetActive (false);
-            m_playerManager.m_negatePlayerInput = true;
-            m_alreadyPlayed = true;
+			m_playerManager.m_negatePlayerInput = true;
+			m_alreadyPlayed = true;
+			firstTime = false;
         }
 
        // if (m_alreadyPlayed && m_currentDialogue)
 		if (m_alreadyPlayed)
         {
            // if (m_currentDialogue.DialogueHasEnded())
-			if(!m_dialogue.activeInHierarchy)
+			if(!m_dialogue.activeInHierarchy && extraDialogue != null)
             {
 				if (extraDialogue != null) {
 					extraDialogue.enabled = true;
@@ -68,7 +77,8 @@ public class DialogueZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-		if (other.tag == "Player" && !m_alreadyPlayed) 
+		//if (other.tag == "Player" && !m_alreadyPlayed) 
+		if (other.tag == "Player")
 		{
 			if(!instantPlay)
 				m_buttonA.SetActive (true);
@@ -78,10 +88,12 @@ public class DialogueZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-		if (other.tag == "Player" && !m_alreadyPlayed) 
+		//if (other.tag == "Player" && !m_alreadyPlayed) 
+		if (other.tag == "Player")
 		{
 			m_buttonA.SetActive (false);
-			m_playerInside = false; 
+			m_playerInside = false;
+			m_alreadyPlayed = false;
 		}
     }
 }
