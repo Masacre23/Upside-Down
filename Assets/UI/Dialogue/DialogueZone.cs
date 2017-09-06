@@ -20,6 +20,7 @@ public class DialogueZone : MonoBehaviour
 	public bool firstTimeEnabled = true;
 
 	bool firstTime = true;
+	public bool desactiveWhenFinished;
 
     void Awake()
     {
@@ -37,13 +38,10 @@ public class DialogueZone : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        //if (Input.GetKeyDown(KeyCode.Return) && playerInside && !b)
 		if (!m_alreadyPlayed && m_playerInside && !m_playerManager.m_paused && (Input.GetButtonDown(m_inputNameButton) || instantPlay))
         {
 			
 			m_dialogue.SetActive (true);
-			//m_dialogue.GetComponent<Dialogue> ().StopAllCoroutines ();
-			//m_dialogue.GetComponent<Dialogue> ().Start ();
 			if (!firstTime) 
 			{
 				m_dialogue.GetComponentInChildren<Dialogue> ().Start ();
@@ -65,6 +63,8 @@ public class DialogueZone : MonoBehaviour
 				}
 				enabled = false;
             }
+			if (desactiveWhenFinished)
+				enabled = false;
         }
     }
 

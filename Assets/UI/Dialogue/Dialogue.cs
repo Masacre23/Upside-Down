@@ -12,7 +12,7 @@ public class Dialogue : MonoBehaviour
     public string[] DialogueStrings;
 	public int[] indexCameras;
 	public Camera[] DialogueCamera;
-	bool activeCameras = false;
+	public bool activeCameras = false;
 
     public float SecondsBetweenCharacters = 0.15f;
 	public float CharacterRateMultiplier = 0.5f;
@@ -30,9 +30,6 @@ public class Dialogue : MonoBehaviour
     Player playerManager;
 	public GameObject startEvent;
 
-	public GameObject m_zone;
-    //this.gameObject.transform.parent.gameObject.SetActive(false);
-    // playerManager.m_negatePlayerInput = false;
     // Use this for initialization
 	public void Start()
 	{
@@ -118,8 +115,6 @@ public class Dialogue : MonoBehaviour
 
         playerManager.m_negatePlayerInput = false;
 		this.gameObject.transform.parent.gameObject.SetActive(false);
-		//m_zone.GetComponent<DialogueZone> ().m_alreadyPlayed = false;
-        //playerManager.m_negateJump = false;
     }
 
     private IEnumerator DisplayString(string stringToDisplay)

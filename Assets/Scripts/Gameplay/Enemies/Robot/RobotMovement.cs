@@ -83,4 +83,13 @@ public class RobotMovement : MonoBehaviour {
 			break;
 		}
 	}
+
+	void OnTriggerStay(Collider col)
+	{
+		if (col.tag == "Player") 
+		{
+			col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
+			col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
+		}
+	}
 }
