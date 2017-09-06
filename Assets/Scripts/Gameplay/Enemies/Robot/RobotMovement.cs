@@ -25,7 +25,6 @@ public class RobotMovement : MonoBehaviour {
 	[Header("CIRCLES & TURRET MOVEMENT")]
 	public float rotationSpeed = 4.0f;
 	public float damp = 2.0f;
-	public int dirRot = 1;
 
 	GameObject target;
 
@@ -73,12 +72,12 @@ public class RobotMovement : MonoBehaviour {
 			//Quaternion rotationAngle = Quaternion.LookRotation (transform.forward + transform.right, transform.up);
 			Quaternion rotationAngle = Quaternion.LookRotation (transform.forward, transform.right);
 			Quaternion temp = Quaternion.Slerp (transform.rotation, rotationAngle, Time.deltaTime * damp);
-			transform.rotation = new Quaternion (temp.x, dirRot * temp.y, temp.z, dirRot * temp.w);
+			transform.rotation = new Quaternion (temp.x, temp.y, temp.z,  temp.w);
 			//transform.position += transform.forward * rotationSpeed * Time.deltaTime;
-			transform.position += dirRot * transform.right * rotationSpeed * Time.deltaTime;
+			transform.position += transform.right * rotationSpeed * Time.deltaTime;
 			break;
 		case movement.TURRET:
-			Quaternion rotation = Quaternion.LookRotation(target.transform.position - transform.position);
+			Quaternion rotation = Quaternion.LookRotation(target.transform.position - transform.position + target.transform.up/2);
 			transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 			break;
 		}
