@@ -15,7 +15,7 @@ public class Dialogue : MonoBehaviour
 	bool activeCameras = false;
 
     public float SecondsBetweenCharacters = 0.15f;
-    public float CharacterRateMultiplier = 0.5f;
+	public float CharacterRateMultiplier = 0.5f;
 
     //public KeyCode DialogueInput = KeyCode.Return;
     public string m_inputNameButton = "Activate";
@@ -98,7 +98,8 @@ public class Dialogue : MonoBehaviour
         while (true)
         {
             //if (Input.GetKeyDown(DialogueInput))
-            if (!playerManager.m_paused && Input.GetButtonDown(m_inputNameButton))
+			//if (!playerManager.m_paused && Input.GetButtonDown(m_inputNameButton) && !_isStringBeingRevealed)
+			if(!_isStringBeingRevealed)
             {
 				
                 break;
@@ -137,11 +138,11 @@ public class Dialogue : MonoBehaviour
 
             if (currentCharacterIndex < stringLength)
             {
-               /* if (Input.GetKey(DialogueInput))
+				/*if (Input.GetButton(m_inputNameButton))
                 {
                     yield return new WaitForSeconds(SecondsBetweenCharacters*CharacterRateMultiplier);
                 }
-                else*
+                else
                 {*/
                     yield return new WaitForSeconds(SecondsBetweenCharacters);
                // }
