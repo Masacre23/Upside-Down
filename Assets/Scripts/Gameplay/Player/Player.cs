@@ -72,7 +72,7 @@ public class Player : Character
 
     //Variables regarding player's throw of objects
     public float m_throwDetectionRange = 20.0f;
-    public float m_throwForce = 20.0f;
+    public float m_throwForce = 2.0f;
     public float m_angleEnemyDetection = 30.0f;
     [HideInInspector] public Transform m_throwAimOrigin;
 

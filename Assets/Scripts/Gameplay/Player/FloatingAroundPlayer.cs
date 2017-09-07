@@ -241,7 +241,7 @@ public class FloatingAroundPlayer : MonoBehaviour
         }
         ThrowableObject throwScript = objectToThrow.GetComponent<ThrowableObject>();
         if (throwScript)
-            throwScript.ThrowObject(throwVector.normalized * throwForce);
+            throwScript.ThrowObject(throwForce, m_player.transform.up, throwVector.normalized );
         m_savedThrow = false;
     }
 

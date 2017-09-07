@@ -105,7 +105,7 @@ public class PickedObject : MonoBehaviour
         if (m_player)
             m_player.PlaySound("ThrowObjects");
 
-        m_pickedObject.ThrowObject(throwVector.normalized * throwForce);
+        m_pickedObject.ThrowObject(throwForce, m_player.transform.up,throwVector.normalized);
     }
 
     //This function sets the target mark in a target position

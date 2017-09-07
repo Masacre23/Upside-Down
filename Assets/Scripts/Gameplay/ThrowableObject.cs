@@ -23,7 +23,10 @@ public class ThrowableObject : MonoBehaviour
 
     [HideInInspector] public bool m_canDamage = false;
     bool m_applyThrownForce = false;
-    Vector3 m_thrownForce = Vector3.zero;
+    bool m_movingHorizontal = false;
+    float m_thrownForce = 0.0f;
+    Vector3 m_vectorUp = Vector3.up;
+    Vector3 m_vectorFroward = Vector3.forward;
     float m_minVelocityDamage = 2.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
 
@@ -69,13 +72,19 @@ public class ThrowableObject : MonoBehaviour
     {
         if (m_applyThrownForce)
         {
-            m_rigidBody.AddForce(m_thrownForce * m_rigidBody.mass, ForceMode.Impulse);
+            m_rigidBody.velocity = m_vectorUp * m_thrownForce;
+            //m_rigidBody.AddForce(m_thrownForce * m_rigidBody.mass, ForceMode.Impulse);
             m_applyThrownForce = false;
+            m_movingHorizontal = true;
+        }
+        if (m_movingHorizontal)
+        {
+            m_rigidBody.MovePosition(m_rigidBody.position + m_vectorFroward * Time.deltaTime);
         }
     }
 
     //This function should be called when the object is thrown
-    public void ThrowObject(Vector3 throwForce)
+    public void ThrowObject(float throwForce, Vector3 up, Vector3 forward)
     {
         if (m_playerPicked)
             StopCarried();
@@ -83,6 +92,8 @@ public class ThrowableObject : MonoBehaviour
             StopFloating();
 
         m_thrownForce = throwForce;
+        m_vectorUp = up;
+        m_vectorFroward = forward;
         m_applyThrownForce = true;
         m_canDamage = true;
 
@@ -184,6 +195,10 @@ public class ThrowableObject : MonoBehaviour
             sound.PlaySound("HitSomething");
 			if(transform.tag != "EnemySnail")
 				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
+        }
+        if(col.collider.tag == "Ice")
+        {
+            m_movingHorizontal = false;
         }
     }
 
