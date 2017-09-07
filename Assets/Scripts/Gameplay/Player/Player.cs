@@ -385,7 +385,15 @@ public class Player : Character
         if (GroundCheck(ref hitInfo))
         {
             if (hitInfo.transform.tag == "EnemySnail")
+            {
                 m_jumpOnEnemy = true;
+                if (!hitInfo.collider.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                {
+                    hitInfo.collider.gameObject.GetComponent<Enemy>().m_animator.SetBool("Stunned", true);
+                    hitInfo.collider.gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                    hitInfo.collider.gameObject.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>().Play();
+                }
+            }
 
             m_tagGround = hitInfo.collider.tag;
             m_gravityOnCharacter.GravityOnFeet(hitInfo);
@@ -572,10 +580,10 @@ public class Player : Character
 		* We detect wich collider of the enemy are we hitting
 		*
 		*/
-		if (collision.collider.tag == "EnemyAuxCollider") 
+		/*if (collision.collider.tag == "EnemyAuxCollider") 
 		{
 			collision.collider.transform.parent.transform.parent.GetComponent<Enemy> ().m_activeCollider = collision.collider;
-		}
+		}*/
 
     }
 

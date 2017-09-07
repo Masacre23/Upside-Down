@@ -86,7 +86,7 @@ public class Enemy : Character {
             m_currentState.OnEnter();
         }
 
-		if(m_activeCollider == m_headCol)
+		/*if(m_activeCollider == m_headCol)
 		{
 			if (!m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			{
@@ -95,7 +95,7 @@ public class Enemy : Character {
 				this.gameObject.transform.GetChild (3).gameObject.GetComponent<ParticleSystem> ().Play ();
 			}
 			m_activeCollider = null;
-		}
+		}*/
 
         UpdateUp();
 
@@ -163,7 +163,6 @@ public class Enemy : Character {
 
     void OnTriggerEnter(Collider col)
     {
-        //if (col.tag == "Player" && m_currentState != m_Changing)
         if (col.tag == "Player")
         {
             m_currentState.OnExit();
@@ -174,16 +173,6 @@ public class Enemy : Character {
             m_animator.SetBool("Sleeping", false);
             m_animator.speed = 1;
         }
-
-        /*if (col.tag == "EnemyWall") 
-		{
-			if (m_currentState == m_Following) 
-			{
-				m_currentState.OnExit ();
-				m_currentState = m_Changing;
-				m_currentState.OnEnter();
-			}
-		}*/
     }
 
     public void DamageManager(DamageData data)
