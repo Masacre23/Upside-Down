@@ -1841,7 +1841,7 @@ MonoBehaviour:
   m_jumpMovement: {x: 0, y: 0, z: 0}
   m_gravityTargets: {fileID: 0}
   m_throwDetectionRange: 20
-  m_throwForce: 20
+  m_throwForce: 2
   m_angleEnemyDetection: 30
   m_throwAimOrigin: {fileID: 0}
   m_pickedObject: {fileID: 0}
@@ -3095,7 +3095,7 @@ Prefab:
     - target: {fileID: 114189272120978456, guid: 5a875835604e46248a5b955128c61904,
         type: 2}
       propertyPath: instantPlay
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 135129382133527250, guid: 5a875835604e46248a5b955128c61904,
         type: 2}
@@ -16576,7 +16576,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 108031.57
+  Age: 108180.56
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -17728,6 +17728,26 @@ Prefab:
         type: 2}
       propertyPath: randomSeed
       value: 186527248
+      objectReference: {fileID: 0}
+    - target: {fileID: 108383128161267732, guid: 85325834d37c26443b19361df482a685,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.1102941
+      objectReference: {fileID: 0}
+    - target: {fileID: 108383128161267732, guid: 85325834d37c26443b19361df482a685,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.1102941
+      objectReference: {fileID: 0}
+    - target: {fileID: 108383128161267732, guid: 85325834d37c26443b19361df482a685,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114889812613279108, guid: 85325834d37c26443b19361df482a685,
+        type: 2}
+      propertyPath: maxTime
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 85325834d37c26443b19361df482a685, type: 2}
@@ -31726,7 +31746,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 147364.6
+  Age: 147512.22
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1

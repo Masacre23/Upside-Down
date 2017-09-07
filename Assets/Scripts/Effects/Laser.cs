@@ -11,6 +11,8 @@ public class Laser : MonoBehaviour {
 	public float particleRate = 0.05f; //20 particles per second
 	public bool drawAlways = false;
 	float particleTime;
+    public float maxTime = 0;
+    public  float time;
 
 	// Use this for initialization
 	void Start () {
@@ -28,11 +30,13 @@ public class Laser : MonoBehaviour {
 		{
 			if (dinamicLaser) 
 			{
+                time += Time.deltaTime;
 				RaycastHit hit;
-				if (Physics.Raycast (transform.position, -transform.up, out hit, 4)) 
+				if (Physics.Raycast (transform.position, -transform.up, out hit, 4) && (time < maxTime || maxTime == 0)) 
 				{
 					laser.enabled = true;
-					if (particleTime >= particleRate) 
+                    transform.GetChild(1).gameObject.SetActive(true);
+                    if (particleTime >= particleRate) 
 					{
                         impactEffect.Play();
 						impactEffect.Emit (1);
@@ -43,21 +47,28 @@ public class Laser : MonoBehaviour {
 					laser.SetPosition (1, target.position);
 				} else 
 				{
-					if (drawAlways) {
-						laser.enabled = true;
-						particleTime += Time.deltaTime;
-						if (particleTime >= particleRate) 
-						{
-							impactEffect.Emit (1);
-							particleTime = 0;
-						}
-						laser.SetPosition (0, firePoint.position);
-						laser.SetPosition (1, target.position);
-					}
-					else
-						laser.enabled = false;
+                    if (drawAlways && (time < maxTime || maxTime == 0))
+                    {
+                        transform.GetChild(1).gameObject.SetActive(true);
+                        laser.enabled = true;
+                        particleTime += Time.deltaTime;
+                        if (particleTime >= particleRate)
+                        {
+                            impactEffect.Emit(1);
+                            particleTime = 0;
+                        }
+                        laser.SetPosition(0, firePoint.position);
+                        laser.SetPosition(1, target.position);
+                    }
+                    else
+                    {
+                        laser.enabled = false;
+                        transform.GetChild(1).gameObject.SetActive(false);
+                    }
 				//	impactEffect.Stop ();
 				}
+                if (time > 2 * maxTime)
+                    time = 0;
 			}
 			else 
 			{
