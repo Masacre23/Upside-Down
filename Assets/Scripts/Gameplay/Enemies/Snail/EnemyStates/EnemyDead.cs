@@ -22,9 +22,10 @@ public class EnemyDead : EnemyStates
         //{
         //    OnExit(data);
         //}
-		counter += Time.deltaTime/10;
-		m_enemy.m_renderer.sharedMaterial.SetFloat("_DisAmount", counter);
-		if (counter > 1)
+		counter += Time.deltaTime/5;
+        //m_enemy.m_renderer.sharedMaterial.SetFloat("_DisAmount", counter);
+        m_enemy.m_renderer.sharedMaterial.SetFloat("_DissolveIntensity", counter);
+        if (counter > 1)
 			gameObject.SetActive (false);
 
         return ret;
