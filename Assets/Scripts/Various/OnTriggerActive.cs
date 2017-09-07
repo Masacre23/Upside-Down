@@ -8,6 +8,7 @@ public class OnTriggerActive : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		go.SetActive (true);
+		if(col.tag == "Player")
+			go.SetActive (true);
 	}
 }
