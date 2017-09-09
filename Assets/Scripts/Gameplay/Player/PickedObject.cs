@@ -15,6 +15,9 @@ public class PickedObject : MonoBehaviour
 
     public float m_objectDetectionRadius = 1.5f;
 
+    private Vector3 m_throwVector = Vector3.forward;
+    private float m_throwForce = 0.0f;
+
     // Use this for initialization
     void Start ()
     {
@@ -85,7 +88,9 @@ public class PickedObject : MonoBehaviour
 
         m_player.RotateModel(playerToTarget.normalized);
 
-        Throw(target.point - m_pickedObject.transform.position, throwForce);
+        m_throwVector = target.point - m_pickedObject.transform.position;
+        m_throwForce = throwForce;
+        //Throw(target.point - m_pickedObject.transform.position, throwForce);
     }
 
     //This function is called to throw an object in a direction
@@ -96,7 +101,14 @@ public class PickedObject : MonoBehaviour
 
         m_player.RotateModel(playerToTarget.normalized);
 
-        Throw(finalPosition - m_pickedObject.transform.position, throwForce);
+        m_throwVector = finalPosition - m_pickedObject.transform.position;
+        m_throwForce = throwForce;
+        //Throw(finalPosition - m_pickedObject.transform.position, throwForce);
+    }
+
+    public void ThrowObjectNow()
+    {
+        Throw(m_throwVector, m_throwForce);
     }
 
     //This function actually throws a specific object in a specific direction with an specific force
@@ -104,8 +116,8 @@ public class PickedObject : MonoBehaviour
     {
         if (m_player)
             m_player.PlaySound("ThrowObjects");
-
-        m_pickedObject.ThrowObject(throwForce, m_player.transform.up,throwVector.normalized);
+        if(m_pickedObject != null)
+            m_pickedObject.ThrowObject(throwForce, m_player.transform.up,throwVector.normalized);
     }
 
     //This function sets the target mark in a target position

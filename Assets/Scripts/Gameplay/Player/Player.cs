@@ -487,6 +487,11 @@ public class Player : Character
         m_throwAnimation = false;
     }
 
+    public void ThrowObjectNow()
+    {
+        m_pickedObject.ThrowObjectNow();
+    }
+
     public GameObject FixingOnEnemy(Transform origin, float angleDetection)
     {
         GameObject closestTarget = null;

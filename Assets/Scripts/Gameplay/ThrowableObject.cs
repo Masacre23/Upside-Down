@@ -9,11 +9,13 @@ public class ThrowableObject : MonoBehaviour
     public float m_floatingSpeed = 10.0f;
     public float m_rotationSpeed = 100.0f;
     public GameObject m_aura;
+    public Vector3 m_chargingPivot = Vector3.zero;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
     Collider m_collider;
     Transform m_floatingPoint;
+    
 
     FloatingAroundPlayer m_targetPlayer = null;
     PickedObject m_playerPicked = null;
@@ -135,6 +137,8 @@ public class ThrowableObject : MonoBehaviour
     {
         transform.position = floatingPoint.position;
         transform.parent = floatingPoint;
+        transform.up = m_vectorUp;
+        transform.Translate(m_chargingPivot);
         m_floatingPoint = floatingPoint;
         m_playerPicked = player;
 

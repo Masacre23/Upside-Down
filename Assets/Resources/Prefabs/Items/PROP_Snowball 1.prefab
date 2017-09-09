@@ -66,7 +66,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1566395059108086}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.4641037, y: -36.74, z: 8.149374}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_ignoreGravity: 0
   m_onGravityWall: 0
   m_onAir: 0
-  m_getStrongestGravity: 1
+  m_getStrongestGravity: 0
 --- !u!114 &114873857477444636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -164,6 +164,7 @@ MonoBehaviour:
   m_floatingSpeed: 10
   m_rotationSpeed: 100
   m_aura: {fileID: 0}
+  m_chargingPivot: {x: 0, y: 0.08, z: 0}
   m_canDamage: 0
   m_prefabHit1: {fileID: 0}
 --- !u!135 &135550214671942548
