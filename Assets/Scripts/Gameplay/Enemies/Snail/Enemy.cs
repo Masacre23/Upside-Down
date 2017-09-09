@@ -104,11 +104,12 @@ public class Enemy : Character {
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.rigidbody)
+        //if (col.rigidbody)
+		if(col.collider.gameObject.layer == 14) //ThrowableObject
         {
             ThrowableObject throwableObject = col.rigidbody.GetComponent<ThrowableObject>();
-           // if (throwableObject && throwableObject.m_canDamage)
-			if (throwableObject)
+            if (throwableObject && throwableObject.m_canDamage)
+		//	if (throwableObject)
             {
                 throwableObject.m_canDamage = false;
                 m_damageData.m_recive = true;

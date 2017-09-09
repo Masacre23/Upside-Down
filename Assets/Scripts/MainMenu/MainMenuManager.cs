@@ -17,6 +17,7 @@ public class MainMenuManager : MonoBehaviour {
     private float time = 0.0f;
 
     private static bool firstTime = true;
+	public AsyncOperation async;
     private void Start()
     {
         m_selected = m_eventSysterm.firstSelectedGameObject;
@@ -27,6 +28,8 @@ public class MainMenuManager : MonoBehaviour {
         waitAnyKey = firstTime;
         m_panelAnyKey.SetActive(waitAnyKey);
         firstTime = false;
+		async = Application.LoadLevelAsync (Scenes.Level1);
+		async.allowSceneActivation = false;
     }
 
     private void Update()

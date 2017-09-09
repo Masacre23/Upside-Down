@@ -7,6 +7,8 @@ public class VideoPlayer : MonoBehaviour {
     public AudioClip m_gameMusic;
 
     private bool m_isPlaying = false;
+	public GameObject menuManager;
+
 	// Use this for initialization
 	void Start () {
         float distance = Vector3.Distance(Camera.main.transform.position, gameObject.transform.position);
@@ -23,7 +25,8 @@ public class VideoPlayer : MonoBehaviour {
             if (m_duration <= 0 || (m_duration < 23 && CrossPlatformInputManager.GetButtonDown("Jump")))
             {
                 ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
-                Scenes.LoadScene(Scenes.Level1);
+                //Scenes.LoadScene(Scenes.Level1);
+				menuManager.GetComponent<MainMenuManager> ().async.allowSceneActivation = true;
                 AudioManager.Instance().PlayMusic(m_gameMusic, 1.0f);
             }
         }
