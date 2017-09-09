@@ -54,32 +54,24 @@ public class ThrowableObject : MonoBehaviour
             //Random rotation of the object within itself
             //transform.Rotate(m_rotationRandomVector * m_rotationSpeed * Time.deltaTime);
         }
-
-        //Checks if the object can damage to enemies. When its velocity falls below a certain value, it stops to deal damage if collided.
-        if (m_canDamage)
-        {
-            if (m_rigidBody.velocity.magnitude < m_minVelocityDamage)
-            {
-                m_canDamage = false;
-                if (m_trail)
-                    m_trail.enabled = false;
-            }
-        }
-
 	}
 
     void FixedUpdate()
     {
+        if (m_movingHorizontal)
+        {
+            m_rigidBody.MovePosition(m_rigidBody.position + m_vectorFroward * Time.deltaTime);
+        }
         if (m_applyThrownForce)
         {
+            //transform.parent = null;
+            //m_playerPicked.FreeSpace();
+
+            m_playerPicked = null;
             m_rigidBody.velocity = m_vectorUp * m_thrownForce;
             //m_rigidBody.AddForce(m_thrownForce * m_rigidBody.mass, ForceMode.Impulse);
             m_applyThrownForce = false;
             m_movingHorizontal = true;
-        }
-        if (m_movingHorizontal)
-        {
-            m_rigidBody.MovePosition(m_rigidBody.position + m_vectorFroward * Time.deltaTime);
         }
     }
 
@@ -100,6 +92,21 @@ public class ThrowableObject : MonoBehaviour
         m_objectGravity.m_ignoreGravity = true;
         if (m_trail)
             m_trail.enabled = true;
+    }
+
+    public void ThrowObjectNow()
+    {
+        if (m_applyThrownForce)
+        {
+            transform.parent = null;
+            m_playerPicked.FreeSpace();
+            m_playerPicked = null;
+
+            m_rigidBody.velocity = m_vectorUp * m_thrownForce;
+            //m_rigidBody.AddForce(m_thrownForce * m_rigidBody.mass, ForceMode.Impulse);
+            m_applyThrownForce = false;
+            m_movingHorizontal = true;
+        }
     }
 
     // This function should be called when an object begins to float around the character
@@ -196,9 +203,13 @@ public class ThrowableObject : MonoBehaviour
 			if(transform.tag != "EnemySnail")
 				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
         }
-        if(col.collider.tag == "Ice")
+        int terrain = LayerMask.NameToLayer("Floor");
+        if (col.collider.gameObject.layer == terrain)
         {
             m_movingHorizontal = false;
+            m_canDamage = false;
+            if (m_trail)
+                m_trail.enabled = false;
         }
     }
 

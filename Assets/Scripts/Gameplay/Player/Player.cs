@@ -426,7 +426,6 @@ public class Player : Character
         m_animator.SetBool("Jump", m_isJumping);
         m_animator.SetBool("DoubleJump", m_doubleJumping);
         m_animator.SetBool("Throwing", m_throwAnimation );
-        m_throwAnimation = false;
     }
 
     public bool PickObjects()
@@ -481,6 +480,11 @@ public class Player : Character
             }
         }
             
+    }
+
+    public void ClearThrowAnimation()
+    {
+        m_throwAnimation = false;
     }
 
     public GameObject FixingOnEnemy(Transform origin, float angleDetection)
