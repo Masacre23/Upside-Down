@@ -10,6 +10,7 @@ public class ThrowableObject : MonoBehaviour
     public float m_rotationSpeed = 100.0f;
     public GameObject m_aura;
     public Vector3 m_chargingPivot = Vector3.zero;
+    public float m_timeToRotate = 2.0f;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
@@ -32,6 +33,8 @@ public class ThrowableObject : MonoBehaviour
     Vector3 m_vectorFroward = Vector3.forward;
     float m_minVelocityDamage = 2.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
+    
+    float m_timeRotating = 0.0f;
 
 	public GameObject m_prefabHit1;
 
@@ -43,19 +46,21 @@ public class ThrowableObject : MonoBehaviour
         m_collider = GetComponent<Collider>();
         m_trail = GetComponent<TrailRenderer>();
 
+        m_rigidBody.freezeRotation = true;
+
 		m_prefabHit1 = (GameObject)Resources.Load ("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (m_isFloating)
+        if(!m_movingHorizontal && !m_rigidBody.freezeRotation)
         {
-            //Moving the object to the floating point position
-            //transform.position = Vector3.Lerp(transform.position, m_floatingPoint.position, m_floatingSpeed * Time.deltaTime);
-
-            //Random rotation of the object within itself
-            //transform.Rotate(m_rotationRandomVector * m_rotationSpeed * Time.deltaTime);
+            m_timeRotating += Time.deltaTime;
+            if(m_timeRotating >= m_timeToRotate)
+            {
+                m_rigidBody.freezeRotation = true;
+            }
         }
 	}
 
@@ -86,6 +91,7 @@ public class ThrowableObject : MonoBehaviour
         else if (m_targetPlayer)
             StopFloating();
 
+        m_rigidBody.freezeRotation = false;
         m_thrownForce = throwForce;
         m_horizontalThrownForce = horizontalThrowForce;
         m_vectorUp = up;
