@@ -387,11 +387,10 @@ public class Player : Character
             if (hitInfo.transform.tag == "EnemySnail")
             {
                 m_jumpOnEnemy = true;
-                if (!hitInfo.collider.gameObject.GetComponent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+                if (enemy.m_animator && !enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                 {
-                    hitInfo.collider.gameObject.GetComponent<Enemy>().m_animator.SetBool("Stunned", true);
-                    hitInfo.collider.gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                    hitInfo.collider.gameObject.transform.GetChild(3).gameObject.GetComponent<ParticleSystem>().Play();
+                    enemy.Stun();
                 }
             }
 

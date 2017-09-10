@@ -24,12 +24,6 @@ public class EnemyArea : MonoBehaviour
 			{
                 enemy.player = col.gameObject;
 				enemy.m_enemyArea = this.gameObject;
-                if (!enemy.m_isSleeping)
-                {
-                    enemy.m_currentState.OnExit();
-                    enemy.m_currentState = enemy.m_Following;
-                    enemy.m_currentState.OnEnter();
-                }
              }
 			if (iceBlocks)
 				iceBlocks.SetActive (true);
@@ -49,9 +43,6 @@ public class EnemyArea : MonoBehaviour
 			foreach (Enemy enemy in enemies)
 			{
                 enemy.player = null;
-                enemy.m_currentState.OnExit();
-                enemy.m_currentState = enemy.m_Idle;
-                enemy.m_currentState.OnEnter();
 			}
 		}
 

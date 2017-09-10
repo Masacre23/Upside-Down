@@ -6,6 +6,7 @@ public class ThrowableObject : MonoBehaviour
 {
     public bool m_canBePicked = true;
     public bool m_isFloating = false;
+    public bool m_isCarring = false;
     public float m_floatingSpeed = 10.0f;
     public float m_rotationSpeed = 100.0f;
     public GameObject m_aura;
@@ -150,7 +151,7 @@ public class ThrowableObject : MonoBehaviour
         m_floatingPoint = floatingPoint;
         m_playerPicked = player;
 
-        m_isFloating = true;
+        m_isCarring = true;
         m_canBePicked = false;
 
         if (m_rigidBody)
@@ -193,7 +194,7 @@ public class ThrowableObject : MonoBehaviour
         m_playerPicked = null;
         m_floatingPoint = null;
 
-        m_isFloating = false;
+        m_isCarring = false;
         m_canBePicked = true;
 
         if (m_rigidBody)

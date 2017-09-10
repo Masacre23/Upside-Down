@@ -13,7 +13,7 @@ public class EnemyDead : EnemyStates
         m_type = States.DEAD;
     }
 
-	public override bool OnUpdate (DamageData data)
+	public override bool OnUpdate (DamageData data, bool stunned)
     {
 		bool ret = false;
 

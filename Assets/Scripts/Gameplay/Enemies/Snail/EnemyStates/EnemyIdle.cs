@@ -18,7 +18,7 @@ public class EnemyIdle : EnemyStates {
     }
 	
 	//Main enemy update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-	public override bool OnUpdate (DamageData data)
+	public override bool OnUpdate (DamageData data, bool stunned)
     {
 		bool ret = false;
 
@@ -32,6 +32,12 @@ public class EnemyIdle : EnemyStates {
         {
             ret = true;
             m_enemy.m_currentState = m_enemy.m_Following;
+        }
+
+        if (stunned)
+        {
+            ret = true;
+            m_enemy.m_currentState = m_enemy.m_Stunned;
         }
 
         /*if (!m_enemy.m_isSleeping)

@@ -12,8 +12,6 @@ public class EnemyFollowing : EnemyStates
 	float capsuleRadius;
 	public Vector3 target;
 
-	public float stunnedTime = 5;
-	float timer ;
 	private float nextAttack;
 	public float attackRate = 2;
 
@@ -23,7 +21,7 @@ public class EnemyFollowing : EnemyStates
         m_type = States.FOLLOWING;
     }
 
-	public override bool OnUpdate (DamageData data)
+	public override bool OnUpdate (DamageData data, bool stunned)
     {
 		bool ret = false;
 		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position); 
@@ -41,19 +39,19 @@ public class EnemyFollowing : EnemyStates
 			m_enemy.m_animator.speed = 1;
 			Move ();
 			Attack ();
-		} else if (info.IsName ("Stunned")) 
-		{
-			if (timer < stunnedTime && m_enemy.m_animator.GetBool("Stunned")) 
-			{
-				timer += Time.deltaTime;
-			}
-			else 
-			{
-				timer = 0;
-				m_enemy.m_animator.SetBool ("Stunned", false);
-				this.gameObject.transform.GetChild (3).gameObject.GetComponent<ParticleSystem> ().Stop ();
-			}
 		}
+
+        if(m_enemy.player == null)
+        {
+            ret = true;
+            m_enemy.m_currentState = m_enemy.m_Idle;
+        }
+
+        if (stunned)
+        {
+            ret = true;
+            m_enemy.m_currentState = m_enemy.m_Stunned;
+        }
         if (data.m_recive)
         {
             ret = true;
