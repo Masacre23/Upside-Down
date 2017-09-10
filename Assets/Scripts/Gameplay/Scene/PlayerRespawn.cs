@@ -24,11 +24,13 @@ public class PlayerRespawn : MonoBehaviour
 			yield return null;
 		}
 
-		player.transform.position = spawn.position;
+        player.GetComponent<Collider>().enabled = true;
+        player.transform.position = spawn.position;
 		player.transform.rotation = spawn.rotation;
 		player.transform.GetChild(0).transform.rotation = spawn.rotation;
         player.GetComponent<Player>().Restart();
         player.GetComponent<Rigidbody>().ResetInertiaTensor();
+        
 
 		for (float t = fadeTime; t > 0.0f;) 
 		{
