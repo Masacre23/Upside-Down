@@ -27,6 +27,7 @@ public class ThrowableObject : MonoBehaviour
     bool m_applyThrownForce = false;
     bool m_movingHorizontal = false;
     float m_thrownForce = 0.0f;
+    float m_horizontalThrownForce = 1.0f;
     Vector3 m_vectorUp = Vector3.up;
     Vector3 m_vectorFroward = Vector3.forward;
     float m_minVelocityDamage = 2.0f;
@@ -62,7 +63,7 @@ public class ThrowableObject : MonoBehaviour
     {
         if (m_movingHorizontal)
         {
-            m_rigidBody.MovePosition(m_rigidBody.position + m_vectorFroward * Time.deltaTime);
+            m_rigidBody.MovePosition(m_rigidBody.position + m_vectorFroward * Time.deltaTime * m_horizontalThrownForce);
         }
         if (m_applyThrownForce)
         {
@@ -78,7 +79,7 @@ public class ThrowableObject : MonoBehaviour
     }
 
     //This function should be called when the object is thrown
-    public void ThrowObject(float throwForce, Vector3 up, Vector3 forward)
+    public void ThrowObject(float throwForce, float horizontalThrowForce, Vector3 up, Vector3 forward)
     {
         if (m_playerPicked)
             StopCarried();
@@ -86,12 +87,13 @@ public class ThrowableObject : MonoBehaviour
             StopFloating();
 
         m_thrownForce = throwForce;
+        m_horizontalThrownForce = horizontalThrowForce;
         m_vectorUp = up;
         m_vectorFroward = forward;
         m_applyThrownForce = true;
         m_canDamage = true;
 
-        m_objectGravity.m_ignoreGravity = true;
+        //m_objectGravity.m_ignoreGravity = true;
         if (m_trail)
             m_trail.enabled = true;
     }
@@ -210,6 +212,7 @@ public class ThrowableObject : MonoBehaviour
         int terrain = LayerMask.NameToLayer("Floor");
         if (col.collider.gameObject.layer == terrain)
         {
+            m_rigidBody.velocity = Vector3.zero;
             m_movingHorizontal = false;
             m_canDamage = false;
             if (m_trail)
