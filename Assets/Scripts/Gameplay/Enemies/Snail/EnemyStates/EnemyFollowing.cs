@@ -24,22 +24,25 @@ public class EnemyFollowing : EnemyStates
 	public override bool OnUpdate (DamageData data, bool stunned)
     {
 		bool ret = false;
-		float distance = Vector3.Distance (m_enemy.player.transform.position, transform.position); 
+        if (m_enemy.player != null)
+        {
+            float distance = Vector3.Distance(m_enemy.player.transform.position, transform.position);
 
-		m_enemy.m_animator.speed = Random.Range(1, 3);
-        m_enemy.m_animator.SetFloat("PlayerDistance", distance);
+            m_enemy.m_animator.speed = Random.Range(1, 3);
+            m_enemy.m_animator.SetFloat("PlayerDistance", distance);
 
-		AnimatorStateInfo info = m_enemy.m_animator.GetCurrentAnimatorStateInfo (0);
-		if (info.IsName ("Walk")) 
-		{
-			m_enemy.m_animator.SetBool ("CanAttack", false); 
-			RaycastHit hit;
-			if(Physics.Raycast(transform.position, transform.forward, out hit, 0.5f) && hit.collider.tag == "Player") // Delete it if you want to add attack rate
-				m_enemy.m_animator.SetBool ("CanAttack", true);
-			m_enemy.m_animator.speed = 1;
-			Move ();
-			Attack ();
-		}
+            AnimatorStateInfo info = m_enemy.m_animator.GetCurrentAnimatorStateInfo(0);
+            if (info.IsName("Walk"))
+            {
+                m_enemy.m_animator.SetBool("CanAttack", false);
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f) && hit.collider.tag == "Player") // Delete it if you want to add attack rate
+                    m_enemy.m_animator.SetBool("CanAttack", true);
+                m_enemy.m_animator.speed = 1;
+                Move();
+                Attack();
+            }
+        }
 
         if(m_enemy.player == null)
         {
