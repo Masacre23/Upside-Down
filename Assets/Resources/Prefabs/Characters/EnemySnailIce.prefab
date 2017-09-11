@@ -2738,7 +2738,7 @@ BoxCollider:
   m_GameObject: {fileID: 1991017258370072}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.05, y: 0.1, z: 0.1}
   m_Center: {x: 0, y: 0.13, z: -0.08}
@@ -2870,9 +2870,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_canBePicked: 0
   m_isFloating: 0
+  m_isCarring: 0
   m_floatingSpeed: 10
   m_rotationSpeed: 100
   m_aura: {fileID: 0}
+  m_chargingPivot: {x: 0, y: 0, z: 0}
+  m_timeToRotate: 2
+  m_isEnemy: 1
   m_canDamage: 0
   m_prefabHit1: {fileID: 1775884164626752, guid: e642f288e0b983f4b963b76dc66944d7,
     type: 2}
@@ -2889,7 +2893,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canChange: 1
   target: {x: 0, y: 0, z: 0}
-  stunnedTime: 5
   attackRate: 2
 --- !u!114 &114481141148524836
 MonoBehaviour:
@@ -2956,6 +2959,7 @@ MonoBehaviour:
   m_currentState: {fileID: 114652371633094634}
   m_Idle: {fileID: 114652371633094634}
   m_Following: {fileID: 114278220942476368}
+  m_Stunned: {fileID: 0}
   m_ReceivingDamage: {fileID: 114481141148524836}
   m_Dead: {fileID: 114978949669252892}
   m_renderer: {fileID: 137836444227204408}
@@ -2967,6 +2971,8 @@ MonoBehaviour:
   m_isFloating: 0
   player: {fileID: 0}
   m_isSleeping: 1
+  m_enemyArea: {fileID: 0}
+  m_wasStunned: 0
   m_type: 0
   hitDirection: 0
   MyNormal: {x: 0, y: 0, z: 0}
@@ -2992,7 +2998,6 @@ MonoBehaviour:
   m_onGravityWall: 0
   m_onAir: 0
   m_getStrongestGravity: 1
-  test: {x: -1, y: -0.000000119209275, z: 0}
 --- !u!114 &114978949669252892
 MonoBehaviour:
   m_ObjectHideFlags: 1

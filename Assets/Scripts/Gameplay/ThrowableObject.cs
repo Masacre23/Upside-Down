@@ -12,10 +12,12 @@ public class ThrowableObject : MonoBehaviour
     public GameObject m_aura;
     public Vector3 m_chargingPivot = Vector3.zero;
     public float m_timeToRotate = 2.0f;
+    public bool m_isEnemy = false;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
-    Collider m_collider;
+    Collider[] m_collider;
+
     Transform m_floatingPoint;
     
 
@@ -44,9 +46,9 @@ public class ThrowableObject : MonoBehaviour
     {
         m_objectGravity = GetComponent<GameObjectGravity>();
         m_rigidBody = GetComponent<Rigidbody>();
-        m_collider = GetComponent<Collider>();
+        m_collider = GetComponentsInChildren<Collider>();
         m_trail = GetComponent<TrailRenderer>();
-
+        
         m_rigidBody.freezeRotation = true;
 
 		m_prefabHit1 = (GameObject)Resources.Load ("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
@@ -55,7 +57,7 @@ public class ThrowableObject : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        if(!m_movingHorizontal && !m_rigidBody.freezeRotation)
+        if (!m_movingHorizontal && !m_rigidBody.freezeRotation)
         {
             m_timeRotating += Time.deltaTime;
             if(m_timeRotating >= m_timeToRotate)
@@ -132,8 +134,10 @@ public class ThrowableObject : MonoBehaviour
         if (m_rigidBody)
             m_rigidBody.isKinematic = true;
 
-        if (m_collider)
-            m_collider.enabled = false;
+        for (int i = 0; i < m_collider.Length; i++)
+        {
+            m_collider[i].enabled = false;
+        }
 
         m_rotationRandomVector = new Vector3(Random.value, Random.value, Random.value).normalized;
 
@@ -144,9 +148,12 @@ public class ThrowableObject : MonoBehaviour
     // This function is called when the object is picked by the player
     public void BeginCarried(Transform floatingPoint, PickedObject player)
     {
-        transform.position = floatingPoint.position;
         transform.parent = floatingPoint;
-        transform.up = m_vectorUp;
+        if (m_isEnemy)
+            transform.forward = m_vectorUp;
+        else
+            transform.up = m_vectorUp;
+        transform.position = floatingPoint.position;
         transform.Translate(m_chargingPivot);
         m_floatingPoint = floatingPoint;
         m_playerPicked = player;
@@ -154,11 +161,13 @@ public class ThrowableObject : MonoBehaviour
         m_isCarring = true;
         m_canBePicked = false;
 
+        m_objectGravity.m_ignoreGravity = true;
         if (m_rigidBody)
             m_rigidBody.isKinematic = true;
-
-        if (m_collider)
-            m_collider.enabled = false;
+        for (int i = 0; i < m_collider.Length; i++)
+        {
+            m_collider[i].enabled = false;
+        }
 
         if (m_aura)
             m_aura.SetActive(true);
@@ -178,8 +187,10 @@ public class ThrowableObject : MonoBehaviour
         if (m_rigidBody)
             m_rigidBody.isKinematic = false;
 
-        if (m_collider)
-            m_collider.enabled = true;
+        for (int i = 0; i < m_collider.Length; i++)
+        {
+            m_collider[i].enabled = true;
+        }
 
         m_rotationRandomVector = Vector3.zero;
         if (m_aura != null)
@@ -197,11 +208,14 @@ public class ThrowableObject : MonoBehaviour
         m_isCarring = false;
         m_canBePicked = true;
 
+        m_objectGravity.m_ignoreGravity = false;
         if (m_rigidBody)
             m_rigidBody.isKinematic = false;
 
-        if (m_collider)
-            m_collider.enabled = true;
+        for (int i = 0; i < m_collider.Length; i++)
+        {
+            m_collider[i].enabled = true;
+        }
 
         if (m_aura != null)
             m_aura.SetActive(false);
@@ -216,8 +230,10 @@ public class ThrowableObject : MonoBehaviour
 			if(transform.tag != "EnemySnail")
 				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
         }
-        int terrain = LayerMask.NameToLayer("Floor");
-        if (col.collider.gameObject.layer == terrain)
+        int floor = LayerMask.NameToLayer("Floor");
+        int water = LayerMask.NameToLayer("HarmfulTerrain");
+        int terrain = LayerMask.NameToLayer("Terrain");
+        if (col.collider.gameObject.layer == terrain || col.collider.gameObject.layer == water || col.collider.gameObject.layer == floor)
         {
             m_rigidBody.velocity = Vector3.zero;
             m_movingHorizontal = false;

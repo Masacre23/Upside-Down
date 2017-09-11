@@ -19,14 +19,13 @@ public class EnemyStunned: EnemyStates {
 	public override bool OnUpdate (DamageData data, bool stunned)
     {
         bool ret = false;
-
+        ThrowableObject throwableObject = m_enemy.gameObject.GetComponent<ThrowableObject>();
         if (timer < stunnedTime)
         {
             timer += Time.deltaTime;
         }
         else
         {
-            ThrowableObject throwableObject = m_enemy.gameObject.GetComponent<ThrowableObject>();
             if (!throwableObject || !throwableObject.m_isCarring)
             {
                 m_enemy.m_currentState = m_enemy.m_Idle;
@@ -37,6 +36,7 @@ public class EnemyStunned: EnemyStates {
         if (data.m_recive)
         {
             ret = true;
+            data.m_damage *= 2;
             m_enemy.DamageManager(data);
         }
 

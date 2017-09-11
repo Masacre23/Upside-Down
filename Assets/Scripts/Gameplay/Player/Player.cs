@@ -388,7 +388,7 @@ public class Player : Character
             {
                 m_jumpOnEnemy = true;
                 Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
-                if (enemy.m_animator && !enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                if (enemy != null && !enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                 {
                     enemy.Stun();
                 }
@@ -497,20 +497,23 @@ public class Player : Character
         float closestDistance = 10000.0f;
         foreach (Enemy enemy in m_enemyDetector.m_enemies)
         {
-            GameObject target = enemy.gameObject;
-            if (!m_pickedObject.EnemyIsFloating(target))
+            if (enemy.m_currentState != enemy.m_Dead)
             {
-                Vector3 toTarget = target.transform.position - origin.position;
-                float distance = toTarget.sqrMagnitude;
-
-                RaycastHit hit;
-                bool hasHit = Physics.Raycast(origin.position, toTarget.normalized, out hit, toTarget.magnitude);
-                //float thisAngle = Vector3.Angle(origin.forward, toTarget);
-                //if (thisAngle < angleDetection && distance < closestDistance)
-                if (distance < closestDistance && hasHit && hit.transform.gameObject == target)
+                GameObject target = enemy.gameObject;
+                if (!m_pickedObject.EnemyIsFloating(target))
                 {
-                    closestDistance = distance;
-                    closestTarget = target;
+                    Vector3 toTarget = target.transform.position - origin.position;
+                    float distance = toTarget.sqrMagnitude;
+
+                    RaycastHit hit;
+                    bool hasHit = Physics.Raycast(origin.position, toTarget.normalized, out hit, toTarget.magnitude);
+                    //float thisAngle = Vector3.Angle(origin.forward, toTarget);
+                    //if (thisAngle < angleDetection && distance < closestDistance)
+                    if (distance < closestDistance && hasHit && hit.transform.gameObject == target)
+                    {
+                        closestDistance = distance;
+                        closestTarget = target;
+                    }
                 }
             }
         }
