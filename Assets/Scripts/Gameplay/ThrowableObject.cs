@@ -12,20 +12,19 @@ public class ThrowableObject : MonoBehaviour
     public GameObject m_aura;
     public Vector3 m_chargingPivot = Vector3.zero;
     public float m_timeToRotate = 2.0f;
-    public bool m_isEnemy = false;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
     Collider[] m_collider;
 
     Transform m_floatingPoint;
-    
+
 
     FloatingAroundPlayer m_targetPlayer = null;
     PickedObject m_playerPicked = null;
 
     TrailRenderer m_trail;
-   
+
 
     [HideInInspector] public bool m_canDamage = false;
     bool m_applyThrownForce = false;
@@ -36,36 +35,36 @@ public class ThrowableObject : MonoBehaviour
     Vector3 m_vectorFroward = Vector3.forward;
     float m_minVelocityDamage = 2.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
-    
+
     float m_timeRotating = 0.0f;
 
-	public GameObject m_prefabHit1;
+    public GameObject m_prefabHit1;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         m_objectGravity = GetComponent<GameObjectGravity>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_collider = GetComponentsInChildren<Collider>();
         m_trail = GetComponent<TrailRenderer>();
-        
+
         m_rigidBody.freezeRotation = true;
 
-		m_prefabHit1 = (GameObject)Resources.Load ("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        m_prefabHit1 = (GameObject)Resources.Load("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         if (!m_movingHorizontal && !m_rigidBody.freezeRotation)
         {
             m_timeRotating += Time.deltaTime;
-            if(m_timeRotating >= m_timeToRotate)
+            if (m_timeRotating >= m_timeToRotate)
             {
                 m_rigidBody.freezeRotation = true;
             }
         }
-	}
+    }
 
     void FixedUpdate()
     {
@@ -149,10 +148,14 @@ public class ThrowableObject : MonoBehaviour
     public void BeginCarried(Transform floatingPoint, PickedObject player)
     {
         transform.parent = floatingPoint;
-        if (m_isEnemy)
+        Enemy enemy = GetComponent<Enemy>();
+        if (enemy) {
             transform.forward = m_vectorUp;
-        else
+            enemy.m_animator.SetBool("Charged", true);
+            enemy.enabled = false;
+        } else {
             transform.up = m_vectorUp;
+        }
         transform.position = floatingPoint.position;
         transform.Translate(m_chargingPivot);
         m_floatingPoint = floatingPoint;
@@ -235,11 +238,21 @@ public class ThrowableObject : MonoBehaviour
         int terrain = LayerMask.NameToLayer("Terrain");
         if (col.collider.gameObject.layer == terrain || col.collider.gameObject.layer == water || col.collider.gameObject.layer == floor)
         {
-            m_rigidBody.velocity = Vector3.zero;
-            m_movingHorizontal = false;
-            m_canDamage = false;
-            if (m_trail)
-                m_trail.enabled = false;
+            if (m_movingHorizontal)
+            {
+                Enemy enemy = GetComponent<Enemy>();
+                if (enemy)
+                {
+                    enemy.m_animator.SetBool("Charged", false);
+                    enemy.enabled = true;
+                    enemy.FallDamage(col.collider.gameObject.layer == water);
+                }
+                m_rigidBody.velocity = Vector3.zero;
+                m_movingHorizontal = false;
+                m_canDamage = false;
+                if (m_trail)
+                    m_trail.enabled = false;
+            }
         }
     }
 

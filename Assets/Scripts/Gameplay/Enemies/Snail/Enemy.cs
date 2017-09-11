@@ -125,7 +125,14 @@ public class Enemy : Character {
             }
         }
 
-		if (col.gameObject.tag == "Player") 
+        int water = LayerMask.NameToLayer("HarmfulTerrain");
+        if (col.collider.gameObject.layer == water) 
+        {
+                m_damageData.m_recive = true;
+                m_damageData.m_damage = (int)(m_health + 1);
+        }
+
+        if (col.gameObject.tag == "Player") 
 		{
 			if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			{
@@ -197,6 +204,16 @@ public class Enemy : Character {
             }
             else
                 m_currentState = m_ReceivingDamage;
+        }
+    }
+
+    public void FallDamage(bool is_water)
+    {
+        m_damageData.m_recive = true;
+        m_damageData.m_damage = 25;
+        if (is_water)
+        {
+            m_damageData.m_damage = (int)(m_health + 1);
         }
     }
 
