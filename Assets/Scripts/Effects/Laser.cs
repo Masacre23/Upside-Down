@@ -13,6 +13,7 @@ public class Laser : MonoBehaviour {
 	float particleTime;
     public float maxTime = 0;
     public  float time;
+	public GameObject bossSceneManager;
 
 	// Use this for initialization
 	void Start () {
@@ -45,6 +46,8 @@ public class Laser : MonoBehaviour {
 					laser.SetPosition (0, firePoint.position);
 					target.position = hit.point;
 					laser.SetPosition (1, target.position);
+					if (bossSceneManager && hit.collider.tag == "Boss")
+						StartCoroutine(bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale (this.gameObject));
 				} else 
 				{
                     if (drawAlways && (time < maxTime || maxTime == 0))
