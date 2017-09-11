@@ -24,6 +24,7 @@ public class Teleport : MonoBehaviour
             Transform destinyPosition = m_destiny.m_thisLocationSpawning;
             Player player = other.gameObject.GetComponent<Player>();
             player.m_negatePlayerInput = true;
+            player.GetComponent<Collider>().enabled = false;
 
             if (player.m_playerRespawn)
             {

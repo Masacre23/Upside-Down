@@ -8,7 +8,7 @@ public class EnemyStates : MonoBehaviour
 	{
 		IDLE,
 		FOLLOWING,
-		CHANGING,
+		STUNNED,
         RECEIVING,
         ATTACKING,
         DEAD
@@ -26,7 +26,7 @@ public class EnemyStates : MonoBehaviour
 	}
 	
 	//Main enemy update.
-	public virtual bool OnUpdate(DamageData data)
+	public virtual bool OnUpdate(DamageData data, bool stunned)
 	{
 		return false;
 	}

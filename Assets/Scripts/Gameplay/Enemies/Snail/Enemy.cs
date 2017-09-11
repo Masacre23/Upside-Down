@@ -9,7 +9,7 @@ public class Enemy : Character {
     public EnemyStates m_currentState;
     [HideInInspector] public EnemyStates m_Idle;
     [HideInInspector] public EnemyStates m_Following;
-    // [HideInInspector] public EnemyStates m_Changing;
+    [HideInInspector] public EnemyStates m_Stunned;
     [HideInInspector] public EnemyStates m_ReceivingDamage;
     [HideInInspector] public EnemyStates m_Dead;
     // [HideInInspector] public EnemyStates m_Attacking;
@@ -28,6 +28,9 @@ public class Enemy : Character {
     public GameObject player;
     public bool m_isSleeping = false;
 	public GameObject m_enemyArea;
+
+    [HideInInspector]public bool m_wasStunned = false;
+    private bool m_playerDetected = true;
 
     public enum Types
     {
@@ -59,6 +62,10 @@ public class Enemy : Character {
         if (!m_Dead)
             m_Dead = gameObject.AddComponent<EnemyDead>();
 
+        m_Stunned = gameObject.GetComponent<EnemyStunned>();
+        if (!m_Stunned)
+            m_Stunned = gameObject.AddComponent<EnemyStunned>();
+
         /*if (!m_Attacking)
              m_Attacking = gameObject.AddComponent<FlyingEnemyAttacking>();*/
 
@@ -80,7 +87,7 @@ public class Enemy : Character {
         base.FixedUpdate();
 
         EnemyStates previousState = m_currentState;
-        if (m_currentState.OnUpdate(m_damageData))
+        if (m_currentState.OnUpdate(m_damageData, m_wasStunned))
         {
             previousState.OnExit();
             m_currentState.OnEnter();
@@ -166,10 +173,7 @@ public class Enemy : Character {
     {
         if (col.tag == "Player")
         {
-            m_currentState.OnExit();
-            m_currentState = m_Following;
             player = col.gameObject;
-            m_currentState.OnEnter();
             m_isSleeping = false;
             m_animator.SetBool("Sleeping", false);
             m_animator.speed = 1;
@@ -194,6 +198,11 @@ public class Enemy : Character {
             else
                 m_currentState = m_ReceivingDamage;
         }
+    }
+
+    public void Stun()
+    {
+        m_wasStunned = true;
     }
 
 	public enum HitDirection { None, Top, Bottom, Forward, Back, Left, Right }
