@@ -171,7 +171,7 @@ public class Enemy : Character {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.tag == "Player")
+		if (col.tag == "Player")
         {
             player = col.gameObject;
             m_isSleeping = false;

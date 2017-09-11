@@ -36,8 +36,8 @@ public class EnemyDead : EnemyStates
 		/*foreach(Collider c in GetComponents<Collider> ()) {
 			c.enabled = true;
 		}*/
-		if (m_enemy.m_type == Enemy.Types.SNAIL) 
-		{
+		//if (m_enemy.m_type == Enemy.Types.SNAIL) 
+		//{
 			m_enemy.m_animator.SetInteger ("HitDirection", (int)m_enemy.hitDirection);
 			m_enemy.m_animator.SetBool ("Dead", true);
 			m_enemy.m_renderer.material = m_enemy.m_transparentMat;
@@ -51,14 +51,14 @@ public class EnemyDead : EnemyStates
 				ea.iceBlocks.transform.GetChild(0).GetComponent<IceBlocks> ().down = true;
 				ea.iceBlocks.transform.GetChild(1).GetComponent<IceBlocks> ().down = true;
 			}
-		}
-        else
-            this.gameObject.SetActive(false);
+		//}
+      //  else
+         //   this.gameObject.SetActive(false);
     }
 
 	public override void OnExit()
 	{
-        if (m_enemy.m_type == Enemy.Types.SNAIL)
-            m_enemy.m_animator.SetBool("Dead", false);
+      //  if (m_enemy.m_type == Enemy.Types.SNAIL)
+       //     m_enemy.m_animator.SetBool("Dead", false);
     }
 }
