@@ -25,7 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.48300004, g: 0.48300004, b: 0.48300004, a: 1}
   m_AmbientIntensity: 0.86
   m_AmbientMode: 0
-  m_SkyboxMaterial: {fileID: 2100000, guid: c32802cdc06476240974c937395be3c7, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7909134, g: 0.7878573, b: 0.7909134, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1623,6 +1623,8 @@ MonoBehaviour:
     m_Bits: 17408
   m_markTarget: {fileID: 915949294}
   m_objectDetectionRadius: 1.5
+  m_horizontalThrowForceDefault: 3
+  m_timeToFall: 2
 --- !u!114 &75670114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16660,7 +16662,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 108714.35
+  Age: 108742.33
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -31731,7 +31733,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 148043.27
+  Age: 148069.22
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
