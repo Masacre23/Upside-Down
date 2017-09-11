@@ -19,7 +19,8 @@ public class PlayerVulnerable : PlayerDamageStates
         {
             ret = true;
             m_player.m_health -= data.m_damage;
-            HUDManager.LostLife();
+            if(data.m_damage > 0)
+                HUDManager.LostLife();
             if (m_player.m_health <= 0)
                 m_player.m_playerDamageState = m_player.m_deadState;
             else
