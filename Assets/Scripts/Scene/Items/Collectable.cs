@@ -46,7 +46,7 @@ public class Collectable : MonoBehaviour {
                 sound.PlaySound("Collectable");
             }
             m_player = col.gameObject.GetComponent<Player>();
-            HUDManager.GetCollectable(m_sprite);
+            HUDManager.GetCollectable();
         }
     }
 }
