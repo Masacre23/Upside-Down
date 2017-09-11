@@ -20,12 +20,12 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.86097515, g: 0.7275862, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 0.7413793, g: 0.92013186, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientGroundColor: {r: 0.48300004, g: 0.48300004, b: 0.48300004, a: 1}
   m_AmbientIntensity: 0.86
-  m_AmbientMode: 0
-  m_SkyboxMaterial: {fileID: 2100000, guid: c32802cdc06476240974c937395be3c7, type: 2}
+  m_AmbientMode: 3
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7909134, g: 0.7878573, b: 0.7909134, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -930,15 +930,15 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 44024769}
-  m_LocalRotation: {x: 0.84930795, y: 0.3532304, z: 0.1960543, w: -0.33980432}
-  m_LocalPosition: {x: 2.01, y: 5.45, z: -0.58}
+  m_LocalRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
+  m_LocalPosition: {x: 2.992, y: 8.434, z: -3.397}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2127145589}
   - {fileID: 798538561}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -214.006, y: -557.829, z: 181.706}
 --- !u!1 &44701049
 GameObject:
   m_ObjectHideFlags: 0
@@ -2270,6 +2270,7 @@ MonoBehaviour:
   m_timeDecreasingSize: 1
   m_sizeMin: 0
   m_sizeMax: 5
+  m_state: 0
 --- !u!1 &166192707
 GameObject:
   m_ObjectHideFlags: 0
@@ -5278,15 +5279,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 321189819}
-  RollAngle: -138.06204
-  RollQuataternion: {x: 0, y: 0, z: -0.9337743, w: 0.35786244}
+  RollAngle: -29.395054
+  RollQuataternion: {x: 0, y: 0, z: -0.2537162, w: 0.9672787}
   RollMatrix:
-    e00: -0.7438688
-    e01: 0.6683255
+    e00: 0.8712562
+    e01: 0.49082857
     e02: 0
     e03: 0
-    e10: -0.6683255
-    e11: -0.7438688
+    e10: -0.49082857
+    e11: 0.8712562
     e12: -0
     e13: 0
     e20: -0
@@ -5299,8 +5300,8 @@ MonoBehaviour:
     e33: 1
   DeltaPosition: {x: 0, y: 0, z: 0}
   Velocity: {x: 0, y: 0, z: 0}
-  OldRotation: {x: 0.84930795, y: 0.3532304, z: 0.1960543, w: -0.33980432}
-  OldPosition: {x: 2.01, y: 5.45, z: -0.58}
+  OldRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
+  OldPosition: {x: 2.992, y: 8.434, z: -3.397}
 --- !u!114 &321189812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10112,7 +10113,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &548090212
 Transform:
   m_ObjectHideFlags: 0
@@ -12374,7 +12375,7 @@ MonoBehaviour:
   Brightness: 1
   RenderQueue: 2000
   RenderQueueOffset: 0
-  Age: 111187.04
+  Age: 111358.64
   TimeScale: 1
   AutoRegenerate: 1
   groups:
@@ -19146,6 +19147,89 @@ Transform:
   m_PrefabParentObject: {fileID: 4915327522670978, guid: d4f91f95ca269d442bf753a56f1033a2,
     type: 2}
   m_PrefabInternal: {fileID: 454618003}
+--- !u!1 &1004823711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1004823712}
+  - component: {fileID: 1004823715}
+  - component: {fileID: 1004823714}
+  - component: {fileID: 1004823713}
+  m_Layer: 0
+  m_Name: Outer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1004823712
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004823711}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 24.49, y: 24.49, z: 24.49}
+  m_Children: []
+  m_Father: {fileID: 1078838116}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1004823713
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004823711}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!33 &1004823714
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004823711}
+  m_Mesh: {fileID: 4300000, guid: 940538042eca54e42b404360c5a948a2, type: 2}
+--- !u!114 &1004823715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004823711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 623ae1a666777ee41834e6d175be63c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Corona: {fileID: 1078838117}
+  MeshFilter: {fileID: 1004823714}
+  MeshRenderer: {fileID: 1004823713}
 --- !u!1 &1010049636
 GameObject:
   m_ObjectHideFlags: 0
@@ -20556,6 +20640,7 @@ Transform:
   m_LocalScale: {x: 0.4356748, y: 0.43567476, z: 0.43567476}
   m_Children:
   - {fileID: 1979510641}
+  - {fileID: 1004823712}
   m_Father: {fileID: 546527397}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20634,7 +20719,7 @@ MonoBehaviour:
   Height: 17.8
   awakeCalled: 1
   outers:
-  - {fileID: 1979510644}
+  - {fileID: 1004823715}
   Lights: []
   Shadows: []
   Scattering: 0
@@ -25572,7 +25657,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 150435.23
+  Age: 150603.97
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
