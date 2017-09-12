@@ -7,6 +7,7 @@ public class BossSceneManager : MonoBehaviour {
 	GameObject boss;
 	int []sizes = {10, 5, 1};
 	bool scaling = false;
+	public GameObject pointReference;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +33,14 @@ public class BossSceneManager : MonoBehaviour {
 			//laser.GetComponent<Laser> ().enabled = false;
 			laser.transform.GetChild(1).gameObject.SetActive(false);
 			phase++;
+			if (phase == 1) 
+			{
+				while (pointReference.transform.position.y > 5) 
+				{
+					pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
+					yield return 0;
+				}
+			}
 		}
 	}
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class OneDirectionAttractor : GravityAttractor
 {
     BoxCollider m_collider;
-    public Vector3 m_gravityNormal;
+    Vector3 m_gravityNormal;
+    public Vector3 m_gravityNormalLocal;
+    public bool m_recalculateGravityOnUpdate = false;
 
     public override void Start()
     {
@@ -13,13 +15,21 @@ public class OneDirectionAttractor : GravityAttractor
         if (!m_collider)
             m_collider = gameObject.AddComponent<BoxCollider>();
 
-        if (m_gravityNormal == Vector3.zero)
-            m_gravityNormal = Vector3.up;
+        if (m_gravityNormalLocal == Vector3.zero)
+            m_gravityNormalLocal = Vector3.up;
 
-        m_gravityNormal.Normalize();
-        m_gravityNormal = transform.TransformDirection(m_gravityNormal);
+        m_gravityNormalLocal.Normalize();
+        m_gravityNormal = transform.TransformDirection(m_gravityNormalLocal);
 
         base.Start();
+    }
+
+    public override void Update()
+    {
+        if (m_recalculateGravityOnUpdate)
+        {
+            m_gravityNormal = transform.TransformDirection(m_gravityNormalLocal);
+        }
     }
 
     public override void GetDistanceAndGravityVector(Vector3 position, ref Vector3 gravity, ref float distance)

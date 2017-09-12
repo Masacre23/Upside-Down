@@ -22,6 +22,11 @@ public class GravityAttractor : MonoBehaviour
             m_attractor = transform.parent.gameObject;
     }
 
+    public virtual void Update()
+    {
+
+    }
+
     public virtual void GetDistanceAndGravityVector(Vector3 position, ref Vector3 gravity, ref float distance)
     {
     }
