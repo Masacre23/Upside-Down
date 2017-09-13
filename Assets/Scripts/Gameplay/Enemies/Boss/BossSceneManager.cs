@@ -29,25 +29,21 @@ public class BossSceneManager : MonoBehaviour {
 			while (boss.transform.localScale.x > sizes [phase]) 
 			{
 				boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
-				if(phase != 2)
-				//	basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase+1)/3, 0);
 				yield return 0;
 			}
-			//scaling = false;
-			//laser.GetComponent<Laser> ().enabled = false;
+
 			laser.transform.GetChild(1).gameObject.SetActive(false);
-			//phase++;
-			/*if (phase == 1) 
-			{*/
+	
 			while (pointReference.transform.position.y > points[phase]) 
-				{
-					pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
+			{
+				pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
 				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase+1)/5, 0);
-					yield return 0;
-				}
-			//}
+				yield return 0;
+			}
 			scaling = false;
 			phase++;
+			boss.GetComponent<Boss> ().m_phase = phase;
+			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
 		}
 	}
 }

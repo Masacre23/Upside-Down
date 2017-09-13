@@ -10,6 +10,8 @@ public class Boss : MonoBehaviour {
 	public Animator m_animator;
 	public int m_phase;
 	public float m_attackRate;
+	public float m_rotationSpeed = 4.0f;
+	public float m_speed = 2.0f;
 
 	public GameObject player;
 	void Awake()
@@ -33,6 +35,9 @@ public class Boss : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+		//transform.position -= new Vector3 (0, 9.8f * Time.deltaTime, 0);
+
 		BossStates previousState = m_currentState;
 		if (m_currentState.OnUpdate ()) 
 		{
