@@ -28,5 +28,29 @@ public class HarmfulTerrain : MonoBehaviour {
                 player.m_negatePlayerInput = true;
             }
         }
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        if (other.gameObject.layer == enemyLayer)
+        {
+            ThrowableObject throwableObject = other.gameObject.GetComponent<ThrowableObject>();
+            if (throwableObject != null)
+            {
+                throwableObject.StopMovingObject(true);
+            }
+            Enemy enemy = other.gameObject.GetComponent<Enemy>();
+            if(enemy != null)
+            {
+                enemy.m_damageData.m_recive = true;
+                enemy.m_damageData.m_damage = (int)(enemy.m_health + 1);
+            }
+        }
+        int throwableLayer = LayerMask.NameToLayer("ThrowableObject");
+        if (other.gameObject.layer == throwableLayer)
+        {
+            ThrowableObject throwableObject = other.gameObject.GetComponent<ThrowableObject>();
+            if(throwableObject != null)
+            {
+                throwableObject.StopMovingObject(true);
+            }
+        }
     }
 }

@@ -238,23 +238,27 @@ public class ThrowableObject : MonoBehaviour
         int terrain = LayerMask.NameToLayer("Terrain");
         if (col.collider.gameObject.layer == terrain || col.collider.gameObject.layer == water || col.collider.gameObject.layer == floor)
         {
-            if (m_movingHorizontal)
-            {
-                Enemy enemy = GetComponent<Enemy>();
-                if (enemy)
-                {
-                    enemy.m_animator.SetBool("Charged", false);
-                    enemy.enabled = true;
-                    enemy.FallDamage(col.collider.gameObject.layer == water);
-                }
-                m_rigidBody.velocity = Vector3.zero;
-                m_movingHorizontal = false;
-                m_canDamage = false;
-                if (m_trail)
-                    m_trail.enabled = false;
-            }
+            StopMovingObject(col.collider.gameObject.layer == water);
         }
     }
 
+    public void StopMovingObject(bool isWater)
+    {
+        if (m_movingHorizontal)
+        {
+            Enemy enemy = GetComponent<Enemy>();
+            if (enemy)
+            {
+                enemy.m_animator.SetBool("Charged", false);
+                enemy.enabled = true;
+                enemy.FallDamage(isWater);
+            }
+            m_rigidBody.velocity = Vector3.zero;
+            m_movingHorizontal = false;
+            m_canDamage = false;
+            if (m_trail)
+                m_trail.enabled = false;
+        }
+    }
 
 }

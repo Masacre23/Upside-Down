@@ -161,7 +161,7 @@ public class PickedObject : MonoBehaviour
     {
         bool ret = false;
 
-        if (m_pickedObject.gameObject == enemy)
+        if (m_pickedObject != null && m_pickedObject.gameObject == enemy)
             ret = true;
 
         return ret;

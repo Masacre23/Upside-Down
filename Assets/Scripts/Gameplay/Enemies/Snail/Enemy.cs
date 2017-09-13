@@ -111,10 +111,10 @@ public class Enemy : Character {
 
     void OnCollisionEnter(Collision col)
     {
-        //if (col.rigidbody)
-		if(col.collider.gameObject.layer == 14) //ThrowableObject
-        {
-            ThrowableObject throwableObject = col.rigidbody.GetComponent<ThrowableObject>();
+        //int throwableLayer = LayerMask.NameToLayer("ThrowableObject");
+        //if (col.collider.gameObject.layer == throwableLayer) //ThrowableObject
+        //{
+            ThrowableObject throwableObject = col.gameObject.GetComponent<ThrowableObject>();
             if (throwableObject && throwableObject.m_canDamage)
 		//	if (throwableObject)
             {
@@ -123,14 +123,7 @@ public class Enemy : Character {
                 m_damageData.m_damage = 50;
 				CalculateDirection (col.gameObject, this.gameObject);
             }
-        }
-
-        int water = LayerMask.NameToLayer("HarmfulTerrain");
-        if (col.collider.gameObject.layer == water) 
-        {
-                m_damageData.m_recive = true;
-                m_damageData.m_damage = (int)(m_health + 1);
-        }
+        //}
 
         if (col.gameObject.tag == "Player") 
 		{
