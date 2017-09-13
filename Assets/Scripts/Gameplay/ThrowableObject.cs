@@ -94,6 +94,7 @@ public class ThrowableObject : MonoBehaviour
             StopFloating();
 
         m_rigidBody.freezeRotation = false;
+        m_timeRotating = 0.0f;
         m_thrownForce = throwForce;
         m_horizontalThrownForce = horizontalThrowForce;
         m_vectorUp = up;
@@ -239,6 +240,12 @@ public class ThrowableObject : MonoBehaviour
         if (col.collider.gameObject.layer == terrain || col.collider.gameObject.layer == water || col.collider.gameObject.layer == floor)
         {
             StopMovingObject(col.collider.gameObject.layer == water);
+        }
+        int player = LayerMask.NameToLayer("Player");
+        if (col.collider.gameObject.layer == player)
+        {
+            m_rigidBody.freezeRotation = false;
+            m_timeRotating = 0;
         }
     }
 
