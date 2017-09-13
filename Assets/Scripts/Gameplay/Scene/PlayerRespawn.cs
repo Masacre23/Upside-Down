@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerRespawn : MonoBehaviour
 {
 	public GameObject[] spawnPoints;
-	float fadeTime = 1.0f;
+	float fadeTime = 5.0f;
 	public Image fadePanel;
 	GameObject player;
 
@@ -19,8 +19,8 @@ public class PlayerRespawn : MonoBehaviour
 	{
 		for (float t = 0.0f; t < fadeTime;) 
 		{
-			t += Time.deltaTime / (fadeTime);
-			fadePanel.color = new Color (0f, 0f, 0f, t);
+			t += Time.deltaTime ;
+			fadePanel.color = new Color (0f, 0f, 0f, t / (fadeTime));
 			yield return null;
 		}
 
@@ -30,12 +30,12 @@ public class PlayerRespawn : MonoBehaviour
 		player.transform.GetChild(0).transform.rotation = spawn.rotation;
         player.GetComponent<Player>().Restart();
         player.GetComponent<Rigidbody>().ResetInertiaTensor();
-        
 
-		for (float t = fadeTime; t > 0.0f;) 
+
+        for (float t = fadeTime; t > 0.0f;) 
 		{
-			t -= Time.deltaTime / (fadeTime);
-			fadePanel.color = new Color (0f, 0f, 0f, t);
+			t -= Time.deltaTime;
+			fadePanel.color = new Color (0f, 0f, 0f, t / (fadeTime));
 			yield return null;
 		}
 	}
