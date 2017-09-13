@@ -26,6 +26,7 @@ public class HarmfulTerrain : MonoBehaviour {
                 player.m_damageData.m_damage = 20;
                 player.m_damageData.m_respawn = true;
                 player.m_negatePlayerInput = true;
+                player.m_animator.SetBool("Drawnning", true);
             }
         }
         int enemyLayer = LayerMask.NameToLayer("Enemy");
@@ -51,6 +52,21 @@ public class HarmfulTerrain : MonoBehaviour {
             {
                 throwableObject.StopMovingObject(true);
             }
+        }
+
+        GameObjectGravity gravityObject = other.gameObject.GetComponent<GameObjectGravity>();
+        if(gravityObject != null)
+        {
+            gravityObject.m_intoWater = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        GameObjectGravity gravityObject = other.gameObject.GetComponent<GameObjectGravity>();
+        if (gameObject != null)
+        {
+            gravityObject.m_intoWater = false;
         }
     }
 }

@@ -179,6 +179,8 @@ public class Player : Character
         m_freezeMovement = false;
         m_negatePlayerInput = false;
 
+        m_animator.Rebind();
+
         m_soundEffects = GetComponent<SoundEffects>();
 
         base.Restart();

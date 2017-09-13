@@ -28,11 +28,13 @@ public class GameObjectGravity : MonoBehaviour
 
     public bool m_onGravityWall = false;
     public bool m_onAir = false;
+    public bool m_intoWater = false;
 
     public bool m_getStrongestGravity = true;
 
     //This should be the same for all gameobjects
     static float m_gravityStrength = -19.0f;
+    static float m_waterResistance = 19.0f;
 
     Player m_player;
 
@@ -81,8 +83,13 @@ public class GameObjectGravity : MonoBehaviour
         {
             if (!m_onGravityWall || (m_onAir && m_objectsGravity.Count > 0) )
                 m_gravity = GetGravity();
-                
-            m_rigidBody.AddForce(m_gravityStrength * m_rigidBody.mass * m_gravity);
+
+            float strength = m_gravityStrength;
+            if (m_intoWater)
+            {
+                strength += m_waterResistance;
+            }
+            m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
         }
         else
         {
