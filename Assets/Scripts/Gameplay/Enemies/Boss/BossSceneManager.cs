@@ -7,7 +7,9 @@ public class BossSceneManager : MonoBehaviour {
 	GameObject boss;
 	int []sizes = {10, 5, 1};
 	bool scaling = false;
+	public GameObject basePlatform;
 	public GameObject pointReference;
+	int[] points = { 6, -6, 0 };
 
 	// Use this for initialization
 	void Start () {
@@ -27,20 +29,25 @@ public class BossSceneManager : MonoBehaviour {
 			while (boss.transform.localScale.x > sizes [phase]) 
 			{
 				boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
+				if(phase != 2)
+				//	basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase+1)/3, 0);
 				yield return 0;
 			}
-			scaling = false;
+			//scaling = false;
 			//laser.GetComponent<Laser> ().enabled = false;
 			laser.transform.GetChild(1).gameObject.SetActive(false);
-			phase++;
-			if (phase == 1) 
-			{
-				while (pointReference.transform.position.y > 5) 
+			//phase++;
+			/*if (phase == 1) 
+			{*/
+			while (pointReference.transform.position.y > points[phase]) 
 				{
 					pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
+				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase+1)/5, 0);
 					yield return 0;
 				}
-			}
+			//}
+			scaling = false;
+			phase++;
 		}
 	}
 }
