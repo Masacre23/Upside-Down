@@ -35,10 +35,6 @@ public class PlayerDebugMode : MonoBehaviour {
     Rect m_rectRecoverHealthMenu;
     string m_titleRecoverHealthMenu;
 
-    GUIStyle m_styleRecoverOxigenMenu;
-    Rect m_rectRecoverOxigenMenu;
-    string m_titleRecoverOxigenMenu;
-
     GUIStyle m_styleHitPlayerMenu;
     Rect m_rectHitPlayerMenu;
     string m_titleHitPlayerMenu;
@@ -94,13 +90,6 @@ public class PlayerDebugMode : MonoBehaviour {
         m_rectRecoverHealthMenu = new Rect(2 * m_screenWidth / 5, 8 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
         m_titleRecoverHealthMenu = "6 : Recover health";
 
-        m_styleRecoverOxigenMenu = new GUIStyle();
-        m_styleRecoverOxigenMenu.alignment = TextAnchor.UpperLeft;
-        m_styleRecoverOxigenMenu.fontSize = 2 * m_screenHeight / 100;
-        m_styleRecoverOxigenMenu.normal.textColor = m_colorInactive;
-        m_rectRecoverOxigenMenu = new Rect(2 * m_screenWidth / 5, 10 * m_screenHeight / 100, m_screenWidth / 5, 2 * m_screenHeight / 100);
-        m_titleRecoverOxigenMenu = "7 : Recover oxigen";
-
         m_styleHitPlayerMenu = new GUIStyle();
         m_styleHitPlayerMenu.alignment = TextAnchor.UpperLeft;
         m_styleHitPlayerMenu.fontSize = 2 * m_screenHeight / 100;
@@ -149,10 +138,6 @@ public class PlayerDebugMode : MonoBehaviour {
                         HUDManager.GainLife();
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                m_playerClass.m_oxigen.SetOxygenMax();
-            }
             if (Input.GetKeyDown(KeyCode.Alpha8) || Input.GetKeyDown(KeyCode.Alpha9))
                 m_playerClass.HitDebug();
         }
@@ -181,8 +166,6 @@ public class PlayerDebugMode : MonoBehaviour {
             m_styleCurrentSpawnsMenu.normal.textColor = m_colorInactive;
             GUI.Label(m_rectRecoverHealthMenu, m_titleRecoverHealthMenu, m_styleRecoverHealthMenu);
             m_styleRecoverHealthMenu.normal.textColor = m_colorInactive;
-            GUI.Label(m_rectRecoverOxigenMenu, m_titleRecoverOxigenMenu, m_styleRecoverOxigenMenu);
-            m_styleRecoverOxigenMenu.normal.textColor = m_colorInactive;
             GUI.Label(m_rectHitPlayerMenu, m_titleHitPlayerMenu, m_styleHitPlayerMenu);
             m_styleHitPlayerMenu.normal.textColor = m_colorInactive;
             GUI.Label(m_rectKillPlayerMenu, m_titleKillPlayerMenu, m_styleKillPlayerMenu);

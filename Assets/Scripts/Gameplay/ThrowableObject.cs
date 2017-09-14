@@ -19,12 +19,9 @@ public class ThrowableObject : MonoBehaviour
 
     Transform m_floatingPoint;
 
-
-    FloatingAroundPlayer m_targetPlayer = null;
     PickedObject m_playerPicked = null;
 
     TrailRenderer m_trail;
-
 
     [HideInInspector] public bool m_canDamage = false;
     bool m_applyThrownForce = false;
@@ -90,8 +87,6 @@ public class ThrowableObject : MonoBehaviour
     {
         if (m_playerPicked)
             StopCarried();
-        else if (m_targetPlayer)
-            StopFloating();
 
         m_rigidBody.freezeRotation = false;
         m_timeRotating = 0.0f;
@@ -120,29 +115,6 @@ public class ThrowableObject : MonoBehaviour
             m_applyThrownForce = false;
             m_movingHorizontal = true;
         }
-    }
-
-    // This function should be called when an object begins to float around the character
-    public void BeginFloating(Transform floatingPoint, FloatingAroundPlayer player, float timeFloating = 0.0f)
-    {
-        m_floatingPoint = floatingPoint;
-        m_targetPlayer = player;
-
-        m_isFloating = true;
-        m_canBePicked = false;
-
-        if (m_rigidBody)
-            m_rigidBody.isKinematic = true;
-
-        for (int i = 0; i < m_collider.Length; i++)
-        {
-            m_collider[i].enabled = false;
-        }
-
-        m_rotationRandomVector = new Vector3(Random.value, Random.value, Random.value).normalized;
-
-        if (m_aura != null)
-            m_aura.SetActive(true);
     }
 
     // This function is called when the object is picked by the player
@@ -175,30 +147,6 @@ public class ThrowableObject : MonoBehaviour
 
         if (m_aura)
             m_aura.SetActive(true);
-    }
-
-    //This function should be called when an object stop floating around the character
-    public void StopFloating()
-    {
-        transform.parent = null;
-        m_targetPlayer.FreeSpace(m_floatingPoint);
-        m_targetPlayer = null;
-        m_floatingPoint = null;
-
-        m_isFloating = false;
-        m_canBePicked = true;
-
-        if (m_rigidBody)
-            m_rigidBody.isKinematic = false;
-
-        for (int i = 0; i < m_collider.Length; i++)
-        {
-            m_collider[i].enabled = true;
-        }
-
-        m_rotationRandomVector = Vector3.zero;
-        if (m_aura != null)
-            m_aura.SetActive(false);
     }
 
     //This function should be called when the object stop been carried by the player

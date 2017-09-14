@@ -79,9 +79,6 @@ public class Player : Character
     //Variables regarding player picking up objects
     [HideInInspector] public PickedObject m_pickedObject;
 
-    //Variables regarding player's health and oxigen
-    [HideInInspector] public OxigenPlayer m_oxigen;
-
 	//Effects
 	public GameObject m_jumpClouds;
 	public GameObject m_runClouds;
@@ -127,8 +124,6 @@ public class Player : Character
 
         if (!(m_playerInput = GetComponent<PlayerController>()))
             m_playerInput = gameObject.AddComponent<PlayerController>();
-        if (!(m_oxigen = GetComponent<OxigenPlayer>()))
-            m_oxigen = gameObject.AddComponent<OxigenPlayer>();
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -258,11 +253,6 @@ public class Player : Character
     public override void FixedUpdate ()
     {
         base.FixedUpdate();
-        //if (m_oxigen.m_oxigen <= 0.0f)
-        //{
-        //    m_damageData.m_damage = (int)m_health + 1;
-        //    m_damageData.m_recive = true;
-        //}
         //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
         //m_rigidBodyTotal = Vector3.zero;
         if (m_damageForceToApply)
