@@ -72,25 +72,12 @@ public class ThrowableObject : MonoBehaviour
         }
         if (m_applyThrownForce)
         {
-            //transform.parent = null;
-            //m_playerPicked.FreeSpace();
-
             m_playerPicked = null;
             m_rigidBody.velocity = m_vectorUp * m_thrownForce;
             //m_rigidBody.AddForce(m_thrownForce * m_rigidBody.mass, ForceMode.Impulse);
             m_applyThrownForce = false;
             m_movingHorizontal = true;
         }
-        //if (m_rotateEnemy)
-        //{
-        //    Enemy enemy = GetComponent<Enemy>();
-        //    if (enemy)
-        //    { 
-        //        float angle = Vector3.Angle(transform.up, -m_playerPicked.transform.GetChild(0).forward);
-        //        transform.Rotate(transform.forward, angle, Space.World);
-        //    }
-        //    m_rotateEnemy = false;
-        //}
     }
 
     //This function should be called when the object is thrown
@@ -140,7 +127,7 @@ public class ThrowableObject : MonoBehaviour
             enemy.m_animator.SetBool("Charged", true);
             enemy.enabled = false;
         } else {
-            transform.up = m_vectorUp;
+            transform.up = player.transform.GetChild(0).up;
             float angleUp = Vector3.Angle(transform.right, -player.transform.GetChild(0).forward);
             transform.Rotate(transform.up, angleUp, Space.World);
         }

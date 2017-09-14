@@ -3686,23 +3686,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 14
       objectReference: {fileID: 0}
-    - target: {fileID: 4047460258257436, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.9000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4047460258257436, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4047460258257436, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.9000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 23110843897338314, guid: 3a23c5b258f749b448851e9b172df8f7,
-        type: 2}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
   m_IsPrefabParent: 0
@@ -14397,7 +14380,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 180326.72
+  Age: 180486.06
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -29857,7 +29840,7 @@ Prefab:
       value: 0.00000050663954
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 65496834178632560, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1391296506 stripped
@@ -30503,7 +30486,7 @@ Prefab:
       value: 173.35701
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 65496834178632560, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 3a23c5b258f749b448851e9b172df8f7, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &1422986564 stripped
@@ -33061,8 +33044,7 @@ GameObject:
 --- !u!65 &1610162642
 BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65963963628062518, guid: 9f872604273e9f74c92edcdf604253a5,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1610162641}
   m_Material: {fileID: 0}
@@ -34124,6 +34106,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.70000094
       objectReference: {fileID: 0}
+    - target: {fileID: 114666747388420396, guid: 3e776c534b4751b4091f37866a0f790e,
+        type: 2}
+      propertyPath: m_transparentMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 61fd2ebcbfd8cdb41a6a125e88005c76, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
   m_IsPrefabParent: 0
@@ -34306,23 +34293,6 @@ Prefab:
     - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
       propertyPath: m_RootOrder
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4520130863248390, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114666747388420396, guid: 3e776c534b4751b4091f37866a0f790e,
-        type: 2}
-      propertyPath: m_transparentMat
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e776c534b4751b4091f37866a0f790e, type: 2}
@@ -38978,8 +38948,7 @@ GameObject:
 --- !u!65 &1944203459
 BoxCollider:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 65816191432100778, guid: 93a773af9f590ea4cad8d1198c0b66a6,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1944203458}
   m_Material: {fileID: 0}
