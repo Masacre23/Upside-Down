@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerRespawn : MonoBehaviour
 {
 	public GameObject[] spawnPoints;
-	float fadeTime = 5.0f;
+	float fadeTime = 1.0f;
 	public Image fadePanel;
 	GameObject player;
 
