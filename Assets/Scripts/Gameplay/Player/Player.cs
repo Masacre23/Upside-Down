@@ -186,7 +186,6 @@ public class Player : Character
     public override void Update()
     {
         ManageInput();
-
         PlayerStates previousState = m_currentState;
 		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimObject, Time.deltaTime))
 		{

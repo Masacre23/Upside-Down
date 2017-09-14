@@ -32,6 +32,7 @@ public class ThrowableObject : MonoBehaviour
     Vector3 m_vectorFroward = Vector3.forward;
     float m_minVelocityDamage = 2.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
+    bool m_rotateEnemy = false;
 
     float m_timeRotating = 0.0f;
 
@@ -80,6 +81,16 @@ public class ThrowableObject : MonoBehaviour
             m_applyThrownForce = false;
             m_movingHorizontal = true;
         }
+        //if (m_rotateEnemy)
+        //{
+        //    Enemy enemy = GetComponent<Enemy>();
+        //    if (enemy)
+        //    { 
+        //        float angle = Vector3.Angle(transform.up, -m_playerPicked.transform.GetChild(0).forward);
+        //        transform.Rotate(transform.forward, angle, Space.World);
+        //    }
+        //    m_rotateEnemy = false;
+        //}
     }
 
     //This function should be called when the object is thrown
@@ -123,12 +134,17 @@ public class ThrowableObject : MonoBehaviour
         transform.parent = floatingPoint;
         Enemy enemy = GetComponent<Enemy>();
         if (enemy) {
-            transform.forward = m_vectorUp;
+            transform.forward = player.transform.GetChild(0).up;
+            float angle = Vector3.Angle(transform.up, -player.transform.GetChild(0).forward);
+            transform.Rotate(transform.forward, angle, Space.World);
             enemy.m_animator.SetBool("Charged", true);
             enemy.enabled = false;
         } else {
             transform.up = m_vectorUp;
+            float angleUp = Vector3.Angle(transform.right, -player.transform.GetChild(0).forward);
+            transform.Rotate(transform.up, angleUp, Space.World);
         }
+        m_rotateEnemy = true;
         transform.position = floatingPoint.position;
         transform.Translate(m_chargingPivot);
         m_floatingPoint = floatingPoint;
