@@ -9,7 +9,7 @@ public class BossSceneManager : MonoBehaviour {
 	bool scaling = false;
 	public GameObject basePlatform;
 	public GameObject pointReference;
-	int[] points = { 6, -6, 0 };
+	int[] points = { 6, 16};
 
 	// Use this for initialization
 	void Start () {
@@ -26,20 +26,36 @@ public class BossSceneManager : MonoBehaviour {
 		if (!scaling) 
 		{
 			scaling = true;
-			while (boss.transform.localScale.x > sizes [phase]) 
+			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
+				pointReference.transform.position.y > points[phase] )) 
 			{
-				boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
+				if(boss.transform.localScale.x > sizes [phase])
+					boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
+				if ((phase == 1)? pointReference.transform.position.y < points[phase] : 
+					pointReference.transform.position.y > points[phase]) 
+				{
+					if(phase == 1)
+						pointReference.transform.position += new Vector3 (0, Time.deltaTime, 0);
+					else
+						pointReference.transform.position -= new Vector3 (0, Time.deltaTime, 0);
+					
+					basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
+				}
 				yield return 0;
 			}
 
-			laser.transform.GetChild(1).gameObject.SetActive(false);
-	
-			while (pointReference.transform.position.y > points[phase]) 
+			//laser.transform.GetChild(1).gameObject.SetActive(false);
+			while (phase == 1 && basePlatform.transform.position.y < 9) 
+			{
+				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
+				yield return 0;
+			}
+			/*while (pointReference.transform.position.y > points[phase]) 
 			{
 				pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
 				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase+1)/5, 0);
 				yield return 0;
-			}
+			}*/
 			scaling = false;
 			phase++;
 			boss.GetComponent<Boss> ().m_phase = phase;
