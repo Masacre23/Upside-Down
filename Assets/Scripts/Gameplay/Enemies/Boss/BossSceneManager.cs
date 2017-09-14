@@ -9,7 +9,7 @@ public class BossSceneManager : MonoBehaviour {
 	bool scaling = false;
 	public GameObject basePlatform;
 	public GameObject pointReference;
-	int[] points = { 6, 16};
+	int[] points = { 6, 16, 16};
 
 	// Use this for initialization
 	void Start () {
