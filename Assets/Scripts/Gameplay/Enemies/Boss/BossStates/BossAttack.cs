@@ -15,13 +15,31 @@ public class BossAttack : BossStates {
 	{
 		bool ret = false;
 
-		if (!m_boss.m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
+		if (m_boss.m_phase == 2)
+			Move ();
+		
+		AnimatorStateInfo info = m_boss.m_animator.GetCurrentAnimatorStateInfo (0);
+		if (!info.IsName ("Attack") && !info.IsName ("Attack2")) 
 		{
 			ret = true;
 			m_boss.m_currentState = m_boss.m_Idle;
 		}
 
 		return ret;
+	}
+
+	void Move()
+	{
+		//m_rigidBody.isKinematic = true;
+		Quaternion rotation = Quaternion.LookRotation(m_boss.player.transform.position - transform.position, Vector3.up);
+		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * m_boss.m_rotationSpeed * 16);
+
+		Vector3 heading = m_boss.player.transform.position - transform.position;
+		heading.y = 0;
+		float distance = heading.magnitude;
+		Vector3 direction = heading / distance;
+
+		transform.position += direction * Time.deltaTime * m_boss.m_speed;
 	}
 
 	public override void OnEnter()
