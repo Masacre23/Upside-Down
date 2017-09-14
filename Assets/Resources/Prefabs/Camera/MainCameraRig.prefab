@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 114856520038537236}
   - component: {fileID: 114508691747097534}
   - component: {fileID: 114503214664828404}
-  - component: {fileID: 114498356762980736}
   m_Layer: 0
   m_Name: MainCameraRig
   m_TagString: Untagged
@@ -288,8 +287,7 @@ MonoBehaviour:
   m_maxReturnTime: 2
   m_targetLockDistance: 1.5
   m_targetBreakLock: 0.2
-  m_changeCamOnPosition: 0
-  m_timeBetweenChanges: 0.5
+  m_defaultTimeBetweenChanges: 0.5
   m_player: {fileID: 0}
   m_model: {fileID: 0}
   m_pivot: {fileID: 0}
@@ -297,27 +295,10 @@ MonoBehaviour:
   m_cam: {fileID: 0}
   m_currentState: {fileID: 0}
   m_onBack: {fileID: 0}
-  m_aiming: {fileID: 0}
   m_transit: {fileID: 0}
+  m_onFixedPoint: {fileID: 0}
   m_cameraProtection: {fileID: 0}
   m_playerDetector: {fileID: 0}
---- !u!114 &114498356762980736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1222552522042562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 698ddc54caa1d214ea0641c45e1eae36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_type: 1
-  m_tiltMax: 75
-  m_tiltMin: 45
-  m_aimSpeed: 3
-  m_minAngleToTarget: 15
-  m_camPosition: {x: 0, y: 1.3, z: 0}
 --- !u!114 &114503214664828404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -334,6 +315,8 @@ MonoBehaviour:
   m_tiltMax: 60
   m_tiltMin: 45
   m_camPosition: {x: 0, y: 3, z: -9}
+  m_transitionToBackTime: 0.5
+  m_savedPivotQuaternion: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &114508691747097534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -393,9 +376,9 @@ MonoBehaviour:
   m_visualiseInEditor: 0
   m_closestDistance: 0.5
   m_dontClipTag: Player
-  m_layersToIgnore:
+  m_layersToCollide:
     serializedVersion: 2
-    m_Bits: 4608
+    m_Bits: 0
 --- !u!114 &114871674746164300
 MonoBehaviour:
   m_ObjectHideFlags: 1

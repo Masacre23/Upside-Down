@@ -64,7 +64,7 @@ public class HarmfulTerrain : MonoBehaviour {
     private void OnTriggerExit(Collider other)
     {
         GameObjectGravity gravityObject = other.gameObject.GetComponent<GameObjectGravity>();
-        if (gameObject != null)
+        if (gravityObject != null)
         {
             gravityObject.m_intoWater = false;
         }

@@ -23,11 +23,8 @@ public class GameObjectGravity : MonoBehaviour
 
     public bool m_ignoreGravity = false;
     float m_timeTravelled;
-    float m_timeOnGravityWallGravity;
     Vector3 m_impulseForce;
 
-    public bool m_onGravityWall = false;
-    public bool m_onAir = false;
     public bool m_intoWater = false;
 
     public bool m_getStrongestGravity = true;
@@ -35,6 +32,9 @@ public class GameObjectGravity : MonoBehaviour
     //This should be the same for all gameobjects
     static float m_gravityStrength = -19.0f;
     static float m_waterResistance = 19.0f;
+
+    private bool m_inGravityWall = false;
+    private Vector3 m_savedGravity = Vector3.zero;
 
     Player m_player;
 
@@ -63,26 +63,15 @@ public class GameObjectGravity : MonoBehaviour
         m_player = GetComponent<Player>();
     }
 
-    public void Update()
-    {
-        if (m_onGravityWall && !m_getStrongestGravity)
-        {
-            m_timeOnGravityWallGravity += Time.deltaTime;
-            if (m_timeOnGravityWallGravity > m_maxTimeOnGravityWallGravity)
-            {
-                m_onGravityWall = false;
-                m_timeOnGravityWallGravity = 0.0f;
-            }
-        }
-    }
-
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
         if (!m_ignoreGravity)
         {
-            if (!m_onGravityWall || (m_onAir && m_objectsGravity.Count > 0) )
+            if (!m_inGravityWall)
                 m_gravity = GetGravity();
+            else
+                m_gravity = m_savedGravity;
 
             float strength = m_gravityStrength;
             if (m_intoWater)
@@ -179,19 +168,23 @@ public class GameObjectGravity : MonoBehaviour
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet
     public void GravityOnFeet(RaycastHit hit)
     {
-        //m_attractorGameObject = hit.transform.gameObject;
         AttractorProperties attractorProperties = hit.transform.gameObject.GetComponent<AttractorProperties>();
         if (attractorProperties)
             m_attractorGameObject = attractorProperties.m_attractor;
 
         if (hit.collider.tag == "GravityWall")
-        {
-            m_gravity = hit.normal;
-            m_onGravityWall = true;
-            m_timeOnGravityWallGravity = 0.0f;
-        }
-        else
-            m_onGravityWall = false;
+            m_savedGravity = hit.normal;
+    }
+
+    public void EnterGravityWallZone()
+    {
+        m_inGravityWall = true;
+        m_savedGravity = m_gravity;
+    }
+
+    public void ExitGravityWallZone()
+    {
+        m_inGravityWall = false;
     }
 
     //Call this function when adding a new attractor to the object

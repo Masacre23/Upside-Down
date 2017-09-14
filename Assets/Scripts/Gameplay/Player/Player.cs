@@ -391,13 +391,11 @@ public class Player : Character
             m_isGrounded = true;
             m_isJumping = false;
             m_gravityOnCharacter.m_getStrongestGravity = true;
-            m_gravityOnCharacter.m_onAir = false;
         }
         else
         {
             m_isGrounded = false;
             m_gravityOnCharacter.m_getStrongestGravity = false;
-            m_gravityOnCharacter.m_onAir = true;
         }
 
         return m_isGrounded;
