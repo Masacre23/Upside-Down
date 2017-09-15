@@ -21,7 +21,7 @@ public class BossSceneManager : MonoBehaviour {
 
 	}
 
-	public IEnumerator ChangeBossScale(GameObject laser)
+	public IEnumerator ChangeBossScale(Laser laser)
 	{
 		if (!scaling) 
 		{
@@ -29,6 +29,8 @@ public class BossSceneManager : MonoBehaviour {
 			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
 				pointReference.transform.position.y > points[phase] )) 
 			{
+				if(phase > 1? laser.hitting : true)
+				{
 				if(boss.transform.localScale.x > sizes [phase])
 					boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
 				if ((phase == 1)? pointReference.transform.position.y < points[phase] : 
@@ -41,9 +43,10 @@ public class BossSceneManager : MonoBehaviour {
 					
 					basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
 				}
+				}
 				yield return 0;
 			}
-
+			laser.bossHitted = true;
 			//laser.transform.GetChild(1).gameObject.SetActive(false);
 			while (phase == 1 && basePlatform.transform.position.y < 9) 
 			{

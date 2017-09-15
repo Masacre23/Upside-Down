@@ -14,6 +14,8 @@ public class Laser : MonoBehaviour {
     public float maxTime = 0;
     public  float time;
 	public GameObject bossSceneManager;
+	public bool bossHitted = false;
+	public bool hitting = false;
 
 	// Use this for initialization
 	void Start () {
@@ -33,35 +35,26 @@ public class Laser : MonoBehaviour {
 			{
                 time += Time.deltaTime;
 				RaycastHit hit;
-				if (Physics.Raycast (transform.position, -transform.up, out hit, 4) && (time < maxTime || maxTime == 0)) 
+				if (Physics.Raycast (transform.position, -transform.up, out hit, bossSceneManager? 20 : 4) && (time < maxTime || maxTime == 0)) 
 				{
-					laser.enabled = true;
-                    transform.GetChild(1).gameObject.SetActive(true);
-                    if (particleTime >= particleRate) 
+					if (!bossSceneManager) 
 					{
-                        impactEffect.Play();
-						impactEffect.Emit (1);
-						particleTime = 0;
-					}
-					laser.SetPosition (0, firePoint.position);
-					target.position = hit.point;
-					laser.SetPosition (1, target.position);
-					if (bossSceneManager && hit.collider.tag == "Boss")
-						StartCoroutine(bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale (this.gameObject));
+						Draw (hit.point);
+					} else if (bossSceneManager && hit.collider.tag == "Boss") 
+					{
+						if (!bossHitted) {
+							Draw (hit.point);
+							hitting = true;
+							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale (this));
+						}
+					} 
 				} else 
 				{
+					hitting = false;
                     if (drawAlways && (time < maxTime || maxTime == 0))
                     {
                         transform.GetChild(1).gameObject.SetActive(true);
-                        laser.enabled = true;
-                        particleTime += Time.deltaTime;
-                        if (particleTime >= particleRate)
-                        {
-                            impactEffect.Emit(1);
-                            particleTime = 0;
-                        }
-                        laser.SetPosition(0, firePoint.position);
-                        laser.SetPosition(1, target.position);
+						Draw ();
                     }
                     else
                     {
@@ -75,16 +68,35 @@ public class Laser : MonoBehaviour {
 			}
 			else 
 			{
-				laser.enabled = true;
-				particleTime += Time.deltaTime;
-				if (particleTime >= particleRate) 
-				{
-					impactEffect.Emit (1);
-					particleTime = 0;
-				}
-				laser.SetPosition (0, firePoint.position);
-				laser.SetPosition (1, target.position);
+				Draw ();
 			}
 		}
+	}
+
+	void Draw()
+	{
+		laser.enabled = true;
+		particleTime += Time.deltaTime;
+		if (particleTime >= particleRate) 
+		{
+			impactEffect.Emit (1);
+			particleTime = 0;
+		}
+		laser.SetPosition (0, firePoint.position);
+		laser.SetPosition (1, target.position);
+	}
+
+	void Draw(Vector3 hitPoint)
+	{
+		laser.enabled = true;
+		transform.GetChild (1).gameObject.SetActive (true);
+		if (particleTime >= particleRate) {
+			impactEffect.Play ();
+			impactEffect.Emit (1);
+			particleTime = 0;
+		}
+		laser.SetPosition (0, firePoint.position);
+		target.position = hitPoint;
+		laser.SetPosition (1, target.position);
 	}
 }
