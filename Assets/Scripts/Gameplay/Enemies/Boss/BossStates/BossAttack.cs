@@ -7,6 +7,8 @@ public class BossAttack : BossStates {
 	AnimatorStateInfo info;
 	public float currentTime;
 	public int frames = 0;
+	float counter = 4;
+	Vector3 randomPos;
 
 	public override void Start ()
 	{
@@ -25,8 +27,11 @@ public class BossAttack : BossStates {
 
 		if (m_boss.m_phase == 2)
 			Move ();
+
+		if (m_boss.m_phase == 3)
+			RunAway ();
 		
-		if(info.normalizedTime > 0.9f)
+		if(info.normalizedTime > 0.9f && m_boss.m_phase <= 1)
 		{
 			ret = true;
 			m_boss.m_currentState = m_boss.m_Idle;
@@ -51,10 +56,6 @@ public class BossAttack : BossStates {
 
 	void ThrowBall()
 	{
-		//AnimatorClipInfo[] clipInfo = m_boss.m_animator.GetCurrentAnimatorClipInfo(0);
-		//currentTime = clipInfo [0].clip.length * info.normalizedTime;
-		//currentTime = info.length * info.normalizedTime;
-	
 		if (frames == 11) 
 		{
 			GameObject go = (GameObject)Instantiate (m_boss.ball, m_boss.OBJETO_TIRAR.transform.position, Quaternion.identity);
@@ -70,6 +71,25 @@ public class BossAttack : BossStates {
 		}
 
 		frames++;
+	}
+
+	void RunAway()
+	{
+		counter += Time.deltaTime;
+		if (counter > 2.5f) 
+		{
+			randomPos = new Vector3 (Random.Range (-10, 10), transform.position.y, Random.Range (-10, 10));
+			counter = 0;
+		}
+		Quaternion rotation = Quaternion.LookRotation(randomPos - transform.position, Vector3.up);
+		transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * m_boss.m_rotationSpeed);
+
+		Vector3 heading = randomPos - transform.position;
+		heading.y = 0;
+		float distance = heading.magnitude;
+		Vector3 direction = heading / distance;
+
+		transform.position += transform.forward * Time.deltaTime * m_boss.m_speed;
 	}
 
 	public override void OnEnter()
