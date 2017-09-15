@@ -10,7 +10,7 @@ public class ThrowableObject : MonoBehaviour
     public float m_floatingSpeed = 10.0f;
     public float m_rotationSpeed = 100.0f;
     public GameObject m_aura;
-    public Vector3 m_chargingPivot = Vector3.zero;
+    public float m_chargingUpPivot = 0.0f;
     public float m_timeToRotate = 2.0f;
     public bool m_isLazer = false;
     public bool m_stageTwo = false;
@@ -141,7 +141,7 @@ public class ThrowableObject : MonoBehaviour
             transform.up = player.transform.GetChild(0).up;
         }
         transform.position = floatingPoint.position;
-        transform.Translate(m_chargingPivot);
+        transform.Translate(floatingPoint.up * m_chargingUpPivot, Space.World);
         m_floatingPoint = floatingPoint;
         m_playerPicked = player;
 
