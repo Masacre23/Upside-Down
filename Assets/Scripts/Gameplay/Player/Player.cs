@@ -49,6 +49,7 @@ public class Player : Character
     [HideInInspector] public VariableCam m_camController;
 
     //Variables regarding player movement
+    public ZoneSpace m_currentZone = null;
     public bool m_freezeMovement;
     public bool m_rotationFollowPlayer;
     [HideInInspector] public bool m_playerStopped = false;
@@ -173,6 +174,7 @@ public class Player : Character
 
         m_freezeMovement = false;
         m_negatePlayerInput = false;
+        m_currentZone = null;
 
         m_animator.Rebind();
 
