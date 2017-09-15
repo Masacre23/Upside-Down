@@ -12,8 +12,12 @@ public class Boss : MonoBehaviour {
 	public float m_attackRate;
 	public float m_rotationSpeed = 4.0f;
 	public float m_speed = 2.0f;
+	public float m_force = 10f;
+	public GameObject OBJETO_TIRAR;
 
+	public GameObject ball;
 	public GameObject player;
+
 	void Awake()
 	{
 		m_animator = gameObject.GetComponent<Animator> ();
