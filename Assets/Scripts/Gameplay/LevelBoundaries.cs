@@ -7,13 +7,16 @@ public class LevelBoundaries : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
-        {
-            Player m_player = other.GetComponent<Player>();
-            m_player.m_damageData.m_recive = true;
-            m_player.m_damageData.m_damage = 20;
-            m_player.m_damageData.m_respawn = true;
-        }
+		if (other.tag == "Player") 
+		{
+			Player m_player = other.GetComponent<Player> ();
+			m_player.m_damageData.m_recive = true;
+			m_player.m_damageData.m_damage = 20;
+			m_player.m_damageData.m_respawn = true;
+		} else if (other.tag == "Boss") 
+		{
+			other.transform.GetChild (0).gameObject.SetActive (true);
+		}
         else
         {
             int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
