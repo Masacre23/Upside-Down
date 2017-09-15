@@ -95,7 +95,6 @@ public class ThrowableObject : MonoBehaviour
         m_applyThrownForce = true;
         m_canDamage = true;
 
-        //m_objectGravity.m_ignoreGravity = true;
         if (m_trail)
             m_trail.enabled = true;
     }
@@ -108,8 +107,6 @@ public class ThrowableObject : MonoBehaviour
             m_playerPicked.FreeSpace();
             m_playerPicked = null;
 
-            m_rigidBody.velocity = m_vectorUp * m_thrownForce;
-            //m_rigidBody.AddForce(m_thrownForce * m_rigidBody.mass, ForceMode.Impulse);
             m_applyThrownForce = false;
             m_movingHorizontal = true;
         }
@@ -185,14 +182,15 @@ public class ThrowableObject : MonoBehaviour
 			if(transform.tag != "EnemySnail")
 				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
         }
-        int floor = LayerMask.NameToLayer("Floor");
+        //int floor = LayerMask.NameToLayer("Floor");
         int water = LayerMask.NameToLayer("HarmfulTerrain");
-        int terrain = LayerMask.NameToLayer("Terrain");
-        if (col.collider.gameObject.layer == terrain || col.collider.gameObject.layer == water || col.collider.gameObject.layer == floor)
+        int player = LayerMask.NameToLayer("Player");
+        int enemy = LayerMask.NameToLayer("Enemy");
+        if (col.collider.gameObject.layer != player && col.collider.gameObject.layer != enemy)
         {
             StopMovingObject(col.collider.gameObject.layer == water);
         }
-        int player = LayerMask.NameToLayer("Player");
+        
         if (col.collider.gameObject.layer == player)
         {
             m_rigidBody.freezeRotation = false;

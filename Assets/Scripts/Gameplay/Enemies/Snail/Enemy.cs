@@ -111,29 +111,20 @@ public class Enemy : Character {
 
     void OnCollisionEnter(Collision col)
     {
-        //int throwableLayer = LayerMask.NameToLayer("ThrowableObject");
-        //if (col.collider.gameObject.layer == throwableLayer) //ThrowableObject
-        //{
-            ThrowableObject throwableObject = col.gameObject.GetComponent<ThrowableObject>();
-            if (throwableObject && throwableObject.m_canDamage)
-		//	if (throwableObject)
-            {
-                throwableObject.m_canDamage = false;
-                m_damageData.m_recive = true;
-                m_damageData.m_damage = 50;
-				CalculateDirection (col.gameObject, this.gameObject);
-            }
-        //}
-
+        ThrowableObject throwableObject = col.gameObject.GetComponent<ThrowableObject>();
+        if (throwableObject && throwableObject.m_canDamage)
+		{
+            throwableObject.m_canDamage = false;
+            m_damageData.m_recive = true;
+            m_damageData.m_damage = 50;
+            throwableObject.StopMovingObject(false);
+			CalculateDirection (col.gameObject, this.gameObject);
+        }
+        
         if (col.gameObject.tag == "Player") 
 		{
 			if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
 			{
-				/*EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
-			if (m_soundEffects != null) {
-				m_soundEffects.PlaySound ("Scream");
-			}*/
-
 				col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
 				col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
 
@@ -146,18 +137,6 @@ public class Enemy : Character {
 					EffectsManager.Instance.GetEffect (m_prefabHit1, col.transform.position + transform.up / 2 + col.transform.forward / 2, transform.up, null);
 				}
 			}
-			else //if(m_activeCollider == m_headCol)/*if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) */
-			{
-				/*RaycastHit hit;
-				if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
-					if (hit.collider.gameObject.tag == "EnemySnail") 
-					{*/
-					//	m_animator.SetBool ("Stunned", true);
-					/*	EffectsManager.Instance.GetEffect(m_prefabHit1, hit.point, transform.up, null);
-					}
-				}*/
-			}
-			//Debug.Log (col.);
 		}
 
         int harmfulTerrain = LayerMask.NameToLayer("HarmfulTerrain");

@@ -14,7 +14,7 @@ public class PickedObject : MonoBehaviour
     private bool m_targetSet = false;
 
     public float m_objectDetectionRadius = 1.5f;
-    public float m_horizontalThrowForceDefault = 3.0f;
+    public float m_horizontalThrowForceDefault = 5.0f;
     public float m_timeToFall = 2.0f;
 
     private Vector3 m_throwVector = Vector3.forward;
@@ -93,8 +93,7 @@ public class PickedObject : MonoBehaviour
 
         m_throwVector = target.point - m_pickedObject.transform.position;
         m_throwForce = throwForce;
-        m_throwHorizontalForce = m_throwVector.magnitude * m_timeToFall;
-        //Throw(target.point - m_pickedObject.transform.position, throwForce);
+        m_throwHorizontalForce = m_horizontalThrowForceDefault;
     }
 
     //This function is called to throw an object in a direction
@@ -108,7 +107,6 @@ public class PickedObject : MonoBehaviour
         m_throwVector = finalPosition - m_pickedObject.transform.position;
         m_throwForce = throwForce;
         m_throwHorizontalForce = m_horizontalThrowForceDefault;
-        //Throw(finalPosition - m_pickedObject.transform.position, throwForce);
     }
 
     public void ThrowObjectNow()
