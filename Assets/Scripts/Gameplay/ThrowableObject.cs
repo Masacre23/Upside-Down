@@ -13,6 +13,7 @@ public class ThrowableObject : MonoBehaviour
     public Vector3 m_chargingPivot = Vector3.zero;
     public float m_timeToRotate = 2.0f;
     public bool m_isLazer = false;
+    public bool m_stageTwo = false;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
@@ -127,7 +128,14 @@ public class ThrowableObject : MonoBehaviour
         }
         else if (m_isLazer)
         {
-            transform.forward = player.transform.GetChild(0).forward;
+            if (m_stageTwo)
+            {
+                transform.forward = player.transform.GetChild(0).GetChild(0).forward;
+            }
+            else
+            {
+                transform.forward = player.transform.GetChild(0).forward;
+            }
         }
         else{
             transform.up = player.transform.GetChild(0).up;
