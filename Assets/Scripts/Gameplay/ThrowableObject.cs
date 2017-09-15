@@ -12,6 +12,7 @@ public class ThrowableObject : MonoBehaviour
     public GameObject m_aura;
     public Vector3 m_chargingPivot = Vector3.zero;
     public float m_timeToRotate = 2.0f;
+    public bool m_isLazer = false;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
@@ -32,7 +33,7 @@ public class ThrowableObject : MonoBehaviour
     Vector3 m_vectorFroward = Vector3.forward;
     float m_minVelocityDamage = 2.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
-    bool m_rotateEnemy = false;
+    bool m_isEnemy = false;
 
     float m_timeRotating = 0.0f;
 
@@ -123,12 +124,14 @@ public class ThrowableObject : MonoBehaviour
             transform.Rotate(transform.forward, angle, Space.World);
             enemy.m_animator.SetBool("Charged", true);
             enemy.enabled = false;
-        } else {
-            transform.up = player.transform.GetChild(0).up;
-            float angleUp = Vector3.Angle(transform.right, -player.transform.GetChild(0).forward);
-            transform.Rotate(transform.up, angleUp, Space.World);
         }
-        m_rotateEnemy = true;
+        else if (m_isLazer)
+        {
+            transform.forward = player.transform.GetChild(0).forward;
+        }
+        else{
+            transform.up = player.transform.GetChild(0).up;
+        }
         transform.position = floatingPoint.position;
         transform.Translate(m_chargingPivot);
         m_floatingPoint = floatingPoint;

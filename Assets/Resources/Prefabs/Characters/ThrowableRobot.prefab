@@ -194,7 +194,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1328265741477760}
-  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalRotation: {x: -0.70710677, y: -0.00000029802322, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9000006, y: 0.9000006, z: 0.9000007}
   m_Children:
@@ -202,7 +202,7 @@ Transform:
   - {fileID: 4803285634267484}
   m_Father: {fileID: 4723635689134458}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.99999, y: -90, z: 89.99999}
 --- !u!4 &4723635689134458
 Transform:
   m_ObjectHideFlags: 1
@@ -210,7 +210,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1257827833300148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 16.85, z: -10.09}
+  m_LocalPosition: {x: 0.28, y: 16.89, z: 10.06}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_Children:
   - {fileID: 4304507195227904}
@@ -384,8 +384,7 @@ MonoBehaviour:
   m_maxTimeTravelled: 0.5
   m_maxTimeOnGravityWallGravity: 1
   m_ignoreGravity: 0
-  m_onGravityWall: 0
-  m_onAir: 0
+  m_intoWater: 0
   m_getStrongestGravity: 0
 --- !u!114 &114620528071716826
 MonoBehaviour:
@@ -404,8 +403,9 @@ MonoBehaviour:
   m_floatingSpeed: 10
   m_rotationSpeed: 100
   m_aura: {fileID: 0}
-  m_chargingPivot: {x: 0, y: 0.08, z: 0}
+  m_chargingPivot: {x: 0, y: 0, z: 0}
   m_timeToRotate: 2
+  m_isLazer: 1
   m_canDamage: 0
   m_prefabHit1: {fileID: 0}
 --- !u!120 &120243567183733320
