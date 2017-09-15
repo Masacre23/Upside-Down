@@ -55,12 +55,12 @@ public class BossAttack : BossStates {
 		//currentTime = clipInfo [0].clip.length * info.normalizedTime;
 		//currentTime = info.length * info.normalizedTime;
 	
-		if (frames == 23) 
+		if (frames == 11) 
 		{
 			GameObject go = (GameObject)Instantiate (m_boss.ball, m_boss.OBJETO_TIRAR.transform.position, Quaternion.identity);
 			go.transform.parent = m_boss.OBJETO_TIRAR.transform;
 		}
-		else if (frames == 50) 
+		else if (frames == 35) 
 		{
 			GameObject go = m_boss.OBJETO_TIRAR.transform.GetChild (0).gameObject;
 			go.transform.parent = null;
