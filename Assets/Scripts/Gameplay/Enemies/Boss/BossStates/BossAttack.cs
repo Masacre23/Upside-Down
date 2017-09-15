@@ -64,6 +64,7 @@ public class BossAttack : BossStates {
 		else if (frames == 35) 
 		{
 			GameObject go = m_boss.OBJETO_TIRAR.transform.GetChild (0).gameObject;
+			go.GetComponent<SphereCollider> ().enabled = true;
 			go.transform.parent = null;
 			Rigidbody rb = go.GetComponent<Rigidbody> ();
 			rb.useGravity = true;
