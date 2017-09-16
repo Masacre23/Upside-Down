@@ -20,8 +20,10 @@ public class ZoneSpace : MonoBehaviour {
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            
             Player player = other.GetComponent<Player>();
-            if ( !player.m_currentZone || m_previousZones.Contains(player.m_currentZone))
+            Debug.Log("Player " + player.m_currentZone + "->" + this.name);
+            if ( !player.m_currentZone || m_previousZones.Contains(player.m_currentZone) || player.m_currentZone == this)
             {
                 player.m_currentZone = this;
             }else
