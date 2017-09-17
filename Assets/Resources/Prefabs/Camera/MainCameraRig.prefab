@@ -138,15 +138,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222552522042562}
-  m_LocalRotation: {x: 0.84930795, y: 0.3532304, z: 0.19605438, w: -0.3398043}
-  m_LocalPosition: {x: 24.007122, y: -28.66655, z: 75.28855}
+  m_LocalRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
+  m_LocalPosition: {x: 2.86, y: 8.06, z: -5.354}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4597633026657924}
   - {fileID: 4251431659902150}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -214.006, y: -557.829, z: 181.706}
 --- !u!20 &20463806256330170
 Camera:
   m_ObjectHideFlags: 1
@@ -207,12 +207,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Radius: 0.4
-  m_SampleCount: 1
-  m_OcclusionIntensity: 1
-  m_Blur: 2
-  m_Downsampling: 2
-  m_OcclusionAttenuation: 1
-  m_MinZ: 0.01
+  m_SampleCount: 2
+  m_OcclusionIntensity: 2.57
+  m_Blur: 4
+  m_Downsampling: 1
+  m_OcclusionAttenuation: 0.2
+  m_MinZ: 0.219
   m_SSAOShader: {fileID: 4800000, guid: 43ca18288c424f645aaa1e9e07f04c50, type: 3}
   m_RandomTexture: {fileID: 2800000, guid: a181ca8e3c62f3e4b8f183f6c586b032, type: 3}
 --- !u!114 &114037359597585000
@@ -281,7 +281,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_moveSpeed: 5
-  m_turnSpeed: 3
+  m_turnSpeed: 6
   m_returnSpeed: 5
   m_autoReturnCam: 0
   m_maxReturnTime: 2
@@ -313,8 +313,8 @@ MonoBehaviour:
   m_type: 0
   m_defaultTiltAngle: 45
   m_tiltMax: 60
-  m_tiltMin: 45
-  m_camPosition: {x: 0, y: 3, z: -9}
+  m_tiltMin: 0
+  m_camPosition: {x: 0, y: 0.4, z: -3.95}
   m_transitionToBackTime: 0.5
   m_savedPivotQuaternion: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &114508691747097534
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_dontClipTag: Player
   m_layersToCollide:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!114 &114871674746164300
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -431,15 +431,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 20463806256330170}
-  RollAngle: -138.06204
-  RollQuataternion: {x: 0, y: 0, z: -0.9337743, w: 0.35786244}
+  RollAngle: -29.395054
+  RollQuataternion: {x: 0, y: 0, z: -0.2537162, w: 0.9672787}
   RollMatrix:
-    e00: -0.7438688
-    e01: 0.6683255
+    e00: 0.8712562
+    e01: 0.49082857
     e02: 0
     e03: 0
-    e10: -0.6683255
-    e11: -0.7438688
+    e10: -0.49082857
+    e11: 0.8712562
     e12: -0
     e13: 0
     e20: -0
@@ -452,8 +452,8 @@ MonoBehaviour:
     e33: 1
   DeltaPosition: {x: 0, y: 0, z: 0}
   Velocity: {x: 0, y: 0, z: 0}
-  OldRotation: {x: 0.84930795, y: 0.3532304, z: 0.19605438, w: -0.3398043}
-  OldPosition: {x: 24.007122, y: -28.66655, z: 75.28855}
+  OldRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
+  OldPosition: {x: 2.86, y: 8.06, z: -5.354}
 --- !u!114 &114961703817148884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -514,7 +514,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135426110894152868
 SphereCollider:

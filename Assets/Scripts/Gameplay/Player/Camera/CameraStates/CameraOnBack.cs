@@ -89,7 +89,7 @@ public class CameraOnBack : CameraStates
     {
         m_lookAngle += x * m_variableCam.m_turnSpeed;
         m_tiltAngle -= y * m_variableCam.m_turnSpeed;
-        m_tiltAngle = Mathf.Clamp(m_tiltAngle, -m_tiltMin, m_tiltMax);
+        m_tiltAngle = Mathf.Clamp(m_tiltAngle, m_tiltMin, m_tiltMax);
 
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
         Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);

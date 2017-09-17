@@ -193,7 +193,6 @@ public class ThrowableObject : MonoBehaviour
 			if(transform.tag != "EnemySnail")
 				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
         }
-        //int floor = LayerMask.NameToLayer("Floor");
         int water = LayerMask.NameToLayer("HarmfulTerrain");
         int player = LayerMask.NameToLayer("Player");
         int enemy = LayerMask.NameToLayer("Enemy");

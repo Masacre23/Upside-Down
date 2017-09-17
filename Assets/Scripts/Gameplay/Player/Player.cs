@@ -91,7 +91,6 @@ public class Player : Character
     float m_runSpeed;
 
     public SoundEffects m_soundEffects;
-    private bool m_InIce;
 
     public override void Awake()
     {
@@ -322,18 +321,6 @@ public class Player : Character
                 m_lastMovement = movement;
                 m_timeSliding = 0.0f;
             }
-            else
-            {
-                m_timeSliding += timeStep;
-                if(m_tagGround == "Ice" && m_currentState == m_grounded)
-                {
-                    m_rigidBody.MovePosition(transform.position + m_lastMovement * m_slideSpeed * timeStep);
-                    if (m_timeSliding >= m_timeSlide)
-                        m_lastMovement = Vector3.zero;
-                }
-                else
-                    m_lastMovement = Vector3.zero;
-            }
         }
     }
 
@@ -563,32 +550,6 @@ public class Player : Character
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        int terrain = LayerMask.NameToLayer("Floor");
-        if (collision.collider.gameObject.layer == terrain)
-        {
-            //if(collision.collider.tag == "Ice")
-            //{
-                m_InIce = true;
-            //}else
-            //{
-            //    m_InIce = false;
-            //} TODO: Esteban.
-        }
-
-		/* ENEMY STUFF
-		* 
-		* We detect wich collider of the enemy are we hitting
-		*
-		*/
-		/*if (collision.collider.tag == "EnemyAuxCollider") 
-		{
-			collision.collider.transform.parent.transform.parent.GetComponent<Enemy> ().m_activeCollider = collision.collider;
-		}*/
-
-    }
-
     private void ManageInput()
     {
         if (!m_negatePlayerInput && !m_paused)
@@ -646,10 +607,7 @@ public class Player : Character
     public void PlayFootStep(string right)
     {
         string footstep = right == "Right" ? "FootStepRight" : "FootStepLeft";
-        if (!m_InIce)
-        {
-            footstep += "Land";
-        }
+
         if (m_soundEffects != null)
             m_soundEffects.PlaySound(footstep);
     }
