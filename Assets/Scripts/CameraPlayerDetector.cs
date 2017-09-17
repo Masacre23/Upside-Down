@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class CameraPlayerDetector : MonoBehaviour
 {
+    public GameObject m_target;
     public bool m_playerInside { get; private set; }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !m_playerInside)
+        if (other.gameObject == m_target)
         {
             m_playerInside = true;
         }
@@ -16,7 +17,7 @@ public class CameraPlayerDetector : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player" && m_playerInside)
+        if (other.gameObject == m_target)
         {
             m_playerInside = false;
         }

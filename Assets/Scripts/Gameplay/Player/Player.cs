@@ -228,12 +228,7 @@ public class Player : Character
     {
         if (m_camController)
         {
-            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, Time.deltaTime);
-            if (m_rotationFollowPlayer)
-            {
-                //m_camController.FollowTarget(Time.deltaTime);
-                m_camController.RotateOnTarget(Time.deltaTime);
-            }
+            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, m_rotationFollowPlayer, Time.deltaTime);
         }
 
         ResetInput();

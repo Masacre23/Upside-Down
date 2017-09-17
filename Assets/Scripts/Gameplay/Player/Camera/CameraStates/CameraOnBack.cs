@@ -92,7 +92,7 @@ public class CameraOnBack : CameraStates
         m_tiltAngle = Mathf.Clamp(m_tiltAngle, m_tiltMin, m_tiltMax);
 
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
-        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
+        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, 0.0f, 0.0f);
 
         m_variableCam.m_pivot.localRotation = targetRotation * tiltRotation;
     }
@@ -103,7 +103,7 @@ public class CameraOnBack : CameraStates
         m_tiltAngle = 0.0f;
 
         Quaternion targetRotation = Quaternion.Euler(m_lookAngle * Vector3.up);
-        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, m_variableCam.m_pivotEulers.y, m_variableCam.m_pivotEulers.z);
+        Quaternion tiltRotation = Quaternion.Euler(m_tiltAngle, 0.0f, 0.0f);
 
         m_variableCam.m_pivot.localRotation = targetRotation * tiltRotation;
     }

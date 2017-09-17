@@ -37,7 +37,7 @@ public class CameraTransiting : CameraStates {
     {
         bool ret = false;
 
-        m_variableCam.FollowTarget(timeStep);
+//        m_variableCam.FollowTarget(timeStep);
 
         if (m_changeWithoutTransition)
         {

@@ -14398,7 +14398,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 182540.12
+  Age: 183317.62
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -16458,6 +16458,26 @@ Prefab:
       propertyPath: m_RootOrder
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114884662050226512, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
+      propertyPath: m_target
+      value: 
+      objectReference: {fileID: 780082996}
+    - target: {fileID: 114844633261691534, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
+      propertyPath: m_target
+      value: 
+      objectReference: {fileID: 780082996}
+    - target: {fileID: 114483449078654096, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
+      propertyPath: m_player
+      value: 
+      objectReference: {fileID: 780083014}
+    - target: {fileID: 114483449078654096, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
+      propertyPath: m_model
+      value: 
+      objectReference: {fileID: 2133263121}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 938e2c1b67b316144894edcd05232d24, type: 2}
   m_IsPrefabParent: 0
@@ -16529,6 +16549,16 @@ Prefab:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 82004322038483020, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[1].time
+      value: 0.49069768
+      objectReference: {fileID: 0}
+    - target: {fileID: 82004322038483020, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e9185f4b76eb9c24c8fae414ee5d9b36, type: 2}
   m_IsPrefabParent: 0
@@ -16552,6 +16582,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1315140804175326, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
     type: 2}
   m_PrefabInternal: {fileID: 780082992}
+--- !u!114 &780083014 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114513896997388278, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
+    type: 2}
+  m_PrefabInternal: {fileID: 780082992}
+  m_Script: {fileID: 11500000, guid: 58a6701dd0cfcfb42aa24db584c8dbb1, type: 3}
 --- !u!1 &783571109
 GameObject:
   m_ObjectHideFlags: 0
@@ -43208,6 +43244,11 @@ Transform:
   m_PrefabParentObject: {fileID: 4009118041974382, guid: 846f02a4565ef5c4f86c99baad9fde28,
     type: 2}
   m_PrefabInternal: {fileID: 2131381124}
+--- !u!4 &2133263121 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4257343554027230, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
+    type: 2}
+  m_PrefabInternal: {fileID: 780082992}
 --- !u!1001 &2136808526
 Prefab:
   m_ObjectHideFlags: 0
