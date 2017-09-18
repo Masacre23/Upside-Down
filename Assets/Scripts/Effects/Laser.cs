@@ -35,7 +35,7 @@ public class Laser : MonoBehaviour {
 			{
                 time += Time.deltaTime;
 				RaycastHit hit;
-				if (Physics.Raycast (transform.position, -transform.up, out hit, bossSceneManager? 20 : 4) && (time < maxTime || maxTime == 0)) 
+				if (Physics.Raycast (transform.position, -transform.up, out hit, bossSceneManager? 20 : 4) && (time < maxTime || maxTime == 0) && !bossHitted) 
 				{
 					if (!bossSceneManager) 
 					{

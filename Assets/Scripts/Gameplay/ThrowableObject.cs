@@ -13,7 +13,7 @@ public class ThrowableObject : MonoBehaviour
     public float m_chargingUpPivot = 0.0f;
     public float m_timeToRotate = 2.0f;
     public bool m_isLazer = false;
-    public bool m_stageTwo = false;
+    public bool m_bossLevel = false;
 
     GameObjectGravity m_objectGravity;
     Rigidbody m_rigidBody;
@@ -80,6 +80,13 @@ public class ThrowableObject : MonoBehaviour
             m_applyThrownForce = false;
             m_movingHorizontal = true;
         }
+		if (m_isLazer && m_isCarring) 
+		{
+			if (m_bossLevel) 
+			{
+				transform.forward = m_playerPicked.transform.GetChild (0).GetChild (0).forward;
+			}
+		}
     }
 
     //This function should be called when the object is thrown
@@ -128,7 +135,7 @@ public class ThrowableObject : MonoBehaviour
         }
         else if (m_isLazer)
         {
-            if (m_stageTwo)
+			if (m_bossLevel)
             {
                 transform.forward = player.transform.GetChild(0).GetChild(0).forward;
             }

@@ -6,11 +6,11 @@ public class BossSceneManager : MonoBehaviour {
 	public int phase = 0;
 	GameObject boss;
 	GameObject player;
-	int []sizes = {10, 5, 1};
+	float []sizes = {10, 5, 1, 0.5f};
 	bool scaling = false;
 	public GameObject basePlatform;
 	public GameObject pointReference;
-	int[] points = { 6, 16, 16};
+	int[] points = { 6, 16, 16, 16};
 	public GameObject[] scenes;
 	public bool activateCameras;
 	public int numScene;
@@ -40,6 +40,10 @@ public class BossSceneManager : MonoBehaviour {
 		{
 			scaling = true;
 			activateCameras = true;
+			if (phase < 2) 
+			{
+				player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = true;
+			}
 			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
 				pointReference.transform.position.y > points[phase] )) 
 			{
@@ -60,8 +64,23 @@ public class BossSceneManager : MonoBehaviour {
 				}
 				yield return 0;
 			}
-			laser.bossHitted = true;
-			//laser.transform.GetChild(1).gameObject.SetActive(false);
+			//if(phase != 2)
+				laser.bossHitted = true;
+			activateCameras = false;
+			player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = false;
+			switch (phase) 
+			{
+			case 1:
+				player.transform.GetChild (0).GetChild (0).transform.localRotation = Quaternion.Euler (0, 0, 0);
+				break;
+			case 2:
+				player.transform.GetChild (0).GetChild (0).transform.localRotation = Quaternion.Euler (5, 0, 0);
+				break;
+			default:
+				player.transform.GetChild (0).GetChild (0).transform.localRotation = Quaternion.Euler (-15, 0, 0);
+				break;
+			}
+
 			while (phase == 1 && basePlatform.transform.position.y < 9) 
 			{
 				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
@@ -77,7 +96,6 @@ public class BossSceneManager : MonoBehaviour {
 			phase++;
 			boss.GetComponent<Boss> ().m_phase = phase;
 			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
-			activateCameras = false;
 		}
 	}
 }
