@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 33371216270981998}
   - component: {fileID: 23110843897338314}
   - component: {fileID: 65084371267692674}
+  - component: {fileID: 135342208416650610}
   m_Layer: 0
   m_Name: PROP_IceTree
   m_TagString: Untagged
@@ -52,7 +53,7 @@ Transform:
   m_GameObject: {fileID: 1389940466495864}
   m_LocalRotation: {x: -0, y: 0.6655211, z: -0, w: 0.7463791}
   m_LocalPosition: {x: 3.7, y: 3.9629998, z: 5.665}
-  m_LocalScale: {x: 0.9000002, y: 0.9, z: 0.9000002}
+  m_LocalScale: {x: 0.90000033, y: 0.9, z: 0.90000033}
   m_Children:
   - {fileID: 4966035048377818}
   m_Father: {fileID: 0}
@@ -119,5 +120,17 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4643003, y: 2.0569, z: 1.4571003}
-  m_Center: {x: 0.09325003, y: 1.1410506, z: 0.073750004}
+  m_Size: {x: 0.4, y: 0.35, z: 0.4}
+  m_Center: {x: 0.05, y: 0.33, z: 0.06}
+--- !u!135 &135342208416650610
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1680768261830084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
+  m_Center: {x: 0.09325009, y: 1.1410506, z: 0.073749766}
