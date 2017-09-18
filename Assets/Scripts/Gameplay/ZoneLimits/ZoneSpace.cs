@@ -22,7 +22,6 @@ public class ZoneSpace : MonoBehaviour {
         {
             
             Player player = other.GetComponent<Player>();
-            Debug.Log("Player " + player.m_currentZone + "->" + this.name);
             if ( !player.m_currentZone || m_previousZones.Contains(player.m_currentZone) || player.m_currentZone == this)
             {
                 player.m_currentZone = this;

@@ -116,7 +116,6 @@ public class HideObjects : MonoBehaviour {
     {
         set
         {
-            Debug.Log("HideObject");
             m_hideObject = value;
         }
         get

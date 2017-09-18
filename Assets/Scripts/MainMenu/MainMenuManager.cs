@@ -77,7 +77,6 @@ public class MainMenuManager : MonoBehaviour {
 	}
 
 	public void PreesQuitButton(){
-		Debug.Log("Quit");
 		Application.Quit();
 	}
 
