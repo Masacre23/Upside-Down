@@ -5,20 +5,33 @@ using UnityEngine;
 public class BossSceneManager : MonoBehaviour {
 	public int phase = 0;
 	GameObject boss;
+	GameObject player;
 	int []sizes = {10, 5, 1};
 	bool scaling = false;
 	public GameObject basePlatform;
 	public GameObject pointReference;
 	int[] points = { 6, 16, 16};
+	public GameObject[] scenes;
+	public bool activateCameras;
+	public int numScene;
 
 	// Use this for initialization
 	void Start () {
 		boss = GameObject.Find ("Boss");
+		player = GameObject.Find ("Player");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (activateCameras && phase < 2) 
+		{
+			player.GetComponent<Player> ().m_paused = true;
+			scenes [numScene].SetActive (true);
+		} else 
+		{
+			player.GetComponent<Player> ().m_paused = false;
+			scenes [numScene].SetActive (false);
+		}
 	}
 
 	public IEnumerator ChangeBossScale(Laser laser)
@@ -26,6 +39,7 @@ public class BossSceneManager : MonoBehaviour {
 		if (!scaling) 
 		{
 			scaling = true;
+			activateCameras = true;
 			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
 				pointReference.transform.position.y > points[phase] )) 
 			{
@@ -63,6 +77,7 @@ public class BossSceneManager : MonoBehaviour {
 			phase++;
 			boss.GetComponent<Boss> ().m_phase = phase;
 			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
+			activateCameras = false;
 		}
 	}
 }

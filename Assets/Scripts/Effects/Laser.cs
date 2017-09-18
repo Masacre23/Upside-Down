@@ -19,7 +19,7 @@ public class Laser : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		bossSceneManager = GameObject.Find ("BossSceneManager");
 	}
 	
 	// Update is called once per frame
