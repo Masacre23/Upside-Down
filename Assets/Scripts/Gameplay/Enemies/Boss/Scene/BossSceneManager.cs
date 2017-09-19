@@ -42,6 +42,7 @@ public class BossSceneManager : MonoBehaviour {
 			activateCameras = true;
 			if (phase < 2) 
 			{
+				boss.GetComponent<Boss> ().Stun ();
 				player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = true;
 			}
 			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
@@ -93,6 +94,8 @@ public class BossSceneManager : MonoBehaviour {
 				yield return 0;
 			}*/
 			scaling = false;
+			if(phase < 2)
+				boss.GetComponent<Boss> ().Stun ();
 			phase++;
 			boss.GetComponent<Boss> ().m_phase = phase;
 			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);

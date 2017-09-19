@@ -6,6 +6,7 @@ public class Boss : MonoBehaviour {
 	public BossStates m_currentState;
 	[HideInInspector] public BossStates m_Idle;
 	[HideInInspector] public BossStates m_Attack;
+	[HideInInspector] public BossStates m_Stunned;
 
 	public Animator m_animator;
 	public int m_phase;
@@ -30,6 +31,10 @@ public class Boss : MonoBehaviour {
 		if (!m_Attack)
 			m_Attack = gameObject.AddComponent<BossAttack> ();
 
+		m_Stunned = gameObject.GetComponent <BossStunned> ();
+		if (!m_Stunned)
+			m_Stunned = gameObject.AddComponent<BossStunned> ();
+
 		m_currentState = m_Idle;
 	}
 
@@ -48,6 +53,16 @@ public class Boss : MonoBehaviour {
 			previousState.OnExit ();
 			m_currentState.OnEnter ();
 		}
+	}
+
+	public void Stun()
+	{
+		m_currentState.OnExit ();
+		if (m_currentState == m_Stunned)
+			m_currentState = m_Idle;
+		else
+			m_currentState = m_Stunned;
+		m_currentState.OnEnter ();
 	}
 
 	void OnCollisionEnter(Collision col)
