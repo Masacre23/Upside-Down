@@ -24,13 +24,17 @@ public class PlayerRespawn : MonoBehaviour
 			yield return null;
 		}
 
-        player.GetComponent<Collider>().enabled = true;
         player.transform.position = spawn.position;
 		player.transform.rotation = spawn.rotation;
 		player.transform.GetChild(0).transform.rotation = spawn.rotation;
         player.GetComponent<Player>().Restart();
         player.GetComponent<Rigidbody>().ResetInertiaTensor();
 
+        int m_playerLayer = LayerMask.NameToLayer("Player");
+        int m_terrainLayer = LayerMask.NameToLayer("Terrain");
+        int m_watterLayer = LayerMask.NameToLayer("HarmfulTerrain");
+        Physics.IgnoreLayerCollision(m_playerLayer, m_terrainLayer, false);
+        //Physics.IgnoreLayerCollision(m_playerLayer, m_watterLayer, false);
 
         for (float t = fadeTime; t > 0.0f;) 
 		{
