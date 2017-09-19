@@ -316,6 +316,7 @@ MonoBehaviour:
   m_autoReturnCam: 0
   m_maxReturnTime: 2
   m_player: {fileID: 0}
+  m_followingPoint: {fileID: 0}
   m_model: {fileID: 0}
   m_pivot: {fileID: 4597633026657924}
   m_cam: {fileID: 4654590810834026}
@@ -346,26 +347,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
-  m_followingEndTime: 0.5
-  m_followingEndSpeed:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0.9999656
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 0.0058481693
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
-  m_followingState: 3
+  m_followingState: 2
 --- !u!114 &114503214664828404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -594,7 +576,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.8
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!135 &135426110894152868
 SphereCollider:
@@ -618,5 +600,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.05
   m_Center: {x: 0, y: 0, z: 0}

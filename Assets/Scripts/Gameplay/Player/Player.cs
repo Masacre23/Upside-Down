@@ -179,6 +179,8 @@ public class Player : Character
 
         m_soundEffects = GetComponent<SoundEffects>();
 
+        m_camController.SetCamOnPlayer();
+
         base.Restart();
     }
 

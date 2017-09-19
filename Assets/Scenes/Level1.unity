@@ -2308,6 +2308,10 @@ Prefab:
       propertyPath: m_MaxParticleSize
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 1457497375993180, guid: 930439b2767adb145ba903fb935ef5e6, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 930439b2767adb145ba903fb935ef5e6, type: 2}
   m_IsPrefabParent: 0
@@ -14543,7 +14547,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 184262.8
+  Age: 184498.39
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -16569,6 +16573,11 @@ Prefab:
       objectReference: {fileID: 780083014}
     - target: {fileID: 114483449078654096, guid: 938e2c1b67b316144894edcd05232d24,
         type: 2}
+      propertyPath: m_followingPoint
+      value: 
+      objectReference: {fileID: 780083000}
+    - target: {fileID: 114483449078654096, guid: 938e2c1b67b316144894edcd05232d24,
+        type: 2}
       propertyPath: m_model
       value: 
       objectReference: {fileID: 2133263121}
@@ -16674,6 +16683,11 @@ GameObject:
 --- !u!1 &780082996 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1315140804175326, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
+    type: 2}
+  m_PrefabInternal: {fileID: 780082992}
+--- !u!4 &780083000 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4468334073049180, guid: e9185f4b76eb9c24c8fae414ee5d9b36,
     type: 2}
   m_PrefabInternal: {fileID: 780082992}
 --- !u!114 &780083014 stripped
@@ -18697,6 +18711,7 @@ Transform:
   - {fileID: 355779800}
   - {fileID: 428302746}
   - {fileID: 2065022845}
+  - {fileID: 1576907735}
   - {fileID: 947267261}
   - {fileID: 1822379782}
   - {fileID: 41842247}
@@ -18704,7 +18719,6 @@ Transform:
   - {fileID: 2137392644}
   - {fileID: 450073253}
   - {fileID: 398317206}
-  - {fileID: 1576907735}
   - {fileID: 101607135}
   - {fileID: 1422986564}
   - {fileID: 2024928568}
@@ -32932,7 +32946,7 @@ Transform:
   m_LocalScale: {x: 0.15395007, y: 0.15395002, z: 0.15395002}
   m_Children: []
   m_Father: {fileID: 854322164}
-  m_RootOrder: 35
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: -366.253, y: 487.185, z: 0.647}
 --- !u!1001 &1577532018
 Prefab:

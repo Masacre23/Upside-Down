@@ -14,6 +14,7 @@ public class VariableCam : MonoBehaviour
     public Ray m_camRay;
 
     public Player m_player;
+    public Transform m_followingPoint;
     public Transform m_model;
     public Transform m_pivot;
     public Transform m_cam;
@@ -31,10 +32,7 @@ public class VariableCam : MonoBehaviour
     public float m_followingMaxSpeed = 1f;
     public float m_followingBeginTime = 1.0f;
     public AnimationCurve m_followingBeginSpeed;
-    public float m_followingEndTime = 1.0f;
-    public AnimationCurve m_followingEndSpeed;
     float m_followingTime = 0.0f;
-    float m_lastDistance = 0.0f;
 
     public bool m_followPlayer { set; get; }
 
@@ -42,8 +40,8 @@ public class VariableCam : MonoBehaviour
     {
         STARTING,
         FOLLOWING,
-        ENDING,
-        OFF
+        OFF,
+        AUTO
     }
 
     public FollowingPlayerState m_followingState = FollowingPlayerState.OFF;
@@ -74,15 +72,6 @@ public class VariableCam : MonoBehaviour
 
     public void OnUpdate(float axisX, float axisY, bool moveCamBehind, bool rotateOnPlayer, float deltaTime)
     {
-        //if (m_followPlayer)
-        //{
-        //    FollowTarget(deltaTime);
-        //    m_followPlayer = !CameraHasReachedPlayer();
-        //}
-
-        //if (!m_followPlayer && !m_playerDetector.m_playerInside)
-        //    m_followPlayer = true;
-
         FollowingTarget(deltaTime);
 
         CameraStates previousState = m_currentState;
@@ -111,59 +100,30 @@ public class VariableCam : MonoBehaviour
                     float perc = m_followingTime / m_followingBeginTime;
                     if (perc > 1.0f)
                     {
-                        transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, deltaTime * m_followingMaxSpeed);
+                        transform.position = Vector3.MoveTowards(transform.position, m_followingPoint.position, deltaTime * m_followingMaxSpeed);
                         m_followingState = FollowingPlayerState.FOLLOWING;
                     }
                     else
                     {
                         float currentSpeed = m_followingBeginSpeed.Evaluate(perc) * m_followingMaxSpeed;
-                        transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, deltaTime * currentSpeed);
+                        transform.position = Vector3.MoveTowards(transform.position, m_followingPoint.position, deltaTime * currentSpeed);
                     }
 
-                    if (m_playerOuterDetector.m_playerInside)
+                    if (m_playerInnerDetector.m_playerInside)
                     {
-                        m_followingTime = 0.0f;
-                        m_lastDistance = (m_player.transform.position - transform.position).sqrMagnitude;
-                        m_followingState = FollowingPlayerState.ENDING;
+                        m_followingState = FollowingPlayerState.OFF;
                     }
                     break;
                 }
             case FollowingPlayerState.FOLLOWING:
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, deltaTime * m_followingMaxSpeed);
-                    if (m_playerOuterDetector.m_playerInside)
+                    transform.position = Vector3.Lerp(transform.position, m_followingPoint.position, deltaTime * m_followingMaxSpeed);
+                    if (m_playerInnerDetector.m_playerInside && CameraHasReachedPlayer())
                     {
-                        m_followingTime = 0.0f;
-                        m_lastDistance = (m_player.transform.position - transform.position).sqrMagnitude;
-                        m_followingState = FollowingPlayerState.ENDING;
+                        m_followingState = FollowingPlayerState.OFF;
                     }
                     break;
                 }
-            case FollowingPlayerState.ENDING:
-                {
-                    m_followingTime += deltaTime;
-                    float perc = m_followingTime / m_followingEndTime;
-                    if (perc > 1.0f)
-                    {
-                        float currentSpeed = m_followingEndSpeed.Evaluate(1.0f) * m_followingMaxSpeed;
-                        transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, deltaTime * currentSpeed);
-                        m_followingState = FollowingPlayerState.OFF;
-                    }
-                    else
-                    {
-                        float currentSpeed = m_followingEndSpeed.Evaluate(perc) * m_followingMaxSpeed;
-                        transform.position = Vector3.MoveTowards(transform.position, m_player.transform.position, deltaTime * currentSpeed);
-                    }
-
-                    float thisDistance = (m_player.transform.position - transform.position).sqrMagnitude;
-                    if (!m_playerOuterDetector.m_playerInside)
-                    {
-                        m_followingTime = 0.0f;
-                        m_followingState = FollowingPlayerState.STARTING;
-                    }
-                    m_lastDistance = thisDistance;
-                }
-                break;
             case FollowingPlayerState.OFF:
                 {
                     if (!m_playerOuterDetector.m_playerInside)
@@ -178,12 +138,17 @@ public class VariableCam : MonoBehaviour
 
     private void FollowTarget(float deltaTime)
     {
-        transform.position = Vector3.Lerp(transform.position, m_player.transform.position, deltaTime * m_followingMaxSpeed);
+        transform.position = Vector3.Lerp(transform.position, m_followingPoint.position, deltaTime * m_followingMaxSpeed);
     }
 
     private bool CameraHasReachedPlayer()
     {
-        return Vector3.SqrMagnitude(transform.position - m_player.transform.position) < 0.1;
+        return Vector3.SqrMagnitude(transform.position - m_followingPoint.position) < 0.001;
+    }
+
+    public void SetCamOnPlayer()
+    {
+        transform.position = m_followingPoint.position;
     }
 
     public void RotateOnTarget(float deltaTime)
