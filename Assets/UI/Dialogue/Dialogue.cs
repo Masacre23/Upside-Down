@@ -29,6 +29,7 @@ public class Dialogue : MonoBehaviour
 
     Player playerManager;
 	public GameObject startEvent;
+	public GameObject endEvent;
 
     // Use this for initialization
 	public void Start()
@@ -115,6 +116,8 @@ public class Dialogue : MonoBehaviour
 
         playerManager.m_negatePlayerInput = false;
 		this.gameObject.transform.parent.gameObject.SetActive(false);
+		if (endEvent)
+			endEvent.SetActive (true);
     }
 
     private IEnumerator DisplayString(string stringToDisplay)

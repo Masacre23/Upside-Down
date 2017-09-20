@@ -32,7 +32,7 @@ public class DialogueZone : MonoBehaviour
 	{
 		if (firstTimeEnabled)
 			firstTimeEnabled = false;
-		else
+		else if(m_buttonA)
 			m_buttonA.SetActive (true);
 	}
     // Update is called once per frame
@@ -40,13 +40,13 @@ public class DialogueZone : MonoBehaviour
     {
 		if (!m_alreadyPlayed && m_playerInside && !m_playerManager.m_paused && (Input.GetButtonDown(m_inputNameButton) || instantPlay))
         {
-			
 			m_dialogue.SetActive (true);
 			if (!firstTime) 
 			{
 				m_dialogue.GetComponentInChildren<Dialogue> ().Start ();
 			}
-			m_buttonA.SetActive (false);
+			if(m_buttonA)
+				m_buttonA.SetActive (false);
 			m_playerManager.m_negatePlayerInput = true;
 			m_alreadyPlayed = true;
 			firstTime = false;
@@ -80,7 +80,7 @@ public class DialogueZone : MonoBehaviour
 		//if (other.tag == "Player" && !m_alreadyPlayed) 
 		if (other.tag == "Player")
 		{
-			if(!instantPlay)
+			if(!instantPlay && m_buttonA)
 				m_buttonA.SetActive (true);
 			m_playerInside = true;
 		}
@@ -91,7 +91,8 @@ public class DialogueZone : MonoBehaviour
 		//if (other.tag == "Player" && !m_alreadyPlayed) 
 		if (other.tag == "Player")
 		{
-			m_buttonA.SetActive (false);
+			if(m_buttonA)
+				m_buttonA.SetActive (false);
 			m_playerInside = false;
 			m_alreadyPlayed = false;
 		}

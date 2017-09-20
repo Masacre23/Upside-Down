@@ -27,13 +27,18 @@ public class SplineInterpolator : MonoBehaviour
 
 	OnEndCallback mOnEndCallback;
 
-
+	public bool desactivateWhenFinish = false;
+	public GameObject endEvent;
 
 	void Awake()
 	{
 		Reset();
 	}
 
+	void Start()
+	{
+		player.GetComponent<Player> ().m_negatePlayerInput = true;;
+	}
 	public void StartInterpolation(OnEndCallback endCallback, bool bRotations, eWrapMode mode)
 	{
 		if (mState != "Reset")
@@ -139,29 +144,15 @@ public class SplineInterpolator : MonoBehaviour
 	{
 		if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
 			return;
-        
-        float distP1_P2 = Vector3.Distance(mNodes[mCurrentIdx].Point, mNodes[mCurrentIdx + 1].Point);
-        Debug.DrawRay(mNodes[mCurrentIdx].Point, -(mNodes[mCurrentIdx].Point - mNodes[mCurrentIdx + 1].Point).normalized * 25, Color.green);
-        float distPlayer_P2 = Vector3.Distance(player.transform.position, mNodes[mCurrentIdx + 1].Point);
-        Debug.DrawRay(player.transform.position, -(player.transform.position - mNodes[mCurrentIdx + 1].Point).normalized * 25, Color.green);
-        float distPlayer_P1 = Vector3.Distance(player.transform.position, mNodes[mCurrentIdx].Point);
-        Debug.DrawRay(player.transform.position, -(player.transform.position - mNodes[mCurrentIdx].Point).normalized * 25, Color.green);
-        float s = (distP1_P2 + distPlayer_P2 + distPlayer_P1) / 2;
-        float h = (2 / distP1_P2) * Mathf.Sqrt(s * (s - distPlayer_P2) * (s - distP1_P2) * (s - distPlayer_P1));
-        float finalDist = Mathf.Sqrt(distPlayer_P1 * distPlayer_P1 - h * h); //Pitagoras
 
-        float playerPercentage = finalDist / distP1_P2;
+		mCurrentTime += Time.deltaTime;
 
-		mCurrentTime = mNodes [mCurrentIdx + 1].Time * playerPercentage;
-
-        // We advance to next point in the path
-        //if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time || playerPercentage >= 0.9f)
-        if (playerPercentage >= 0.9f)
-        {
+		// We advance to next point in the path
+		if (mCurrentTime >= mNodes[mCurrentIdx + 1].Time)
+		{
 			if (mCurrentIdx < mNodes.Count - 3)
 			{
 				mCurrentIdx++;
-                return;
 			}
 			else
 			{
@@ -178,6 +169,14 @@ public class SplineInterpolator : MonoBehaviour
 					// We call back to inform that we are ended
 					if (mOnEndCallback != null)
 						mOnEndCallback();
+
+					//player.GetComponent<Player> ().m_negatePlayerInput = false;
+
+					if (endEvent)
+						endEvent.SetActive (true);
+					
+					if (desactivateWhenFinish)
+						gameObject.SetActive (false);
 				}
 				else
 				{
@@ -186,30 +185,21 @@ public class SplineInterpolator : MonoBehaviour
 				}
 			}
 		}
-        else if(playerPercentage <= 0.1f)
-        {
-            mCurrentIdx--;
-            return;
-        }
 
 		if (mState != "Stopped")
 		{
 			// Calculates the t param between 0 and 1
 			float param = (mCurrentTime - mNodes[mCurrentIdx].Time) / (mNodes[mCurrentIdx + 1].Time - mNodes[mCurrentIdx].Time);
-            param = playerPercentage;
+
 			// Smooth the param
 			param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
-            Debug.Log(param);
-			//transform.position = GetHermiteInternal(mCurrentIdx, param);
-            Vector3 desiredPosition = GetHermiteInternal(mCurrentIdx, param);
-            transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * speed);
 
-            if (mRotations)
+			transform.position = GetHermiteInternal(mCurrentIdx, param);
+
+			if (mRotations)
 			{
-				//transform.rotation = GetSquad(mCurrentIdx, param);
-                Quaternion desiredRotation = GetSquad(mCurrentIdx, param);
-                transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * speed);
-            }
+				transform.rotation = GetSquad(mCurrentIdx, param);
+			}
 		}
 	}
 
