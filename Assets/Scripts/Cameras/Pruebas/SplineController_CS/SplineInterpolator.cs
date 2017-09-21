@@ -29,6 +29,11 @@ public class SplineInterpolator : MonoBehaviour
 
 	public bool desactivateWhenFinish = false;
 	public GameObject endEvent;
+	public float timePaused;
+	public GameObject player;
+	public bool noReset;
+	float mCurrentTime;
+	int mCurrentIdx = 1;
 
 	void Awake()
 	{
@@ -37,7 +42,8 @@ public class SplineInterpolator : MonoBehaviour
 
 	void Start()
 	{
-		player.GetComponent<Player> ().m_negatePlayerInput = true;;
+		if(player)
+			player.GetComponent<Player> ().m_negatePlayerInput = true;;
 	}
 	public void StartInterpolation(OnEndCallback endCallback, bool bRotations, eWrapMode mode)
 	{
@@ -53,11 +59,11 @@ public class SplineInterpolator : MonoBehaviour
 
 	public void Reset()
 	{
-		mNodes.Clear();
+		//mNodes.Clear();
 		mState = "Reset";
 		mCurrentIdx = 1;
 		mCurrentTime = 0;
-		mRotations = false;
+		//mRotations = false;
 		mEndPointsMode = eEndPointsMode.AUTO;
 	}
 
@@ -135,11 +141,6 @@ public class SplineInterpolator : MonoBehaviour
 		mNodes.Add(lastNode);
 	}
 
-	float mCurrentTime;
-	int mCurrentIdx = 1;
-	public GameObject player;
-	public float speed = 1;
-
 	void Update()
 	{
 		if (mState == "Reset" || mState == "Stopped" || mNodes.Count < 4)
@@ -171,12 +172,11 @@ public class SplineInterpolator : MonoBehaviour
 						mOnEndCallback();
 
 					//player.GetComponent<Player> ().m_negatePlayerInput = false;
-
-					if (endEvent)
-						endEvent.SetActive (true);
 					
-					if (desactivateWhenFinish)
-						gameObject.SetActive (false);
+					if (desactivateWhenFinish) 
+					{
+						StartCoroutine (Wait ());
+					}
 				}
 				else
 				{
@@ -201,6 +201,17 @@ public class SplineInterpolator : MonoBehaviour
 				transform.rotation = GetSquad(mCurrentIdx, param);
 			}
 		}
+	}
+
+	IEnumerator Wait()
+	{
+		yield return new WaitForSeconds (timePaused);
+		if (endEvent)
+			endEvent.SetActive (true);
+		//if(!noReset)
+		gameObject.SetActive (false);
+		Reset ();
+		StartInterpolation (mOnEndCallback, bRotations: true, mode:eWrapMode.ONCE);
 	}
 
 	Quaternion GetSquad(int idxFirstPoint, float t)

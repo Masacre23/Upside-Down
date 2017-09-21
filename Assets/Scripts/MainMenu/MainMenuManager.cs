@@ -13,7 +13,7 @@ public class MainMenuManager : MonoBehaviour {
 
     private GameObject m_selected;
     private bool showLogo = true;
-    private bool waitAnyKey = true;
+    private bool waitAnyKey = false;
     private float time = 0.0f;
 
     private static bool firstTime = true;
@@ -26,7 +26,7 @@ public class MainMenuManager : MonoBehaviour {
         m_canvasMenu.SetActive(!showLogo);
         m_panelButtons.SetActive(!showLogo);
         waitAnyKey = firstTime;
-        m_panelAnyKey.SetActive(waitAnyKey);
+        //m_panelAnyKey.SetActive(waitAnyKey);
         firstTime = false;
 		async = Application.LoadLevelAsync (Scenes.Level1);
 		async.allowSceneActivation = false;
@@ -37,13 +37,22 @@ public class MainMenuManager : MonoBehaviour {
         if (showLogo)
         {
             time += Time.deltaTime;
-            if(time >= 3.0f)
-            {
-                m_eventSysterm.SetSelectedGameObject(null);
-                showLogo = false;
-                m_canvasLogo.SetActive(false);
-                m_canvasMenu.SetActive(true);
-            }
+			if (time >= 5.0f)
+			{
+				m_canvasLogo.SetActive (false);
+			}
+
+			if (time >= 21.0f) 
+			{
+				m_canvasMenu.SetActive(true);
+			}
+
+			if (time >= 23.0f) 
+			{
+				m_panelAnyKey.SetActive (true);
+				m_eventSysterm.SetSelectedGameObject(null);
+				showLogo = false;
+			}
         }
         else if (waitAnyKey)
         {

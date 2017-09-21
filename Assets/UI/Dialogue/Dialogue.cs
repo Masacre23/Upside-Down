@@ -10,6 +10,7 @@ public class Dialogue : MonoBehaviour
 
 	public int bossEvent = -1; //if -1 means no event
     public string[] DialogueStrings;
+	public string[] DialogueStringsES;
 	public int[] indexCameras;
 	public Camera[] DialogueCamera;
 	public bool activeCameras = false;
@@ -31,6 +32,8 @@ public class Dialogue : MonoBehaviour
 	public GameObject startEvent;
 	public GameObject endEvent;
 
+	bool spanish;
+
     // Use this for initialization
 	public void Start()
 	{
@@ -48,6 +51,8 @@ public class Dialogue : MonoBehaviour
 
 		if (startEvent)
 			startEvent.SetActive (true);
+
+		spanish = GameObject.Find ("Data").GetComponent<Data> ().spanish;
 	}
 		
 	// Update is called once per frame
@@ -82,7 +87,10 @@ public class Dialogue : MonoBehaviour
 						GameObject.Find ("Boss").GetComponent<BossScene> ().enabled = true;
 				}
 
-                StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
+				if(!spanish)
+                	StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
+				else
+					StartCoroutine(DisplayString(DialogueStringsES[currentDialogueIndex++]));
 
                 if (currentDialogueIndex >= dialogueLength)
                 {
