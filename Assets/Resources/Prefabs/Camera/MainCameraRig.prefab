@@ -168,8 +168,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222552522042562}
-  m_LocalRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
-  m_LocalPosition: {x: 2.86, y: 8.06, z: -5.354}
+  m_LocalRotation: {x: -0.002898028, y: 0.93108696, z: -0.06853, w: 0.35829094}
+  m_LocalPosition: {x: 24.38, y: 19.94, z: 2.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4597633026657924}
@@ -177,7 +177,7 @@ Transform:
   - {fileID: 4251431659902150}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -214.006, y: -557.829, z: 181.706}
+  m_LocalEulerAnglesHint: {x: -187.212, y: -402.293, z: 176.851}
 --- !u!20 &20463806256330170
 Camera:
   m_ObjectHideFlags: 1
@@ -196,7 +196,7 @@ Camera:
     height: 1
   near clip plane: 0.02
   far clip plane: 400
-  field of view: 60
+  field of view: 20
   orthographic: 0
   orthographic size: 100
   m_Depth: -1
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_defaultTiltAngle: 45
   m_tiltMax: 60
   m_tiltMin: 0
-  m_camPosition: {x: 0, y: 0.4, z: -3.95}
+  m_camPosition: {x: 0, y: 1, z: -11.85}
   m_transitionToBackTime: 0.5
   m_savedPivotQuaternion: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &114508691747097534
@@ -493,15 +493,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 20463806256330170}
-  RollAngle: -29.395054
-  RollQuataternion: {x: 0, y: 0, z: -0.2537162, w: 0.9672787}
+  RollAngle: -11.128208
+  RollQuataternion: {x: 0, y: 0, z: -0.09695937, w: 0.9952883}
   RollMatrix:
-    e00: 0.8712562
-    e01: 0.49082857
+    e00: 0.9811978
+    e01: 0.19300506
     e02: 0
     e03: 0
-    e10: -0.49082857
-    e11: 0.8712562
+    e10: -0.19300506
+    e11: 0.9811978
     e12: -0
     e13: 0
     e20: -0
@@ -514,8 +514,8 @@ MonoBehaviour:
     e33: 1
   DeltaPosition: {x: 0, y: 0, z: 0}
   Velocity: {x: 0, y: 0, z: 0}
-  OldRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
-  OldPosition: {x: 2.86, y: 8.06, z: -5.354}
+  OldRotation: {x: -0.002898028, y: 0.93108696, z: -0.06853, w: 0.35829094}
+  OldPosition: {x: 24.38, y: 19.94, z: 2.04}
 --- !u!114 &114961703817148884
 MonoBehaviour:
   m_ObjectHideFlags: 1
