@@ -34,16 +34,20 @@ public class SplineInterpolator : MonoBehaviour
 	public bool noReset;
 	float mCurrentTime;
 	int mCurrentIdx = 1;
+	Vector3 startPos;
+	Quaternion startRot;
 
 	void Awake()
 	{
+		startPos = transform.position;
+		startRot = transform.rotation;
 		Reset();
 	}
 
 	void Start()
 	{
 		if(player)
-			player.GetComponent<Player> ().m_negatePlayerInput = true;;
+			player.GetComponent<Player> ().m_negatePlayerInput = true;
 	}
 	public void StartInterpolation(OnEndCallback endCallback, bool bRotations, eWrapMode mode)
 	{
@@ -63,8 +67,10 @@ public class SplineInterpolator : MonoBehaviour
 		mState = "Reset";
 		mCurrentIdx = 1;
 		mCurrentTime = 0;
-		//mRotations = false;
+		mRotations = false;
 		mEndPointsMode = eEndPointsMode.AUTO;
+		transform.position = startPos;
+		transform.rotation = startRot;
 	}
 
 	public void AddPoint(Vector3 pos, Quaternion quat, float timeInSeconds, Vector2 easeInOut)
@@ -193,12 +199,14 @@ public class SplineInterpolator : MonoBehaviour
 
 			// Smooth the param
 			param = MathUtils.Ease(param, mNodes[mCurrentIdx].EaseIO.x, mNodes[mCurrentIdx].EaseIO.y);
-
-			transform.position = GetHermiteInternal(mCurrentIdx, param);
-
-			if (mRotations)
+			Vector3 pos = GetHermiteInternal (mCurrentIdx, param);
+			if (!float.IsNaN (pos.x) && !float.IsNaN (pos.y) && !float.IsNaN (pos.z)) 
 			{
-				transform.rotation = GetSquad(mCurrentIdx, param);
+				transform.position = pos;
+
+				if (mRotations) {
+					transform.rotation = GetSquad (mCurrentIdx, param);
+				}
 			}
 		}
 	}
