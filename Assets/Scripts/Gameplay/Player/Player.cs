@@ -161,6 +161,8 @@ public class Player : Character
         m_runSpeed = 2 * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
 
+        m_camController.SetCamOnPlayer();
+
         m_jumpOnEnemy = false;
     }
 

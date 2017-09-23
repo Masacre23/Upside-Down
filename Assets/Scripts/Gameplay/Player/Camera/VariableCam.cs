@@ -136,11 +136,6 @@ public class VariableCam : MonoBehaviour
         }
     }
 
-    private void FollowTarget(float deltaTime)
-    {
-        transform.position = Vector3.Lerp(transform.position, m_followingPoint.position, deltaTime * m_followingMaxSpeed);
-    }
-
     private bool CameraHasReachedPlayer()
     {
         return Vector3.SqrMagnitude(transform.position - m_followingPoint.position) < 0.001;
@@ -149,12 +144,33 @@ public class VariableCam : MonoBehaviour
     public void SetCamOnPlayer()
     {
         transform.position = m_followingPoint.position;
+        if (m_currentState != m_onBack)
+        {
+            m_currentState.OnExit();
+            m_currentState = m_onBack;
+            m_currentState.OnEnter();
+        }
+        ((CameraOnBack)m_onBack).MoveCamBehind();
     }
 
     public void RotateOnTarget(float deltaTime)
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, m_player.transform.rotation, deltaTime * m_returnSpeed);
     } 
+
+    public void SetCameraOnBackLookingAtTarget(Transform orientation, float transitionTime = 0.0f)
+    {
+        CameraTransiting transitingCam = (CameraTransiting)m_transit;
+        transitingCam.ResetTime();
+
+        Quaternion lookRotation = orientation.localRotation;
+        Vector3 eulers = m_pivot.transform.localRotation.eulerAngles;
+        Quaternion finalRotation = lookRotation * Quaternion.Euler(eulers.x, 0.0f, 0.0f);
+
+        CameraOnBack onBack = (CameraOnBack)m_onBack;
+        transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, onBack.m_pivotPosition, Quaternion.identity, finalRotation, true, transitionTime);
+        m_currentState.EnableCameraChange();
+    }
 
     //This function creates a transition from current camera to onBack camera
     public void SetCameraOnBack(float transitionTime = 0.0f)

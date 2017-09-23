@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 135561825657606898}
   - component: {fileID: 114844633261691534}
   m_Layer: 15
-  m_Name: "PlayerInnerDetector\xB4"
+  m_Name: PlayerInnerDetector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,8 +168,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222552522042562}
-  m_LocalRotation: {x: -0.002898028, y: 0.93108696, z: -0.06853, w: 0.35829094}
-  m_LocalPosition: {x: 24.38, y: 19.94, z: 2.04}
+  m_LocalRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
+  m_LocalPosition: {x: 2.86, y: 8.06, z: -5.354}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4597633026657924}
@@ -196,7 +196,7 @@ Camera:
     height: 1
   near clip plane: 0.02
   far clip plane: 400
-  field of view: 20
+  field of view: 60
   orthographic: 0
   orthographic size: 100
   m_Depth: -1
@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d3f8750b942ae6408bece8cef007b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_turnSpeed: 6
+  m_turnSpeed: 3
   m_returnSpeed: 5
   m_autoReturnCam: 0
   m_maxReturnTime: 2
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_cameraProtection: {fileID: 0}
   m_playerInnerDetector: {fileID: 114844633261691534}
   m_playerOuterDetector: {fileID: 114884662050226512}
-  m_followingMaxSpeed: 5
+  m_followingMaxSpeed: 4
   m_followingBeginTime: 0.5
   m_followingBeginSpeed:
     serializedVersion: 2
@@ -335,8 +335,8 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
     - serializedVersion: 2
       time: 1
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_defaultTiltAngle: 45
   m_tiltMax: 60
   m_tiltMin: 0
-  m_camPosition: {x: 0, y: 1, z: -11.85}
+  m_camPosition: {x: 0, y: 0.4, z: -3.95}
   m_transitionToBackTime: 0.5
   m_savedPivotQuaternion: {x: 0, y: 0, z: 0, w: 1}
 --- !u!114 &114508691747097534
@@ -493,15 +493,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 20463806256330170}
-  RollAngle: -11.128208
-  RollQuataternion: {x: 0, y: 0, z: -0.09695937, w: 0.9952883}
+  RollAngle: -12.98077
+  RollQuataternion: {x: 0, y: 0, z: -0.113036476, w: 0.99359083}
   RollMatrix:
-    e00: 0.9811978
-    e01: 0.19300506
+    e00: 0.9744455
+    e01: 0.22462401
     e02: 0
     e03: 0
-    e10: -0.19300506
-    e11: 0.9811978
+    e10: -0.22462401
+    e11: 0.9744455
     e12: -0
     e13: 0
     e20: -0
@@ -514,8 +514,8 @@ MonoBehaviour:
     e33: 1
   DeltaPosition: {x: 0, y: 0, z: 0}
   Velocity: {x: 0, y: 0, z: 0}
-  OldRotation: {x: -0.002898028, y: 0.93108696, z: -0.06853, w: 0.35829094}
-  OldPosition: {x: 24.38, y: 19.94, z: 2.04}
+  OldRotation: {x: 0.2866507, y: -0.15247387, z: 0.05937532, w: 0.9439586}
+  OldPosition: {x: 2.86, y: 8.06, z: -5.354}
 --- !u!114 &114961703817148884
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -37,8 +37,6 @@ public class CameraTransiting : CameraStates {
     {
         bool ret = false;
 
-//        m_variableCam.FollowTarget(timeStep);
-
         if (m_changeWithoutTransition)
         {
             if (m_localPivotTransforms)
@@ -62,6 +60,8 @@ public class CameraTransiting : CameraStates {
         {
             m_time += timeStep;
             float perc = m_time / (m_timeBetweenChanges - m_addedTime);
+            if (perc >= 1.0f)
+                perc = 1.0f;
 
             Quaternion newPivotRotation = Quaternion.Slerp(m_initialRotationPivot, m_targetRotationPivot, perc);
             Quaternion newCameraRotation = Quaternion.Slerp(m_initialRotationCamera, m_targetRotationCamera, perc);
