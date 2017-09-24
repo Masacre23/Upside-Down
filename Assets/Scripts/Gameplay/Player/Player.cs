@@ -331,8 +331,9 @@ public class Player : Character
             Vector3 movement = m_axisHorizontal * GetDirectionRight() + m_axisVertical * forward;
             movement.Normalize();
 
-            Vector3 jumpDirection = transform.TransformDirection(m_jumpMovement.normalized);
             Vector3 jumpMovement = transform.TransformDirection(m_jumpMovement);
+            Vector3 jumpDirection = jumpMovement.normalized;
+            
 
             //We need to ignore input in the direction of the jump
             Vector3 finalDirection = movement;
