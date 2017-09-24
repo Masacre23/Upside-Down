@@ -23,6 +23,7 @@ public class PlayerOnAir : PlayerStates
         m_player.OnAir();
         m_player.UpdateUp();
         m_player.MoveOnAir(timeStep);
+
         if (m_player.CheckGroundAndEnemyStatus())
         {
             if (m_player.m_pickedObject.HasObjectsToThrow())

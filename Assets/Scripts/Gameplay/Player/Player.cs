@@ -61,12 +61,12 @@ public class Player : Character
     private float m_timeSliding = 0.0f;
     private Vector3 m_rigidBodyTotal = Vector3.zero;
     [HideInInspector] public bool m_doubleJumping = false;
-    [HideInInspector] public Vector3 m_jumpDirection = Vector3.zero;
     [HideInInspector] public Vector3 m_jumpMovement;
     private bool m_hasJumped = false;
     private Vector3 m_jumpVector;
 
     public bool m_jumpOnEnemy { get; private set; }
+    public bool m_enemyDetected = false;
 
     //Variables regarding player's change of gravity
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
@@ -290,7 +290,6 @@ public class Player : Character
 
         m_jumpVector = transform.up * m_jumpForceVertical;
         m_jumpMovement = transform.InverseTransformDirection(movement * speed);
-        m_jumpDirection = transform.InverseTransformDirection(movement);
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
@@ -332,7 +331,7 @@ public class Player : Character
             Vector3 movement = m_axisHorizontal * GetDirectionRight() + m_axisVertical * forward;
             movement.Normalize();
 
-            Vector3 jumpDirection = transform.TransformDirection(m_jumpDirection);
+            Vector3 jumpDirection = transform.TransformDirection(m_jumpMovement.normalized);
             Vector3 jumpMovement = transform.TransformDirection(m_jumpMovement);
 
             //We need to ignore input in the direction of the jump
@@ -342,8 +341,10 @@ public class Player : Character
                 finalDirection -= Vector3.Dot(movement, jumpDirection) * jumpDirection;
 
             float speed = GetSpeedFromInput(m_inputSpeed);
+            Vector3 finalMovement = finalDirection * speed + jumpMovement;
+            finalMovement = DetectEnemyBelow(finalMovement);
 
-            m_rigidBodyTotal += m_offset + (finalDirection * speed + jumpMovement) * timeStep;
+            m_rigidBodyTotal += m_offset + finalMovement * timeStep;
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)
@@ -356,12 +357,34 @@ public class Player : Character
         }
     }
 
+    private Vector3 DetectEnemyBelow(Vector3 movement)
+    {
+        Vector3 rayDirection = -5.0f * transform.up + movement;
+        rayDirection.Normalize();
+        Debug.DrawRay(transform.position, rayDirection, Color.gray);
+
+        RaycastHit hitInfo;
+        int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
+        if (Physics.Raycast(transform.position, rayDirection, out hitInfo, 1.0f, enemyLayer))
+        {
+            if (hitInfo.transform.tag == "EnemySnail")
+            {
+                m_enemyDetected = true;
+                Vector3 toEnemy = hitInfo.transform.position - transform.position;
+                toEnemy -= Vector3.Dot(toEnemy, transform.up) * transform.up;
+                return (toEnemy + movement) / 2.0f;
+            }
+        }
+
+        return movement;
+    }
+
     // This function is similar to Character.CheckGroundStatus, but also checks if the player is falling on an enemy in order to produce a jump
     public bool CheckGroundAndEnemyStatus()
     {
         RaycastHit hitInfo = new RaycastHit();
         Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
-        if (GroundCheck(ref hitInfo))
+        if (GroundCheck(ref hitInfo, m_enemyDetected))
         {
             if (hitInfo.transform.tag == "EnemySnail")
             {
