@@ -32,7 +32,7 @@ public class Dialogue : MonoBehaviour
 	public GameObject startEvent;
 	public GameObject endEvent;
 
-	bool spanish;
+	bool spanish = false;
 
     // Use this for initialization
 	public void Start()
@@ -52,7 +52,10 @@ public class Dialogue : MonoBehaviour
 		if (startEvent)
 			startEvent.SetActive (true);
 
-		spanish = GameObject.Find ("Data").GetComponent<Data> ().spanish;
+        if (GameObject.Find("Data"))
+        {
+            spanish = GameObject.Find("Data").GetComponent<Data>().spanish;
+        }
 	}
 		
 	// Update is called once per frame
