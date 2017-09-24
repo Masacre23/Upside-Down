@@ -27,16 +27,14 @@ public class SoundEffects : MonoBehaviour {
            
     }
 
-    // Use this for initialization
-    void Start ()
+    public void PlaySound(AudioClip clip)
     {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        AudioManager manager = AudioManager.Instance();
+        float volume = 1.0f;
+        if (manager != null)
+            volume = manager.m_soundVolume;
+        m_audio.PlayOneShot(clip, volume);
+    }
 
     public void PlaySound(string sound)
     {
