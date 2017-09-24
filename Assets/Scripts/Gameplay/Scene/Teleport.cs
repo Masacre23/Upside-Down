@@ -30,9 +30,10 @@ public class Teleport : MonoBehaviour
             Player player = other.gameObject.GetComponent<Player>();
             player.m_negatePlayerInput = true;
             player.m_currentZone = null;
+            player.m_camController.CameraFollowingOff();
             Physics.IgnoreLayerCollision(m_playerLayer, m_watterLayer, true);
             Physics.IgnoreLayerCollision(m_playerLayer, m_terrainLayer, true);
-
+            
 
             if (player.m_playerRespawn)
             {

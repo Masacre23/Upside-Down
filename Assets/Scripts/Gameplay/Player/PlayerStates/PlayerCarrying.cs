@@ -44,10 +44,8 @@ public class PlayerCarrying : PlayerStates
         m_player.m_rotationFollowPlayer = true;
         m_player.m_freezeMovement = false;
         
-        m_player.m_jumpDirection = Vector3.zero;
         m_player.m_jumpMovement = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
-        m_player.m_camController.m_followPlayer = true;
         m_player.m_animator.SetBool("Charging", true);
     }
 

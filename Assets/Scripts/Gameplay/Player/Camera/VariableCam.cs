@@ -34,7 +34,7 @@ public class VariableCam : MonoBehaviour
     public AnimationCurve m_followingBeginSpeed;
     float m_followingTime = 0.0f;
 
-    public bool m_followPlayer { set; get; }
+    bool m_followPlayer = true;
 
     public enum FollowingPlayerState
     {
@@ -126,7 +126,7 @@ public class VariableCam : MonoBehaviour
                 }
             case FollowingPlayerState.OFF:
                 {
-                    if (!m_playerOuterDetector.m_playerInside)
+                    if (!m_playerOuterDetector.m_playerInside && m_followPlayer)
                     {
                         m_followingTime = 0.0f;
                         m_followingState = FollowingPlayerState.STARTING;
@@ -141,9 +141,16 @@ public class VariableCam : MonoBehaviour
         return Vector3.SqrMagnitude(transform.position - m_followingPoint.position) < 0.001;
     }
 
+    public void CameraFollowingOff()
+    {
+        m_followingState = FollowingPlayerState.OFF;
+        m_followPlayer = false;
+    }
+
     public void SetCamOnPlayer()
     {
         transform.position = m_followingPoint.position;
+        transform.rotation = m_followingPoint.rotation;
         if (m_currentState != m_onBack)
         {
             m_currentState.OnExit();
@@ -151,6 +158,7 @@ public class VariableCam : MonoBehaviour
             m_currentState.OnEnter();
         }
         ((CameraOnBack)m_onBack).MoveCamBehind();
+        m_followPlayer = true;
     }
 
     public void RotateOnTarget(float deltaTime)

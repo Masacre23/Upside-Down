@@ -131,7 +131,7 @@ public class Character : MonoBehaviour
             m_groundCheckDistance = 0.01f;
     }
 
-    protected bool GroundCheck(ref RaycastHit hitInfo)
+    protected bool GroundCheck(ref RaycastHit hitInfo, bool withSphereCast = false)
     {
         bool ret = false;
         int ignoreWater = 1 << LayerMask.NameToLayer("Water");
@@ -140,8 +140,8 @@ public class Character : MonoBehaviour
         ignoreWater = ~ignoreWater;
 
         ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
-        //if (!ret)
-        //    ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
+        if (!ret && withSphereCast)
+            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
 
         return ret;
     }
