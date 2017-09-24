@@ -31,6 +31,7 @@ public class Enemy : Character {
 
     [HideInInspector]public bool m_wasStunned = false;
     private bool m_playerDetected = true;
+    private EnemyAttacCollider m_enemyCollider;
 
     public enum Types
     {
@@ -72,6 +73,8 @@ public class Enemy : Character {
         m_currentState = m_Idle;
 
         m_damageData = new DamageData();
+
+        m_enemyCollider = GetComponentInChildren<EnemyAttacCollider>();
 
         base.Awake();
     }
@@ -121,23 +124,23 @@ public class Enemy : Character {
 			CalculateDirection (col.gameObject, this.gameObject);
         }
         
-        if (col.gameObject.tag == "Player") 
-		{
-			if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
-			{
-				col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
-				col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
+  //      if (col.gameObject.tag == "Player") 
+		//{
+		//	if (m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) 
+		//	{
+		//		col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
+		//		col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
 
-				Vector3 diff = transform.position - col.transform.position;
-				float distance = diff.magnitude;
-				Vector3 dir = diff / distance;
+		//		Vector3 diff = transform.position - col.transform.position;
+		//		float distance = diff.magnitude;
+		//		Vector3 dir = diff / distance;
 
-				RaycastHit hit;
-				if (Physics.Raycast (transform.position, dir, out hit, 1f)) {
-					EffectsManager.Instance.GetEffect (m_prefabHit1, col.transform.position + transform.up / 2 + col.transform.forward / 2, transform.up, null);
-				}
-			}
-		}
+		//		RaycastHit hit;
+		//		if (Physics.Raycast (transform.position, dir, out hit, 1f)) {
+		//			EffectsManager.Instance.GetEffect (m_prefabHit1, col.transform.position + transform.up / 2 + col.transform.forward / 2, transform.up, null);
+		//		}
+		//	}
+		//}
 
         int harmfulTerrain = LayerMask.NameToLayer("HarmfulTerrain");
         if (col.collider.gameObject.layer == harmfulTerrain)
@@ -157,6 +160,11 @@ public class Enemy : Character {
             m_animator.SetBool("Sleeping", false);
             m_animator.speed = 1;
         }
+    }
+
+    public void CanAttack(bool attack)
+    {
+        m_enemyCollider.CanAttack(attack);
     }
 
     public void DamageManager(DamageData data)
@@ -194,7 +202,7 @@ public class Enemy : Character {
         m_wasStunned = true;
     }
 
-	public enum HitDirection { None, Top, Bottom, Forward, Back, Left, Right }
+    public enum HitDirection { None, Top, Bottom, Forward, Back, Left, Right }
 	public HitDirection hitDirection = HitDirection.None;
 	public Vector3 MyNormal;
 	void CalculateDirection( GameObject Object, GameObject ObjectHit ){
@@ -266,4 +274,6 @@ public class Enemy : Character {
 		}
 
 	}
+
+   
 }

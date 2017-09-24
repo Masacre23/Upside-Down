@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemsMotion : MonoBehaviour {
-    public readonly int m_maxAnimations = 3;
+    public int m_maxAnimations = 3;
 
     private Animator m_animator;
     private int m_currentAnimation = 0;
