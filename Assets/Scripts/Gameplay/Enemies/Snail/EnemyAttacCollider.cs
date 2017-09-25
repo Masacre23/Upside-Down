@@ -9,6 +9,8 @@ public class EnemyAttacCollider : MonoBehaviour {
     private int m_playerLayer;
     private int m_enemyAttackLayer;
 
+    [HideInInspector]public bool is_attacking = false;
+
     // Use this for initialization
     void Start () {
         m_animator = GetComponentInParent<Animator>();
@@ -16,23 +18,25 @@ public class EnemyAttacCollider : MonoBehaviour {
         m_prefabHit1 = enemy.m_prefabHit1;
         m_playerLayer = LayerMask.NameToLayer("Player");
         m_enemyAttackLayer = LayerMask.NameToLayer("EnemyAttack");
-    }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-    public void CanAttack(bool attack)
+    }
+
+    public void CanAttack()
     {
-        Physics.IgnoreLayerCollision(m_playerLayer, m_enemyAttackLayer, !attack);
+        is_attacking = true;
+        Physics.IgnoreLayerCollision(m_playerLayer, m_enemyAttackLayer, false);
     }
 
-    void OnCollisionEnter(Collision col)
+    public void CannotAttack()
+    {
+        is_attacking = false;
+        Physics.IgnoreLayerCollision(m_playerLayer, m_enemyAttackLayer, true);
+    }
+
+    void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.layer == m_playerLayer)
         {
-
             col.gameObject.GetComponent<Player>().m_damageData.m_recive = true;
             col.gameObject.GetComponent<Player>().m_damageData.m_damage = 20;
 

@@ -399,7 +399,7 @@ public class Player : Character
                 m_lastEnemyJumped = hitInfo.transform.gameObject;
                 m_jumpOnEnemy = true;
                 Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
-                if (enemy != null && !enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                if (enemy != null && !enemy.m_enemyCollider.is_attacking)
                 {
                     enemy.Stun();
                 }
