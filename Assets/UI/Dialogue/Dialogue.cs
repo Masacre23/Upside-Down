@@ -44,18 +44,18 @@ public class Dialogue : MonoBehaviour
 
 		playerManager = GameObject.Find("Player").GetComponent<Player>();
 		_isDialoguePlaying = true;
-		StartCoroutine(StartDialogue());
+        if (GameObject.Find("Data"))
+        {
+            spanish = GameObject.Find("Data").GetComponent<Data>().spanish;
+        }
+
+        StartCoroutine(StartDialogue());
 
 		if (DialogueCamera.Length != 0)
 			activeCameras = true;
 
 		if (startEvent)
 			startEvent.SetActive (true);
-
-        if (GameObject.Find("Data"))
-        {
-            spanish = GameObject.Find("Data").GetComponent<Data>().spanish;
-        }
 	}
 		
 	// Update is called once per frame

@@ -13648,7 +13648,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 188014.4
+  Age: 188045.11
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -16252,7 +16252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26ecdd0a371f40848a953101033b12a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spanish: 0
+  spanish: 1
 --- !u!4 &784198745
 Transform:
   m_ObjectHideFlags: 0
@@ -30457,7 +30457,18 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 784198744}
+        m_MethodName: ToggleDialogues
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_IsOn: 1
@@ -41943,8 +41954,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2136392866}
-  m_LocalRotation: {x: 0.25100556, y: -0.1990093, z: -0.94730747, w: 0.00017594325}
-  m_LocalPosition: {x: 13.1, y: -25.34, z: -27.59}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 356162477}
