@@ -6,6 +6,9 @@ using UnityEngine;
 //It inherits from Character.
 public class Player : Character
 {
+    public float m_speedFactor = 2.0f;
+    public float m_carryingFactor = 1.0f;
+
     //Variables regarding player input control
     PlayerController m_playerInput;
     float m_axisHorizontal;
@@ -66,7 +69,8 @@ public class Player : Character
     private Vector3 m_jumpVector;
 
     public bool m_jumpOnEnemy { get; private set; }
-    public bool m_enemyDetected = false;
+    [HideInInspector] public bool m_enemyDetected = false;
+    [HideInInspector] public GameObject m_lastEnemyJumped = null;
 
     //Variables regarding player's change of gravity
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
@@ -89,6 +93,7 @@ public class Player : Character
     [HideInInspector] public EnemyDetectorByLayer m_enemyDetector;
     float m_inputSpeed;
     float m_runSpeed;
+    float m_carryingSpeed;
 
     public SoundEffects m_soundEffects;
 
@@ -158,7 +163,8 @@ public class Player : Character
         m_negatePlayerInput = false;
         base.Start();
 
-        m_runSpeed = 2 * m_moveSpeed;
+        m_runSpeed = m_speedFactor * m_moveSpeed;
+        m_carryingSpeed = m_carryingFactor * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
 
         m_camController.SetCamOnPlayer();
@@ -368,7 +374,7 @@ public class Player : Character
         int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
         if (Physics.Raycast(transform.position, rayDirection, out hitInfo, 1.0f, enemyLayer))
         {
-            if (hitInfo.transform.tag == "EnemySnail")
+            if (hitInfo.transform.tag == "EnemySnail" && hitInfo.transform.gameObject != m_lastEnemyJumped)
             {
                 m_enemyDetected = true;
                 Vector3 toEnemy = hitInfo.transform.position - transform.position;
@@ -377,6 +383,7 @@ public class Player : Character
             }
         }
 
+        m_enemyDetected = false;
         return movement;
     }
 
@@ -389,9 +396,10 @@ public class Player : Character
         {
             if (hitInfo.transform.tag == "EnemySnail")
             {
+                m_lastEnemyJumped = hitInfo.transform.gameObject;
                 m_jumpOnEnemy = true;
                 Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
-                if (enemy != null && !enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                if (enemy != null && !enemy.m_enemyCollider.is_attacking)
                 {
                     enemy.Stun();
                 }
@@ -653,7 +661,10 @@ public class Player : Character
 
     private float GetSpeedFromInput(float inputIntensity)
     {
-        return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
+        if (m_currentState != m_carrying)
+            return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
+        else
+            return m_carryingSpeed;
     }
 
     public void CheckPlayerStopped(float axisHorizontal, float axisVertical)

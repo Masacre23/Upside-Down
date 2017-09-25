@@ -413,14 +413,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1764460115970446}
-  m_LocalRotation: {x: -0, y: 0.90486115, z: -0, w: -0.42570686}
-  m_LocalPosition: {x: 1.0429995, y: 4.207, z: 6.092}
-  m_LocalScale: {x: 0.14000002, y: 0.14, z: 0.14000002}
+  m_LocalRotation: {x: -0.1257375, y: -0.7460595, z: 0.65016687, w: 0.06977393}
+  m_LocalPosition: {x: 3.853, y: 2.528, z: 0.047}
+  m_LocalScale: {x: 0.13429892, y: 0.12212957, z: 0.1342989}
   m_Children:
   - {fileID: 4740014566311836}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 230.39099, z: 0}
+  m_LocalEulerAnglesHint: {x: -252.285, y: 61.577995, z: -113.83099}
 --- !u!4 &4862936783481812
 Transform:
   m_ObjectHideFlags: 1
@@ -476,6 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e85fc3c685ed8746a7a3a37c2cb9820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_maxAnimations: 3
 --- !u!137 &137175212907171254
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -483,8 +484,8 @@ SkinnedMeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190803598832030}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

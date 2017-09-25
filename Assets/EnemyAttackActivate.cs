@@ -11,8 +11,13 @@ public class EnemyAttackActivate : MonoBehaviour {
         m_enemyCollider = GetComponentInChildren<EnemyAttacCollider>();
     }
 
-    public void CanAttack(bool attack)
+    public void CanAttack()
     {
-        m_enemyCollider.CanAttack(attack);
+        m_enemyCollider.CanAttack();
+    }
+
+    public void CannotAttack()
+    {
+        m_enemyCollider.CannotAttack();
     }
 }
