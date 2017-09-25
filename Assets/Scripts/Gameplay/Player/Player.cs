@@ -69,7 +69,8 @@ public class Player : Character
     private Vector3 m_jumpVector;
 
     public bool m_jumpOnEnemy { get; private set; }
-    public bool m_enemyDetected = false;
+    [HideInInspector] public bool m_enemyDetected = false;
+    [HideInInspector] public GameObject m_lastEnemyJumped = null;
 
     //Variables regarding player's change of gravity
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
@@ -373,7 +374,7 @@ public class Player : Character
         int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
         if (Physics.Raycast(transform.position, rayDirection, out hitInfo, 1.0f, enemyLayer))
         {
-            if (hitInfo.transform.tag == "EnemySnail")
+            if (hitInfo.transform.tag == "EnemySnail" && hitInfo.transform.gameObject != m_lastEnemyJumped)
             {
                 m_enemyDetected = true;
                 Vector3 toEnemy = hitInfo.transform.position - transform.position;
@@ -382,6 +383,7 @@ public class Player : Character
             }
         }
 
+        m_enemyDetected = false;
         return movement;
     }
 
@@ -394,6 +396,7 @@ public class Player : Character
         {
             if (hitInfo.transform.tag == "EnemySnail")
             {
+                m_lastEnemyJumped = hitInfo.transform.gameObject;
                 m_jumpOnEnemy = true;
                 Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
                 if (enemy != null && !enemy.m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -662,7 +665,6 @@ public class Player : Character
             return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
         else
             return m_carryingSpeed;
-
     }
 
     public void CheckPlayerStopped(float axisHorizontal, float axisVertical)
