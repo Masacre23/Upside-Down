@@ -60,12 +60,14 @@ public class BossAttack : BossStates {
 		{
 			GameObject go = (GameObject)Instantiate (m_boss.ball, m_boss.OBJETO_TIRAR.transform.position, Quaternion.identity);
 			go.transform.parent = m_boss.OBJETO_TIRAR.transform;
-		}
+            go.transform.lossyScale.Set(4, 4, 4);
+        }
 		else if (frames == 35) 
 		{
 			GameObject go = m_boss.OBJETO_TIRAR.transform.GetChild (0).gameObject;
 			go.GetComponent<SphereCollider> ().enabled = true;
 			go.transform.parent = null;
+            go.transform.localScale = new Vector3(4, 4, 4);
 			Rigidbody rb = go.GetComponent<Rigidbody> ();
 			rb.useGravity = true;
 			rb.AddForce ((transform.up + 2*transform.forward + transform.right) * m_boss.m_force);
