@@ -31,7 +31,7 @@ public class Enemy : Character {
 
     [HideInInspector]public bool m_wasStunned = false;
     private bool m_playerDetected = true;
-    private EnemyAttacCollider m_enemyCollider;
+    public EnemyAttacCollider m_enemyCollider;
 
     public enum Types
     {
@@ -164,7 +164,7 @@ public class Enemy : Character {
 
     public void CanAttack(bool attack)
     {
-        m_enemyCollider.CanAttack(attack);
+        //m_enemyCollider.CanAttack(attack);
     }
 
     public void DamageManager(DamageData data)
