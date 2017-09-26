@@ -42,7 +42,7 @@ public class Laser : MonoBehaviour {
 						Draw (hit.point);
 					} else if (bossSceneManager && hit.collider.tag == "Boss") 
 					{
-						if (!bossHitted) {
+						if (!bossHitted && transform.parent.GetComponent<ThrowableObject> ().m_isCarring) {
 							Draw (hit.point);
 							hitting = true;
 							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale (this));
