@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelBoundaries : MonoBehaviour
 {
+    public GameObject win;
 
     void OnTriggerExit(Collider other)
     {
@@ -16,6 +17,7 @@ public class LevelBoundaries : MonoBehaviour
 		} else if (other.tag == "Boss") 
 		{
 			other.transform.GetChild (0).gameObject.SetActive (true);
+            win.SetActive(true);
 		}
         else
         {
