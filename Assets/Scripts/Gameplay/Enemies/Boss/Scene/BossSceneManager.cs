@@ -101,4 +101,10 @@ public class BossSceneManager : MonoBehaviour {
 			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
 		}
 	}
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Player")
+            boss.GetComponent<Boss>().m_animator.SetBool("BattleHasStarted", true);
+    }
 }

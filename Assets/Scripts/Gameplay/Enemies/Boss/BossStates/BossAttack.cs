@@ -22,7 +22,7 @@ public class BossAttack : BossStates {
 		bool ret = false;
 
 		info = m_boss.m_animator.GetCurrentAnimatorStateInfo (0);
-		if (m_boss.m_phase == 1 && info.IsName("Attack3"))
+		if (m_boss.m_phase == 1 /*&& info.IsName("Attack3")*/)
 			ThrowBall ();
 
 		if (m_boss.m_phase == 2)
@@ -31,7 +31,7 @@ public class BossAttack : BossStates {
 		if (m_boss.m_phase == 3)
 			RunAway ();
 		
-		if(info.normalizedTime > 0.9f && m_boss.m_phase <= 1)
+		if(info.normalizedTime > 0.9f && m_boss.m_phase <= 1 && !info.IsName("Laught"))
 		{
 			ret = true;
 			m_boss.m_currentState = m_boss.m_Idle;
@@ -56,13 +56,13 @@ public class BossAttack : BossStates {
 
 	void ThrowBall()
 	{
-		if (frames == 11) 
+        if (frames == 23) 
 		{
 			GameObject go = (GameObject)Instantiate (m_boss.ball, m_boss.OBJETO_TIRAR.transform.position, Quaternion.identity);
 			go.transform.parent = m_boss.OBJETO_TIRAR.transform;
-            go.transform.lossyScale.Set(4, 4, 4);
+           // go.transform.lossyScale.Set(4, 4, 4);
         }
-		else if (frames == 35) 
+		else if (frames == 50) 
 		{
 			GameObject go = m_boss.OBJETO_TIRAR.transform.GetChild (0).gameObject;
 			go.GetComponent<SphereCollider> ().enabled = true;
@@ -97,6 +97,12 @@ public class BossAttack : BossStates {
 
 	public override void OnEnter()
 	{
+        Vector3 relativePoint = transform.InverseTransformPoint(m_boss.player.transform.position);
+        if (relativePoint.x < 0.0f)
+            m_boss.m_animator.SetBool("LeftRight", true); //Left
+        else if (relativePoint.x > 0.0f)
+            m_boss.m_animator.SetBool("LeftRight", false); //Right
+
 		m_boss.m_animator.SetBool ("IsAttacking", true);
 	}
 
