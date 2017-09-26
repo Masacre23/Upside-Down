@@ -35,6 +35,8 @@ public class ThrowableObject : MonoBehaviour
     float m_minVelocityDamage = 2.0f;
     Vector3 m_rotationRandomVector = Vector3.zero;
     bool m_isEnemy = false;
+    int[] m_layers;
+    int m_layer = 0;
 
     float m_timeRotating = 0.0f;
 
@@ -46,6 +48,12 @@ public class ThrowableObject : MonoBehaviour
         m_objectGravity = GetComponent<GameObjectGravity>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_collider = GetComponentsInChildren<Collider>();
+        m_layers = new int[m_collider.Length];
+        for (int i = 0; i < m_collider.Length; i++)
+        {
+            m_layers[i] = m_collider[i].gameObject.layer;
+        }
+        m_layer = LayerMask.NameToLayer("IgnorePlayer");
         m_trail = GetComponent<TrailRenderer>();
 
         m_rigidBody.freezeRotation = true;
@@ -160,7 +168,8 @@ public class ThrowableObject : MonoBehaviour
             m_rigidBody.isKinematic = true;
         for (int i = 0; i < m_collider.Length; i++)
         {
-            m_collider[i].enabled = false;
+            m_collider[i].gameObject.layer = m_layer;
+            //m_collider[i].enabled = false;
         }
 
         if (m_aura)
@@ -184,7 +193,8 @@ public class ThrowableObject : MonoBehaviour
 
         for (int i = 0; i < m_collider.Length; i++)
         {
-            m_collider[i].enabled = true;
+            m_collider[i].gameObject.layer = m_layers[i];
+            //m_collider[i].enabled = true;
         }
 
         if (m_aura != null)
