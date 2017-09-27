@@ -12,7 +12,7 @@ public class LevelBoundaries : MonoBehaviour
 		{
 			Player m_player = other.GetComponent<Player> ();
 			m_player.m_damageData.m_recive = true;
-			m_player.m_damageData.m_damage = 20;
+			m_player.m_damageData.m_damage = 0;
 			m_player.m_damageData.m_respawn = true;
 		} else if (other.tag == "Boss") 
 		{
