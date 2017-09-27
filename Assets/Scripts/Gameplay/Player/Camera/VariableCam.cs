@@ -171,9 +171,11 @@ public class VariableCam : MonoBehaviour
         CameraTransiting transitingCam = (CameraTransiting)m_transit;
         transitingCam.ResetTime();
 
-        Quaternion lookRotation = orientation.localRotation;
-        Vector3 eulers = m_pivot.transform.localRotation.eulerAngles;
-        Quaternion finalRotation = lookRotation * Quaternion.Euler(eulers.x, 0.0f, 0.0f);
+        Vector3 pivotForward = transform.InverseTransformDirection(orientation.forward);
+        Vector3 pivotUp = transform.InverseTransformDirection(orientation.up);
+        Quaternion lookRotation = Quaternion.LookRotation(pivotForward, pivotUp);
+
+        Quaternion finalRotation = Quaternion.Euler(0.0f, lookRotation.eulerAngles.y, 0.0f) * Quaternion.Euler(m_pivot.transform.localRotation.eulerAngles.x, 0.0f, 0.0f);
 
         CameraOnBack onBack = (CameraOnBack)m_onBack;
         transitingCam.SetTransitionValues(m_onBack, onBack.m_camPosition, onBack.m_pivotPosition, Quaternion.identity, finalRotation, true, transitionTime);
