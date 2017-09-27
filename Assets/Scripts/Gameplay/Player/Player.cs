@@ -61,7 +61,6 @@ public class Player : Character
     public string m_tagGround = "";
     public float m_timeSlide = 0.2f;
     public float m_slideSpeed = 2.0f;
-    private float m_timeSliding = 0.0f;
     private Vector3 m_rigidBodyTotal = Vector3.zero;
     [HideInInspector] public bool m_doubleJumping = false;
     [HideInInspector] public Vector3 m_jumpMovement;
@@ -323,7 +322,6 @@ public class Player : Character
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 20.0f * timeStep);
                 m_lastMovement = movement;
-                m_timeSliding = 0.0f;
             }
         }
     }
@@ -359,7 +357,6 @@ public class Player : Character
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 20.0f * timeStep);
                 m_lastMovement = movement;
-                m_timeSliding = 0.0f;
             }
         }
     }

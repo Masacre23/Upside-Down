@@ -109,7 +109,7 @@ public class VariableCam : MonoBehaviour
                         transform.position = Vector3.MoveTowards(transform.position, m_followingPoint.position, deltaTime * currentSpeed);
                     }
 
-                    if (m_playerInnerDetector.m_playerInside)
+                    if (m_playerInnerDetector.m_playerInside && CameraHasReachedPlayer())
                     {
                         m_followingState = FollowingPlayerState.OFF;
                     }
@@ -138,7 +138,7 @@ public class VariableCam : MonoBehaviour
 
     private bool CameraHasReachedPlayer()
     {
-        return Vector3.SqrMagnitude(transform.position - m_followingPoint.position) < 0.001;
+        return Vector3.SqrMagnitude(transform.position - m_followingPoint.position) < 0.01;
     }
 
     public void CameraFollowingOff()
