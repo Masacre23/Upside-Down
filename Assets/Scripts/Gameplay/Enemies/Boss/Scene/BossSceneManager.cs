@@ -14,6 +14,8 @@ public class BossSceneManager : MonoBehaviour {
 	public GameObject[] scenes;
 	public bool activateCameras;
 	public int numScene;
+    public GameObject asteroids;
+    public GameObject[] platforms;
 
 	// Use this for initialization
 	void Start () {
@@ -27,11 +29,14 @@ public class BossSceneManager : MonoBehaviour {
 		{
 			player.GetComponent<Player> ().m_paused = true;
 			scenes [numScene].SetActive (true);
+            player.transform.parent = platforms[numScene].transform;
 		} else 
 		{
 			player.GetComponent<Player> ().m_paused = false;
 			scenes [numScene].SetActive (false);
-		}
+            player.transform.parent = null;
+
+        }
 	}
 
 	public IEnumerator ChangeBossScale(Laser laser)
@@ -40,11 +45,13 @@ public class BossSceneManager : MonoBehaviour {
 		{
 			scaling = true;
 			activateCameras = true;
+
 			if (phase < 2) 
 			{
 				boss.GetComponent<Boss> ().Stun ();
 				player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = true;
-			}
+
+            }
 			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
 				pointReference.transform.position.y > points[phase] )) 
 			{
@@ -68,7 +75,7 @@ public class BossSceneManager : MonoBehaviour {
 			//if(phase != 2)
 				laser.bossHitted = true;
 			activateCameras = false;
-			player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = false;
+            player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = false;
 			switch (phase) 
 			{
 			case 1:
@@ -82,22 +89,26 @@ public class BossSceneManager : MonoBehaviour {
 				break;
 			}
 
-			while (phase == 1 && basePlatform.transform.position.y < 9) 
+            scaling = false;
+            if (phase < 2)
+                boss.GetComponent<Boss>().Stun();
+
+            while (phase == 1 && basePlatform.transform.position.y < 9) 
 			{
-				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
+			    basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
 				yield return 0;
 			}
-			/*while (pointReference.transform.position.y > points[phase]) 
-			{
-				pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
-				basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase+1)/5, 0);
-				yield return 0;
-			}*/
-			scaling = false;
-			if(phase < 2)
-				boss.GetComponent<Boss> ().Stun ();
+
 			phase++;
-			boss.GetComponent<Boss> ().m_phase = phase;
+            while (phase < 3 && phase == 1 ? asteroids.transform.localPosition.y < 2 : asteroids.transform.localPosition.y > 0)
+            {
+                asteroids.transform.localPosition += new Vector3(0, phase == 1 ? Time.deltaTime : -Time.deltaTime, 0);
+                asteroids.transform.GetChild(0).GetComponent<SgtSimpleOrbit>().Radius += phase == 1 ? -Time.deltaTime/2 : Time.deltaTime/2;
+                asteroids.transform.GetChild(1).GetComponent<SgtSimpleOrbit>().Radius += phase == 1 ? -Time.deltaTime/2 : Time.deltaTime/2;
+                asteroids.transform.GetChild(2).GetComponent<SgtSimpleOrbit>().Radius += phase == 1 ? -Time.deltaTime/2 : Time.deltaTime/2;
+                yield return 0;
+            }
+            boss.GetComponent<Boss> ().m_phase = phase;
 			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
 		}
 	}
