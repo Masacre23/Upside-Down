@@ -16,6 +16,7 @@ public class BossSceneManager : MonoBehaviour {
 	public int numScene;
     public GameObject asteroids;
     public GameObject[] platforms;
+    bool lastCorrutineHasEnded;
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +44,8 @@ public class BossSceneManager : MonoBehaviour {
 	{
 		if (!scaling) 
 		{
-			scaling = true;
+            lastCorrutineHasEnded = false;
+            scaling = true;
 			activateCameras = true;
 
 			if (phase < 2) 
@@ -52,13 +54,22 @@ public class BossSceneManager : MonoBehaviour {
 				player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = true;
 
             }
-			while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
+
+            StartCoroutine(Platforms(phase, laser));
+            while (boss.transform.localScale.x > sizes[phase])
+            {
+                if (phase > 1 ? laser.hitting : true)
+                    boss.transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
+                yield return 0;
+            }
+            /*while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
 				pointReference.transform.position.y > points[phase] )) 
 			{
 				if(phase > 1? laser.hitting : true)
 				{
 				if(boss.transform.localScale.x > sizes [phase])
 					boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
+
 				if ((phase == 1)? pointReference.transform.position.y < points[phase] : 
 					pointReference.transform.position.y > points[phase]) 
 				{
@@ -71,9 +82,10 @@ public class BossSceneManager : MonoBehaviour {
 				}
 				}
 				yield return 0;
-			}
-			//if(phase != 2)
-				laser.bossHitted = true;
+			}*/
+
+                //if(phase != 2)
+                laser.bossHitted = true;
 			activateCameras = false;
             player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = false;
 			switch (phase) 
@@ -93,25 +105,57 @@ public class BossSceneManager : MonoBehaviour {
             if (phase < 2)
                 boss.GetComponent<Boss>().Stun();
 
-            while (phase == 1 && basePlatform.transform.position.y < 9) 
-			{
-			    basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
-				yield return 0;
-			}
+            StartCoroutine(Asteroids(phase));
+            StartCoroutine(BigPlatform(phase));
+
+            while(!lastCorrutineHasEnded)
+                yield return 0;
 
 			phase++;
-            while (phase < 3 && phase == 1 ? asteroids.transform.localPosition.y < 2 : asteroids.transform.localPosition.y > 0)
-            {
-                asteroids.transform.localPosition += new Vector3(0, phase == 1 ? Time.deltaTime : -Time.deltaTime, 0);
-                asteroids.transform.GetChild(0).GetComponent<SgtSimpleOrbit>().Radius += phase == 1 ? -Time.deltaTime/2 : Time.deltaTime/2;
-                asteroids.transform.GetChild(1).GetComponent<SgtSimpleOrbit>().Radius += phase == 1 ? -Time.deltaTime/2 : Time.deltaTime/2;
-                asteroids.transform.GetChild(2).GetComponent<SgtSimpleOrbit>().Radius += phase == 1 ? -Time.deltaTime/2 : Time.deltaTime/2;
-                yield return 0;
-            }
+
             boss.GetComponent<Boss> ().m_phase = phase;
 			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
 		}
 	}
+
+    private IEnumerator Platforms(int p, Laser laser)
+    {
+        while (((phase == 1) ? pointReference.transform.position.y < points[p] : pointReference.transform.position.y > points[p]))
+        {
+            if (phase > 1 ? laser.hitting : true)
+            {
+                if (phase == 1)
+                    pointReference.transform.position += new Vector3(0, Time.deltaTime, 0);
+                else
+                    pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
+
+                basePlatform.transform.position += new Vector3(0, Time.deltaTime * (p + 1) / 5.1f, 0);
+            }
+            yield return 0;
+        }
+    }
+    
+    private IEnumerator Asteroids(int p)
+    {
+        while (p < 2 && p == 0 ? asteroids.transform.localPosition.y < 2 : asteroids.transform.localPosition.y > 0)
+        {
+            asteroids.transform.localPosition += new Vector3(0, p == 0 ? Time.deltaTime : -Time.deltaTime, 0);
+            asteroids.transform.GetChild(0).GetComponent<SgtSimpleOrbit>().Radius += p == 0 ? -Time.deltaTime / 2 : Time.deltaTime / 2;
+            asteroids.transform.GetChild(1).GetComponent<SgtSimpleOrbit>().Radius += p == 0 ? -Time.deltaTime / 2 : Time.deltaTime / 2;
+            asteroids.transform.GetChild(2).GetComponent<SgtSimpleOrbit>().Radius += p == 0 ? -Time.deltaTime / 2 : Time.deltaTime / 2;
+            yield return 0;
+        }
+    }
+
+    private IEnumerator BigPlatform(int p)
+    {
+        while (p == 1 && basePlatform.transform.position.y < 9)
+        {
+            basePlatform.transform.position += new Vector3(0, Time.deltaTime * (p + 1) / 5.1f, 0);
+            yield return 0;
+        }
+        lastCorrutineHasEnded = true;
+    }
 
     void OnTriggerEnter(Collider col)
     {
