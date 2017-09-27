@@ -23,6 +23,7 @@ public class ChangeCamOnEnter : MonoBehaviour
         if (player)
         {
             player.m_camController.SetCameraOnBackLookingAtTarget(m_orientation.transform, m_transitionToLook);
+            gameObject.SetActive(false);
         }
     }
 }
