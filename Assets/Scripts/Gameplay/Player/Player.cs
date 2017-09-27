@@ -94,7 +94,7 @@ public class Player : Character
     float m_runSpeed;
     float m_carryingSpeed;
 
-    public SoundEffects m_soundEffects;
+    public PlayerSoundEffects m_soundEffects;
 
     public override void Awake()
     {
@@ -146,7 +146,7 @@ public class Player : Character
 
         m_gravityTargets = GetComponentInChildren<TargetDetectorByTag>();
 
-        m_soundEffects = GetComponent<SoundEffects>();
+        m_soundEffects = GetComponent<PlayerSoundEffects>();
 
         m_pickedObject = GetComponent<PickedObject>();
         m_enemyDetector = GetComponentInChildren<EnemyDetectorByLayer>();
@@ -184,7 +184,7 @@ public class Player : Character
 
         m_animator.Rebind();
 
-        m_soundEffects = GetComponent<SoundEffects>();
+        m_soundEffects = GetComponent<PlayerSoundEffects>();
 
         m_camController.SetCamOnPlayer();
 
@@ -299,7 +299,7 @@ public class Player : Character
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
         if (m_soundEffects != null)
-            m_soundEffects.PlaySound("Jump");
+            m_soundEffects.PlayJump();
     }
 
     //This functions controls the character movement and the model orientation.
@@ -630,14 +630,6 @@ public class Player : Character
     {
         m_justUnpaused = true;
         ResetInput();
-    }
-
-    public void PlayFootStep(string right)
-    {
-        string footstep = right == "Right" ? "FootStepRight" : "FootStepLeft";
-
-        if (m_soundEffects != null)
-            m_soundEffects.PlaySound(footstep);
     }
 
     public void PlaySound(string name)
