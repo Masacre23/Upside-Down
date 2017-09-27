@@ -50,6 +50,6 @@ public class PlayerOnAir : PlayerStates
         m_player.m_runClouds.GetComponent<ParticleSystem>().Play();
 
         if (m_player.m_soundEffects)
-            m_player.m_soundEffects.PlaySound("Fall");
+            m_player.m_soundEffects.PlayFall();
     }
 }
