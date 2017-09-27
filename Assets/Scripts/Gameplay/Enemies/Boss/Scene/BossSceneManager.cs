@@ -62,27 +62,6 @@ public class BossSceneManager : MonoBehaviour {
                     boss.transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
                 yield return 0;
             }
-            /*while (boss.transform.localScale.x > sizes [phase] || ((phase == 1)? pointReference.transform.position.y < points[phase] : 
-				pointReference.transform.position.y > points[phase] )) 
-			{
-				if(phase > 1? laser.hitting : true)
-				{
-				if(boss.transform.localScale.x > sizes [phase])
-					boss.transform.localScale -= new Vector3 (Time.deltaTime, Time.deltaTime, Time.deltaTime);
-
-				if ((phase == 1)? pointReference.transform.position.y < points[phase] : 
-					pointReference.transform.position.y > points[phase]) 
-				{
-					if(phase == 1)
-						pointReference.transform.position += new Vector3 (0, Time.deltaTime, 0);
-					else
-						pointReference.transform.position -= new Vector3 (0, Time.deltaTime, 0);
-					
-					basePlatform.transform.position += new Vector3 (0, Time.deltaTime * (phase + 1) / 5.1f, 0);
-				}
-				}
-				yield return 0;
-			}*/
 
                 //if(phase != 2)
                 laser.bossHitted = true;
@@ -108,23 +87,24 @@ public class BossSceneManager : MonoBehaviour {
             StartCoroutine(Asteroids(phase));
             StartCoroutine(BigPlatform(phase));
 
-            while(!lastCorrutineHasEnded)
+            phase++;
+            boss.GetComponent<Boss>().m_phase = phase;
+            boss.GetComponent<Boss>().m_animator.SetInteger("Phase", phase);
+
+            while (!lastCorrutineHasEnded)
                 yield return 0;
 
-			phase++;
-
-            boss.GetComponent<Boss> ().m_phase = phase;
-			boss.GetComponent<Boss> ().m_animator.SetInteger ("Phase", phase);
+            
 		}
 	}
 
     private IEnumerator Platforms(int p, Laser laser)
     {
-        while (((phase == 1) ? pointReference.transform.position.y < points[p] : pointReference.transform.position.y > points[p]))
+        while (((p == 1) ? pointReference.transform.position.y < points[p] : pointReference.transform.position.y > points[p]))
         {
-            if (phase > 1 ? laser.hitting : true)
+            if (p > 1 ? laser.hitting : true)
             {
-                if (phase == 1)
+                if (p == 1)
                     pointReference.transform.position += new Vector3(0, Time.deltaTime, 0);
                 else
                     pointReference.transform.position -= new Vector3(0, Time.deltaTime, 0);
