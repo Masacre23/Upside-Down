@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CloudsManager : MonoBehaviour {
 
-    public ScalableMobilePlatform[] m_clouds;
+    public ScalableCloud[] m_clouds;
     public float m_frecuency = 1.0f;
     public float m_period = 8.0f;
 
