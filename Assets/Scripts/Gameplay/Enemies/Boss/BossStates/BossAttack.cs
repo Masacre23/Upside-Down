@@ -51,7 +51,8 @@ public class BossAttack : BossStates {
 		float distance = heading.magnitude;
 		Vector3 direction = heading / distance;
 
-		transform.position += direction * Time.deltaTime * m_boss.m_speed;
+        if(distance > m_boss.minDistanceToPlayer)
+		    transform.position += direction * Time.deltaTime * m_boss.m_speed;
 	}
 
 	void ThrowBall()

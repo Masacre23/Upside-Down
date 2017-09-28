@@ -18,6 +18,7 @@ public class Boss : MonoBehaviour {
 
 	public GameObject ball;
 	public GameObject player;
+    public float minDistanceToPlayer = 3.0f;
 
     public bool m_canChase = true;
 
