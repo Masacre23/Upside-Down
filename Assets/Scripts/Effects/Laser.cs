@@ -29,7 +29,8 @@ public class Laser : MonoBehaviour {
             Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
             if (screenPoint.z < 0 || screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1) //if is not viewing
             {
-                transform.parent.gameObject.SetActive(false);
+                //transform.parent.gameObject.SetActive(false);
+                Destroy(transform.parent.gameObject);
             }
         }
 		if (target == null) 

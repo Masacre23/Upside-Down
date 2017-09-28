@@ -210,7 +210,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1257827833300148}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.28, y: 16.89, z: 10.06}
+  m_LocalPosition: {x: 10.02, y: 16.89, z: -0.29}
   m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_Children:
   - {fileID: 4304507195227904}
@@ -366,6 +366,8 @@ MonoBehaviour:
   maxTime: 0
   time: 0
   bossSceneManager: {fileID: 0}
+  bossHitted: 0
+  hitting: 0
 --- !u!114 &114514307606720204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,9 +405,10 @@ MonoBehaviour:
   m_floatingSpeed: 10
   m_rotationSpeed: 100
   m_aura: {fileID: 0}
-  m_chargingPivot: {x: 0, y: 0, z: 0}
+  m_chargingUpPivot: 0.08
   m_timeToRotate: 2
   m_isLazer: 1
+  m_bossLevel: 1
   m_canDamage: 0
   m_prefabHit1: {fileID: 0}
 --- !u!120 &120243567183733320

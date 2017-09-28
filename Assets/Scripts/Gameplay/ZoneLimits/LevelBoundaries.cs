@@ -18,7 +18,10 @@ public class LevelBoundaries : MonoBehaviour
 		{
 			other.transform.GetChild (0).gameObject.SetActive (true);
             win.SetActive(true);
-		}
+		}else if(other.tag == "GravityAffected")
+        {
+            Destroy(other.gameObject);
+        }
         else
         {
             int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
