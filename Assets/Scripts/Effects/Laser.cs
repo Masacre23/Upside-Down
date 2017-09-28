@@ -20,6 +20,8 @@ public class Laser : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		bossSceneManager = GameObject.Find ("BossSceneManager");
+        if (bossSceneManager)
+            target.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -52,9 +54,11 @@ public class Laser : MonoBehaviour {
 					} else if (bossSceneManager && hit.collider.tag == "Boss") 
 					{
 						if (!bossHitted && transform.parent.GetComponent<ThrowableObject> ().m_isCarring) {
-							Draw (hit.point);
+                            target.gameObject.SetActive(true);
+                            Draw (hit.point);
 							hitting = true;
-							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale (this));
+                            bossSceneManager.GetComponent<BossSceneManager>().laser = this;
+							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale ());
 						}
 					} 
 				} else 

@@ -6,7 +6,7 @@ public class BossSceneManager : MonoBehaviour {
 	public int phase = 0;
 	GameObject boss;
 	GameObject player;
-	float []sizes = {10, 5, 1, 0.5f};
+	float []sizes = {10, 5, 1, 0.1f};
 	bool scaling = false;
 	public GameObject basePlatform;
 	public GameObject pointReference;
@@ -18,6 +18,9 @@ public class BossSceneManager : MonoBehaviour {
     public GameObject[] platforms;
     bool lastCorrutineHasEnded;
     public GameObject[] handsColliders;
+    public GameObject smokePrefab;
+    public Laser laser;
+    public GameObject credits;
 
 	// Use this for initialization
 	void Start () {
@@ -41,7 +44,7 @@ public class BossSceneManager : MonoBehaviour {
         }
 	}
 
-	public IEnumerator ChangeBossScale(Laser laser)
+	public IEnumerator ChangeBossScale()
 	{
 		if (!scaling) 
 		{
@@ -103,6 +106,11 @@ public class BossSceneManager : MonoBehaviour {
             while (!lastCorrutineHasEnded)
                 yield return 0;
 
+            if (phase == 4)
+            {
+                Instantiate(smokePrefab, boss.transform.position, Quaternion.EulerAngles(new Vector3(-90, 0, 0)));
+                credits.SetActive(true);
+            }
         }
 	}
 

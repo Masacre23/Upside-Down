@@ -1324,6 +1324,9 @@ MonoBehaviour:
   handsColliders:
   - {fileID: 737133868}
   - {fileID: 737133869}
+  smokePrefab: {fileID: 100000, guid: 70a155c91461538449bc5795c0013315, type: 2}
+  laser: {fileID: 0}
+  credits: {fileID: 1011358853}
 --- !u!65 &122010834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3745,7 +3748,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 189614.05
+  Age: 189668.52
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -5007,7 +5010,7 @@ MonoBehaviour:
   Radius: 14
   Oblateness: 0
   Center: {x: 0, y: 17, z: 0}
-  Angle: 76296.04
+  Angle: 76467.695
   DegreesPerSecond: 3
 --- !u!114 &552266519
 MonoBehaviour:
@@ -5082,7 +5085,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 552266517}
   m_LocalRotation: {x: -0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: 0.7071068}
-  m_LocalPosition: {x: -5.685879, y: 17, z: 12.793387}
+  m_LocalPosition: {x: 7.482108, y: 17, z: -11.832923}
   m_LocalScale: {x: 0.5, y: 0.5000012, z: 0.5000012}
   m_Children:
   - {fileID: 2081756891}
@@ -8268,6 +8271,7 @@ MonoBehaviour:
   OBJETO_TIRAR: {fileID: 646613445}
   ball: {fileID: 1742674814012828, guid: 47368aea06178c644ab5a6128c0dee81, type: 2}
   player: {fileID: 0}
+  minDistanceToPlayer: 2
   m_canChase: 0
 --- !u!135 &737133874
 SphereCollider:
@@ -9225,7 +9229,7 @@ MonoBehaviour:
   Radius: 14
   Oblateness: 0
   Center: {x: 0, y: 17, z: 0}
-  Angle: 76419.32
+  Angle: 76590.98
   DegreesPerSecond: 3
 --- !u!114 &806033006
 MonoBehaviour:
@@ -9300,7 +9304,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 806033004}
   m_LocalRotation: {x: -0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: 0.7071068}
-  m_LocalPosition: {x: 13.81507, y: 17, z: -2.268004}
+  m_LocalPosition: {x: -13.997983, y: 17, z: 0.23762928}
   m_LocalScale: {x: 0.5, y: 0.5000012, z: 0.5000012}
   m_Children:
   - {fileID: 565135680}
@@ -13557,7 +13561,7 @@ MonoBehaviour:
   - {fileID: 1158660613}
   - {fileID: 406038015}
   - {fileID: 1001298375}
-  spawnRate: 60
+  spawnRate: 30
   time: 0
 --- !u!1 &1169953589 stripped
 GameObject:
@@ -19786,7 +19790,7 @@ MonoBehaviour:
   Radius: 14
   Oblateness: 0
   Center: {x: 0, y: 17, z: 0}
-  Angle: 76528.87
+  Angle: 76700.52
   DegreesPerSecond: 3
 --- !u!114 &1735230676
 MonoBehaviour:
@@ -19861,7 +19865,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1735230674}
   m_LocalRotation: {x: -0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: 0.7071068}
-  m_LocalPosition: {x: -6.758428, y: 17, z: -12.260654}
+  m_LocalPosition: {x: 4.9077916, y: 17, z: 13.111582}
   m_LocalScale: {x: 0.5, y: 0.5000012, z: 0.5000012}
   m_Children:
   - {fileID: 1387083404}
