@@ -31,7 +31,7 @@ public class BossAttack : BossStates {
 		if (m_boss.m_phase == 3)
 			RunAway ();
 		
-		if(info.normalizedTime > 0.9f && m_boss.m_phase <= 1 && !info.IsName("Laught"))
+		if(info.normalizedTime > 0.9f && (m_boss.m_phase <= 1 || !m_boss.m_canChase) && !info.IsName("Laught"))
 		{
 			ret = true;
 			m_boss.m_currentState = m_boss.m_Idle;

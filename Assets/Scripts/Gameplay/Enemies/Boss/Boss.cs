@@ -19,6 +19,8 @@ public class Boss : MonoBehaviour {
 	public GameObject ball;
 	public GameObject player;
 
+    public bool m_canChase = true;
+
 	void Awake()
 	{
 		m_animator = gameObject.GetComponent<Animator> ();

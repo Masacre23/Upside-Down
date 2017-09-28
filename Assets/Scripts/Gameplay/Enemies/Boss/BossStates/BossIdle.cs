@@ -19,7 +19,7 @@ public class BossIdle : BossStates {
 		Rotate ();
 
 		counter += Time.deltaTime;
-		if (counter >= m_boss.m_attackRate) 
+		if (counter >= m_boss.m_attackRate && (m_boss.m_phase == 2? m_boss.m_canChase : true)) 
 		{
 			ret = true;
 			counter = 0;

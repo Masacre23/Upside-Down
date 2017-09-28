@@ -24,6 +24,14 @@ public class Laser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (bossHitted && !transform.parent.GetComponent<ThrowableObject> ().m_isCarring)
+        {
+            Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
+            if (screenPoint.z < 0 || screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1) //if is not viewing
+            {
+                transform.parent.gameObject.SetActive(false);
+            }
+        }
 		if (target == null) 
 		{
 			laser.enabled = false;

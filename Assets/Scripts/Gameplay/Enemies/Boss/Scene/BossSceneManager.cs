@@ -17,6 +17,7 @@ public class BossSceneManager : MonoBehaviour {
     public GameObject asteroids;
     public GameObject[] platforms;
     bool lastCorrutineHasEnded;
+    public GameObject[] handsColliders;
 
 	// Use this for initialization
 	void Start () {
@@ -64,8 +65,10 @@ public class BossSceneManager : MonoBehaviour {
             }
 
                 //if(phase != 2)
-                laser.bossHitted = true;
+                
+            laser.gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
 			activateCameras = false;
+            laser.bossHitted = true;
             player.transform.GetChild (0).GetChild (0).GetComponent<LookAtBoss> ().enabled = false;
 			switch (phase) 
 			{
@@ -91,11 +94,16 @@ public class BossSceneManager : MonoBehaviour {
             boss.GetComponent<Boss>().m_phase = phase;
             boss.GetComponent<Boss>().m_animator.SetInteger("Phase", phase);
 
+            if(phase == 3)
+            {
+                handsColliders[0].GetComponent<CapsuleCollider> ().enabled = false;
+                handsColliders[1].GetComponent<CapsuleCollider> ().enabled = false;
+            }
+
             while (!lastCorrutineHasEnded)
                 yield return 0;
 
-            
-		}
+        }
 	}
 
     private IEnumerator Platforms(int p, Laser laser)
