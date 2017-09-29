@@ -190,14 +190,16 @@ public class Dialogue : MonoBehaviour
 
             if (currentCharacterIndex < stringLength)
             {
-				/*if (Input.GetButton(m_inputNameButton))
+                if (Input.GetButton(m_inputNameButton))
                 {
-                    yield return new WaitForSeconds(SecondsBetweenCharacters*CharacterRateMultiplier);
+                    Debug.Log("YOLOOOOO");
+                    // yield return new WaitForSeconds(SecondsBetweenCharacters*CharacterRateMultiplier);
+                    yield return 0;
                 }
                 else
-                {*/
+                {
                     yield return new WaitForSeconds(SecondsBetweenCharacters);
-               // }
+                }
             }
             else
             {
