@@ -8,7 +8,20 @@ public class Dialogue : MonoBehaviour
 {
     private Text _textComponent;
 
-	public int bossEvent = -1; //if -1 means no event
+	//public int bossEvent = -1; //if -1 means no event
+    //public int kingEvent = -1;
+
+    public enum eventType { BOSS, KING, OTHER};
+    [System.Serializable]
+    public struct Event
+    {
+        public eventType etype;
+        public string[] animationVariable;
+        public int[] index;
+        public int counter;
+    }
+
+    public Event[] dialogueEvent;
     public string[] DialogueStrings;
 	public string[] DialogueStringsES;
 	public int[] indexCameras;
@@ -86,9 +99,29 @@ public class Dialogue : MonoBehaviour
 				{
 					DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
 					DialogueCamera [indexCameras [currentDialogueIndex]].gameObject.SetActive (true);
-					if (bossEvent == currentDialogueIndex)
-						GameObject.Find ("Boss").GetComponent<BossScene> ().enabled = true;
-				}
+
+                    for (int i = 0; i < dialogueEvent.Length; ++i)
+                    {
+                        if (dialogueEvent[i].index[dialogueEvent[i].counter] == currentDialogueIndex)
+                        {
+                            switch (dialogueEvent[i].etype)
+                            {
+                                case eventType.BOSS:
+                                    GameObject.Find("Boss").GetComponent<BossScene>().enabled = true;
+                                    break;
+
+                                case eventType.KING:
+                                    GameObject.Find("King").GetComponent<Animator>().SetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter], true);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            if(dialogueEvent[i].counter != dialogueEvent[i].index.Length - 1)
+                                dialogueEvent[i].counter++;
+                        }
+                    }
+                }
 
 				if(!spanish)
                 	StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
@@ -118,14 +151,24 @@ public class Dialogue : MonoBehaviour
         }
 		if(activeCameras)
 			DialogueCamera [indexCameras [currentDialogueIndex - 1]].gameObject.SetActive (false);
-		if (bossEvent != -1)
-			SceneManager.LoadScene (2);
+
+        playerManager.m_negatePlayerInput = false;
+        for (int i = 0; i < dialogueEvent.Length; ++i)
+        {
+            //if (bossEvent != -1)
+            if (dialogueEvent[i].etype == eventType.BOSS)
+            {
+                GameObject.Find("Boss").GetComponent<BossScene>().dialogueFinished = true;
+                playerManager.m_negatePlayerInput = true;
+            }
+                //SceneManager.LoadScene (2);
+        }
         HideIcons();
         _isEndOfDialogue = false;
         _isDialoguePlaying = false;
 		_isStringBeingRevealed = false;
 
-        playerManager.m_negatePlayerInput = false;
+        
 		this.gameObject.transform.parent.gameObject.SetActive(false);
 		if (endEvent)
 			endEvent.SetActive (true);
@@ -147,14 +190,16 @@ public class Dialogue : MonoBehaviour
 
             if (currentCharacterIndex < stringLength)
             {
-				/*if (Input.GetButton(m_inputNameButton))
+                if (Input.GetButton(m_inputNameButton))
                 {
-                    yield return new WaitForSeconds(SecondsBetweenCharacters*CharacterRateMultiplier);
+                    Debug.Log("YOLOOOOO");
+                    // yield return new WaitForSeconds(SecondsBetweenCharacters*CharacterRateMultiplier);
+                    yield return 0;
                 }
                 else
-                {*/
+                {
                     yield return new WaitForSeconds(SecondsBetweenCharacters);
-               // }
+                }
             }
             else
             {
