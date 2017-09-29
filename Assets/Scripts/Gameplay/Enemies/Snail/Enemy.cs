@@ -85,6 +85,10 @@ public class Enemy : Character {
     // Use this for initialization
     public override void Start()
     {
+        if (m_isSleeping)
+        {
+            m_sound.PlaySleep();
+        }
         base.Start();
     }
 
@@ -156,11 +160,15 @@ public class Enemy : Character {
 
     void OnTriggerEnter(Collider col)
     {
-		if (col.tag == "Player")
+        if (col.tag == "Player")
         {
             player = col.gameObject;
-            m_isSleeping = false;
-            m_animator.SetBool("Sleeping", false);
+            if (m_isSleeping)
+            {
+                m_sound.StopSleep();
+                m_isSleeping = false;
+                m_animator.SetBool("Sleeping", false);
+            }
             m_animator.speed = 1;
         }
     }
@@ -172,8 +180,12 @@ public class Enemy : Character {
 
     public void DamageManager(DamageData data)
     {
-        m_isSleeping = false;
-        m_animator.SetBool("Sleeping", false);
+        if (m_isSleeping)
+        {
+            m_sound.StopSleep();
+            m_isSleeping = false;
+            m_animator.SetBool("Sleeping", false);
+        }
         m_animator.speed = 1;
         m_health -= data.m_damage;
         if (m_health <= 0)

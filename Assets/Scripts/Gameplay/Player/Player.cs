@@ -551,9 +551,6 @@ public class Player : Character
 		{
 			if (col.gameObject.tag == "FlyingEnemy") 
 			{
-				EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
-                if (m_soundEffects != null)
-                    m_soundEffects.PlaySound("Scream");
                 m_damageData.m_recive = true;
                 m_damageData.m_damage = 20;
             }
@@ -635,12 +632,6 @@ public class Player : Character
     {
         m_justUnpaused = true;
         ResetInput();
-    }
-
-    public void PlaySound(string name)
-    {
-        if (m_soundEffects != null)
-            m_soundEffects.PlaySound(name);
     }
 
     private Vector3 GetDirectionRight()

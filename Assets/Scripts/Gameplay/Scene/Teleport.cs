@@ -11,15 +11,15 @@ public class Teleport : MonoBehaviour
     private int m_terrainLayer;
     private int m_generalLayer;
     private int m_watterLayer;
-    private SoundEffects sounds;
+    private TeleportsSoundEffects m_sounds;
 
 	void Start ()
     {
         m_playerLayer = LayerMask.NameToLayer("Player");
         m_terrainLayer = LayerMask.NameToLayer("Terrain");
         m_watterLayer = LayerMask.NameToLayer("HarmfulTerrain");
-        sounds = GetComponent<SoundEffects>();
-        sounds.PlaySoundLoop("Idle");
+        m_sounds = GetComponent<TeleportsSoundEffects>();
+        m_sounds.PlayIdle();
 	}
 
     private void OnTriggerEnter(Collider other)
@@ -38,7 +38,7 @@ public class Teleport : MonoBehaviour
             if (player.m_playerRespawn)
             {
                 player.m_playerRespawn.ReSpawn(destinyPosition);
-                sounds.PlaySound("Pass");
+                m_sounds.PlayPass();
             }
         }
     }

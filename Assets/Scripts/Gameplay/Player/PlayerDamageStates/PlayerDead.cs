@@ -34,8 +34,7 @@ public class PlayerDead : PlayerDamageStates
 
         if (m_player.m_soundEffects)
         {
-            m_player.m_soundEffects.StopSoundLoop("Scream");
-            m_player.m_soundEffects.PlaySound("Dead");
+            //m_player.m_soundEffects.PlaySound("Dead"); //TODO: CHECK SOUND
         }
             
         if (data.m_respawn)

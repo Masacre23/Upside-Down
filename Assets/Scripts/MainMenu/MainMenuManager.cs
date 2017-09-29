@@ -28,7 +28,7 @@ public class MainMenuManager : MonoBehaviour {
         waitAnyKey = firstTime;
         //m_panelAnyKey.SetActive(waitAnyKey);
         firstTime = false;
-		async = Application.LoadLevelAsync (Scenes.Level1);
+		async = Scenes.LoadSceneAsync (Scenes.Level1);
 		async.allowSceneActivation = false;
     }
 
@@ -71,11 +71,11 @@ public class MainMenuManager : MonoBehaviour {
                     m_eventSysterm.SetSelectedGameObject(m_selected);
                 else
                     m_selected = m_eventSysterm.currentSelectedGameObject;
-                SoundEffects sound = m_selected.GetComponent<SoundEffects>();
+                /*SoundEffects sound = m_selected.GetComponent<SoundEffects>();
                 if(sound != null)
                 {
                     sound.PlaySound("Change");
-                }
+                }*/ //TODO: CHECK SOUND
             }
         }
         

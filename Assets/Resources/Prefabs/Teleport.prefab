@@ -495,8 +495,8 @@ GameObject:
   - component: {fileID: 4046623244380984}
   - component: {fileID: 114104127998487172}
   - component: {fileID: 82474084973021644}
-  - component: {fileID: 114724634766607454}
   - component: {fileID: 135277535303336452}
+  - component: {fileID: 114395493818139622}
   m_Layer: 15
   m_Name: Teleport
   m_TagString: Untagged
@@ -1043,8 +1043,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1457497375993180}
-  m_LocalRotation: {x: 0.3428551, y: 0.6299531, z: -0.6040556, w: -0.34745708}
-  m_LocalPosition: {x: -0.44406906, y: 0.77, z: -4.0217314}
+  m_LocalRotation: {x: 0.012705456, y: -0.26929703, z: 0.0005353659, w: 0.96297324}
+  m_LocalPosition: {x: -1.9886672, y: 7.4516606, z: -1.4003998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4036473195921896}
@@ -1052,7 +1052,7 @@ Transform:
   - {fileID: 4964139240641502}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -328.48, y: -91.935005, z: -272.362}
+  m_LocalEulerAnglesHint: {x: -181.419, y: -211.252, z: -180.333}
 --- !u!4 &4063549514596762
 Transform:
   m_ObjectHideFlags: 1
@@ -1605,13 +1605,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1292868136225916}
-  m_LocalRotation: {x: 0.00000002980232, y: -0.9767142, z: -0.00000013411045, w: 0.21454473}
-  m_LocalPosition: {x: -0.7870308, y: 0.50000143, z: -1.4850655}
+  m_LocalRotation: {x: -1.9645083e-10, y: -0.9610994, z: -0.0000000018626449, w: 0.27620283}
+  m_LocalPosition: {x: -0.93, y: 0.5, z: -1.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4046623244380984}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -9.976001, y: -155.222, z: -3.7480001}
+  m_LocalEulerAnglesHint: {x: -9.976001, y: -147.93301, z: -3.7480001}
 --- !u!4 &4819568139255416
 Transform:
   m_ObjectHideFlags: 1
@@ -1723,7 +1723,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1079750532230416}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.038, y: 0.503, z: -0.031}
+  m_LocalPosition: {x: 0.14, y: 0.51, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4474967363067154}
@@ -3749,7 +3749,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_destiny: {fileID: 0}
   m_thisLocationSpawning: {fileID: 4797015579249316}
---- !u!114 &114724634766607454
+--- !u!114 &114395493818139622
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -3757,15 +3757,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1457497375993180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0588b83538c7d43b2dc23c4cf9ea7a, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a79df6a161d97e4cb9a4127c57caff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keys:
-  - Idle
-  - Pass
-  sounds:
-  - {fileID: 8300000, guid: 437b654d7ea5b8049be556b177836ba5, type: 3}
-  - {fileID: 8300000, guid: d214d4a07b596cc4ba52b7f8eecd993e, type: 3}
 --- !u!135 &135277535303336452
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -8951,7 +8945,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -1062033792
+  randomSeed: 436575520
   InitialModule:
     serializedVersion: 3
     enabled: 1

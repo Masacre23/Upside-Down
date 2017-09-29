@@ -7,11 +7,12 @@ public class SnowBallPoof : MonoBehaviour {
     public float m_disappearVelocity = 2.0f; 
 
     private bool m_disappear = false;
+    private ThrowableObject m_throwable;
 
     // Use this for initialization
     void Start()
     {
-
+        m_throwable = GetComponent<ThrowableObject>();
     }
 
     void Update()
@@ -32,10 +33,13 @@ public class SnowBallPoof : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        if(col.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if(col.collider.gameObject.layer == LayerMask.NameToLayer("Enemy") && !m_throwable.m_isCarring)
         {
             EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
             m_disappear = true;
+            SnowBallSoundEffects sound = GetComponent<SnowBallSoundEffects>();
+            if (sound)
+                sound.PlayCrash();
         }
     }
 }

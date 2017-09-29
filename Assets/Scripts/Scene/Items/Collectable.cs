@@ -40,11 +40,11 @@ public class Collectable : MonoBehaviour {
         int player = LayerMask.NameToLayer("Player");
         if (col.gameObject.layer == player) {
             EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
-            SoundEffects sound = col.gameObject.GetComponent<SoundEffects>();
+            /*SoundEffects sound = col.gameObject.GetComponent<SoundEffects>();
             if (sound != null)
             {
                 sound.PlaySound("Collectable");
-            }
+            }*/ // TODO: CHECK SOUND
             m_player = col.gameObject.GetComponent<Player>();
             HUDManager.GetCollectable();
         }

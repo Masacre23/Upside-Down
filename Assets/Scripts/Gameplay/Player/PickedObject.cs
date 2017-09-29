@@ -53,14 +53,6 @@ public class PickedObject : MonoBehaviour
 
         List<Collider> detectedObjects = new List<Collider>(Physics.OverlapSphere(detectionOrigin, m_objectDetectionRadius, m_layersPicking));
         detectedObjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(detectionOrigin, a.transform.position).CompareTo(Vector3.Distance(detectionOrigin, b.transform.position)); });
-        if (detectedObjects.Count > 0)
-        {
-            SoundEffects sound = m_player.GetComponent<SoundEffects>();
-            if (sound != null)
-            {
-                sound.PlaySound("GetObjects");
-            }
-        }
 
         for (int i = 0; i < detectedObjects.Count; i++)
         {
@@ -117,8 +109,6 @@ public class PickedObject : MonoBehaviour
     //This function actually throws a specific object in a specific direction with an specific force
     private void Throw()
     {
-        if (m_player)
-            m_player.PlaySound("ThrowObjects");
         if(m_pickedObject != null)
             m_pickedObject.ThrowObject(m_throwForce, m_throwHorizontalForce, m_player.transform.up,m_throwVector.normalized);
     }

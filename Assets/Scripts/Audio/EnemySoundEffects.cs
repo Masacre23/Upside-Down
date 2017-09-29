@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySoundEffects : SoundEffects {
-    public static string m_resourcesPath = "Audio/Enemy/";
-    public static string m_walkPath = "Walk/";
-    public static string m_crashPath = "Crash/";
+    private string m_resourcesPath = "Audio/Enemy/";
+    private string m_walkFile = "Walk";
+    private string m_crashFile = "Crash";
+    private string m_sleepFile = "Sleep";
 
     private AudioClip m_walk;
     private AudioClip m_crash;
+    private AudioClip m_sleep;
     private bool m_isWalking = false;
 
     void Start()
     {
-        m_walk = Resources.LoadAll<AudioClip>(m_resourcesPath+ m_walkPath)[0];
-        m_crash = Resources.LoadAll<AudioClip>(m_resourcesPath + m_crashPath)[0];
+        m_walk = Resources.Load<AudioClip>(m_resourcesPath+ m_walkFile);
+        m_crash = Resources.Load<AudioClip>(m_resourcesPath + m_crashFile);
+        m_sleep = Resources.Load<AudioClip>(m_resourcesPath + m_sleepFile);
     }
 
     public void PlayWalk()
@@ -33,6 +36,16 @@ public class EnemySoundEffects : SoundEffects {
             m_isWalking = false;
             base.StopSoundLoop();
         }
+    }
+
+    public void PlaySleep()
+    {
+        base.PlaySoundLoop(m_sleep);
+    }
+
+    public void StopSleep()
+    {
+        base.StopSoundLoop();
     }
 
     public void PlayCrash()

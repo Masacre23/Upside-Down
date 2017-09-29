@@ -27,6 +27,12 @@ public class Scenes : MonoBehaviour {
         SceneManager.LoadScene(sceneIndex);
     }
 
+    public static AsyncOperation LoadSceneAsync(int sceneIndex)
+    {
+        currentScene = sceneIndex;
+        return SceneManager.LoadSceneAsync(sceneIndex);
+    }
+
     public static int CurrentScene
     {
         get

@@ -203,13 +203,9 @@ public class ThrowableObject : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        SoundEffects sound = GetComponent<SoundEffects>();
-        if (sound != null)
-        {
-            sound.PlaySound("HitSomething");
-			if(transform.tag != "EnemySnail")
+        if(transform.tag != "EnemySnail")
 				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
-        }
+
         int water = LayerMask.NameToLayer("HarmfulTerrain");
         int player = LayerMask.NameToLayer("Player");
         int enemy = LayerMask.NameToLayer("Enemy");
