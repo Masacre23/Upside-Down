@@ -398,8 +398,13 @@ public class Player : Character
                 Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
                 if (enemy != null && !enemy.m_enemyCollider.is_attacking)
                 {
+                    enemy.m_sound.PlayCrash();
                     enemy.Stun();
                 }
+            }else
+            {
+                if (m_soundEffects)
+                    m_soundEffects.PlayFall();
             }
 
             m_tagGround = hitInfo.collider.tag;

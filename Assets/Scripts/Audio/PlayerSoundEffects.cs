@@ -60,19 +60,16 @@ public class PlayerSoundEffects : SoundEffects {
 
     public void PlayFootStep()
     {
-        Debug.Log(m_terrainIndex);
         base.PlaySound(m_fxSounds[m_terrains[m_terrainIndex]].GetFootSteep());
     }
 
     public void PlayJump()
     {
-        Debug.Log(m_terrainIndex);
         base.PlaySound(m_fxSounds[m_terrains[m_terrainIndex]].GetJump());
     }
 
     public void PlayFall()
     {
-        Debug.Log(m_terrainIndex);
         base.PlaySound(m_fxSounds[m_terrains[m_terrainIndex]].GetFall());
     }
 

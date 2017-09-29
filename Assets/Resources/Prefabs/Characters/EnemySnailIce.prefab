@@ -175,12 +175,12 @@ GameObject:
   - component: {fileID: 114666747388420396}
   - component: {fileID: 114193801501227358}
   - component: {fileID: 114919453644291758}
-  - component: {fileID: 114487566056504750}
   - component: {fileID: 82861667742098438}
   - component: {fileID: 114652371633094634}
   - component: {fileID: 114278220942476368}
   - component: {fileID: 114481141148524836}
   - component: {fileID: 114978949669252892}
+  - component: {fileID: 114822412569681076}
   m_Layer: 10
   m_Name: EnemySnailIce
   m_TagString: EnemySnail
@@ -2919,23 +2919,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69616177be2e40f459e29de4a17033ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114487566056504750
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1092291310857354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0588b83538c7d43b2dc23c4cf9ea7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keys:
-  - SplashWater
-  - Walk
-  sounds:
-  - {fileID: 8300000, guid: f70fa3176a2cfe94f98c2cf3d601faff, type: 3}
-  - {fileID: 8300000, guid: 5c8a2cf655c8f1b4b9a42bf4678a826c, type: 3}
 --- !u!114 &114652371633094634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2988,9 +2971,23 @@ MonoBehaviour:
   m_enemyArea: {fileID: 0}
   m_wasStunned: 0
   m_enemyCollider: {fileID: 0}
+  m_sound: {fileID: 0}
   m_type: 0
   hitDirection: 0
   MyNormal: {x: 0, y: 0, z: 0}
+--- !u!114 &114822412569681076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1092291310857354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c7b2628027d7c4b81031d085f5758b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys: []
+  sounds: []
 --- !u!114 &114919453644291758
 MonoBehaviour:
   m_ObjectHideFlags: 1

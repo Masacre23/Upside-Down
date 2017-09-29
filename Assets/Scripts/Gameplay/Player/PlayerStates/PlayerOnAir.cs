@@ -48,8 +48,5 @@ public class PlayerOnAir : PlayerStates
     {
         EffectsManager.Instance.GetEffect(m_player.m_jumpClouds, m_player.m_smoke);
         m_player.m_runClouds.GetComponent<ParticleSystem>().Play();
-
-        if (m_player.m_soundEffects)
-            m_player.m_soundEffects.PlayFall();
     }
 }

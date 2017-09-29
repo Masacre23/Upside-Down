@@ -32,6 +32,7 @@ public class Enemy : Character {
     [HideInInspector]public bool m_wasStunned = false;
     private bool m_playerDetected = true;
     public EnemyAttacCollider m_enemyCollider;
+    [HideInInspector]public EnemySoundEffects m_sound;
 
     public enum Types
     {
@@ -75,6 +76,8 @@ public class Enemy : Character {
         m_damageData = new DamageData();
 
         m_enemyCollider = GetComponentInChildren<EnemyAttacCollider>();
+
+        m_sound = GetComponent<EnemySoundEffects>();
 
         base.Awake();
     }

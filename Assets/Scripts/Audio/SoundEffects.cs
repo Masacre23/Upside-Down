@@ -36,6 +36,23 @@ public class SoundEffects : MonoBehaviour {
         m_audio.PlayOneShot(clip, volume);
     }
 
+    public void PlaySoundLoop(AudioClip clip)
+    {
+        AudioManager manager = AudioManager.Instance();
+        float volume = 1.0f;
+        if (manager != null)
+            volume = manager.m_soundVolume;
+        m_audio.clip = clip;
+        m_audio.loop = true;
+        m_audio.Play();
+        m_audio.volume = volume;
+    }
+
+    public void StopSoundLoop()
+    {
+        m_audio.Stop();
+    }
+
     public void PlaySound(string sound)
     {
         AudioManager manager = AudioManager.Instance();

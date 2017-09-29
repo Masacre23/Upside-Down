@@ -39,8 +39,12 @@ public class EnemyFollowing : EnemyStates
                 if (Physics.Raycast(transform.position, transform.forward, out hit, 0.5f) && hit.collider.tag == "Player") // Delete it if you want to add attack rate
                     m_enemy.m_animator.SetBool("CanAttack", true);
                 m_enemy.m_animator.speed = 1;
+                m_enemy.m_sound.PlayWalk();
                 Move();
                 Attack();
+            }else
+            {
+                m_enemy.m_sound.StopWalk();
             }
         }
 
@@ -75,22 +79,12 @@ public class EnemyFollowing : EnemyStates
 
 		radiusCollider = m_enemy.GetComponent<SphereCollider>().radius;
 		m_enemy.GetComponent<SphereCollider>().radius = 0;
-
-        SoundEffects sound = m_enemy.GetComponent<SoundEffects>();
-        if(sound != null)
-        {
-            sound.PlaySoundLoop("Walk");
-        }
 	}
 
 	public override void OnExit()
 	{
 		m_enemy.GetComponent<SphereCollider>().radius = radiusCollider;
-        SoundEffects sound = m_enemy.GetComponent<SoundEffects>();
-        if (sound != null)
-        {
-            sound.StopSoundLoop("Walk");
-        }
+        m_enemy.m_sound.StopWalk();
     }
 
 	public void Move()
