@@ -6,6 +6,7 @@ using UnityEngine;
 //It inherits from Character.
 public class Player : Character
 {
+    [Header("Movement factors")]
     public float m_speedFactor = 2.0f;
     public float m_carryingFactor = 1.0f;
 
@@ -22,13 +23,14 @@ public class Player : Character
 
     [HideInInspector] public bool m_throwAnimation = false;
 
+    [Header("Input bools")]
     public bool m_negatePlayerInput = false;
-
     public bool m_savedPlayerInput = false;
     public bool m_paused = false;
     public bool m_justUnpaused = false;
 
     //Variables regarding player state
+    [Header("Player States")]
     public PlayerStates m_currentState;
     [HideInInspector] public PlayerStates m_grounded;
     [HideInInspector] public PlayerStates m_onAir;
@@ -48,10 +50,11 @@ public class Player : Character
     [HideInInspector] public Vector3 m_damageForce;
 
     //General Info variables
-    public Transform m_modelTransform;
+    [HideInInspector] public Transform m_modelTransform;
     [HideInInspector] public VariableCam m_camController;
 
     //Variables regarding player movement
+    [Header("Movement")]
     public ZoneSpace m_currentZone = null;
     public bool m_freezeMovement;
     public bool m_rotationFollowPlayer;
@@ -75,6 +78,7 @@ public class Player : Character
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
 
     //Variables regarding player's throw of objects
+    [Header("Throw variables")]
     public float m_throwDetectionRange = 20.0f;
     public float m_throwForce = 2.0f;
     public float m_angleEnemyDetection = 30.0f;
@@ -84,15 +88,11 @@ public class Player : Character
     [HideInInspector] public PickedObject m_pickedObject;
 
 	//Effects
-	public GameObject m_jumpClouds;
-	public GameObject m_runClouds;
-    public GameObject m_hit;
-    public Transform m_smoke;
-
+    [Header("Others")]
     [HideInInspector] public EnemyDetectorByLayer m_enemyDetector;
     [HideInInspector] public float m_inputSpeed;
-    float m_runSpeed;
-    float m_carryingSpeed;
+    private float m_runSpeed;
+    private float m_carryingSpeed;
 
     public PlayerSoundEffects m_soundEffects;
 

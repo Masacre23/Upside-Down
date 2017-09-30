@@ -40,13 +40,9 @@ public class PlayerOnAir : PlayerStates
     public override void OnEnter()
     {
         m_doubleJump = false;
-
-        m_player.m_runClouds.GetComponent<ParticleSystem>().Stop();
     }
 
     public override void OnExit()
     {
-        EffectsManager.Instance.GetEffect(m_player.m_jumpClouds, m_player.m_smoke);
-        m_player.m_runClouds.GetComponent<ParticleSystem>().Play();
     }
 }

@@ -40,8 +40,6 @@ public class ThrowableObject : MonoBehaviour
 
     float m_timeRotating = 0.0f;
 
-    public GameObject m_prefabHit1;
-
     // Use this for initialization
     void Start()
     {
@@ -57,8 +55,6 @@ public class ThrowableObject : MonoBehaviour
         m_trail = GetComponent<TrailRenderer>();
 
         m_rigidBody.freezeRotation = true;
-
-        m_prefabHit1 = (GameObject)Resources.Load("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
     }
 
     // Update is called once per frame
@@ -203,9 +199,6 @@ public class ThrowableObject : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if(transform.tag != "EnemySnail")
-				EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position, transform.up, null);
-
         int water = LayerMask.NameToLayer("HarmfulTerrain");
         int player = LayerMask.NameToLayer("Player");
         int enemy = LayerMask.NameToLayer("Enemy");

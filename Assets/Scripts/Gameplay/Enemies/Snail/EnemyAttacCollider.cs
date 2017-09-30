@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyAttacCollider : MonoBehaviour {
 
-    private GameObject m_prefabHit1;
     private Animator m_animator;
     private int m_playerLayer;
     private int m_enemyAttackLayer;
@@ -15,7 +14,6 @@ public class EnemyAttacCollider : MonoBehaviour {
     void Start () {
         m_animator = GetComponentInParent<Animator>();
         Enemy enemy = GetComponentInParent<Enemy>();
-        m_prefabHit1 = enemy.m_prefabHit1;
         m_playerLayer = LayerMask.NameToLayer("Player");
         m_enemyAttackLayer = LayerMask.NameToLayer("EnemyAttack");
 
@@ -43,12 +41,6 @@ public class EnemyAttacCollider : MonoBehaviour {
             Vector3 diff = transform.position - col.transform.position;
             float distance = diff.magnitude;
             Vector3 dir = diff / distance;
-
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, dir, out hit, 1f))
-            {
-                EffectsManager.Instance.GetEffect(m_prefabHit1, col.transform.position + transform.up / 2 + col.transform.forward / 2, transform.up, null);
-            }
         }
     }
 }
