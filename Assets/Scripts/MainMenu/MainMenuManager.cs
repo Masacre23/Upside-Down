@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour {
     public GameObject m_panelAnyKey;
     public VideoPlayer m_video;
 
+    private UISoundEffects m_sound;
     private GameObject m_selected;
     private bool showLogo = true;
     private bool waitAnyKey = false;
@@ -20,6 +21,7 @@ public class MainMenuManager : MonoBehaviour {
 	public AsyncOperation async;
     private void Start()
     {
+        m_sound = GetComponent<UISoundEffects>();
         m_selected = m_eventSysterm.firstSelectedGameObject;
         showLogo = firstTime;
         m_canvasLogo.SetActive(showLogo);
@@ -71,11 +73,10 @@ public class MainMenuManager : MonoBehaviour {
                     m_eventSysterm.SetSelectedGameObject(m_selected);
                 else
                     m_selected = m_eventSysterm.currentSelectedGameObject;
-                /*SoundEffects sound = m_selected.GetComponent<SoundEffects>();
-                if(sound != null)
+                if(m_sound != null)
                 {
-                    sound.PlaySound("Change");
-                }*/ //TODO: CHECK SOUND
+                    m_sound.PlayChange();
+                }
             }
         }
         

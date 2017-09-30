@@ -25,7 +25,6 @@ public class VideoPlayer : MonoBehaviour {
             if (m_duration <= 0 || (m_duration < 23 && CrossPlatformInputManager.GetButtonDown("Jump")))
             {
                 ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
-                //Scenes.LoadScene(Scenes.Level1);
 				menuManager.GetComponent<MainMenuManager> ().async.allowSceneActivation = true;
                 AudioManager.Instance().PlayMusic(m_gameMusic, 1.0f);
             }

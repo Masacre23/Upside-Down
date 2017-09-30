@@ -114,11 +114,6 @@ public class Character : MonoBehaviour
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
-        /*SoundEffects m_soundEffects = GetComponent<SoundEffects>();
-        if(m_soundEffects != null)
-        {
-            m_soundEffects.PlaySound("Jump");
-        }*/ //TODO: CHECK SOUND
     }
 
     //This function should be called while character is on air.

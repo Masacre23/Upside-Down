@@ -27,12 +27,16 @@ public class RobotMovement : MonoBehaviour {
 	public float damp = 2.0f;
 
 	GameObject target;
+    LazerSoundEffects m_sound;
 
 	// Use this for initialization
 	void Start () {
 		startPoint = transform.position;
 		endPoint = transform.position + direction * distance;
 		target = GameObject.Find ("Player");
+        m_sound = GetComponent<LazerSoundEffects>();
+        if (m_sound && moveType != movement.TURRET)
+            m_sound.PlayLazer();
 	}
 	
 	// Update is called once per frame
