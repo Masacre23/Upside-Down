@@ -7,7 +7,8 @@ public class PlayerAnimationEvents : MonoBehaviour
     Player m_player;
 
     [Header("Snow on foot")]
-    public GameObject m_prefabSnowOnFeet;
+    public GameObject m_prefabSnowBackOnFeet;
+    public GameObject m_prefabSnowAroundOnFeet;
     public Transform m_leftFootTransform;
     public Transform m_rightFootTransform;
 
@@ -46,22 +47,50 @@ public class PlayerAnimationEvents : MonoBehaviour
         m_player.m_pickedObject.ThrowObjectNow();
     }
 
-    public void AnimationLeftFootOnGround()
+    public void AnimationLeftFootWithSnow()
     {
         m_player.m_soundEffects.PlayFootStep();   
-        if (SetFootprint(m_leftFootprint, m_leftFootFrontTransform, m_leftFootBackTransform) && m_player.m_inputSpeed > 0.5)
+        if (SetFootprint(m_leftFootprint, m_leftFootFrontTransform, m_leftFootBackTransform))
         {
-            EffectsManager.Instance.GetEffect(m_prefabSnowOnFeet, m_leftFootTransform);
+            EffectsManager.Instance.GetEffect(m_prefabSnowBackOnFeet, m_leftFootTransform);
         }
     }
 
-    public void AnimationRightFootOnGround()
+    public void AnimationRightFootWithSnow()
     {
         m_player.m_soundEffects.PlayFootStep(); 
-        if (SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform) && m_player.m_inputSpeed > 0.5)
+        if (SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform))
         {
-            EffectsManager.Instance.GetEffect(m_prefabSnowOnFeet, m_rightFootTransform);
+            EffectsManager.Instance.GetEffect(m_prefabSnowBackOnFeet, m_rightFootTransform);
         }
+    }
+
+    public void AnimationLeftFoot()
+    {
+        m_player.m_soundEffects.PlayFootStep();
+        if (SetFootprint(m_leftFootprint, m_leftFootFrontTransform, m_leftFootBackTransform) && m_player.m_inputSpeed > 0.25)
+        {
+            EffectsManager.Instance.GetEffect(m_prefabSnowAroundOnFeet, m_leftFootTransform);
+        }
+    }
+
+    public void AnimationRightFoot()
+    {
+        m_player.m_soundEffects.PlayFootStep();
+        if (SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform) && m_player.m_inputSpeed > 0.25)
+        {
+            EffectsManager.Instance.GetEffect(m_prefabSnowAroundOnFeet, m_rightFootTransform);
+        }
+    }
+
+    public void AnimationLeftFootprint()
+    {
+        SetFootprint(m_leftFootprint, m_leftFootFrontTransform, m_leftFootBackTransform);
+    }
+
+    public void AnimationRightFootprint()
+    {
+        SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform);
     }
 
     public void AnimationOnFalling()

@@ -999,6 +999,7 @@ GameObject:
   - component: {fileID: 4700149599958874}
   - component: {fileID: 95291070827406156}
   - component: {fileID: 114291606028190588}
+  - component: {fileID: 114341727340632470}
   m_Layer: 27
   m_Name: Anm_CHARACTERENEMY1_Attack03
   m_TagString: EnemySnail
@@ -1335,6 +1336,21 @@ GameObject:
   - component: {fileID: 199677089369747544}
   m_Layer: 10
   m_Name: Star 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1926586463432118
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4572934720762578}
+  m_Layer: 0
+  m_Name: SnowTransform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2016,6 +2032,19 @@ Transform:
   m_Father: {fileID: 4520130863248390}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!4 &4572934720762578
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1926586463432118}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0.2238}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4959099439589604}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4591670157468376
 Transform:
   m_ObjectHideFlags: 1
@@ -2634,6 +2663,7 @@ Transform:
   - {fileID: 4699571555565712}
   - {fileID: 4694031237698916}
   - {fileID: 4885124024896664}
+  - {fileID: 4572934720762578}
   m_Father: {fileID: 4700149599958874}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -41.78762, y: 0, z: 0}
@@ -2906,6 +2936,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75f935898e4d79447bf6928919e02be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114341727340632470
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1605770425995474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c409ed252a5e764fa0e233e5ab654f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_snowPrefab: {fileID: 1863850911704736, guid: 6a443d6d2b5179741846ac75f9376a02,
+    type: 2}
+  m_prefabTransform: {fileID: 4572934720762578}
 --- !u!114 &114481141148524836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2949,8 +2993,6 @@ MonoBehaviour:
   m_rigidBody: {fileID: 54564652599057642}
   m_capsule: {fileID: 0}
   m_capsuleHeight: 0
-  m_prefabHit: {fileID: 1775884164626752, guid: e642f288e0b983f4b963b76dc66944d7,
-    type: 2}
   m_currentState: {fileID: 114652371633094634}
   m_Idle: {fileID: 114652371633094634}
   m_Following: {fileID: 114278220942476368}
