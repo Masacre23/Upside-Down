@@ -90,7 +90,7 @@ public class Player : Character
     public Transform m_smoke;
 
     [HideInInspector] public EnemyDetectorByLayer m_enemyDetector;
-    float m_inputSpeed;
+    [HideInInspector] public float m_inputSpeed;
     float m_runSpeed;
     float m_carryingSpeed;
 

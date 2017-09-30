@@ -5,6 +5,11 @@ using UnityEngine;
 public class PlayerAnimationEvents : MonoBehaviour
 {
     Player m_player;
+    public GameObject m_prefabSnowOnFeet;
+    public Transform m_leftFootTransform;
+    public Transform m_rightFootTransform;
+    public GameObject m_leftFootprint;
+    public GameObject m_rightFootprint;
 
 	// Use this for initialization
 	void Start ()
@@ -22,8 +27,17 @@ public class PlayerAnimationEvents : MonoBehaviour
         m_player.m_pickedObject.ThrowObjectNow();
     }
 
-    public void AnimationFeetOnGround()
+    public void AnimationLeftFootOnGround()
     {
         m_player.m_soundEffects.PlayFootStep();
+        if (m_player.m_inputSpeed > 0.5)
+            EffectsManager.Instance.GetEffect(m_prefabSnowOnFeet, m_leftFootTransform);
+    }
+
+    public void AnimationRightFootOnGround()
+    {
+        m_player.m_soundEffects.PlayFootStep();
+        if (m_player.m_inputSpeed > 0.5)
+            EffectsManager.Instance.GetEffect(m_prefabSnowOnFeet, m_rightFootTransform);
     }
 }
