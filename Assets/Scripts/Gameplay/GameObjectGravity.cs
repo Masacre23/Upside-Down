@@ -27,7 +27,7 @@ public class GameObjectGravity : MonoBehaviour
 
     public bool m_intoWater = false;
 
-    public bool m_getStrongestGravity = true;
+    public bool m_getStrongestGravity = false;
 
     //This should be the same for all gameobjects
     static float m_gravityStrength = -19.0f;

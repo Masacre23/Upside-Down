@@ -160,6 +160,7 @@ public class ThrowableObject : MonoBehaviour
         m_canBePicked = false;
 
         m_objectGravity.m_ignoreGravity = true;
+        m_objectGravity.m_getStrongestGravity = false;
         if (m_rigidBody)
             m_rigidBody.isKinematic = true;
         for (int i = 0; i < m_collider.Length; i++)
