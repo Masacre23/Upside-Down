@@ -20,7 +20,7 @@ public class Player : Character
     bool m_aimObject;
     bool m_returnCam;
 
-    bool m_throwAnimation = false;
+    [HideInInspector] public bool m_throwAnimation = false;
 
     public bool m_negatePlayerInput = false;
 
@@ -490,16 +490,6 @@ public class Player : Character
             }
         //}
             
-    }
-
-    public void ClearThrowAnimation()
-    {
-        m_throwAnimation = false;
-    }
-
-    public void ThrowObjectNow()
-    {
-        m_pickedObject.ThrowObjectNow();
     }
 
     public GameObject FixingOnEnemy(Transform origin, float angleDetection)

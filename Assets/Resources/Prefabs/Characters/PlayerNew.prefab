@@ -804,6 +804,7 @@ GameObject:
   - component: {fileID: 114401963694654250}
   - component: {fileID: 82004322038483020}
   - component: {fileID: 114305159177427238}
+  - component: {fileID: 114504875569775428}
   m_Layer: 9
   m_Name: PlayerNew
   m_TagString: Player
@@ -5101,8 +5102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71566d81fb579bf4186f56cf33546fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keys: []
-  sounds: []
 --- !u!114 &114385715964675476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5151,6 +5150,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   fadePanel: {fileID: 0}
+--- !u!114 &114504875569775428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1315140804175326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd4f377374f51474fa17785b0141de31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114513896997388278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5175,6 +5185,7 @@ MonoBehaviour:
   m_prefabHit1: {fileID: 0}
   m_speedFactor: 2
   m_carryingFactor: 1
+  m_throwAnimation: 0
   m_negatePlayerInput: 0
   m_savedPlayerInput: 0
   m_paused: 0
