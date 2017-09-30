@@ -121,6 +121,8 @@ GameObject:
   - component: {fileID: 4687940597070054}
   - component: {fileID: 54279723169857370}
   - component: {fileID: 114059315295250210}
+  - component: {fileID: 82335115821772528}
+  - component: {fileID: 114195942912260878}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
@@ -309,6 +311,92 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &82335115821772528
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1492823762314214}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 5
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0.04239544
+      value: 1.0056123
+      inSlope: -0.18065111
+      outSlope: -0.18065111
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.31711036
+      value: 0.5283164
+      inSlope: -2.727156
+      outSlope: -2.727156
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -0.05001994
+      outSlope: -0.05001994
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!108 &108757422751852758
 Light:
   m_ObjectHideFlags: 1
@@ -362,7 +450,17 @@ MonoBehaviour:
   distance: 4
   rotationSpeed: 4
   damp: 1
-  dirRot: 1
+--- !u!114 &114195942912260878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1492823762314214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a53135344e631409e38ba453d9bee3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114426108904774006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -380,6 +478,12 @@ MonoBehaviour:
   impactEffect: {fileID: 198409847109726188}
   dinamicLaser: 1
   particleRate: 0.05
+  drawAlways: 0
+  maxTime: 0
+  time: 0
+  bossSceneManager: {fileID: 0}
+  bossHitted: 0
+  hitting: 0
 --- !u!120 &120307984632020124
 LineRenderer:
   m_ObjectHideFlags: 1
