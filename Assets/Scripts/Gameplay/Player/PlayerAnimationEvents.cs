@@ -126,7 +126,7 @@ public class PlayerAnimationEvents : MonoBehaviour
         {
             Vector3 forward = frontHit.point - backHit.point;
             Vector3 middlePoint = backHit.point + forward / 2.0f;
-            EffectsManager.Instance.GetEffect(prefab, middlePoint + transform.up * m_distanceFromFloor, transform.up, forward.normalized);
+            EffectsManager.Instance.GetEffect(prefab, middlePoint + transform.up * m_distanceFromFloor, transform.up, forward.normalized, frontHit.transform);
             return true;
         }
 
