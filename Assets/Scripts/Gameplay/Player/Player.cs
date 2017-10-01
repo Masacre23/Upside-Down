@@ -82,7 +82,6 @@ public class Player : Character
     public float m_throwDetectionRange = 20.0f;
     public float m_throwForce = 2.0f;
     public float m_angleEnemyDetection = 30.0f;
-    [HideInInspector] public Transform m_throwAimOrigin;
 
     //Variables regarding player picking up objects
     [HideInInspector] public PickedObject m_pickedObject;
@@ -150,7 +149,6 @@ public class Player : Character
 
         m_pickedObject = GetComponent<PickedObject>();
         m_enemyDetector = GetComponentInChildren<EnemyDetectorByLayer>();
-        m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
         base.Awake();
     }
 
@@ -438,55 +436,24 @@ public class Player : Character
         m_animator.SetBool("Throwing", m_throwAnimation );
     }
 
-    public bool PickObjects()
+    public bool TryToPick()
     {
-        bool pickedAny = false;
-
         if (m_pickedObject.CanPickMoreObjects())
         {
-            pickedAny = m_pickedObject.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
-        }
-
-        return pickedAny;           
-    }
-
-    public void ThrowObjectsThirdPerson(bool hasThrown)
-    {
-        if (hasThrown)
-        {
-            m_pickedObject.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
-            m_throwAnimation = true;
-        }   
-    }
-
-    public GameObject FixingOnEnemy(Transform origin, float angleDetection)
-    {
-        GameObject closestTarget = null;
-        float closestDistance = 10000.0f;
-        foreach (Enemy enemy in m_enemyDetector.m_enemies)
-        {
-            if (enemy.m_currentState != enemy.m_Dead)
+            if (m_pickedObject.FindObjectToPick(transform.position + transform.up * (m_capsuleHeight / 2)))
             {
-                GameObject target = enemy.gameObject;
-                if (!m_pickedObject.EnemyIsFloating(target))
-                {
-                    Vector3 toTarget = target.transform.position - origin.position;
-                    float distance = toTarget.sqrMagnitude;
-
-                    RaycastHit hit;
-                    bool hasHit = Physics.Raycast(origin.position, toTarget.normalized, out hit, toTarget.magnitude);
-                    //float thisAngle = Vector3.Angle(origin.forward, toTarget);
-                    //if (thisAngle < angleDetection && distance < closestDistance)
-                    if (distance < closestDistance && hasHit && hit.transform.gameObject == target)
-                    {
-                        closestDistance = distance;
-                        closestTarget = target;
-                    }
-                }
+                m_carrying.m_pickingOrThrowing = true;
+                return true;
             }
         }
 
-        return closestTarget;
+        return false;           
+    }
+
+    public void ThrowObjectsThirdPerson()
+    {
+        m_pickedObject.SetThrowingForces(m_throwForce);
+        m_throwAnimation = true;
     }
 
     void OnCollisionEnter(Collision col)

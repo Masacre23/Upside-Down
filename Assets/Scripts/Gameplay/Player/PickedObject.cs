@@ -25,10 +25,8 @@ public class PickedObject : MonoBehaviour
 	}
 
     // This functions serves to pick the nearest objects (that are in m_layerPicking mask) to the player
-    public bool PickObjects(Vector3 detectionOrigin)
+    public bool FindObjectToPick(Vector3 detectionOrigin)
     {
-        bool pickedAny = false;
-
         List<Collider> detectedObjects = new List<Collider>(Physics.OverlapSphere(detectionOrigin, m_objectDetectionRadius, m_layersPicking));
         detectedObjects.Sort(delegate (Collider a, Collider b) { return Vector3.Distance(detectionOrigin, a.transform.position).CompareTo(Vector3.Distance(detectionOrigin, b.transform.position)); });
 
@@ -38,13 +36,14 @@ public class PickedObject : MonoBehaviour
             if (throwableObject && throwableObject.m_canBePicked)
             {
                 m_pickedObject = throwableObject;
-                m_pickedObject.BeginCarried(m_pickedObjectPosition, this);
-                pickedAny = true;
-                break;
+                Vector3 forwardForPlayer = m_pickedObject.transform.position - m_player.transform.position;
+                forwardForPlayer -= Vector3.Dot(forwardForPlayer, m_player.transform.up) * m_player.transform.up;
+                m_player.RotateModel(forwardForPlayer.normalized);
+                return true;
             }
         }
 
-        return pickedAny;
+        return false;
     }
 
     //This function is called to drop the carried object
@@ -54,41 +53,23 @@ public class PickedObject : MonoBehaviour
             m_pickedObject.StopCarried();
     }
 
-    //This function is called to throw an object to a target
-    public void ThrowObjectToTarget(RaycastHit target, Transform playerOrigin, float throwForce)
+    //This function is called to throw an object in a direction
+    public void SetThrowingForces(float throwForce)
     {
-        Vector3 playerToTarget = target.point - playerOrigin.position;
-
-        m_player.RotateModel(playerToTarget.normalized);
-
-        m_throwVector = target.point - m_pickedObject.transform.position;
         m_throwForce = throwForce;
         m_throwHorizontalForce = m_horizontalThrowForceDefault;
     }
 
-    //This function is called to throw an object in a direction
-    public void ThrowObjectToDirection(Transform playerOrigin, float maxAimLength, float throwForce)
+    public void PickObjectNow()
     {
-        Vector3 playerToTarget = playerOrigin.forward * maxAimLength;
-        Vector3 finalPosition = playerOrigin.position + playerToTarget;
-
-        m_player.RotateModel(playerToTarget.normalized);
-
-        m_throwVector = finalPosition - m_pickedObject.transform.position;
-        m_throwForce = throwForce;
-        m_throwHorizontalForce = m_horizontalThrowForceDefault;
+        if (m_pickedObject)
+            m_pickedObject.BeginCarried(m_pickedObjectPosition, this);
     }
 
     public void ThrowObjectNow()
     {
-        Throw();
-    }
-
-    //This function actually throws a specific object in a specific direction with an specific force
-    private void Throw()
-    {
-        if(m_pickedObject != null)
-            m_pickedObject.ThrowObject(m_throwForce, m_throwHorizontalForce, m_player.transform.up,m_throwVector.normalized);
+        if (m_pickedObject)
+            m_pickedObject.ThrowObject(m_throwForce, m_throwHorizontalForce, m_player.transform.up, m_player.m_modelTransform.forward);
     }
 
     //This function serves to free a space for picking objects, called when they are thrown or fall

@@ -33,7 +33,7 @@ public class PlayerGrounded : PlayerStates
             m_player.Move(timeStep);
             if (pickObjects)
             {
-                if (m_player.PickObjects())
+                if (m_player.TryToPick())
                 {
                     m_player.m_currentState = m_player.m_carrying;
                     ret = true;

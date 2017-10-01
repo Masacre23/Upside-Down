@@ -37,6 +37,12 @@ public class PlayerAnimationEvents : MonoBehaviour
         m_player = GetComponent<Player>();
 	}
 
+    public void AnimationPickObject()
+    {
+        m_player.m_carrying.m_pickingOrThrowing = false;
+        m_player.m_pickedObject.PickObjectNow();
+    }
+
     public void AnimationClearThrow()
     {
         m_player.m_throwAnimation = false;
@@ -45,6 +51,11 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AnimationThrowObject()
     {
         m_player.m_pickedObject.ThrowObjectNow();
+    }
+
+    public void AnimationExitThrowing()
+    {
+        m_player.m_carrying.m_hasThrown = true;
     }
 
     public void AnimationLeftFootWithSnow()

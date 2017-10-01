@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerCarrying : PlayerStates
 {
-
+    public bool m_pickingOrThrowing = false;
+    public bool m_hasThrown = false;
     public float m_floatingHeight = 1.0f;
 
     public override void Start()
@@ -21,18 +22,27 @@ public class PlayerCarrying : PlayerStates
         m_player.CheckPlayerStopped(axisHorizontal, axisVertical);
 
         m_player.UpdateUp();
-        m_player.Move(timeStep);
 
-        m_player.ThrowObjectsThirdPerson(pickObjects);
-        if (pickObjects)
+        if (!m_pickingOrThrowing)
         {
-            m_player.m_currentState = m_player.m_grounded;
-            ret = true;
+            m_player.Move(timeStep);
+
+            if (pickObjects)
+            {
+                m_player.ThrowObjectsThirdPerson();
+                m_pickingOrThrowing = true;
+            }
         }
-                
+
         if (!m_player.CheckGroundStatus())
         {
             m_player.m_currentState = m_player.m_onAir;
+            ret = true;
+        }
+
+        if (m_hasThrown)
+        {
+            m_player.m_currentState = m_player.m_grounded;
             ret = true;
         }
 
@@ -43,7 +53,9 @@ public class PlayerCarrying : PlayerStates
     {
         m_player.m_rotationFollowPlayer = true;
         m_player.m_freezeMovement = false;
-        
+
+        m_hasThrown = false;
+
         m_player.m_jumpMovement = Vector3.zero;
         m_player.m_rigidBody.velocity = Vector3.zero;
         m_player.m_animator.SetBool("Charging", true);
