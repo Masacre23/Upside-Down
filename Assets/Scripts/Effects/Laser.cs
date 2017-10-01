@@ -16,16 +16,20 @@ public class Laser : MonoBehaviour {
 	public GameObject bossSceneManager;
 	public bool bossHitted = false;
 	public bool hitting = false;
+    private LazerSoundEffects m_sound;
+    private bool m_on = false;
 
 	// Use this for initialization
 	void Start () {
 		bossSceneManager = GameObject.Find ("BossSceneManager");
         if (bossSceneManager)
             target.gameObject.SetActive(false);
+        m_sound = GetComponentInParent<LazerSoundEffects>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        bool on = m_on;
         if (bossHitted && !transform.parent.GetComponent<ThrowableObject> ().m_isCarring)
         {
             Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);
@@ -39,6 +43,7 @@ public class Laser : MonoBehaviour {
 		{
 			laser.enabled = false;
 			impactEffect.Stop ();
+            on = false;
 		}
 		else 
 		{
@@ -51,11 +56,13 @@ public class Laser : MonoBehaviour {
 					if (!bossSceneManager) 
 					{
 						Draw (hit.point);
+                        on = true;
 					} else if (bossSceneManager && hit.collider.tag == "Boss") 
 					{
 						if (!bossHitted && transform.parent.GetComponent<ThrowableObject> ().m_isCarring) {
                             target.gameObject.SetActive(true);
                             Draw (hit.point);
+                            on = true;
 							hitting = true;
                             bossSceneManager.GetComponent<BossSceneManager>().laser = this;
 							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale ());
@@ -68,11 +75,13 @@ public class Laser : MonoBehaviour {
                     {
                         transform.GetChild(1).gameObject.SetActive(true);
 						Draw ();
+                        on = true;
                     }
                     else
                     {
                         laser.enabled = false;
                         transform.GetChild(1).gameObject.SetActive(false);
+                        on = false;
                     }
 				//	impactEffect.Stop ();
 				}
@@ -82,8 +91,17 @@ public class Laser : MonoBehaviour {
 			else 
 			{
 				Draw ();
+                on = true;
 			}
 		}
+        if(on != m_on)
+        {
+            if (on)
+                m_sound.PlayLazer();
+            else
+                m_sound.StopLazer();
+            m_on = on;
+        }
 	}
 
 	void Draw()

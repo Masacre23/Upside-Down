@@ -49,7 +49,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void AnimationLeftFootWithSnow()
     {
-        m_player.m_soundEffects.PlayFootStep();   
+        if (m_player.m_soundEffects)
+        {
+            m_player.m_soundEffects.PlayFootStep();
+        }   
         if (SetFootprint(m_leftFootprint, m_leftFootFrontTransform, m_leftFootBackTransform))
         {
             EffectsManager.Instance.GetEffect(m_prefabSnowBackOnFeet, m_leftFootTransform);
@@ -58,7 +61,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void AnimationRightFootWithSnow()
     {
-        m_player.m_soundEffects.PlayFootStep(); 
+        if (m_player.m_soundEffects)
+        {
+            m_player.m_soundEffects.PlayFootStep();
+        } 
         if (SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform))
         {
             EffectsManager.Instance.GetEffect(m_prefabSnowBackOnFeet, m_rightFootTransform);
@@ -67,7 +73,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void AnimationLeftFoot()
     {
-        m_player.m_soundEffects.PlayFootStep();
+        if (m_player.m_soundEffects)
+        {
+            m_player.m_soundEffects.PlayFootStep();
+        }
         if (SetFootprint(m_leftFootprint, m_leftFootFrontTransform, m_leftFootBackTransform) && m_player.m_inputSpeed > 0.25)
         {
             EffectsManager.Instance.GetEffect(m_prefabSnowAroundOnFeet, m_leftFootTransform);
@@ -76,7 +85,10 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void AnimationRightFoot()
     {
-        m_player.m_soundEffects.PlayFootStep();
+        if (m_player.m_soundEffects)
+        {
+            m_player.m_soundEffects.PlayFootStep();
+        }
         if (SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform) && m_player.m_inputSpeed > 0.25)
         {
             EffectsManager.Instance.GetEffect(m_prefabSnowAroundOnFeet, m_rightFootTransform);
