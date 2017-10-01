@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class BossScene : MonoBehaviour {
 	public int maxTime;
 	public int speed;
+    public AudioClip m_music;
 
 	float time;
     Image fade;
@@ -44,7 +45,8 @@ public class BossScene : MonoBehaviour {
                 fade.color = temp;
                 yield return 0;
             }
-            SceneManager.LoadScene(2);
+            Scenes.LoadScene(Scenes.Boss);
+            AudioManager.Instance().PlayMusic(m_music, 0.5f);
         }
     }
 }
