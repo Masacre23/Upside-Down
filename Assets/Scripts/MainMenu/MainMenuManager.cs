@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class MainMenuManager : MonoBehaviour {
@@ -9,6 +10,7 @@ public class MainMenuManager : MonoBehaviour {
     public GameObject m_canvasMenu;
     public GameObject m_panelButtons;
     public GameObject m_panelAnyKey;
+    public UISelectedIndicator m_selectedMasck;
     public VideoPlayer m_video;
 
     private UISoundEffects m_sound;
@@ -21,6 +23,7 @@ public class MainMenuManager : MonoBehaviour {
 	public AsyncOperation async;
     private void Start()
     {
+        Cursor.visible = false;
         m_sound = GetComponent<UISoundEffects>();
         m_selected = m_eventSysterm.firstSelectedGameObject;
         showLogo = firstTime;
@@ -63,19 +66,25 @@ public class MainMenuManager : MonoBehaviour {
                 waitAnyKey = false;
                 m_panelAnyKey.SetActive(false);
                 m_panelButtons.SetActive(true);
+                m_selectedMasck.gameObject.SetActive(true);
+                m_selectedMasck.SelectNewButton(m_selected);
             }
         }
         else
         {
-            if (m_eventSysterm.currentSelectedGameObject != m_selected)
+            if (m_canvasMenu.activeSelf)
             {
-                if (m_eventSysterm.currentSelectedGameObject == null)
-                    m_eventSysterm.SetSelectedGameObject(m_selected);
-                else
-                    m_selected = m_eventSysterm.currentSelectedGameObject;
-                if(m_sound != null)
+                if (m_eventSysterm.currentSelectedGameObject != m_selected)
                 {
-                    m_sound.PlayChange();
+                    if (m_eventSysterm.currentSelectedGameObject == null)
+                        m_eventSysterm.SetSelectedGameObject(m_selected);
+                    else
+                        m_selected = m_eventSysterm.currentSelectedGameObject;
+                    m_selectedMasck.SelectNewButton(m_selected);
+                    if (m_sound != null)
+                    {
+                        m_sound.PlayChange();
+                    }
                 }
             }
         }

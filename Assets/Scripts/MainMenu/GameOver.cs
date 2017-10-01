@@ -30,7 +30,7 @@ public class GameOver : MonoBehaviour {
                 audioManager.PlayMusic(m_mainMenuClip, 0.5f);
             Scenes.LoadScene(Scenes.MainMenu);
         }
-        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
         {
             AudioManager audioManager = AudioManager.Instance();
             if (audioManager && m_mainMenuClip)
@@ -39,7 +39,7 @@ public class GameOver : MonoBehaviour {
             HUDManager.ShowWinPanel(false);
             Scenes.LoadScene(Scenes.MainMenu);
         }
-        if (CrossPlatformInputManager.GetButtonDown("Jump"))
+        if (CrossPlatformInputManager.GetButtonDown("Submit"))
         {
             AudioManager audioManager = AudioManager.Instance();
             if (audioManager && m_mainMenuClip)
