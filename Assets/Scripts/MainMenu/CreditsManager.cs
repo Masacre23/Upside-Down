@@ -21,7 +21,7 @@ public class CreditsManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
         {
             m_creditsPanel.SetActive(false);
             m_previousPanel.SetActive(true);

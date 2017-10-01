@@ -18,7 +18,12 @@ public class OptionsManager : MonoBehaviour {
 
     public Slider m_musicVolume;
     public Slider m_effectsVolume;
+    public Toggle m_language;
 
+    public UISelectedIndicator m_indicator;
+
+    private UISoundEffects m_sound;
+    private GameObject m_selected;
     private bool m_musicSelected = false;
     private bool m_effectsSelected = false;
 
@@ -30,12 +35,28 @@ public class OptionsManager : MonoBehaviour {
             m_musicVolume.value = audio.m_musicVolume;
             m_effectsVolume.value = audio.m_soundVolume;
         }
+        m_sound = GetComponent<UISoundEffects>();
         m_musicSelected = false;
         m_effectsSelected = false;
+        m_selected = m_eventSystem.firstSelectedGameObject;
+        m_indicator.SelectNewButton(m_selected);
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (m_eventSystem.currentSelectedGameObject != m_selected)
+        {
+            if (m_eventSystem.currentSelectedGameObject == null)
+                m_eventSystem.SetSelectedGameObject(m_selected);
+            else
+                m_selected = m_eventSystem.currentSelectedGameObject;
+            m_indicator.SelectNewButton(m_selected);
+            if (m_sound != null)
+            {
+                m_sound.PlayChange();
+            }
+        }
+
         float axisHorizontal = Input.GetAxis("Horizontal");
         if (m_musicSelected)
         {
@@ -46,7 +67,7 @@ public class OptionsManager : MonoBehaviour {
             m_effectsVolume.value += axisHorizontal * 0.1f;
         }
 
-        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+        if (CrossPlatformInputManager.GetButtonDown("Cancel"))
         {
             if (m_controllerPanel.activeSelf)
             {
@@ -71,6 +92,11 @@ public class OptionsManager : MonoBehaviour {
     public void SelectEffects(bool selected)
     {
         m_effectsSelected = selected;
+    }
+
+    public void ChangeLanguage()
+    {
+        m_language.isOn = !m_language.isOn;
     }
 
     public void ChangeMusicVolume()

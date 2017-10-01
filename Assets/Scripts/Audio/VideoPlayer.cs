@@ -22,7 +22,7 @@ public class VideoPlayer : MonoBehaviour {
 		if(m_isPlaying)
         {
             m_duration -= Time.deltaTime;
-            if (m_duration <= 0 || (m_duration < 23 && CrossPlatformInputManager.GetButtonDown("Jump")))
+            if (m_duration <= 0 || (m_duration < 23 && CrossPlatformInputManager.GetButtonDown("Submit")))
             {
                 ((MovieTexture)GetComponent<Renderer>().material.mainTexture).Stop();
 				menuManager.GetComponent<MainMenuManager> ().async.allowSceneActivation = true;
