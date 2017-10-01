@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4953225008340536}
   - component: {fileID: 33578501134160874}
   - component: {fileID: 23344267935548534}
-  - component: {fileID: 64709174879247384}
-  m_Layer: 0
+  - component: {fileID: 64726000929627556}
+  m_Layer: 20
   m_Name: Rock Opaque
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35,13 +35,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1558930918863242}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.30325547, y: -0.22203882, z: 0.9255788, w: 0.04515438}
+  m_LocalPosition: {x: -8.909, y: -11.684, z: -1.0760002}
+  m_LocalScale: {x: 3.6094737, y: 4.032993, z: 2.7094011}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 22.559002, y: -399.021, z: -193.67099}
 --- !u!23 &23344267935548534
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -55,7 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 335404cd58f7d114fb66e0c7dc613cb4, type: 2}
+  - {fileID: 2100000, guid: 18499ec3869e35241b0129928f918d8e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -80,7 +80,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1558930918863242}
   m_Mesh: {fileID: 4300000, guid: 8ff34c53c0d2ad947a9483207673bfde, type: 3}
---- !u!64 &64709174879247384
+--- !u!64 &64726000929627556
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -90,7 +90,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
+  m_Convex: 1
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 8ff34c53c0d2ad947a9483207673bfde, type: 3}

@@ -51,8 +51,6 @@ public class PlayerCarrying : PlayerStates
 
     public override void OnExit()
     {
-        m_player.m_pickedObject.UnsetTarget();
-        //m_player.m_rotationFollowPlayer = false;
         m_player.m_animator.SetBool("Charging", false);
     }
 }

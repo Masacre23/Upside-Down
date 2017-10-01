@@ -10,9 +10,6 @@ public class PickedObject : MonoBehaviour
     public LayerMask m_layersPicking;
     private Player m_player;
 
-    public GameObject m_markTarget;
-    private bool m_targetSet = false;
-
     public float m_objectDetectionRadius = 1.5f;
     public float m_horizontalThrowForceDefault = 5.0f;
     public float m_timeToFall = 2.0f;
@@ -24,26 +21,7 @@ public class PickedObject : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        if (m_markTarget)
-            m_markTarget.SetActive(false);
-        else
-        {
-            m_markTarget = GameObject.Find("MarkTargetSprite");
-            if (m_markTarget)
-                m_markTarget.SetActive(false);
-        }
-
-        m_player = GameObject.Find("Player").GetComponent<Player>();
-
-        if (!m_pickedObjectPosition)
-            m_pickedObjectPosition = GameObject.Find("PickedObjectPosition").transform;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        if (m_targetSet)
-            m_markTarget.transform.forward = Camera.main.transform.forward;
+        m_player = GetComponent<Player>();
 	}
 
     // This functions serves to pick the nearest objects (that are in m_layerPicking mask) to the player
@@ -111,22 +89,6 @@ public class PickedObject : MonoBehaviour
     {
         if(m_pickedObject != null)
             m_pickedObject.ThrowObject(m_throwForce, m_throwHorizontalForce, m_player.transform.up,m_throwVector.normalized);
-    }
-
-    //This function sets the target mark in a target position
-    public void SetTarget(Vector3 position)
-    {
-        m_markTarget.transform.position = position;
-        m_markTarget.transform.forward = Camera.main.transform.forward;
-        m_markTarget.SetActive(true);
-        m_targetSet = true;
-    }
-
-    //This function unsets the target mark
-    public void UnsetTarget()
-    {
-        m_markTarget.SetActive(false);
-        m_targetSet = false;
     }
 
     //This function serves to free a space for picking objects, called when they are thrown or fall

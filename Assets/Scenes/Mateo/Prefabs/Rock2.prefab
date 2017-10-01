@@ -19,8 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4645808537866266}
-  - component: {fileID: 64220619908533940}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Rock2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +36,8 @@ GameObject:
   - component: {fileID: 4881716350944546}
   - component: {fileID: 33568455743169458}
   - component: {fileID: 23698756126100868}
-  m_Layer: 0
+  - component: {fileID: 64820862019853406}
+  m_Layer: 20
   m_Name: Group1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,17 +109,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1854171532962990}
   m_Mesh: {fileID: 4300000, guid: bfe8c25b5f98fab42b97431482343e28, type: 3}
---- !u!64 &64220619908533940
+--- !u!64 &64820862019853406
 MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1257106651250644}
+  m_GameObject: {fileID: 1854171532962990}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
+  m_Convex: 1
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: bfe8c25b5f98fab42b97431482343e28, type: 3}

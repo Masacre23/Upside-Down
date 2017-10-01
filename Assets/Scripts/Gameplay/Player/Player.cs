@@ -452,44 +452,11 @@ public class Player : Character
 
     public void ThrowObjectsThirdPerson(bool hasThrown)
     {
-        //GameObject targetEnemy = FixingOnEnemy(m_throwAimOrigin, m_angleEnemyDetection);
-
-        //RaycastHit targetHit;
-        //bool hasTarget = false;
-        //if (targetEnemy != null)
-        //{
-        //    Vector3 toEnemy = targetEnemy.transform.position - m_throwAimOrigin.position;
-        //    hasTarget = Physics.Raycast(m_throwAimOrigin.position, toEnemy.normalized, out targetHit, m_throwDetectionRange);
-        //}
-        //else
-        //{
-        //    hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
-        //    Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
-        //}
-
-        //if (hasTarget)
-        //{
-        //    if (targetEnemy)
-        //        m_pickedObject.SetTarget(targetHit.collider.gameObject.transform.position);
-        //    else
-        //        m_pickedObject.UnsetTarget();
-
-        //    if (hasThrown)
-        //    {
-        //        m_pickedObject.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
-        //        m_throwAnimation = true;
-        //    }
-        //}
-        //else
-        //{
-            m_pickedObject.UnsetTarget();
-            if (hasThrown)
-            {
-                m_pickedObject.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
-                m_throwAnimation = true;
-            }
-        //}
-            
+        if (hasThrown)
+        {
+            m_pickedObject.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
+            m_throwAnimation = true;
+        }   
     }
 
     public GameObject FixingOnEnemy(Transform origin, float angleDetection)

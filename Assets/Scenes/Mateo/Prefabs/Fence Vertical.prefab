@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4863523407153620}
   - component: {fileID: 33927376183276480}
   - component: {fileID: 23231961389805992}
-  - component: {fileID: 64095840651583852}
-  m_Layer: 0
+  - component: {fileID: 65107246086519772}
+  m_Layer: 20
   m_Name: Fence Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,17 +80,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1089142354159534}
   m_Mesh: {fileID: 4300000, guid: 3b9247c8c6e677748a392c5fc3fa9c7a, type: 3}
---- !u!64 &64095840651583852
-MeshCollider:
+--- !u!65 &65107246086519772
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1089142354159534}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
-  m_InflateMesh: 0
-  m_SkinWidth: 0.01
-  m_Mesh: {fileID: 4300000, guid: 3b9247c8c6e677748a392c5fc3fa9c7a, type: 3}
+  m_Size: {x: 0.16579999, y: 0.5149999, z: 0.16579999}
+  m_Center: {x: 0, y: 0, z: 0}
