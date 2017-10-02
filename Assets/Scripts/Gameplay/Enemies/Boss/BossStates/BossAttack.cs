@@ -28,8 +28,11 @@ public class BossAttack : BossStates {
 		if (m_boss.m_phase == 2)
 			Move ();
 
-		if (m_boss.m_phase == 3)
-			RunAway ();
+        if (m_boss.m_phase == 3)
+        {
+            m_boss.m_sound.PlayWalk();
+            RunAway();
+        }
 		
 		if(info.normalizedTime > 0.9f && (m_boss.m_phase <= 1 || !m_boss.m_canChase) && !info.IsName("Laught"))
 		{
@@ -51,8 +54,14 @@ public class BossAttack : BossStates {
 		float distance = heading.magnitude;
 		Vector3 direction = heading / distance;
 
-        if(distance > m_boss.minDistanceToPlayer)
-		    transform.position += direction * Time.deltaTime * m_boss.m_speed;
+        if (distance > m_boss.minDistanceToPlayer)
+        {
+            transform.position += direction * Time.deltaTime * m_boss.m_speed;
+            m_boss.m_sound.PlayWalk();
+        }else
+        {
+            m_boss.m_sound.StopWalk();
+        }
 	}
 
 	void ThrowBall()
@@ -111,5 +120,6 @@ public class BossAttack : BossStates {
 	{
 		m_boss.m_animator.SetBool ("IsAttacking", false);
 		frames = 0;
+        m_boss.m_sound.StopWalk();
 	}
 }

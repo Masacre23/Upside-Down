@@ -8,6 +8,7 @@ public class Boss : MonoBehaviour {
 	[HideInInspector] public BossStates m_Attack;
 	[HideInInspector] public BossStates m_Stunned;
 
+    [HideInInspector] public SnowmanBossSoundEffects m_sound;
 	public Animator m_animator;
 	public int m_phase;
 	public float m_attackRate;
@@ -37,6 +38,8 @@ public class Boss : MonoBehaviour {
 		m_Stunned = gameObject.GetComponent <BossStunned> ();
 		if (!m_Stunned)
 			m_Stunned = gameObject.AddComponent<BossStunned> ();
+
+        m_sound = GetComponent<SnowmanBossSoundEffects>();
 
 		m_currentState = m_Idle;
 	}
