@@ -18,6 +18,7 @@ public class Laser : MonoBehaviour {
 	public bool hitting = false;
     private LazerSoundEffects m_sound;
     private bool m_on = false;
+    public float laserDistance = 4.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -51,7 +52,7 @@ public class Laser : MonoBehaviour {
 			{
                 time += Time.deltaTime;
 				RaycastHit hit;
-				if (Physics.Raycast (transform.position, -transform.up, out hit, bossSceneManager? 20 : 4) && (time < maxTime || maxTime == 0) && !bossHitted) 
+				if (Physics.Raycast (transform.position, -transform.up, out hit, bossSceneManager? 20 : laserDistance) && (time < maxTime || maxTime == 0) && !bossHitted) 
 				{
 					if (!bossSceneManager) 
 					{
@@ -67,7 +68,7 @@ public class Laser : MonoBehaviour {
                             bossSceneManager.GetComponent<BossSceneManager>().laser = this;
 							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale ());
 						}
-					} 
+					}
 				} else 
 				{
 					hitting = false;
@@ -119,7 +120,7 @@ public class Laser : MonoBehaviour {
 
 	void Draw(Vector3 hitPoint)
 	{
-		laser.enabled = true;
+        laser.enabled = true;
 		transform.GetChild (1).gameObject.SetActive (true);
 		if (particleTime >= particleRate) {
 			impactEffect.Play ();

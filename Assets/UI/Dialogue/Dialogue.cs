@@ -11,12 +11,13 @@ public class Dialogue : MonoBehaviour
 	//public int bossEvent = -1; //if -1 means no event
     //public int kingEvent = -1;
 
-    public enum eventType { BOSS, SNOWMAN, OTHER};
+    public enum eventType { BOSS, SNOWMAN, ENABLEDISABLE};
     [System.Serializable]
     public struct Event
     {
         public eventType etype;
         public string name;
+        public GameObject GOtoEnable;
         public string[] animationVariable;
         public int[] index;
         public int counter;
@@ -80,6 +81,9 @@ public class Dialogue : MonoBehaviour
                             anim.SetBool(dialogueEvent[0].animationVariable[dialogueEvent[0].counter], !anim.GetBool(dialogueEvent[0].animationVariable[dialogueEvent[0].counter]));
                             break;
 
+                        case eventType.ENABLEDISABLE:
+                            dialogueEvent[0].GOtoEnable.SetActive(!dialogueEvent[0].GOtoEnable.activeInHierarchy);
+                            break;
                         default:
                             break;
                     }
@@ -137,6 +141,10 @@ public class Dialogue : MonoBehaviour
                                 case eventType.SNOWMAN:
                                     Animator anim = GameObject.Find(dialogueEvent[i].name).GetComponent<Animator>();
                                     anim.SetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter], !anim.GetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter]));
+                                    break;
+
+                                case eventType.ENABLEDISABLE:
+                                    dialogueEvent[i].GOtoEnable.SetActive(!dialogueEvent[i].GOtoEnable.activeInHierarchy);
                                     break;
 
                                 default:
@@ -200,6 +208,10 @@ public class Dialogue : MonoBehaviour
                         case eventType.SNOWMAN:
                             Animator anim = GameObject.Find(dialogueEvent[i].name).GetComponent<Animator>();
                             anim.SetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter], !anim.GetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter]));
+                            break;
+
+                        case eventType.ENABLEDISABLE:
+                            dialogueEvent[i].GOtoEnable.SetActive(!dialogueEvent[i].GOtoEnable.activeInHierarchy);
                             break;
 
                         default:
