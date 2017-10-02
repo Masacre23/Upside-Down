@@ -399,8 +399,10 @@ public class Player : Character
                     enemy.m_sound.PlayCrash();
                     enemy.Stun();
                 }
-            }else
+            }
+            else
             {
+                m_lastEnemyJumped = null;
                 if (m_soundEffects)
                     m_soundEffects.PlayFall();
             }

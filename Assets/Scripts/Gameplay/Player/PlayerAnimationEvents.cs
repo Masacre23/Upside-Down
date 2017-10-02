@@ -23,10 +23,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     public float m_checkFloorDistance = 0.3f;
     public float m_distanceFromFloor = 0.025f;
 
-    [Header("JumpCloud")]
-    public GameObject m_smokeCloud;
-    public Transform m_smokePosition;
-
     [Header("Recieve hit")]
     public GameObject m_hit;
     public Transform m_hitTransform;
@@ -114,11 +110,6 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void AnimationRightFootprint()
     {
         SetFootprint(m_rightFootprint, m_rightFootFrontTransform, m_rightFootBackTransform);
-    }
-
-    public void AnimationOnFalling()
-    {
-        EffectsManager.Instance.GetEffect(m_smokeCloud, m_smokePosition);
     }
 
     public void AnimationHit()

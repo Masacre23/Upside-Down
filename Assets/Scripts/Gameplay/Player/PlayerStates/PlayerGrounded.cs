@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerGrounded : PlayerStates
 {
-
     public float m_floatingHeight = 1.0f;
+    [Header("JumpCloud")]
+    public GameObject m_smokeCloud;
+    public Transform m_smokePosition;
 
     public override void Start()
     {
@@ -59,6 +61,8 @@ public class PlayerGrounded : PlayerStates
 //        m_player.m_rigidBody.velocity = Vector3.zero;
 
         m_player.m_enemyDetected = false;
+
+        EffectsManager.Instance.GetEffect(m_smokeCloud, m_smokePosition);
     }
 
     public override void OnExit()
