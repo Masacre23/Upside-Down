@@ -54,7 +54,7 @@ public class BossAttack : BossStates {
 		float distance = heading.magnitude;
 		Vector3 direction = heading / distance;
 
-        if (distance > m_boss.minDistanceToPlayer)
+        if (distance > m_boss.minDistanceToPlayer * transform.localScale.x)
         {
             transform.position += direction * Time.deltaTime * m_boss.m_speed;
             m_boss.m_sound.PlayWalk();

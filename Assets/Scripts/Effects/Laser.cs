@@ -31,6 +31,12 @@ public class Laser : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         bool on = m_on;
+        if (bossSceneManager && !transform.parent.GetComponent<ThrowableObject>().m_isCarring)
+        {
+            laser.enabled = false;
+            transform.GetChild(1).gameObject.SetActive(false);
+        }
+
         if (bossHitted && !transform.parent.GetComponent<ThrowableObject> ().m_isCarring)
         {
             Vector3 screenPoint = Camera.main.WorldToViewportPoint(transform.position);

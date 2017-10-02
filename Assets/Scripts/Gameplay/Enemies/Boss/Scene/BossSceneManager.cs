@@ -112,6 +112,7 @@ public class BossSceneManager : MonoBehaviour {
             if (phase == 4)
             {
                 Instantiate(smokePrefab, boss.transform.position, Quaternion.EulerAngles(new Vector3(-90, 0, 0)));
+                player.GetComponent<Player>().m_paused = true;
                 StartCoroutine(Fade());
                 credits.SetActive(true);
             }
@@ -159,7 +160,6 @@ public class BossSceneManager : MonoBehaviour {
 
     public IEnumerator Fade()
     {
-        player.GetComponent<Player>().m_paused = true;
         while (fade.color.a < 1)
         {
             Color temp = fade.color;
