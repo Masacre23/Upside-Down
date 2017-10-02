@@ -34,7 +34,7 @@ public class PlayerDead : PlayerDamageStates
 
         if (m_player.m_soundEffects)
         {
-            //m_player.m_soundEffects.PlaySound("Dead"); //TODO: CHECK SOUND
+            m_player.m_soundEffects.PlayGameOver();
         }
             
         if (data.m_respawn)

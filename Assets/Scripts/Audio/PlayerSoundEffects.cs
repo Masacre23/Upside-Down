@@ -45,11 +45,13 @@ public class PlayerSoundEffects : SoundEffects {
     public static string m_jumpPath = "Jumps/";
     public static string m_fallPath = "Fall/";
     private string m_collectableFile = "Collectable";
-    
+    private string m_gameOverFailFile = "GameOver";
+
     private string[] m_terrains = new string[] { "Snow", "Cloud" };
     private Dictionary<string, TerrainSounds> m_fxSounds = new Dictionary<string, TerrainSounds>();
 
     private AudioClip m_collectable;
+    private AudioClip m_gameOverFail;
 
     private int m_terrainIndex = 0;
 
@@ -60,6 +62,7 @@ public class PlayerSoundEffects : SoundEffects {
             m_fxSounds.Add(m_terrains[i], new TerrainSounds(m_terrains[i]));
         }
         m_collectable = Resources.Load<AudioClip>(m_resourcesPath + m_collectableFile);
+        m_gameOverFail = Resources.Load<AudioClip>(m_resourcesPath + m_gameOverFailFile);
     }
 
     public void PlayFootStep()
@@ -82,4 +85,8 @@ public class PlayerSoundEffects : SoundEffects {
         base.PlaySound(m_collectable);
     }
  
+    public void PlayGameOver()
+    {
+        AudioManager.Instance().PlayMusic(m_gameOverFail, 0.5f);
+    }
 }

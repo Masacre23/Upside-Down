@@ -23,6 +23,7 @@ public class BossSceneManager : MonoBehaviour {
     public Laser laser;
     public GameObject credits;
     public Image fade;
+    public AudioClip m_winMusic;
 
 	// Use this for initialization
 	void Start () {
@@ -160,6 +161,7 @@ public class BossSceneManager : MonoBehaviour {
 
     public IEnumerator Fade()
     {
+        AudioManager.Instance().PlayMusic(m_winMusic, 0.5f);
         while (fade.color.a < 1)
         {
             Color temp = fade.color;
