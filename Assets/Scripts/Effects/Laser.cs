@@ -67,7 +67,10 @@ public class Laser : MonoBehaviour {
 							hitting = true;
                             bossSceneManager.GetComponent<BossSceneManager>().laser = this;
 							StartCoroutine (bossSceneManager.GetComponent<BossSceneManager> ().ChangeBossScale ());
-						}
+                        }else
+                        {
+                            on = false;
+                        }
 					}
 				} else 
 				{
