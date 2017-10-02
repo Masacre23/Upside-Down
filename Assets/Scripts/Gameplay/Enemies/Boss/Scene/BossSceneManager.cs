@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossSceneManager : MonoBehaviour {
 	public int phase = 0;
@@ -21,12 +22,14 @@ public class BossSceneManager : MonoBehaviour {
     public GameObject smokePrefab;
     public Laser laser;
     public GameObject credits;
+    public Image fade;
 
 	// Use this for initialization
 	void Start () {
 		boss = GameObject.Find ("Boss");
 		player = GameObject.Find ("Player");
-	}
+        //fade = GameObject.Find("Fade").GetComponent<Image>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -109,6 +112,7 @@ public class BossSceneManager : MonoBehaviour {
             if (phase == 4)
             {
                 Instantiate(smokePrefab, boss.transform.position, Quaternion.EulerAngles(new Vector3(-90, 0, 0)));
+                StartCoroutine(Fade());
                 credits.SetActive(true);
             }
         }
@@ -151,6 +155,21 @@ public class BossSceneManager : MonoBehaviour {
             yield return 0;
         }
         lastCorrutineHasEnded = true;
+    }
+
+    public IEnumerator Fade()
+    {
+        player.GetComponent<Player>().m_paused = true;
+        while (fade.color.a < 1)
+        {
+            Color temp = fade.color;
+            temp.a += Time.deltaTime / 5;
+            fade.color = temp;
+            yield return 0;
+        }
+
+        yield return new WaitForSeconds(60);
+        Scenes.LoadScene(Scenes.MainMenu);
     }
 
     void OnTriggerEnter(Collider col)

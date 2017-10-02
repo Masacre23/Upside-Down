@@ -27112,7 +27112,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 188478.3
+  Age: 188502.2
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -56744,6 +56744,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 784198744}
     - target: {fileID: 114341533703532304, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
         type: 2}
       propertyPath: m_previousPanel
@@ -56759,11 +56764,6 @@ Prefab:
       propertyPath: m_eventSystem
       value: 
       objectReference: {fileID: 1092491689}
-    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
-        type: 2}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 784198744}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a527da9e32b634c4fae23cd6bb8d7bf5, type: 2}
   m_IsPrefabParent: 0
@@ -66791,6 +66791,15 @@ Prefab:
       propertyPath: m_eventSystem
       value: 
       objectReference: {fileID: 1092491689}
+    - target: {fileID: 114587964017982134, guid: 6c171bee3cc1efe4f9681b78a689eb7d,
+        type: 2}
+      propertyPath: m_Navigation.m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1086205673273182, guid: 6c171bee3cc1efe4f9681b78a689eb7d, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6c171bee3cc1efe4f9681b78a689eb7d, type: 2}
   m_IsPrefabParent: 0

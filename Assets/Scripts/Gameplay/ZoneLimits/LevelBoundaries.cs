@@ -5,6 +5,12 @@ using UnityEngine;
 public class LevelBoundaries : MonoBehaviour
 {
     public GameObject win;
+    BossSceneManager bossSceneManager;
+
+    private void Start()
+    {
+        bossSceneManager = GameObject.Find("BossSceneManager").GetComponent<BossSceneManager>();
+    }
 
     void OnTriggerExit(Collider other)
     {
@@ -17,6 +23,7 @@ public class LevelBoundaries : MonoBehaviour
 		} else if (other.tag == "Boss") 
 		{
 			other.transform.GetChild (0).gameObject.SetActive (true);
+            StartCoroutine(bossSceneManager.Fade());
             win.SetActive(true);
 		}else if(other.tag == "GravityAffected")
         {
