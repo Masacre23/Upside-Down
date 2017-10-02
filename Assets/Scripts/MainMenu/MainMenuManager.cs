@@ -30,6 +30,11 @@ public class MainMenuManager : MonoBehaviour {
         m_canvasLogo.SetActive(showLogo);
         m_canvasMenu.SetActive(!showLogo);
         m_panelButtons.SetActive(!showLogo);
+        if (!firstTime)
+        {
+            m_selectedMasck.gameObject.SetActive(true);
+            m_selectedMasck.SelectNewButton(m_selected);
+        }
         waitAnyKey = firstTime;
         //m_panelAnyKey.SetActive(waitAnyKey);
         firstTime = false;
