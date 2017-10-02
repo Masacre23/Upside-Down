@@ -13,6 +13,8 @@ public class CreditsManager : MonoBehaviour {
     public GameObject m_previousButton;
     public EventSystem m_eventSystem;
 
+    public Scrollbar m_srollBar;
+
     // Use this for initialization
     void Start()
     {
@@ -27,5 +29,7 @@ public class CreditsManager : MonoBehaviour {
             m_previousPanel.SetActive(true);
             m_eventSystem.SetSelectedGameObject(m_previousButton);
         }
+        float axisHorizontal = Input.GetAxis("Vertical");
+        m_srollBar.value += axisHorizontal * 0.1f;
     }
 }

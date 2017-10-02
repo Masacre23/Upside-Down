@@ -61,6 +61,22 @@ public class EnemyStunned: EnemyStates {
             throwableObject.m_canBePicked = false;
         timer = 0;
         m_enemy.m_animator.SetBool("Stunned", false);
-        transform.GetChild(3).gameObject.GetComponent<ParticleSystem>().Stop();
+        ParticleSystem ps = transform.GetChild(3).gameObject.GetComponent<ParticleSystem>();
+        ParticleSystem ps_child = ps.gameObject.transform.GetChild(0).GetComponent<ParticleSystem>();
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+        int num = ps.GetParticles(particles);
+        for (int i = 0; i < num; i++)
+        {
+            particles[i].remainingLifetime = 0;
+        }
+        ps.SetParticles(particles, num);
+        particles = new ParticleSystem.Particle[ps_child.particleCount];
+        num = ps_child.GetParticles(particles);
+        for (int i = 0; i < num; i++)
+        {
+            particles[i].remainingLifetime = 0;
+        }
+        ps_child.SetParticles(particles, num);
+        ps.Stop();
     }
 }
