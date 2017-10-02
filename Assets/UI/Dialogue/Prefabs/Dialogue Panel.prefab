@@ -152,7 +152,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c6e253f9731477d40a8abbd280666434, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3adce7261fb0ac845bc8eaa3734c21a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -180,7 +180,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 08cf5ca854e633243987f00309b2fd2e, type: 3}
     m_FontSize: 23
     m_FontStyle: 0
     m_BestFit: 1
@@ -231,21 +231,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f2dd2d85d993f4d869c6a76c6f1d35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossEvent: -1
+  dialogueEvent:
+  - etype: 1
+    name: Snowman_Hat
+    GOtoEnable: {fileID: 0}
+    animationVariable:
+    - Talk
+    - Talk
+    index: 0000000003000000
+    counter: 0
   DialogueStrings:
-  - Vaya eso ha debido doler.
-  - Bienvenido a nuestro humilde planeta, tu debes ser el pizzero que ha pedido nuestro
-    rey.
-  - Debes ir a la parte mas alta del planeta, donde se encuentra el castillo.
+  - Ouch, that must have hurt.
+  - Welcome to our humble planet, you must be the delivery man. our king is waiting
+    for you.
+  - You have to go to the highest point of the planet, where the castle is located.
+  DialogueStringsES:
+  - Vaya, eso ha debido de doler.
+  - "Bienvenido a nuestro humilde planeta, tu debes ser el pizzero, nuestro rey te
+    est\xE1 esperando."
+  - Debes ir al lugar mas alto del planeta, donde se encuentra el castillo.
   indexCameras: 000000000000000000000000
   DialogueCamera:
   - {fileID: 0}
+  activeCameras: 0
   SecondsBetweenCharacters: 0.025
   CharacterRateMultiplier: 0.25
   m_inputNameButton: Activate
+  _isDialoguePlaying: 0
   ContinueIcon: {fileID: 1506999595506508}
   StopIcon: {fileID: 1506999595506508}
   startEvent: {fileID: 0}
+  endEvent: {fileID: 0}
 --- !u!114 &114811439792520460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -265,7 +281,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: c6e253f9731477d40a8abbd280666434, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3adce7261fb0ac845bc8eaa3734c21a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -343,8 +359,8 @@ RectTransform:
   m_Father: {fileID: 224452328205389606}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.36, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.27, y: 0}
+  m_AnchorMax: {x: 0.7, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -396,13 +412,13 @@ RectTransform:
   m_GameObject: {fileID: 1506999595506508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224452328205389606}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.95, y: 0}
-  m_AnchorMax: {x: 1, y: 0.2}
+  m_AnchorMin: {x: 0.9, y: 0.1}
+  m_AnchorMax: {x: 0.98, y: 0.4}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
