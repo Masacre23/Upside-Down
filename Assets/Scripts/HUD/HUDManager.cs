@@ -37,6 +37,7 @@ public class HUDManager : MonoBehaviour {
         m_newCollectable = false;
         m_showGameOverPanel = false;
         m_showWinPanel = false;
+        m_numberCollectable = 0;
         m_collectableNumber.sprite = m_collectableSprites[m_numberCollectable];
     }
 
