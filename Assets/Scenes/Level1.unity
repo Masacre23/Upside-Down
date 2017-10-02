@@ -8920,6 +8920,11 @@ Prefab:
       propertyPath: dialogueEvent.Array.data[1].name
       value: King
       objectReference: {fileID: 0}
+    - target: {fileID: 114382856054172026, guid: 4ca36affca7353a43baafc5c8df4a7d6,
+        type: 2}
+      propertyPath: dialogueEvent.Array.data[0].etype
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -18406,7 +18411,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 214212.72
+  Age: 214216.08
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -63226,6 +63231,7 @@ MonoBehaviour:
   m_laugth: {fileID: 8300000, guid: 7399ea16ad97b5a4eaa8c12e18c4caa3, type: 3}
   m_walk: {fileID: 8300000, guid: ac99d3ee96877354ba113848bf682956, type: 3}
   m_hit: {fileID: 8300000, guid: fa899291e1236c548822b297a01be61e, type: 3}
+  m_pain: {fileID: 0}
 --- !u!82 &2109569775
 AudioSource:
   m_ObjectHideFlags: 0
