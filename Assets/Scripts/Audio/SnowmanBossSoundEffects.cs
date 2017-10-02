@@ -8,6 +8,7 @@ public class SnowmanBossSoundEffects : SoundEffects {
     public AudioClip m_laugth;
     public AudioClip m_walk;
     public AudioClip m_hit;
+    public AudioClip m_pain;
     private bool m_isWalking = false;
 
     void Start()
@@ -41,6 +42,11 @@ public class SnowmanBossSoundEffects : SoundEffects {
             m_isWalking = false;
             base.StopSoundLoop();
         }
+    }
+
+    public void PlayPain()
+    {
+        base.PlaySoundLoop(m_pain);
     }
 
     public void StopLoop()
