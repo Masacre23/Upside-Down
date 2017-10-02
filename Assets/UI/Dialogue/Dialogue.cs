@@ -195,7 +195,8 @@ public class Dialogue : MonoBehaviour
         {
             for (int i = 0; i < dialogueEvent.Length; i++)
             {
-                if(dialogueEvent[i].counter == 0 && dialogueEvent[i].etype != eventType.BOSS)
+                //if(dialogueEvent[i].counter == 0 && dialogueEvent[i].etype != eventType.BOSS)
+                if (dialogueEvent[i].counter == 0 && dialogueEvent[i].index.Length != 1)
                     dialogueEvent[i].counter++;
                 if (dialogueEvent[i].index[dialogueEvent[i].counter] == currentDialogueIndex)
                 {

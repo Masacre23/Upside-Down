@@ -8,6 +8,7 @@ public class BossBall : MonoBehaviour {
 	public float m_disappearVelocity = 2.0f; 
 
 	private bool m_disappear = false;
+    public bool snowman;
 
 	// Use this for initialization
 	void Start () {
@@ -36,7 +37,9 @@ public class BossBall : MonoBehaviour {
 			col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
 			col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
 		}
-		if (col.tag == "Player" || col.gameObject.layer == 21) {
+		if (col.tag == "Player" || col.gameObject.layer == 21 || snowman? col.tag == "Boss" : false) {
+            if (snowman)
+                GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager> ().DisableLaser();
 			EffectsManager.Instance.GetEffect (m_prefabEffect, transform);
 			m_disappear = true;
 		}

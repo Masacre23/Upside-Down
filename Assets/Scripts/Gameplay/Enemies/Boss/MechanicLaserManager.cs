@@ -5,6 +5,7 @@ using UnityEngine;
 public class MechanicLaserManager : MonoBehaviour {
     public GameObject laser;
     public GameObject bossSceneManager;
+    public GameObject snowmanCrushed;
 
 	// Use this for initialization
 	void Start ()
@@ -21,11 +22,13 @@ public class MechanicLaserManager : MonoBehaviour {
         laser.transform.GetChild(0).GetComponent<Laser>().bossSceneManager = null;
     }
 
-    private void OnDisable()
+    public void DisableLaser()
     {
         laser.transform.GetChild(0).GetComponent<Laser>().laser.enabled = false;
         laser.transform.GetChild(0).transform.GetChild(1).gameObject.SetActive(false);
         laser.transform.GetChild(0).GetComponent<Laser>().bossSceneManager = bossSceneManager;
         laser.GetComponent<GameObjectGravity>().enabled = true;
+        GameObject.Find("Boss").GetComponent<Animator>().SetBool("Cinematic", false);
+        snowmanCrushed.SetActive(true);
     }
 }
