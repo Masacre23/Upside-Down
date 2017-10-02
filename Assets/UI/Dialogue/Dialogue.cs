@@ -77,16 +77,18 @@ public class Dialogue : MonoBehaviour
                             break;
 
                         case eventType.SNOWMAN:
-                            Animator anim = GameObject.Find(dialogueEvent[0].name).GetComponent<Animator>();
-                            anim.SetBool(dialogueEvent[0].animationVariable[dialogueEvent[0].counter], !anim.GetBool(dialogueEvent[0].animationVariable[dialogueEvent[0].counter]));
+                            Animator anim = GameObject.Find(dialogueEvent[i].name).GetComponent<Animator>();
+                            anim.SetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter], !anim.GetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter]));
                             break;
 
                         case eventType.ENABLEDISABLE:
-                            dialogueEvent[0].GOtoEnable.SetActive(!dialogueEvent[0].GOtoEnable.activeInHierarchy);
+                            dialogueEvent[i].GOtoEnable.SetActive(!dialogueEvent[i].GOtoEnable.activeInHierarchy);
                             break;
                         default:
                             break;
                     }
+                    if (dialogueEvent[i].counter != dialogueEvent[i].index.Length - 1)
+                        dialogueEvent[i].counter++;
                 }
             }
         }
