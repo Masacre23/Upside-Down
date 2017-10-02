@@ -5,6 +5,7 @@ public class VideoPlayer : MonoBehaviour {
 
     public float m_duration;
     public AudioClip m_gameMusic;
+    public AudioClip m_cinematicMusic;
 
     private bool m_isPlaying = false;
 	public GameObject menuManager;
@@ -15,6 +16,7 @@ public class VideoPlayer : MonoBehaviour {
         float height = 2.0f * Mathf.Tan(0.5f * Camera.main.fieldOfView * Mathf.Deg2Rad) * distance;
         float width = height * Screen.width / Screen.height;
         gameObject.transform.localScale = new Vector3(width / 10f, 1.0f, height / 10f);
+        AudioManager.Instance().PlayMusic(m_cinematicMusic, 0.5f);
     }
 	
 	// Update is called once per frame
