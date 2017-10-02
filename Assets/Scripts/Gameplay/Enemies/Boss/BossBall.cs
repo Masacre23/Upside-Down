@@ -9,10 +9,11 @@ public class BossBall : MonoBehaviour {
 
 	private bool m_disappear = false;
     public bool snowman;
+    private SnowBallSoundEffects m_sound;
 
 	// Use this for initialization
 	void Start () {
-		
+        m_sound = GetComponent<SnowBallSoundEffects>();
 	}
 	
 	// Update is called once per frame
@@ -41,6 +42,10 @@ public class BossBall : MonoBehaviour {
             if (snowman)
                 GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager> ().DisableLaser();
 			EffectsManager.Instance.GetEffect (m_prefabEffect, transform);
+            if(m_sound != null)
+            {
+                m_sound.PlayCrash();
+            }
 			m_disappear = true;
 		}
 	}

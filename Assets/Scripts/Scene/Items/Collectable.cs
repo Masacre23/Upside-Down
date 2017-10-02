@@ -45,6 +45,14 @@ public class Collectable : MonoBehaviour {
                 m_sound.PlayCollectable();
             }
             m_player = col.gameObject.GetComponent<Player>();
+            if (m_player.m_health > 0)
+            {
+                m_player.m_health += 20;
+                if (m_player.m_health > m_player.m_maxHealth)
+                    m_player.m_health = m_player.m_maxHealth;
+                else
+                    HUDManager.GainLife();
+            }
             HUDManager.GetCollectable();
         }
     }
