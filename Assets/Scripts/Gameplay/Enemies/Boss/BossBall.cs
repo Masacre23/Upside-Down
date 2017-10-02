@@ -40,7 +40,10 @@ public class BossBall : MonoBehaviour {
 		}
 		if (col.tag == "Player" || col.gameObject.layer == 21 || snowman? col.tag == "Boss" : false) {
             if (snowman)
-                GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager> ().DisableLaser();
+            {
+                GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager>().DisableLaser();
+                GameObject.Find("MechanicScreamSound").SetActive(false);
+            }
 			EffectsManager.Instance.GetEffect (m_prefabEffect, transform);
             if(m_sound != null)
             {
