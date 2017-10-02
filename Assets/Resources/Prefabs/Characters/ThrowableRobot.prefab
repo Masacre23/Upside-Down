@@ -211,14 +211,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1257827833300148}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.02, y: 16.89, z: -0.29}
-  m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
+  m_LocalRotation: {x: -0, y: 0.7331535, z: -0, w: 0.68006325}
+  m_LocalPosition: {x: 0.02, y: 16.89, z: -9.87}
+  m_LocalScale: {x: 0.8000003, y: 0.79999995, z: 0.8000003}
   m_Children:
   - {fileID: 4304507195227904}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 94.303, z: 0}
 --- !u!4 &4763357415727494
 Transform:
   m_ObjectHideFlags: 1
@@ -267,8 +267,8 @@ MeshRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1328265741477760}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -462,6 +462,7 @@ MonoBehaviour:
   bossSceneManager: {fileID: 0}
   bossHitted: 0
   hitting: 0
+  laserDistance: 4
 --- !u!114 &114514307606720204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -504,7 +505,6 @@ MonoBehaviour:
   m_isLazer: 1
   m_bossLevel: 1
   m_canDamage: 0
-  m_prefabHit1: {fileID: 0}
 --- !u!114 &114700248220361608
 MonoBehaviour:
   m_ObjectHideFlags: 1
