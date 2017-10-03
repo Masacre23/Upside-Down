@@ -40,12 +40,8 @@ public class BossBall : MonoBehaviour {
 			col.gameObject.GetComponent<Player> ().m_damageData.m_recive = true;
 			col.gameObject.GetComponent<Player> ().m_damageData.m_damage = 20;
 		}
-		if (col.tag == "Player" || col.gameObject.layer == 21 || (snowman? col.tag == "Boss" : false)) {
-            if (snowman)
-            {
-                GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager>().DisableLaser();
-                GameObject.Find("MechanicScreamSound").SetActive(false);
-            }
+		if (col.tag == "Player" || (col.gameObject.layer == 29 && col.tag != "BossFloor") ) {
+           
 			EffectsManager.Instance.GetEffect (m_prefabEffect, transform);
             if(m_sound != null)
             {
@@ -53,5 +49,11 @@ public class BossBall : MonoBehaviour {
             }
 			m_disappear = true;
 		}
-	}
+
+        if ((snowman ? col.tag == "Boss" : false))
+        {
+            GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager>().DisableLaser();
+            GameObject.Find("MechanicScreamSound").SetActive(false);
+        }
+    }
 }

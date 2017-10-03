@@ -25,6 +25,7 @@ public class BossSceneManager : MonoBehaviour {
     public Image fade;
     public AudioClip m_winMusic;
     public PauseMenuManager m_pauseMenu;
+    bool GameFinished = false;
 
 	// Use this for initialization
 	void Start () {
@@ -41,6 +42,10 @@ public class BossSceneManager : MonoBehaviour {
 			scenes [numScene].SetActive (true);
             player.transform.parent = platforms[numScene].transform;
 		}
+        else if (GameFinished)
+        {
+            player.GetComponent<Player>().m_paused = true;
+        }
         else if(!m_pauseMenu.IsPaused())
 		{
 			player.GetComponent<Player> ().m_paused = false;
@@ -48,6 +53,7 @@ public class BossSceneManager : MonoBehaviour {
             player.transform.parent = null;
 
         }
+        
 	}
 
 	public IEnumerator ChangeBossScale()
@@ -68,6 +74,8 @@ public class BossSceneManager : MonoBehaviour {
             StartCoroutine(Platforms(phase, laser));
             while (boss.transform.localScale.x > sizes[phase])
             {
+                if (laser == null)
+                    laser = GameObject.Find("Lasers").transform.GetChild(0).GetChild(0).GetComponent<Laser> ();
                 if (phase > 1 ? laser.hitting : true)
                     boss.transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
                 yield return 0;
@@ -87,7 +95,10 @@ public class BossSceneManager : MonoBehaviour {
 			case 2:
 				player.transform.GetChild (0).GetChild (0).transform.localRotation = Quaternion.Euler (5, 0, 0);
 				break;
-			default:
+            case 3:
+                player.transform.GetChild(0).GetChild(0).transform.localRotation = Quaternion.Euler(10, 0, 0);
+                break;
+            default:
 				player.transform.GetChild (0).GetChild (0).transform.localRotation = Quaternion.Euler (-15, 0, 0);
 				break;
 			}
@@ -116,6 +127,7 @@ public class BossSceneManager : MonoBehaviour {
             {
                 Instantiate(smokePrefab, boss.transform.position, Quaternion.EulerAngles(new Vector3(-90, 0, 0)));
                 player.GetComponent<Player>().m_paused = true;
+                GameFinished = true;
                 StartCoroutine(Fade());
                 credits.SetActive(true);
             }
@@ -172,7 +184,7 @@ public class BossSceneManager : MonoBehaviour {
             yield return 0;
         }
 
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(70);
         Scenes.LoadScene(Scenes.MainMenu);
     }
 
