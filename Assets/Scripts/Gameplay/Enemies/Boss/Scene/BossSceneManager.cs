@@ -24,6 +24,7 @@ public class BossSceneManager : MonoBehaviour {
     public GameObject credits;
     public Image fade;
     public AudioClip m_winMusic;
+    public AudioClip m_mainMenuMusic;
     public PauseMenuManager m_pauseMenu;
     bool GameFinished = false;
 
@@ -185,6 +186,7 @@ public class BossSceneManager : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(90);
+        AudioManager.Instance().PlayMusic(m_mainMenuMusic, 0.5f);
         Scenes.LoadScene(Scenes.MainMenu);
     }
 
