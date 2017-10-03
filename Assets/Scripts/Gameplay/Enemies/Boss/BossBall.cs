@@ -54,6 +54,13 @@ public class BossBall : MonoBehaviour {
         {
             GameObject.Find("MechanicLaserManager").GetComponent<MechanicLaserManager>().DisableLaser();
             GameObject.Find("MechanicScreamSound").SetActive(false);
+
+            EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
+            if (m_sound != null)
+            {
+                m_sound.PlayCrash();
+            }
+            m_disappear = true;
         }
     }
 }
