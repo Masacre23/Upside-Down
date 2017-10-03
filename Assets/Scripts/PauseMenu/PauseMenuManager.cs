@@ -74,4 +74,9 @@ public class PauseMenuManager : MonoBehaviour {
         }
         Scenes.LoadScene(Scenes.MainMenu);
     }
+
+    public bool IsPaused()
+    {
+        return mIsPaused;
+    }
 }

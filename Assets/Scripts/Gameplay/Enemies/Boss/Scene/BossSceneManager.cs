@@ -24,6 +24,7 @@ public class BossSceneManager : MonoBehaviour {
     public GameObject credits;
     public Image fade;
     public AudioClip m_winMusic;
+    public PauseMenuManager m_pauseMenu;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +40,8 @@ public class BossSceneManager : MonoBehaviour {
 			player.GetComponent<Player> ().m_paused = true;
 			scenes [numScene].SetActive (true);
             player.transform.parent = platforms[numScene].transform;
-		} else 
+		}
+        else if(!m_pauseMenu.IsPaused())
 		{
 			player.GetComponent<Player> ().m_paused = false;
 			scenes [numScene].SetActive (false);
