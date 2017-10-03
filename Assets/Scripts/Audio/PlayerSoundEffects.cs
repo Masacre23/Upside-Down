@@ -87,6 +87,6 @@ public class PlayerSoundEffects : SoundEffects {
  
     public void PlayGameOver()
     {
-        AudioManager.Instance().PlayMusic(m_gameOverFail, 0.5f);
+        AudioManager.Instance().PlayMusicWithoutLoop(m_gameOverFail, 0.5f);
     }
 }

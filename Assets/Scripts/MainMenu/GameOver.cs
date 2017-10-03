@@ -16,9 +16,9 @@ public class GameOver : MonoBehaviour {
     {
         m_time = Time.time;
 
-        AudioManager audioManager = AudioManager.Instance();
+        /*AudioManager audioManager = AudioManager.Instance();
         if (audioManager && m_gameOverClip)
-            audioManager.PlayMusic(m_gameOverClip, 0.5f);
+            audioManager.PlayMusic(m_gameOverClip, 0.5f);*/
 	}
 	
 	// Update is called once per frame

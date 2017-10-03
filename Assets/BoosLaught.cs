@@ -23,7 +23,7 @@ public class BoosLaught : StateMachineBehaviour {
         SnowmanBossSoundEffects sound = animator.gameObject.GetComponent<SnowmanBossSoundEffects>();
         if (sound != null)
         {
-            sound.StopLoop();
+            sound.StopLaught();
         }
     }
 

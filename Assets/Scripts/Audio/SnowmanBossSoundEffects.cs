@@ -10,6 +10,7 @@ public class SnowmanBossSoundEffects : SoundEffects {
     public AudioClip m_hit;
     public AudioClip m_pain;
     private bool m_isWalking = false;
+    private bool m_isLaughting = false;
 
     void Start()
     {
@@ -17,17 +18,20 @@ public class SnowmanBossSoundEffects : SoundEffects {
 
     public void PlayTalk()
     {
+        m_isLaughting = false;
         base.PlaySoundLoop(m_talk);
     }
 
     public void PlayLaught()
     {
+        m_isLaughting = true;
         base.PlaySoundLoop(m_laugth);
     }
 
 
     public void PlayWalk()
     {
+        m_isLaughting = false;
         if (!m_isWalking)
         {
             m_isWalking = true;
@@ -37,6 +41,7 @@ public class SnowmanBossSoundEffects : SoundEffects {
 
     public void StopWalk()
     {
+        m_isLaughting = false;
         if (m_isWalking)
         {
             m_isWalking = false;
@@ -46,12 +51,22 @@ public class SnowmanBossSoundEffects : SoundEffects {
 
     public void PlayPain()
     {
+        m_isLaughting = false;
         base.PlaySoundLoop(m_pain);
     }
 
     public void StopLoop()
     {
         base.StopSoundLoop();
+    }
+
+    public void StopLaught()
+    {
+        if (m_isLaughting)
+        {
+            base.StopSoundLoop();
+            m_isLaughting = false;
+        }
     }
 
     public void PlayHit()

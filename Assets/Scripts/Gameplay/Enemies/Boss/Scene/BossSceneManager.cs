@@ -161,7 +161,7 @@ public class BossSceneManager : MonoBehaviour {
 
     public IEnumerator Fade()
     {
-        AudioManager.Instance().PlayMusic(m_winMusic, 0.5f);
+        AudioManager.Instance().PlayMusicWithoutLoop(m_winMusic, 0.5f);
         while (fade.color.a < 1)
         {
             Color temp = fade.color;
