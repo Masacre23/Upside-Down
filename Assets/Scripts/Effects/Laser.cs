@@ -43,7 +43,10 @@ public class Laser : MonoBehaviour {
             if (screenPoint.z < 0 || screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1) //if is not viewing
             {
                 //transform.parent.gameObject.SetActive(false);
+                bossSceneManager.GetComponent<BossSceneManager>().laser = null;
                 Destroy(transform.parent.gameObject);
+                //transform.parent.gameObject.transform.parent = null;
+                //transform.parent.gameObject.SetActive(false);
             }
         }
 		if (target == null) 
