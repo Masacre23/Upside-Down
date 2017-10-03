@@ -3773,6 +3773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 493629865}
+  fade: {fileID: 1430589922}
 --- !u!1001 &107540059
 Prefab:
   m_ObjectHideFlags: 0
@@ -10345,7 +10346,7 @@ Prefab:
     - target: {fileID: 114382856054172026, guid: 4ca36affca7353a43baafc5c8df4a7d6,
         type: 2}
       propertyPath: DialogueStringsES.Array.data[2]
-      value: "Aqu\xED arriba!!"
+      value: "\xA1\xA1Aqu\xED arriba!!"
       objectReference: {fileID: 0}
     - target: {fileID: 114382856054172026, guid: 4ca36affca7353a43baafc5c8df4a7d6,
         type: 2}
@@ -10392,7 +10393,7 @@ Prefab:
     - target: {fileID: 114382856054172026, guid: 4ca36affca7353a43baafc5c8df4a7d6,
         type: 2}
       propertyPath: DialogueStringsES.Array.data[11]
-      value: AAAAAAAH!!!
+      value: "\xA1\xA1AAAAAAAH!!!"
       objectReference: {fileID: 0}
     - target: {fileID: 114382856054172026, guid: 4ca36affca7353a43baafc5c8df4a7d6,
         type: 2}
@@ -14892,6 +14893,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1640396346419300, guid: b3a4f18c9e2ee7f48b786c4ef8a1c986, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b3a4f18c9e2ee7f48b786c4ef8a1c986, type: 2}
   m_IsPrefabParent: 0
@@ -15712,7 +15717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &493629866
 Transform:
   m_ObjectHideFlags: 0
@@ -21084,7 +21089,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 215973.83
+  Age: 216068.77
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -25029,7 +25034,7 @@ MonoBehaviour:
   - The animals here are not very friendly.
   - Try jumping on them or thowing something at them.
   DialogueStringsES:
-  - CUIDADO!!
+  - "\xA1\xA1CUIDADO!!"
   - "Los animales de aqu\xED no son muy amigables."
   - Prueba a saltarles encima o a lanzarles algo.
   indexCameras: 000000000000000001000000
@@ -50135,21 +50140,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114102089777983094, guid: b54e524fa9ea8da448d6fc9b84edafc3,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 689910802}
-    - target: {fileID: 114221111561326330, guid: b54e524fa9ea8da448d6fc9b84edafc3,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 689910802}
-    - target: {fileID: 114635733129608700, guid: b54e524fa9ea8da448d6fc9b84edafc3,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 2098794604}
     - target: {fileID: 114702951433786960, guid: b54e524fa9ea8da448d6fc9b84edafc3,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -50165,20 +50155,21 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgument
       value: 
       objectReference: {fileID: 1326283939}
-    - target: {fileID: 224527883350042532, guid: b54e524fa9ea8da448d6fc9b84edafc3,
+    - target: {fileID: 114635733129608700, guid: b54e524fa9ea8da448d6fc9b84edafc3,
         type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -20
-      objectReference: {fileID: 0}
-    - target: {fileID: 224378925824574944, guid: b54e524fa9ea8da448d6fc9b84edafc3,
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 2098794604}
+    - target: {fileID: 114221111561326330, guid: b54e524fa9ea8da448d6fc9b84edafc3,
         type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1460953461957572, guid: b54e524fa9ea8da448d6fc9b84edafc3, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 689910802}
+    - target: {fileID: 114102089777983094, guid: b54e524fa9ea8da448d6fc9b84edafc3,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 689910802}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b54e524fa9ea8da448d6fc9b84edafc3, type: 2}
   m_IsPrefabParent: 0
@@ -60589,6 +60580,26 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1014799469507850, guid: a428a7580a885a94c9ff02c36b0ca5ae, type: 2}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137722984500731822, guid: a428a7580a885a94c9ff02c36b0ca5ae,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137908777939337636, guid: a428a7580a885a94c9ff02c36b0ca5ae,
+        type: 2}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137722984500731822, guid: a428a7580a885a94c9ff02c36b0ca5ae,
+        type: 2}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 137908777939337636, guid: a428a7580a885a94c9ff02c36b0ca5ae,
+        type: 2}
+      propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class SceneIceManager : MonoBehaviour {
 
     public GameObject canvas;
-    Image fade;
+    public Image fade;
 
 	// Use this for initialization
 	void Start () {
         canvas.SetActive(true);
-        fade = GameObject.Find("Fade").GetComponent<Image>();
+      //  fade = GameObject.Find("Fade").GetComponent<Image>();
         StartCoroutine(Fade());
     }
 
