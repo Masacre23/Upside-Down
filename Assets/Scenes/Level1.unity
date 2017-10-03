@@ -21084,7 +21084,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 215965.95
+  Age: 215970.75
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -21656,8 +21656,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_pauseInputButton: Pause
   mPausePanel: {fileID: 1344417146}
+  m_optionsPanel: {fileID: 1326283940}
+  m_creditsPanel: {fileID: 2098794604}
   m_eventSysterm: {fileID: 450640266}
-  m_mainMenuClip: {fileID: 8300000, guid: b0866727ad3e3f2408830a0c27a5f099, type: 3}
+  m_mainMenuClip: {fileID: 8300000, guid: 283da84ea8c46cc4da02c53cdc19d05f, type: 3}
+  m_indicator: {fileID: 1344417148}
 --- !u!114 &689910803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49566,6 +49569,11 @@ Prefab:
       propertyPath: m_previousButton
       value: 
       objectReference: {fileID: 1344417145}
+    - target: {fileID: 114341533703532304, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: m_eventSystem
+      value: 
+      objectReference: {fileID: 450640266}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a527da9e32b634c4fae23cd6bb8d7bf5, type: 2}
   m_IsPrefabParent: 0
@@ -50189,6 +50197,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224927857656275606, guid: b54e524fa9ea8da448d6fc9b84edafc3,
     type: 2}
   m_PrefabInternal: {fileID: 1344417144}
+--- !u!114 &1344417148 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114865704484368440, guid: b54e524fa9ea8da448d6fc9b84edafc3,
+    type: 2}
+  m_PrefabInternal: {fileID: 1344417144}
+  m_Script: {fileID: 11500000, guid: 4a353606e69b7f24a9c3de97d40359d5, type: 3}
 --- !u!1 &1348607963
 GameObject:
   m_ObjectHideFlags: 0
