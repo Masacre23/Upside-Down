@@ -33,6 +33,8 @@ public class AudioManager : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         musicAudioSource1 = audioSources[0];
         musicAudioSource2 = audioSources[1];
+        musicAudioSource1.volume = m_musicVolume;
+        musicAudioSource2.volume = m_musicVolume;
         musicAudioSource1.Play();
         m_audioSource1IsPlaying = true;
     }

@@ -140,6 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224043713490275326}
   - component: {fileID: 222059425701007946}
+  - component: {fileID: 114806998831244052}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -319,7 +320,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1955974825653648}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -522,11 +523,11 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 114318752516941344}
   m_HandleRect: {fileID: 224043713490275326}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.7396666
+  m_Size: 0.7392053
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -597,21 +598,23 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 08cf5ca854e633243987f00309b2fd2e, type: 3}
-    m_FontSize: 14
+    m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
-    m_MaxSize: 30
+    m_MinSize: 2
+    m_MaxSize: 60
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\nSleepy Creepy\n\nEsteban Arr\xFAa (Programmer)\nMateo Costa (3D Artist)\nGuillem
-    Ferr\xE9 (Programmer)\nAdri\xE1n Guevara Alonso (Programmer, FX specialist)\nAlex
-    Plaza (3D Animator)\n\nColaborators\n\nMarina Molina (Sound)\nRaquel G. Caba\xF1as
-    (Sound)\n\nAltea Guevara Alonso (UI Artist)\n"
+  m_Text: "Sleepy Creepy\n\n\nEsteban Arr\xFAa Garc\xEDa \n- Gameplay & Sound Programmer\r
+    -\n\nMateo Costa \n- Modeling, Texturing, Concept Art, Level Design -\r\n\nGuill\xE9m
+    Ferr\xE9 \n- Gameplay & Physics Programmer, Lead Programmer\r -\n\nAdri\xE1n Guevara
+    Alonso \n- Cinematics & IA Programmer, FX specialist\r -\n\nAlex Plaza \n- 3D
+    Animator\r -\n\nColaborators\n\n\nMarina Molina \n- Sound Designer -\n\nRaquel
+    G. Caba\xF1as \n- Sound Designer -\n\nAltea Guevara Alonso \n- UI Artist -\n"
 --- !u!114 &114783374401742002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -643,6 +646,33 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114806998831244052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1551921497172092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114949106280503352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -768,7 +798,7 @@ RectTransform:
   m_Father: {fileID: 224594684106009474}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.000000029802322, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -786,7 +816,7 @@ RectTransform:
   m_Father: {fileID: 224791345030074222}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.26033342}
+  m_AnchorMin: {x: 0, y: 0.2607947}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -865,7 +895,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224594684106009474
