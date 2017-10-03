@@ -184,7 +184,7 @@ public class BossSceneManager : MonoBehaviour {
             yield return 0;
         }
 
-        yield return new WaitForSeconds(70);
+        yield return new WaitForSeconds(90);
         Scenes.LoadScene(Scenes.MainMenu);
     }
 

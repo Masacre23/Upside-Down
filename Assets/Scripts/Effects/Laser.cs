@@ -31,7 +31,7 @@ public class Laser : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         bool on = m_on;
-        if (bossSceneManager && !transform.parent.GetComponent<ThrowableObject>().m_isCarring)
+        if (bossSceneManager && (!transform.parent.GetComponent<ThrowableObject>().m_isCarring || hitting == false))
         {
             laser.enabled = false;
             transform.GetChild(1).gameObject.SetActive(false);
