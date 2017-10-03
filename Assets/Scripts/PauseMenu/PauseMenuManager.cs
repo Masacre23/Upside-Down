@@ -57,7 +57,6 @@ public class PauseMenuManager : MonoBehaviour {
     {
         mIsPaused = !mIsPaused;
         mPausePanel.SetActive(mIsPaused);
-        m_player.PausePlayer();
     }
 
     public void Resume()
