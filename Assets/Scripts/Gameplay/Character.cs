@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-
+    [Header("Character class")]
     public float m_maxHealth = 120.0f;
     public float m_health = 120.0f;
     public float m_moveSpeed = 4.0f;
@@ -25,9 +25,6 @@ public class Character : MonoBehaviour
 
     protected bool m_isGrounded;
 
-	//Effects
-	public GameObject m_prefabHit1;
-
     public virtual void Awake()
     {
         if (!(m_gravityOnCharacter =  GetComponent<GameObjectGravity>()))
@@ -37,16 +34,16 @@ public class Character : MonoBehaviour
             m_animator = GetComponent<Animator>();
         else
 			m_animator = transform.GetChild(0).GetComponent<Animator> ();
-
-		m_prefabHit1 = (GameObject)Resources.Load("Prefabs/Effects/CFX3_Hit_Misc_D (Orange)", typeof(GameObject));
     }
 
     // Use this for initialization
     public virtual void Start ()
     {
         m_rigidBody = GetComponent<Rigidbody>();
-        m_capsule = GetComponent<CapsuleCollider>();
-        m_capsuleHeight = m_capsule.height;
+		if (tag == "Player") {
+			m_capsule = GetComponent<CapsuleCollider> ();
+			m_capsuleHeight = m_capsule.height;
+		}
 
         m_rigidBody.freezeRotation = true;
         m_health = m_maxHealth;
@@ -59,6 +56,10 @@ public class Character : MonoBehaviour
     }
 
     public virtual void Update()
+    {
+    }
+
+    public virtual void LateUpdate()
     {
     }
 
@@ -81,13 +82,11 @@ public class Character : MonoBehaviour
             m_isGrounded = true;
             m_isJumping = false;
             m_gravityOnCharacter.m_getStrongestGravity = true;
-            m_gravityOnCharacter.m_onAir = false;
         }
         else
         {
             m_isGrounded = false;
             m_gravityOnCharacter.m_getStrongestGravity = false;
-            m_gravityOnCharacter.m_onAir = true;
         }
 
         return m_isGrounded;
@@ -110,11 +109,6 @@ public class Character : MonoBehaviour
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
-        SoundEffects m_soundEffects = GetComponent<SoundEffects>();
-        if(m_soundEffects != null)
-        {
-            m_soundEffects.PlaySound("Jump");
-        }
     }
 
     //This function should be called while character is on air.
@@ -127,16 +121,17 @@ public class Character : MonoBehaviour
             m_groundCheckDistance = 0.01f;
     }
 
-    bool GroundCheck(ref RaycastHit hitInfo)
+    protected bool GroundCheck(ref RaycastHit hitInfo, bool withSphereCast = false)
     {
         bool ret = false;
         int ignoreWater = 1 << LayerMask.NameToLayer("Water");
         ignoreWater = ignoreWater | 1 << LayerMask.NameToLayer("GeneralTrigger");
+        ignoreWater = ignoreWater | 1 << LayerMask.NameToLayer("StencilDetector");
         ignoreWater = ~ignoreWater;
 
         ret = Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
-        //if (!ret)
-        //    ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
+        if (!ret && withSphereCast)
+            ret = Physics.SphereCast(transform.position + (transform.up * 0.1f), m_capsule.radius, -transform.up, out hitInfo, m_groundCheckDistance, ignoreWater);
 
         return ret;
     }

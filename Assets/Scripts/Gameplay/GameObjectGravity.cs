@@ -8,36 +8,44 @@ using UnityEngine;
 public class GameObjectGravity : MonoBehaviour
 {
     [HideInInspector] public Rigidbody m_rigidBody;
-    private RaycastHit m_attractor;
     public GameObject m_attractorGameObject;
     public Vector3 m_gravity { get; private set; }
 
-    public List<GravityAttractor> m_planetsGravity;
-    public List<GravityAttractor> m_objectsGravity;
+    [SerializeField] List<GravityAttractor> m_planetsGravity;
+    [SerializeField] List<GravityAttractor> m_objectsGravity;
+
+    Dictionary<GameObject, List<GravityAttractor>> m_planetsGravityByAttractor;
+    Dictionary<GameObject, List<GravityAttractor>> m_objectsGravityByAttractor;
+
 
     public float m_maxTimeTravelled = 0.5f;
     public float m_maxTimeOnGravityWallGravity = 1.0f;
 
     public bool m_ignoreGravity = false;
     float m_timeTravelled;
-    float m_timeOnGravityWallGravity;
     Vector3 m_impulseForce;
 
-    public bool m_onGravityWall = false;
-    public bool m_onAir = false;
+    public bool m_intoWater = false;
 
-    public bool m_getStrongestGravity = true;
+    public bool m_getStrongestGravity = false;
 
     //This should be the same for all gameobjects
     static float m_gravityStrength = -19.0f;
+    static float m_waterResistance = 19.0f;
+
+    private bool m_inGravityWall = false;
+    private Vector3 m_savedGravity = Vector3.zero;
 
     Player m_player;
-    public Vector3 test;
 
     void Awake()
     {
         m_planetsGravity = new List<GravityAttractor>();
         m_objectsGravity = new List<GravityAttractor>();
+
+        m_planetsGravityByAttractor = new Dictionary<GameObject, List<GravityAttractor>>();
+        m_objectsGravityByAttractor = new Dictionary<GameObject, List<GravityAttractor>>();
+
 
         m_rigidBody = GetComponent<Rigidbody>();
         m_rigidBody.useGravity = false;
@@ -55,29 +63,22 @@ public class GameObjectGravity : MonoBehaviour
         m_player = GetComponent<Player>();
     }
 
-    public void Update()
-    {
-        test = m_gravity;
-        if (m_onGravityWall && !m_getStrongestGravity)
-        {
-            m_timeOnGravityWallGravity += Time.deltaTime;
-            if (m_timeOnGravityWallGravity > m_maxTimeOnGravityWallGravity)
-            {
-                m_onGravityWall = false;
-                m_timeOnGravityWallGravity = 0.0f;
-            }
-        }
-    }
-
 	// Called to add gravity force into the rigid body.
 	public void FixedUpdate ()
     {
         if (!m_ignoreGravity)
         {
-            if (!m_onGravityWall || (m_onAir && m_objectsGravity.Count > 0) )
+            if (!m_inGravityWall)
                 m_gravity = GetGravity();
-                
-            m_rigidBody.AddForce(m_gravityStrength * m_rigidBody.mass * m_gravity);
+            else
+                m_gravity = m_savedGravity;
+
+            float strength = m_gravityStrength;
+            if (m_intoWater)
+            {
+                strength += m_waterResistance;
+            }
+            m_rigidBody.AddForce(strength * m_rigidBody.mass * m_gravity);
         }
         else
         {
@@ -99,13 +100,19 @@ public class GameObjectGravity : MonoBehaviour
         {
             if (m_getStrongestGravity)
             {
-                //GameObject strongestAttractor = GetStrongestAttractor();
                 foreach (GravityAttractor attractor in m_objectsGravity)
                 {
                     if (attractor.m_attractor == m_attractorGameObject)
                     {
                         gravity += attractor.GetGravityWithDistance(transform.position);
                     }
+                }
+            }
+            else if (GetNumAttractors() == 1)
+            {
+                foreach (GravityAttractor attractor in m_objectsGravity)
+                {
+                    gravity += attractor.GetGravityWithDistance(transform.position);
                 }
             }
             else
@@ -151,23 +158,100 @@ public class GameObjectGravity : MonoBehaviour
         return objectAttractor;
     }
 
+    // Returns the number of attractors the object has
+    private int GetNumAttractors()
+    {
+        return m_objectsGravityByAttractor.Count;
+    }
+
     //This function sets the passed raycasthit as the current attractor for the game object
     //It's mainly to be used by characters in order update its attractor while they walk on an attractor, not on planet
     public void GravityOnFeet(RaycastHit hit)
     {
-        //m_attractorGameObject = hit.transform.gameObject;
         AttractorProperties attractorProperties = hit.transform.gameObject.GetComponent<AttractorProperties>();
         if (attractorProperties)
             m_attractorGameObject = attractorProperties.m_attractor;
 
         if (hit.collider.tag == "GravityWall")
+            m_savedGravity = hit.normal;
+    }
+
+    public void EnterGravityWallZone()
+    {
+        m_inGravityWall = true;
+        m_savedGravity = m_gravity;
+    }
+
+    public void ExitGravityWallZone()
+    {
+        m_inGravityWall = false;
+    }
+
+    //Call this function when adding a new attractor to the object
+    public void AddAttractor(GravityAttractor newAttractor)
+    {
+        if (newAttractor.m_type == GravityAttractor.GravityType.PLANET)
         {
-            m_gravity = hit.normal;
-            m_onGravityWall = true;
-            m_timeOnGravityWallGravity = 0.0f;
+            if (!m_planetsGravity.Contains(newAttractor))
+            {
+                m_planetsGravity.Add(newAttractor);
+                AddingToDictionary(m_planetsGravityByAttractor, newAttractor);
+            }
         }
         else
-            m_onGravityWall = false;
+        {
+            if (!m_objectsGravity.Contains(newAttractor))
+            {
+                m_objectsGravity.Add(newAttractor);
+                AddingToDictionary(m_objectsGravityByAttractor, newAttractor);
+            }
+        }
     }
+
+    //Call this function when removing an attractor for the object
+    public void RemoveAttractor(GravityAttractor oldAttractor)
+    {
+        if (m_planetsGravity.Contains(oldAttractor))
+        {
+            m_planetsGravity.Remove(oldAttractor);
+            RemovingFromDictionary(m_planetsGravityByAttractor, oldAttractor);
+        }
+        else if (m_objectsGravity.Contains(oldAttractor))
+        {
+            m_objectsGravity.Remove(oldAttractor);
+            RemovingFromDictionary(m_objectsGravityByAttractor, oldAttractor);
+        }
+    }
+
+    private void AddingToDictionary(Dictionary<GameObject, List<GravityAttractor>> dictionary, GravityAttractor newAttractor)
+    {
+        List<GravityAttractor> newList;
+        if (dictionary.ContainsKey(newAttractor.m_attractor))
+        {
+            dictionary.TryGetValue(newAttractor.m_attractor, out newList);
+            newList.Add(newAttractor);
+        }
+        else
+        {
+            newList = new List<GravityAttractor>();
+            newList.Add(newAttractor);
+            dictionary.Add(newAttractor.m_attractor, newList);
+        }
+    }
+
+    private void RemovingFromDictionary(Dictionary<GameObject, List<GravityAttractor>> dictionary, GravityAttractor oldAttractor)
+    {
+        List<GravityAttractor> newList;
+        if (dictionary.ContainsKey(oldAttractor.m_attractor))
+        {
+            dictionary.TryGetValue(oldAttractor.m_attractor, out newList);
+            newList.Remove(oldAttractor);
+            if (newList.Count == 0)
+            {
+                dictionary.Remove(oldAttractor.m_attractor);
+            }
+        }
+    }
+
 
 }

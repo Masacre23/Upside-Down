@@ -28,8 +28,6 @@ public class IsometricCamera : MonoBehaviour {
 		float x = CrossPlatformInputManager.GetAxis ("Mouse X") * 2.5f;
 		float y = CrossPlatformInputManager.GetAxis ("Mouse Y") * 2.5f;
 
-		//m_lookAngleX += x * m_turnSpeed;
-		//m_lookAngleY += y * m_turnSpeed;
 		m_lookAngleX = Mathf.Lerp(m_lookAngleX, x, m_turnSpeed * Time.deltaTime);
 		m_lookAngleY = Mathf.Lerp(m_lookAngleY, y, m_turnSpeed * Time.deltaTime);
 

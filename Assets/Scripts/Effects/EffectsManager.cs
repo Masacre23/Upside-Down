@@ -77,7 +77,28 @@ public class EffectsManager : MonoBehaviour {
 
         ret.transform.position = effectPosition;
         ret.transform.rotation = Quaternion.FromToRotation(ret.transform.up, effectUpDirection) * ret.transform.rotation;
-        //ret.transform.rotation = ret.transform.rotation * Quaternion.FromToRotation(ret.transform.rotation.eulerAngles, effectUpDirection);
+
+        if (effectParent == null)
+            ret.transform.parent = m_defaultParent;
+        else
+            ret.transform.parent = effectParent;
+
+        return ret;
+    }
+
+    public GameObject GetEffect(GameObject effectPrefab, Vector3 effectPosition, Vector3 effectUpDirection, Vector3 effectFrontDirection, Transform effectParent = null)
+    {
+        GameObject ret = null;
+
+        if (effectPrefab == null)
+            return null;
+
+        ret = GetEffectFromPool(effectPrefab);
+
+        ret.SetActive(true);
+
+        ret.transform.position = effectPosition;
+        ret.transform.rotation = Quaternion.LookRotation(effectFrontDirection, effectUpDirection);
 
         if (effectParent == null)
             ret.transform.parent = m_defaultParent;

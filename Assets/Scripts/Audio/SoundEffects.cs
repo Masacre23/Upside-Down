@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SoundEffects : MonoBehaviour {
 
-    public string[] keys;
-    public AudioClip[] sounds;
+    public static string m_resourcesWaterPath = "Audio/Water/";
+
+    private AudioClip m_splash;
 
     private Dictionary<string, AudioClip> m_soundsEffects;
 
@@ -13,63 +14,47 @@ public class SoundEffects : MonoBehaviour {
 
     private void Awake()
     {
-        m_soundsEffects = new Dictionary<string, AudioClip>();
-        for(int i = 0; i < keys.Length && i < sounds.Length; i++)
-        {
-            m_soundsEffects.Add(keys[i], sounds[i]);
-        }
-
         m_audio = GetComponent<AudioSource>();
         if (!m_audio)
         {
             m_audio = this.gameObject.AddComponent<AudioSource>();
         }
-           
+        m_splash = Resources.LoadAll<AudioClip>(m_resourcesWaterPath)[0];
     }
 
-    // Use this for initialization
-    void Start ()
-    {
-        
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    public void PlaySound(string sound)
+    public void PlaySound(AudioClip clip)
     {
         AudioManager manager = AudioManager.Instance();
         float volume = 1.0f;
         if (manager != null)
             volume = manager.m_soundVolume;
-        if (m_soundsEffects.ContainsKey(sound))
-        {
-            m_audio.PlayOneShot(m_soundsEffects[sound], volume);
-        }
+        m_audio.PlayOneShot(clip, volume);
     }
 
-    public void PlaySoundLoop(string sound)
+    public void PlaySoundLoop(AudioClip clip)
     {
         AudioManager manager = AudioManager.Instance();
         float volume = 1.0f;
         if (manager != null)
             volume = manager.m_soundVolume;
-        if (m_soundsEffects.ContainsKey(sound))
-        {
-            m_audio.clip = m_soundsEffects[sound];
-            m_audio.loop = true;
-            m_audio.Play();
-            m_audio.volume = volume;
-        }
+        m_audio.clip = clip;
+        m_audio.loop = true;
+        m_audio.Play();
+        m_audio.volume = volume;
     }
 
-    public void StopSoundLoop(string sound)
+    public void StopSoundLoop()
     {
-        if (m_soundsEffects.ContainsKey(sound))
-        {
-            m_audio.Stop();
-        }
+        m_audio.Stop();
     }
+
+    public void PlaySplash()
+    {
+        AudioManager manager = AudioManager.Instance();
+        float volume = 1.0f;
+        if (manager != null)
+            volume = manager.m_soundVolume;
+        m_audio.PlayOneShot(m_splash, volume);
+    }
+
 }

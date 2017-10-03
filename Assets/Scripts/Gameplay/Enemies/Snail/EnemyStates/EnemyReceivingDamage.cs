@@ -12,7 +12,7 @@ public class EnemyReceivingDamage : EnemyStates
         m_type = States.RECEIVING;
     }
 
-	public override bool OnUpdate (DamageData data)
+	public override bool OnUpdate (DamageData data, bool stunned)
     {
 		bool ret = false;
 

@@ -10,6 +10,8 @@ public class AutoDisable : MonoBehaviour
 	void Start ()
     {
         m_thisSystem = GetComponent<ParticleSystem>();
+        if (!m_thisSystem)
+            m_thisSystem = GetComponentInChildren<ParticleSystem>();
 	}
 	
 	// Update is called once per frame

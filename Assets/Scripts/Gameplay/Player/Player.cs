@@ -6,8 +6,10 @@ using UnityEngine;
 //It inherits from Character.
 public class Player : Character
 {
+    [Header("Movement factors")]
+    public float m_speedFactor = 2.0f;
+    public float m_carryingFactor = 1.0f;
 
-    public bool m_fixedCam = false;
     //Variables regarding player input control
     PlayerController m_playerInput;
     float m_axisHorizontal;
@@ -16,28 +18,23 @@ public class Player : Character
     float m_camVertical;
     bool m_jumping;
     bool m_pickObjects;
-    bool m_changeGravity;
     bool m_aimObject;
-    bool m_throwObjectButtonDown;
     bool m_returnCam;
 
-    bool m_throwObjectButtonUp = true;
-    bool m_throwAnimation = false;
+    [HideInInspector] public bool m_throwAnimation = false;
 
+    [Header("Input bools")]
     public bool m_negatePlayerInput = false;
-
     public bool m_savedPlayerInput = false;
     public bool m_paused = false;
     public bool m_justUnpaused = false;
-    public bool m_negateJump = false;
 
     //Variables regarding player state
+    [Header("Player States")]
     public PlayerStates m_currentState;
     [HideInInspector] public PlayerStates m_grounded;
     [HideInInspector] public PlayerStates m_onAir;
-    [HideInInspector] public PlayerStates m_aimToThrow;
-    [HideInInspector] public PlayerStates m_floating;
-    [HideInInspector] public PlayerStates m_changing;
+    [HideInInspector] public PlayerCarrying m_carrying;
 
     //Variables regarding player damage state
     public PlayerDamageStates m_playerDamageState;
@@ -53,61 +50,50 @@ public class Player : Character
     [HideInInspector] public Vector3 m_damageForce;
 
     //General Info variables
-    public Transform m_modelTransform;
+    [HideInInspector] public Transform m_modelTransform;
     [HideInInspector] public VariableCam m_camController;
-    [HideInInspector] public PlayerGravity m_playerGravity;
 
     //Variables regarding player movement
+    [Header("Movement")]
+    public ZoneSpace m_currentZone = null;
     public bool m_freezeMovement;
     public bool m_rotationFollowPlayer;
-    public bool m_playerStopped = false;
+    [HideInInspector] public bool m_playerStopped = false;
     public Vector3 m_offset = Vector3.zero;
     public Vector3 m_lastMovement = Vector3.zero;
     public string m_tagGround = "";
     public float m_timeSlide = 0.2f;
     public float m_slideSpeed = 2.0f;
-    private float m_timeSliding = 0.0f;
     private Vector3 m_rigidBodyTotal = Vector3.zero;
     [HideInInspector] public bool m_doubleJumping = false;
-    [HideInInspector] public Vector3 m_jumpDirection = Vector3.zero;
     [HideInInspector] public Vector3 m_jumpMovement;
     private bool m_hasJumped = false;
     private Vector3 m_jumpVector;
 
+    public bool m_jumpOnEnemy { get; private set; }
+    [HideInInspector] public bool m_enemyDetected = false;
+    [HideInInspector] public GameObject m_lastEnemyJumped = null;
+
     //Variables regarding player's change of gravity
-    public float m_gravityRange = 3.0f;
-    public bool m_reachedGround = true;
-    public MarkObject m_markedTarget = null;
-    public bool m_markAimedObject = false;
     [HideInInspector] public TargetDetectorByTag m_gravityTargets;
 
     //Variables regarding player's throw of objects
+    [Header("Throw variables")]
     public float m_throwDetectionRange = 20.0f;
-    public float m_throwForce = 20.0f;
+    public float m_throwForce = 2.0f;
     public float m_angleEnemyDetection = 30.0f;
-    [HideInInspector] public Transform m_throwAimOrigin;
-    [HideInInspector] public Transform m_lowAimOrigin;
-    [HideInInspector] public Transform m_highAimOrigin;
 
     //Variables regarding player picking up objects
-    [HideInInspector] public FloatingAroundPlayer m_floatingObjects;
-
-    //Variables regarding player's health and oxigen
-    [HideInInspector] public OxigenPlayer m_oxigen;
+    [HideInInspector] public PickedObject m_pickedObject;
 
 	//Effects
-	public GameObject m_jumpClouds;
-	public GameObject m_runClouds;
-    public GameObject m_hit;
-    public Transform m_smoke;
-
-    [HideInInspector] public Dictionary<string, TargetDetector> m_targetsDetectors;
+    [Header("Others")]
     [HideInInspector] public EnemyDetectorByLayer m_enemyDetector;
-    float m_inputSpeed;
-    float m_runSpeed;
+    [HideInInspector] public float m_inputSpeed;
+    private float m_runSpeed;
+    private float m_carryingSpeed;
 
-    public SoundEffects m_soundEffects;
-    private bool m_InIce;
+    public PlayerSoundEffects m_soundEffects;
 
     public override void Awake()
     {
@@ -117,15 +103,10 @@ public class Player : Character
         m_onAir = gameObject.GetComponent<PlayerOnAir>();
         if (!m_onAir)
             m_onAir = gameObject.AddComponent<PlayerOnAir>();
-        //m_floating = gameObject.GetComponent<PlayerFloating>();
-        //if (!m_floating)
-        //    m_floating = gameObject.AddComponent<PlayerFloating>();
-        //m_changing = gameObject.GetComponent<PlayerChanging>();
-        //if (!m_changing)
-        //    m_changing = gameObject.AddComponent<PlayerChanging>();
-        m_aimToThrow = gameObject.GetComponent<PlayerThrowing>();
-        if (!m_aimToThrow)
-            m_aimToThrow = gameObject.AddComponent<PlayerThrowing>();
+        m_carrying = gameObject.GetComponent<PlayerCarrying>();
+        if (!m_carrying)
+            m_carrying = gameObject.AddComponent<PlayerCarrying>();
+
         m_currentState = m_onAir;
 
         m_vulnerable = gameObject.GetComponent<PlayerVulnerable>();
@@ -146,10 +127,6 @@ public class Player : Character
 
         if (!(m_playerInput = GetComponent<PlayerController>()))
             m_playerInput = gameObject.AddComponent<PlayerController>();
-        if (!(m_playerGravity = GetComponent<PlayerGravity>()))        
-            m_playerGravity = gameObject.AddComponent<PlayerGravity>();
-        if (!(m_oxigen = GetComponent<OxigenPlayer>()))
-            m_oxigen = gameObject.AddComponent<OxigenPlayer>();
 
         CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
 
@@ -168,14 +145,10 @@ public class Player : Character
 
         m_gravityTargets = GetComponentInChildren<TargetDetectorByTag>();
 
-        m_soundEffects = GetComponent<SoundEffects>();
+        m_soundEffects = GetComponent<PlayerSoundEffects>();
 
-        m_targetsDetectors = new Dictionary<string, TargetDetector>();
-        m_floatingObjects = GetComponentInChildren<FloatingAroundPlayer>();
+        m_pickedObject = GetComponent<PickedObject>();
         m_enemyDetector = GetComponentInChildren<EnemyDetectorByLayer>();
-        m_throwAimOrigin = GameObject.Find("ThrowAimRaycast").transform;
-        m_lowAimOrigin = GameObject.Find("LowAimRaycast").transform;
-        m_highAimOrigin = GameObject.Find("HighAimRaycast").transform;
         base.Awake();
     }
 
@@ -187,9 +160,13 @@ public class Player : Character
         m_negatePlayerInput = false;
         base.Start();
 
-        m_runSpeed = 2 * m_moveSpeed;
+        m_runSpeed = m_speedFactor * m_moveSpeed;
+        m_carryingSpeed = m_carryingFactor * m_moveSpeed;
         m_rigidBodyTotal = Vector3.zero;
 
+        m_camController.SetCamOnPlayer();
+
+        m_jumpOnEnemy = false;
     }
 
     public override void Restart()
@@ -201,8 +178,13 @@ public class Player : Character
 
         m_freezeMovement = false;
         m_negatePlayerInput = false;
+        m_currentZone = null;
 
-        m_soundEffects = GetComponent<SoundEffects>();
+        m_animator.Rebind();
+
+        m_soundEffects = GetComponent<PlayerSoundEffects>();
+
+        m_camController.SetCamOnPlayer();
 
         base.Restart();
     }
@@ -212,9 +194,8 @@ public class Player : Character
     public override void Update()
     {
         ManageInput();
-
         PlayerStates previousState = m_currentState;
-		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_changeGravity, m_aimObject, m_throwObjectButtonDown, Time.deltaTime))
+		if (m_currentState.OnUpdate(m_axisHorizontal, m_axisVertical, m_jumping, m_pickObjects, m_aimObject, Time.deltaTime))
 		{
 			previousState.OnExit();
 			m_currentState.OnEnter();
@@ -223,19 +204,6 @@ public class Player : Character
         m_modelTransform.rotation = Quaternion.FromToRotation(m_modelTransform.up, transform.up) * m_modelTransform.rotation;
 
         UpdateAnimator();
-
-        if (m_camController)
-        {
-            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, Time.deltaTime);
-            if (m_rotationFollowPlayer)
-            {
-                //m_camController.FollowTarget(Time.deltaTime);
-                m_camController.RotateOnTarget(Time.deltaTime);
-            }   
-        }
-
-        if (!m_markAimedObject)
-            UnmarkTarget();
 
         this.transform.position = this.transform.position + m_rigidBodyTotal;
         m_rigidBodyTotal = Vector3.zero;
@@ -261,10 +229,19 @@ public class Player : Character
         }
 
         m_doubleJumping = false;
+    }
+
+    public override void LateUpdate()
+    {
+        if (m_camController)
+        {
+            m_camController.OnUpdate(m_camHorizontal, m_camVertical, m_returnCam, m_rotationFollowPlayer, Time.deltaTime);
+        }
+
         ResetInput();
     }
 
-    public void ChangeCurrentStateToOnAir()
+    public void ChangeStateOnDamage()
     {
         PlayerStates previousState = m_currentState;
         m_currentState = m_onAir;
@@ -278,11 +255,6 @@ public class Player : Character
     public override void FixedUpdate ()
     {
         base.FixedUpdate();
-        //if (m_oxigen.m_oxigen <= 0.0f)
-        //{
-        //    m_damageData.m_damage = (int)m_health + 1;
-        //    m_damageData.m_recive = true;
-        //}
         //m_rigidBody.MovePosition(transform.position + m_rigidBodyTotal);
         //m_rigidBodyTotal = Vector3.zero;
         if (m_damageForceToApply)
@@ -292,82 +264,25 @@ public class Player : Character
         }
     }
 
-    //This function looks for a gravity wall in front of the player
-    //It marks the target if someone is found (unmarking previous marked objects)
-    //If no one is found, it unmarks previous objects
-    public bool GetGravityChangeTarget(out RaycastHit target)
-    {
-        bool ret = false;
-
-        //First look for a target in front of character (ThrowAimRaycast), 
-        // if not found look for one below (LowAimRaycast)
-        // if not found look for one up (HighAimRaycast)
-
-        ret = GetGravityWall(m_throwAimOrigin, out target);
-        if (!ret)
-            ret = GetGravityWall(m_lowAimOrigin, out target);
-        if (!ret)
-            ret = GetGravityWall(m_highAimOrigin, out target);
-
-        if (!ret)
-            UnmarkTarget();
-
-        return ret;
-    }
-
-    //This gets only one gravity wall, casting a raycast from and forward of Origin
-    private bool GetGravityWall(Transform origin, out RaycastHit target)
-    {
-        bool ret = false;
-
-        int layerMask = 1 << LayerMask.NameToLayer("Terrain");
-        if (Physics.Raycast(origin.position, origin.forward, out target, m_gravityRange, layerMask))
-        {
-            if (target.collider.tag == "GravityWall")
-            {
-                MarkObject newMarked = target.transform.GetComponent<MarkObject>();
-                if (newMarked && target.transform.gameObject != m_gravityOnCharacter.m_attractorGameObject)
-                {
-                    ret = true;
-                    if (newMarked != m_markedTarget)
-                    {
-                        UnmarkTarget();
-                        newMarked.BeginMarking();
-                        m_markedTarget = newMarked;
-                    }
-                }
-            }
-        }
-
-        return ret;
-    }
-
-    //This function unmarks a target, if any
-    public void UnmarkTarget()
-    {
-        if (m_markedTarget != null)
-        {
-            m_markedTarget.StopMarking();
-            m_markedTarget = null;
-        }
-    }
-
     //This functions computes the direction of the jump from the player input
     //Then calls the jump method in the computed direction
     public override void Jump(float inputHorizontal, float inputVertical)
     {
-        Vector3 forward = GetDirectionForward();
-        Vector3 movement = inputHorizontal * GetDirectionRight() + inputVertical * forward;
-        movement.Normalize();
+        Vector3 movement = Vector3.zero;
+        if (m_jumpOnEnemy)
+        {
+            m_jumpOnEnemy = false;
+            movement = m_modelTransform.forward;
+        }
+        else
+        {
+            Vector3 forward = GetDirectionForward();
+            movement = inputHorizontal * GetDirectionRight() + inputVertical * forward;
+            movement.Normalize();
+        }
 
-        JumpInDirection(movement, m_inputSpeed);
-    }
-
-    //This function deals with the jump of the character
-    //It mainly adds a velocity to the rigidbody in the direction of the gravity.
-    public void JumpInDirection (Vector3 movement, float inputIntensity)
-    {
-        float speed = GetSpeedFromInput(inputIntensity);
+        //float speed = GetSpeedFromInput(m_inputSpeed);
+        float speed = m_runSpeed;
 
         if (movement != Vector3.zero)
             m_modelTransform.rotation = Quaternion.LookRotation(movement, transform.up);
@@ -377,13 +292,12 @@ public class Player : Character
         m_jumpMovement = Vector3.zero;
 
         m_jumpVector = transform.up * m_jumpForceVertical;
-        m_jumpMovement = movement.normalized * speed;
-        m_jumpDirection = movement.normalized;
+        m_jumpMovement = transform.InverseTransformDirection(movement * speed);
         m_isGrounded = false;
         m_isJumping = true;
         m_groundCheckDistance = 0.01f;
         if (m_soundEffects != null)
-            m_soundEffects.PlaySound("Jump");
+            m_soundEffects.PlayJump();
     }
 
     //This functions controls the character movement and the model orientation.
@@ -406,19 +320,6 @@ public class Player : Character
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 20.0f * timeStep);
                 m_lastMovement = movement;
-                m_timeSliding = 0.0f;
-            }
-            else
-            {
-                m_timeSliding += timeStep;
-                if(m_tagGround == "Ice" && m_currentState == m_grounded)
-                {
-                    m_rigidBody.MovePosition(transform.position + m_lastMovement * m_slideSpeed * timeStep);
-                    if (m_timeSliding >= m_timeSlide)
-                        m_lastMovement = Vector3.zero;
-                }
-                else
-                    m_lastMovement = Vector3.zero;
             }
         }
     }
@@ -432,15 +333,21 @@ public class Player : Character
             Vector3 movement = m_axisHorizontal * GetDirectionRight() + m_axisVertical * forward;
             movement.Normalize();
 
+            Vector3 jumpMovement = transform.TransformDirection(m_jumpMovement);
+            Vector3 jumpDirection = jumpMovement.normalized;
+            
+
             //We need to ignore input in the direction of the jump
             Vector3 finalDirection = movement;
-            float forwardIntensity = Vector3.Dot(movement, m_jumpDirection);
+            float forwardIntensity = Vector3.Dot(movement, jumpDirection);
             if (forwardIntensity > 0.0f)
-                finalDirection -= Vector3.Dot(movement, m_jumpDirection) * m_jumpDirection;
+                finalDirection -= Vector3.Dot(movement, jumpDirection) * jumpDirection;
 
             float speed = GetSpeedFromInput(m_inputSpeed);
+            Vector3 finalMovement = finalDirection * speed + jumpMovement;
+            finalMovement = DetectEnemyBelow(finalMovement);
 
-            m_rigidBodyTotal += m_offset + (finalDirection * speed + m_jumpMovement) * timeStep;
+            m_rigidBodyTotal += m_offset + finalMovement * timeStep;
             m_offset = Vector3.zero;
 
             if (movement != Vector3.zero)
@@ -448,9 +355,71 @@ public class Player : Character
                 Quaternion modelRotation = Quaternion.LookRotation(movement, transform.up);
                 m_modelTransform.rotation = Quaternion.Slerp(m_modelTransform.rotation, modelRotation, 20.0f * timeStep);
                 m_lastMovement = movement;
-                m_timeSliding = 0.0f;
             }
         }
+    }
+
+    private Vector3 DetectEnemyBelow(Vector3 movement)
+    {
+        Vector3 rayDirection = -5.0f * transform.up + movement;
+        rayDirection.Normalize();
+        Debug.DrawRay(transform.position, rayDirection, Color.gray);
+
+        RaycastHit hitInfo;
+        int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");
+        if (Physics.Raycast(transform.position, rayDirection, out hitInfo, 1.0f, enemyLayer))
+        {
+            if (hitInfo.transform.tag == "EnemySnail" && hitInfo.transform.gameObject != m_lastEnemyJumped)
+            {
+                m_enemyDetected = true;
+                Vector3 toEnemy = hitInfo.transform.position - transform.position;
+                toEnemy -= Vector3.Dot(toEnemy, transform.up) * transform.up;
+                return (toEnemy + movement) / 2.0f;
+            }
+        }
+
+        m_enemyDetected = false;
+        return movement;
+    }
+
+    // This function is similar to Character.CheckGroundStatus, but also checks if the player is falling on an enemy in order to produce a jump
+    public bool CheckGroundAndEnemyStatus()
+    {
+        RaycastHit hitInfo = new RaycastHit();
+        Debug.DrawLine(transform.position + (transform.up * 0.1f), transform.position + (transform.up * 0.1f) + (-transform.up * m_groundCheckDistance), Color.magenta);
+        if (GroundCheck(ref hitInfo, m_enemyDetected))
+        {
+            if (hitInfo.transform.tag == "EnemySnail")
+            {
+                m_lastEnemyJumped = hitInfo.transform.gameObject;
+                m_jumpOnEnemy = true;
+                Enemy enemy = hitInfo.collider.gameObject.GetComponent<Enemy>();
+                if (enemy != null && !enemy.m_enemyCollider.is_attacking)
+                {
+                    enemy.m_sound.PlayCrash();
+                    enemy.Stun();
+                }
+            }
+            else
+            {
+                m_lastEnemyJumped = null;
+                if (m_soundEffects)
+                    m_soundEffects.PlayFall();
+            }
+
+            m_tagGround = hitInfo.collider.tag;
+            m_gravityOnCharacter.GravityOnFeet(hitInfo);
+            m_isGrounded = true;
+            m_isJumping = false;
+            m_gravityOnCharacter.m_getStrongestGravity = true;
+        }
+        else
+        {
+            m_isGrounded = false;
+            m_gravityOnCharacter.m_getStrongestGravity = false;
+        }
+
+        return m_isGrounded;
     }
 
     public void RotateModel(Vector3 forward)
@@ -466,88 +435,27 @@ public class Player : Character
         m_animator.SetBool("Grounded", m_isGrounded);
         m_animator.SetBool("Jump", m_isJumping);
         m_animator.SetBool("DoubleJump", m_doubleJumping);
-        m_animator.SetBool("Throwing", m_throwAnimation || (m_currentState == m_aimToThrow));
-        m_throwAnimation = false;
+        m_animator.SetBool("Throwing", m_throwAnimation );
     }
 
-    public void PickObjects()
+    public bool TryToPick()
     {
-        if (m_floatingObjects.CanPickMoreObjects())
+        if (m_pickedObject.CanPickMoreObjects())
         {
-            m_floatingObjects.PickObjects(transform.position + transform.up * (m_capsuleHeight / 2));
-        }
-            
-    }
-
-    public void ThrowObjectsThirdPerson(bool hasThrown)
-    {
-        GameObject targetEnemy = FixingOnEnemy(m_throwAimOrigin, m_angleEnemyDetection);
-
-        RaycastHit targetHit;
-        bool hasTarget = false;
-        if (targetEnemy != null)
-        {
-            Vector3 toEnemy = targetEnemy.transform.position - m_throwAimOrigin.position;
-            hasTarget = Physics.Raycast(m_throwAimOrigin.position, toEnemy.normalized, out targetHit, m_throwDetectionRange);
-        }
-        else
-        {
-            hasTarget = Physics.Raycast(m_throwAimOrigin.position, m_throwAimOrigin.forward, out targetHit, m_throwDetectionRange);
-            Debug.DrawRay(m_throwAimOrigin.position, m_throwAimOrigin.forward, Color.red);
-        }
-
-        if (hasTarget)
-        {
-            if (targetEnemy)
-                m_floatingObjects.SetTarget(targetHit.collider.gameObject.transform.position);
-            //m_floatingObjects.SetTarget(targetHit.point);
-            else
-                m_floatingObjects.UnsetTarget();
-
-            if (hasThrown)
+            if (m_pickedObject.FindObjectToPick(transform.position + transform.up * (m_capsuleHeight / 2)))
             {
-                m_floatingObjects.ThrowObjectToTarget(targetHit, m_throwAimOrigin, m_throwForce);
-                m_throwAnimation = true;
-            }
-        }
-        else
-        {
-            m_floatingObjects.UnsetTarget();
-            if (hasThrown)
-            {
-                m_floatingObjects.ThrowObjectToDirection(m_throwAimOrigin, m_throwDetectionRange, m_throwForce);
-                m_throwAnimation = true;
-            }
-        }
-            
-    }
-
-    public GameObject FixingOnEnemy(Transform origin, float angleDetection)
-    {
-        GameObject closestTarget = null;
-        float closestDistance = 10000.0f;
-        //foreach (GameObject target in m_targetsDetectors["Enemy"].m_targets)
-        foreach (Enemy enemy in m_enemyDetector.m_enemies)
-        {
-            GameObject target = enemy.gameObject;
-            if (!m_floatingObjects.EnemyIsFloating(target))
-            {
-                Vector3 toTarget = target.transform.position - origin.position;
-                float distance = toTarget.sqrMagnitude;
-
-                RaycastHit hit;
-                bool hasHit = Physics.Raycast(origin.position, toTarget.normalized, out hit, toTarget.magnitude);
-                //float thisAngle = Vector3.Angle(origin.forward, toTarget);
-                //if (thisAngle < angleDetection && distance < closestDistance)
-                if (distance < closestDistance && hasHit && hit.transform.gameObject == target)
-                {
-                    closestDistance = distance;
-                    closestTarget = target;
-                }
+                m_carrying.m_pickingOrThrowing = true;
+                return true;
             }
         }
 
-        return closestTarget;
+        return false;           
+    }
+
+    public void ThrowObjectsThirdPerson()
+    {
+        m_pickedObject.SetThrowingForces(m_throwForce);
+        m_throwAnimation = true;
     }
 
     void OnCollisionEnter(Collision col)
@@ -567,41 +475,8 @@ public class Player : Character
         int enemy = LayerMask.NameToLayer("Enemy");
         if (col.collider.gameObject.layer == enemy) 
 		{
-			if (col.gameObject.tag != "FlyingEnemy") //If is snail
-			{ 
-				if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Attack")) {
-                    EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
-                    if (m_soundEffects != null) {
-						m_soundEffects.PlaySound ("Scream");
-					}
-					m_damageData.m_recive = true;
-					m_damageData.m_damage = 20;
-
-					Vector3 diff = transform.position - col.transform.position;
-					float distance = diff.magnitude;
-					Vector3 dir = diff / distance;
-
-					RaycastHit hit;
-					if (Physics.Raycast (transform.position, dir, out hit, 1f)) {
-						EffectsManager.Instance.GetEffect (m_prefabHit1, col.transform.position + transform.up/2 + col.transform.forward/2, transform.up, null);
-					}
-				} else if (col.transform.GetComponentInParent<Enemy> ().m_animator.GetCurrentAnimatorStateInfo (0).IsName ("Walk")) 
-				{
-					RaycastHit hit;
-					if (Physics.Raycast (transform.position, -transform.up, out hit, 1f)) {
-						if (hit.collider.gameObject.tag == "EnemySnail") 
-						{
-							col.transform.GetComponentInParent<Enemy> ().m_animator.SetBool ("Stunned", true);
-							EffectsManager.Instance.GetEffect(m_prefabHit1, hit.point, transform.up, null);
-						}
-					}
-				}
-			} 
-			else 
+			if (col.gameObject.tag == "FlyingEnemy") 
 			{
-                EffectsManager.Instance.GetEffect(m_hit, col.contacts[0].point);
-                if (m_soundEffects != null)
-                    m_soundEffects.PlaySound("Scream");
                 m_damageData.m_recive = true;
                 m_damageData.m_damage = 20;
             }
@@ -631,46 +506,12 @@ public class Player : Character
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        int terrain = LayerMask.NameToLayer("Floor");
-        if (collision.collider.gameObject.layer == terrain)
-        {
-            //if(collision.collider.tag == "Ice")
-            //{
-                m_InIce = true;
-            //}else
-            //{
-            //    m_InIce = false;
-            //} TODO: Esteban.
-        }
-
-    }
-
     private void ManageInput()
     {
         if (!m_negatePlayerInput && !m_paused)
         {
             m_playerInput.GetDirections(ref m_axisHorizontal, ref m_axisVertical, ref m_camHorizontal, ref m_camVertical);
-            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_changeGravity, ref m_aimObject, ref m_throwObjectButtonDown, ref m_returnCam);
-
-            //if (m_negateJump)
-            //    m_jumping = false;
-
-            if (m_throwObjectButtonUp)
-            {
-                if (m_throwObjectButtonDown)
-                    m_throwObjectButtonUp = false;
-            }
-            else
-            {
-                if (m_throwObjectButtonDown)
-                    m_throwObjectButtonDown = false;
-                else
-                    m_throwObjectButtonUp = true;
-            }
-            if (m_throwObjectButtonDown)
-                m_throwObjectButtonUp = false;
+            m_playerInput.GetButtons(ref m_jumping, ref m_pickObjects, ref m_aimObject, ref m_returnCam);
 
         }
         m_playerStopped = false;
@@ -685,9 +526,7 @@ public class Player : Character
         m_camVertical = 0.0f;
         m_jumping = false;
         m_pickObjects = false;
-        m_changeGravity = false;
         m_aimObject = false;
-        m_throwObjectButtonDown = false;
         m_returnCam = false;
     }
 
@@ -721,58 +560,29 @@ public class Player : Character
         ResetInput();
     }
 
-    public void PlayFootStep(string right)
-    {
-        string footstep = right == "Right" ? "FootStepRight" : "FootStepLeft";
-        if (!m_InIce)
-        {
-            footstep += "Land";
-        }
-        if (m_soundEffects != null)
-            m_soundEffects.PlaySound(footstep);
-    }
-
-    public void PlaySound(string name)
-    {
-        if (m_soundEffects != null)
-            m_soundEffects.PlaySound(name);
-    }
-
     private Vector3 GetDirectionRight()
     {
-        //return Camera.main.transform.right;
-        if (m_fixedCam)
-        {
-            return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
-        }  
-        else
-        {
-            Vector3 forwardProjection = Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
-
-            //return Vector3.Cross(transform.up, Camera.main.transform.forward).normalized;
-            //return Camera.main.transform.right;
-            return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
-        }
-            
+        return Camera.main.transform.right - Vector3.Dot(Camera.main.transform.right, transform.up) * transform.up;
     }
 
     private Vector3 GetDirectionForward()
     {
-        if (m_fixedCam)
-        {
-            return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
-        }
-        else
-        {
-            //return Vector3.Cross(Camera.main.transform.right, transform.up).normalized;
-            return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
-        }
-            
-
+        return Camera.main.transform.forward - Vector3.Dot(Camera.main.transform.forward, transform.up) * transform.up;
     }
 
     private float GetSpeedFromInput(float inputIntensity)
     {
-        return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
+        if (m_currentState != m_carrying)
+            return inputIntensity > 0.5 ? m_runSpeed : m_moveSpeed;
+        else
+            return m_carryingSpeed;
+    }
+
+    public void CheckPlayerStopped(float axisHorizontal, float axisVertical)
+    {
+        if (axisHorizontal == 0.0f && axisVertical == 0.0f)
+            m_playerStopped = true;
+        else
+            m_playerStopped = false;
     }
 }

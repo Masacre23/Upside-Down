@@ -33,6 +33,8 @@ public class AudioManager : MonoBehaviour
         AudioSource[] audioSources = GetComponents<AudioSource>();
         musicAudioSource1 = audioSources[0];
         musicAudioSource2 = audioSources[1];
+        musicAudioSource1.volume = m_musicVolume;
+        musicAudioSource2.volume = m_musicVolume;
         musicAudioSource1.Play();
         m_audioSource1IsPlaying = true;
     }
@@ -67,6 +69,19 @@ public class AudioManager : MonoBehaviour
         AudioSource audioSource = m_audioSource1IsPlaying ? musicAudioSource2 : musicAudioSource1;
         audioSource.clip = music;
         audioSource.loop = true;
+        audioSource.volume = 0;
+        audioSource.Play();
+        m_secondChange = timeChanged;
+        m_audioSource1IsPlaying = !m_audioSource1IsPlaying;
+        m_changeAudioSource = true;
+    }
+
+
+    public void PlayMusicWithoutLoop(AudioClip music, float timeChanged)
+    {
+        AudioSource audioSource = m_audioSource1IsPlaying ? musicAudioSource2 : musicAudioSource1;
+        audioSource.clip = music;
+        audioSource.loop = false;
         audioSource.volume = 0;
         audioSource.Play();
         m_secondChange = timeChanged;

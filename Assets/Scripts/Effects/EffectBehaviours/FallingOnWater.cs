@@ -22,7 +22,7 @@ public class FallingOnWater : MonoBehaviour
 
             SoundEffects sound = other.gameObject.GetComponent<SoundEffects>();
             if (sound)
-                sound.PlaySound("SplashWater");
+                sound.PlaySplash();
 
             if (other.tag == "Player")
             {

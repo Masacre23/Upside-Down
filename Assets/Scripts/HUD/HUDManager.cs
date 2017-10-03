@@ -11,11 +11,11 @@ public class HUDManager : MonoBehaviour {
     public Image m_sight;
 
     public Sprite[] m_lifeSprites;
-    public Image[] m_collectableImages;
+    public Sprite[] m_collectableSprites;
     public Image m_imageLife;
+    public Image m_collectableNumber;
 
     private int m_lifeIndex = 0;
-    private int m_collectableIndex = 0;
 
     private static bool m_showGravityPanel = false;
     private static bool m_isGreen = false;
@@ -24,8 +24,9 @@ public class HUDManager : MonoBehaviour {
     private static bool m_newCollectable = false;
     private static bool m_showGameOverPanel = false;
     private static bool m_showWinPanel = false;
-    private static float[] m_fillAmount = { 1.0f, 0.667f, 0.334f, 0 };
+    private static float[] m_fillAmount = { 1.0f, 1.0f, 1.0f, 1.0f };
     private static Sprite m_newCollectableSprite;
+    private static int m_numberCollectable = 0;
 
     void Start()
     {
@@ -36,6 +37,8 @@ public class HUDManager : MonoBehaviour {
         m_newCollectable = false;
         m_showGameOverPanel = false;
         m_showWinPanel = false;
+        m_numberCollectable = 0;
+        m_collectableNumber.sprite = m_collectableSprites[m_numberCollectable];
     }
 
     void Update ()
@@ -77,10 +80,8 @@ public class HUDManager : MonoBehaviour {
             }
             if (m_newCollectable)
             {
+                m_collectableNumber.sprite = m_collectableSprites[m_numberCollectable];
                 m_newCollectable = false;
-                m_collectableImages[m_collectableIndex].gameObject.SetActive(true);
-                m_collectableImages[m_collectableIndex].sprite = m_newCollectableSprite;
-                ++m_collectableIndex;
             }
         }
     }
@@ -105,10 +106,10 @@ public class HUDManager : MonoBehaviour {
         m_gainLife = true;
     }
 
-    public static void GetCollectable(Sprite sprite)
+    public static void GetCollectable()
     {
-        m_newCollectableSprite = sprite;
         m_newCollectable = true;
+        m_numberCollectable++;
     }
 
     public static void ShowGameOverPanel(bool show)

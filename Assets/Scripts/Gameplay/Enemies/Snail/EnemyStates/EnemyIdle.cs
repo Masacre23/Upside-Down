@@ -13,11 +13,12 @@ public class EnemyIdle : EnemyStates {
             m_enemy.m_animator.SetBool("Sleeping", true);
             m_enemy.m_animator.Play("Sleeping", -1, 0.3f);
             m_enemy.m_animator.speed = 0;
+			this.gameObject.transform.GetChild (2).gameObject.SetActive (true);
         }
     }
 	
 	//Main enemy update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())
-	public override bool OnUpdate (DamageData data)
+	public override bool OnUpdate (DamageData data, bool stunned)
     {
 		bool ret = false;
 
@@ -31,6 +32,12 @@ public class EnemyIdle : EnemyStates {
         {
             ret = true;
             m_enemy.m_currentState = m_enemy.m_Following;
+        }
+
+        if (stunned)
+        {
+            ret = true;
+            m_enemy.m_currentState = m_enemy.m_Stunned;
         }
 
         /*if (!m_enemy.m_isSleeping)
@@ -52,6 +59,15 @@ public class EnemyIdle : EnemyStates {
 
 	public override void OnExit()
 	{
-		
+        ParticleSystem ps = this.gameObject.transform.GetChild(2).gameObject.GetComponent<ParticleSystem>();
+        ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+        int num = ps.GetParticles(particles);
+        for(int i = 0; i<num; i++)
+        {
+            particles[i].remainingLifetime = 0;
+        }
+        ps.SetParticles(particles, num);
+        ps.Stop();
+		this.gameObject.transform.GetChild (1).gameObject.SetActive (true);
 	}
 }

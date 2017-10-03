@@ -27,15 +27,14 @@ public class PlayerDead : PlayerDamageStates
 
     public override void OnEnter(DamageData data)
     {
-        m_player.m_floatingObjects.DropAll();
-        m_player.ChangeCurrentStateToOnAir();
+        m_player.m_pickedObject.Drop();
+        m_player.ChangeStateOnDamage();
         m_player.m_negatePlayerInput = true;
         m_player.m_animator.SetBool("Dead", true);
 
         if (m_player.m_soundEffects)
         {
-            m_player.m_soundEffects.StopSoundLoop("Scream");
-            m_player.m_soundEffects.PlaySound("Dead");
+            m_player.m_soundEffects.PlayGameOver();
         }
             
         if (data.m_respawn)

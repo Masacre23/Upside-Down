@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PauseMenuManager : MonoBehaviour {
 
     //public KeyCode mPauseKey;
     public string m_pauseInputButton = "Pause";
     public GameObject mPausePanel;
+    public GameObject m_optionsPanel;
+    public GameObject m_creditsPanel;
     public EventSystem m_eventSysterm;
     public AudioClip m_mainMenuClip;
 
+    public UISelectedIndicator m_indicator;
     private GameObject m_selected;
 
     private Player m_player;
@@ -22,18 +26,22 @@ public class PauseMenuManager : MonoBehaviour {
         mPausePanel.SetActive(mIsPaused);
         m_selected = m_eventSysterm.firstSelectedGameObject;
         m_player = GameObject.Find("Player").GetComponent<Player>();
+        m_indicator.SelectNewButton(m_selected);
     }
 	
 	// Update is called once per frame
 	void Update () {
         //if (Input.GetKeyDown(mPauseKey))
-        if (Input.GetButtonDown(m_pauseInputButton))
+        if (CrossPlatformInputManager.GetButtonDown(m_pauseInputButton))
         {
-            Paused();
-            if (mIsPaused)
-                m_player.PausePlayer();
-            else
-                m_player.UnpausePlayer();
+            if (!m_optionsPanel.activeSelf && !m_creditsPanel.activeSelf)
+            {
+                Paused();
+                if (mIsPaused)
+                    m_player.PausePlayer();
+                else
+                    m_player.UnpausePlayer();
+            }
         }
         if (m_eventSysterm.currentSelectedGameObject != m_selected)
         {
@@ -41,6 +49,7 @@ public class PauseMenuManager : MonoBehaviour {
                 m_eventSysterm.SetSelectedGameObject(m_selected);
             else
                 m_selected = m_eventSysterm.currentSelectedGameObject;
+            m_indicator.SelectNewButton(m_selected);
         }
     }
 
@@ -48,7 +57,6 @@ public class PauseMenuManager : MonoBehaviour {
     {
         mIsPaused = !mIsPaused;
         mPausePanel.SetActive(mIsPaused);
-        Time.timeScale = mIsPaused ? 0 : 1;
     }
 
     public void Resume()
@@ -65,5 +73,10 @@ public class PauseMenuManager : MonoBehaviour {
             AudioManager.Instance().PlayMusic(m_mainMenuClip, 1.0f);
         }
         Scenes.LoadScene(Scenes.MainMenu);
+    }
+
+    public bool IsPaused()
+    {
+        return mIsPaused;
     }
 }

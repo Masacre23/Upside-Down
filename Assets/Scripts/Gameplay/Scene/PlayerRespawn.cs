@@ -10,30 +10,43 @@ public class PlayerRespawn : MonoBehaviour
 	public Image fadePanel;
 	GameObject player;
 
-	void Start()
+    int m_playerLayer;
+    int m_terrainLayer;
+    int m_floorLayer;
+    int m_watterLayer;
+
+    void Start()
 	{
 		player = GameObject.Find ("Player");
-	}
+
+        m_playerLayer = LayerMask.NameToLayer("Player");
+        m_terrainLayer = LayerMask.NameToLayer("Terrain");
+        m_floorLayer = LayerMask.NameToLayer("Floor");
+        m_watterLayer = LayerMask.NameToLayer("HarmfulTerrain");
+    }
 
 	IEnumerator Fading(Transform spawn)
 	{
 		for (float t = 0.0f; t < fadeTime;) 
 		{
-			t += Time.deltaTime / (fadeTime);
-			fadePanel.color = new Color (0f, 0f, 0f, t);
+			t += Time.deltaTime ;
+			fadePanel.color = new Color (0f, 0f, 0f, t / (fadeTime));
 			yield return null;
 		}
-
-		player.transform.position = spawn.position;
+        player.transform.position = spawn.position;
 		player.transform.rotation = spawn.rotation;
 		player.transform.GetChild(0).transform.rotation = spawn.rotation;
         player.GetComponent<Player>().Restart();
         player.GetComponent<Rigidbody>().ResetInertiaTensor();
+        
+        Physics.IgnoreLayerCollision(m_playerLayer, m_terrainLayer, false);
+        Physics.IgnoreLayerCollision(m_playerLayer, m_floorLayer, false);
+        Physics.IgnoreLayerCollision(m_playerLayer, m_watterLayer, false);
 
-		for (float t = fadeTime; t > 0.0f;) 
+        for (float t = fadeTime; t > 0.0f;) 
 		{
-			t -= Time.deltaTime / (fadeTime);
-			fadePanel.color = new Color (0f, 0f, 0f, t);
+			t -= Time.deltaTime;
+			fadePanel.color = new Color (0f, 0f, 0f, t / (fadeTime));
 			yield return null;
 		}
 	}

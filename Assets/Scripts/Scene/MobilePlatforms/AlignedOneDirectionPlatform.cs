@@ -68,7 +68,7 @@ public class AlignedOneDirectionPlatform : MonoBehaviour {
                         m_state = PlatformAlignedState.NONE;
 
                 }
-                PlanetGravity.AlignWithFather(gameObject);
+                //PlanetGravity.AlignWithFather(gameObject);
                 break;
         }
     }

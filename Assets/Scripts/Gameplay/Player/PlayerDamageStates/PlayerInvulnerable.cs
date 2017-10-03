@@ -40,14 +40,14 @@ public class PlayerInvulnerable : PlayerDamageStates
 
         if (data.m_recive && data.m_respawn)
         {
-            m_player.ChangeCurrentStateToOnAir();
+            m_player.ChangeStateOnDamage();
             //m_player.m_health -= data.m_damage;
             //HUDManager.LostLife();
             if (m_player.m_health <= 0)
                 m_player.m_playerDamageState = m_player.m_deadState;
             else
             {
-                m_player.m_floatingObjects.DropAll();
+                m_player.m_pickedObject.Drop();
                 m_player.m_playerRespawn.ReSpawn(m_player.m_checkPoint);
                 m_player.m_playerDamageState = m_player.m_invulnerable;
 

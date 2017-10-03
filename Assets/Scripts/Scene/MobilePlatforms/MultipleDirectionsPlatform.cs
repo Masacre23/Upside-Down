@@ -103,7 +103,7 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                         m_state = PlatformState.WAIT;
                     }
                     m_speedLastUpdate =  m_direction[m_movementIndex] * m_speedMove;
-                    PlanetGravity.AlignWithFather(gameObject);
+                    //PlanetGravity.AlignWithFather(gameObject);
                 }
                 else
                 {
@@ -127,7 +127,7 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     }
                     m_speedLastUpdate = m_direction[m_movementIndex] * m_speedRotate;
                     transform.parent = parent;
-                    PlanetGravity.AlignWithFather(gameObject);
+                    //PlanetGravity.AlignWithFather(gameObject);
                 }
                 else
                 {
@@ -149,7 +149,7 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     transform.rotation = m_initicalTransform.rotation;
                     m_state = PlatformState.RESTART;
                 }
-                PlanetGravity.AlignWithFather(gameObject);
+                //PlanetGravity.AlignWithFather(gameObject);
                 break;
             case PlatformState.RESTART:
                 float verticalToMove = m_verticalDistance - m_distanceTraveled;
@@ -163,7 +163,7 @@ public class MultipleDirectionsPlatform : MonoBehaviour {
                     m_playerDetected = false;
                     m_state = PlatformState.STOP;
                 }
-                PlanetGravity.AlignWithFather(gameObject);
+                //PlanetGravity.AlignWithFather(gameObject);
                 break;
         }
     }

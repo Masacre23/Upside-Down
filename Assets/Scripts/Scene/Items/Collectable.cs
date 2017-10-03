@@ -15,7 +15,6 @@ public class Collectable : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -40,13 +39,21 @@ public class Collectable : MonoBehaviour {
         int player = LayerMask.NameToLayer("Player");
         if (col.gameObject.layer == player) {
             EffectsManager.Instance.GetEffect(m_prefabEffect, transform);
-            SoundEffects sound = col.gameObject.GetComponent<SoundEffects>();
-            if (sound != null)
+            PlayerSoundEffects m_sound = col.gameObject.GetComponent<PlayerSoundEffects>();
+            if (m_sound != null)
             {
-                sound.PlaySound("Collectable");
+                m_sound.PlayCollectable();
             }
             m_player = col.gameObject.GetComponent<Player>();
-            HUDManager.GetCollectable(m_sprite);
+            if (m_player.m_health > 0)
+            {
+                m_player.m_health += 20;
+                if (m_player.m_health > m_player.m_maxHealth)
+                    m_player.m_health = m_player.m_maxHealth;
+                else
+                    HUDManager.GainLife();
+            }
+            HUDManager.GetCollectable();
         }
     }
 }
