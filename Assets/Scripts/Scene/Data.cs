@@ -13,5 +13,11 @@ public class Data : MonoBehaviour {
 	public void ToggleDialogues()
 	{
 		spanish = !spanish;
+        GameObject[] dialogues = GameObject.FindGameObjectsWithTag("Dialogue");
+
+        foreach (GameObject go in dialogues)
+        {
+            go.GetComponent<Dialogue>().spanish = spanish;
+        }
 	}
 }

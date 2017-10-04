@@ -1094,6 +1094,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -3407,6 +3411,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -3774,6 +3782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 493629865}
   fade: {fileID: 1430589922}
+  toggle: {fileID: 1326283942}
 --- !u!1001 &107540059
 Prefab:
   m_ObjectHideFlags: 0
@@ -10625,6 +10634,10 @@ Prefab:
         type: 2}
       propertyPath: dialogueEvent.Array.data[4].index.Array.data[1]
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -20577,7 +20590,7 @@ GameObject:
   - component: {fileID: 644927202}
   m_Layer: 5
   m_Name: Dialogue Text
-  m_TagString: Untagged
+  m_TagString: Dialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20637,6 +20650,7 @@ MonoBehaviour:
   StopIcon: {fileID: 229445619}
   startEvent: {fileID: 0}
   endEvent: {fileID: 0}
+  spanish: 0
 --- !u!114 &644927203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21135,7 +21149,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 216686
+  Age: 216700.83
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -25030,7 +25044,7 @@ GameObject:
   - component: {fileID: 797975687}
   m_Layer: 5
   m_Name: Dialogue Text
-  m_TagString: Untagged
+  m_TagString: Dialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25096,6 +25110,7 @@ MonoBehaviour:
   StopIcon: {fileID: 1301753732}
   startEvent: {fileID: 0}
   endEvent: {fileID: 0}
+  spanish: 0
 --- !u!114 &797975688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26020,6 +26035,10 @@ Prefab:
         type: 2}
       propertyPath: dialogueEvent.Array.data[0].index.Array.data[1]
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -30987,6 +31006,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -46042,6 +46065,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -49703,6 +49730,21 @@ Prefab:
       propertyPath: m_eventSystem
       value: 
       objectReference: {fileID: 450640266}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 103446134}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleDialogues
+      objectReference: {fileID: 0}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a527da9e32b634c4fae23cd6bb8d7bf5, type: 2}
   m_IsPrefabParent: 0
@@ -49721,6 +49763,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224662928578034008, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
     type: 2}
   m_PrefabInternal: {fileID: 1326283938}
+--- !u!114 &1326283942 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1326283938}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &1330556135
 Prefab:
   m_ObjectHideFlags: 0
@@ -51174,7 +51222,7 @@ GameObject:
   - component: {fileID: 1382310748}
   m_Layer: 5
   m_Name: Dialogue Text
-  m_TagString: Untagged
+  m_TagString: Dialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51234,6 +51282,7 @@ MonoBehaviour:
   StopIcon: {fileID: 49048027}
   startEvent: {fileID: 0}
   endEvent: {fileID: 0}
+  spanish: 0
 --- !u!114 &1382310749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58312,6 +58361,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -60765,7 +60818,7 @@ GameObject:
   - component: {fileID: 1698673052}
   m_Layer: 5
   m_Name: Dialogue Text
-  m_TagString: Untagged
+  m_TagString: Dialogue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60825,6 +60878,7 @@ MonoBehaviour:
   StopIcon: {fileID: 1260716151}
   startEvent: {fileID: 0}
   endEvent: {fileID: 0}
+  spanish: 0
 --- !u!114 &1698673053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62311,6 +62365,10 @@ Prefab:
     - target: {fileID: 1875625713778580, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -70102,6 +70160,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -71548,6 +71610,10 @@ Prefab:
       value: 
       objectReference: {fileID: 12800000, guid: c2a406dcc95b4b240820b2ae968d3ee9,
         type: 3}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0

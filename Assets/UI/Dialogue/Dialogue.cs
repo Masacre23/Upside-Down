@@ -47,7 +47,7 @@ public class Dialogue : MonoBehaviour
 	public GameObject startEvent;
 	public GameObject endEvent;
 
-	bool spanish = false;
+	public bool spanish = false;
 
     // Use this for initialization
 	public void Start()
