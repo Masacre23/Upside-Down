@@ -6,6 +6,7 @@ public class LevelBoundaries : MonoBehaviour
 {
     public GameObject win;
     BossSceneManager bossSceneManager;
+    public GameObject lasers;
 
     private void Start()
     {
@@ -26,10 +27,19 @@ public class LevelBoundaries : MonoBehaviour
 			other.transform.GetChild (0).gameObject.SetActive (true);
             StartCoroutine(bossSceneManager.Fade());
             win.SetActive(true);
-		}/*else if(other.tag == "GravityAffected")
+		}else if(other.tag == "GravityAffected" && lasers)
         {
-            Destroy(other.gameObject);
-        }*/
+            //Destroy(other.gameObject);
+           //  transform.parent = null;
+            for (int i = 0; i < 4; i++)
+            {
+                if (lasers.GetComponent<LaserSpawner>().lasers[i] != null && other.gameObject.transform.position.x == lasers.GetComponent<LaserSpawner>().lasers[i].gameObject.transform.position.x)
+                {
+                    GameObject.Find("Lasers").GetComponent<LaserSpawner>().lasers[i] = null;
+                    other.gameObject.transform.parent = null;
+                }
+            }
+        }
         else
         {
             int enemyLayer = 1 << LayerMask.NameToLayer("Enemy");

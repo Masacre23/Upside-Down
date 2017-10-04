@@ -27,7 +27,11 @@ public class LaserSpawner : MonoBehaviour {
         {
             for(int i = 0; i < 4; ++i)
             {
-                if(lasers[i] == null)
+               // if (lasers[i] != transform.GetChild(i))
+               //     lasers[i] = null;
+
+               // if(lasers[i] == null)
+               if(!lasers[i] || lasers[i] == null || System.Object.Equals(lasers[i], null))
                 {
                     time += Time.deltaTime;
                     if (time > spawnRate)
@@ -36,6 +40,7 @@ public class LaserSpawner : MonoBehaviour {
                         if (screenPoint.z < 0 || screenPoint.x < 0 || screenPoint.x > 1 || screenPoint.y < 0 || screenPoint.y > 1) //if is not viewing
                         {
                             lasers[i] = (GameObject)Instantiate(LaserPrefab, origPos[i].position, Quaternion.identity, transform);
+                            lasers[i].GetComponent<OnCollisionBigPlatform>().lasers = gameObject;
                             time = 0;
                         }
                     }

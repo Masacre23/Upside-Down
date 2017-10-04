@@ -50,7 +50,7 @@ public class Dialogue : MonoBehaviour
 
 	public bool spanish = false;
 
-    public bool canSkip = false;
+    public bool canSkip = true;
 
     Coroutine coroutineDialogue;
     Coroutine coroutuneDisplayString;
@@ -121,7 +121,7 @@ public class Dialogue : MonoBehaviour
             }
 	        
 	    }*/
-        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+        if (CrossPlatformInputManager.GetButtonDown("PickObjects") && canSkip)
         {
             StopCoroutine(coroutineDialogue);
             StopCoroutine(coroutuneDisplayString);
@@ -159,6 +159,8 @@ public class Dialogue : MonoBehaviour
                 }
                 currentDialogueIndex++;
             }
+            //Camera.main.gameObject.SetActive(false);
+           // Camera.current.gameObject.SetActive(false);
             if (activeCameras)
                 DialogueCamera[indexCameras[currentDialogueIndex - 1]].gameObject.SetActive(false);
 

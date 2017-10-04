@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114514307606720204}
   - component: {fileID: 114700248220361608}
   - component: {fileID: 82728893862664964}
+  - component: {fileID: 114378978896976826}
   m_Layer: 14
   m_Name: ThrowableRobot
   m_TagString: GravityAffected
@@ -463,6 +464,17 @@ MonoBehaviour:
   bossHitted: 0
   hitting: 0
   laserDistance: 4
+--- !u!114 &114378978896976826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1257827833300148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1714abd557a5a254f88d99e2c214a0c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114514307606720204
 MonoBehaviour:
   m_ObjectHideFlags: 1
