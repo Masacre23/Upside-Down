@@ -8037,6 +8037,10 @@ Prefab:
       propertyPath: dialogueEvent.Array.data[0].index.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -9061,7 +9065,7 @@ MonoBehaviour:
   Brightness: 7
   RenderQueue: 3000
   RenderQueueOffset: 0
-  Age: 194111.72
+  Age: 193976.02
   TimeScale: 1
   Softness: 0
   AutoRegenerate: 1
@@ -9467,6 +9471,10 @@ Prefab:
         type: 2}
       propertyPath: dialogueEvent.Array.data[0].index.Array.data[1]
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -9927,7 +9935,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 435281287}
   m_LocalRotation: {x: -0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: 0.7071068}
-  m_LocalPosition: {x: -13.196185, y: 17, z: 4.6755443}
+  m_LocalPosition: {x: -12.261747, y: 17, z: -6.756444}
   m_LocalScale: {x: 0.5, y: 0.5000012, z: 0.5000012}
   m_Children:
   - {fileID: 192353542}
@@ -9972,7 +9980,7 @@ MonoBehaviour:
   Radius: 14
   Oblateness: 0
   Center: {x: 0, y: 17, z: 0}
-  Angle: 89929.51
+  Angle: 89521.15
   DegreesPerSecond: 3
 --- !u!114 &435281292
 MonoBehaviour:
@@ -14197,6 +14205,10 @@ Prefab:
       propertyPath: dialogueEvent.Array.data[0].index.Array.data[1]
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -15835,6 +15847,10 @@ Prefab:
         type: 2}
       propertyPath: dialogueEvent.Array.data[3].index.Array.data[0]
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -23862,7 +23878,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -25563,6 +25579,10 @@ Prefab:
     - target: {fileID: 1875625713778580, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -31233,7 +31253,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1108241498}
   m_LocalRotation: {x: -0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: 0.7071068}
-  m_LocalPosition: {x: 11.149647, y: 17, z: 8.466721}
+  m_LocalPosition: {x: 1.0812986, y: 17, z: 13.958179}
   m_LocalScale: {x: 0.5, y: 0.5000012, z: 0.5000012}
   m_Children:
   - {fileID: 416478016}
@@ -31278,7 +31298,7 @@ MonoBehaviour:
   Radius: 14
   Oblateness: 0
   Center: {x: 0, y: 17, z: 0}
-  Angle: 90052.79
+  Angle: 89644.43
   DegreesPerSecond: 3
 --- !u!114 &1108241503
 MonoBehaviour:
@@ -37295,6 +37315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1220072826}
   fade: {fileID: 572318405}
+  toggle: {fileID: 1611581787}
 --- !u!4 &1278030307
 Transform:
   m_ObjectHideFlags: 0
@@ -45501,6 +45522,21 @@ Prefab:
       propertyPath: m_AnchoredPosition.y
       value: -41.508057
       objectReference: {fileID: 0}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1278030306}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleDialogues
+      objectReference: {fileID: 0}
+    - target: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+        type: 2}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a527da9e32b634c4fae23cd6bb8d7bf5, type: 2}
   m_IsPrefabParent: 0
@@ -45519,6 +45555,12 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224662928578034008, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
     type: 2}
   m_PrefabInternal: {fileID: 1611581783}
+--- !u!114 &1611581787 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114168964364867448, guid: a527da9e32b634c4fae23cd6bb8d7bf5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1611581783}
+  m_Script: {fileID: 2109663825, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1001 &1615737518
 Prefab:
   m_ObjectHideFlags: 0
@@ -46093,6 +46135,10 @@ Prefab:
         type: 2}
       propertyPath: dialogueEvent.Array.data[0].index.Array.data[1]
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
@@ -47361,7 +47407,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1726509181}
   m_LocalRotation: {x: -0.7071068, y: -0.000000061817246, z: -0.000000061817246, w: 0.7071068}
-  m_LocalPosition: {x: 4.2478924, y: 17, z: -13.339993}
+  m_LocalPosition: {x: 12.791773, y: 17, z: -5.6895113}
   m_LocalScale: {x: 0.5, y: 0.5000012, z: 0.5000012}
   m_Children:
   - {fileID: 1910674980}
@@ -47406,7 +47452,7 @@ MonoBehaviour:
   Radius: 14
   Oblateness: 0
   Center: {x: 0, y: 17, z: 0}
-  Angle: 90162.336
+  Angle: 89753.98
   DegreesPerSecond: 3
 --- !u!114 &1726509186
 MonoBehaviour:
@@ -48884,6 +48930,10 @@ Prefab:
       propertyPath: dialogueEvent.Array.data[1].index.Array.data[1]
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1150146573141248, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
+      propertyPath: m_TagString
+      value: Dialogue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ca36affca7353a43baafc5c8df4a7d6, type: 2}
   m_IsPrefabParent: 0
@@ -49541,11 +49591,6 @@ Prefab:
     - target: {fileID: 137865671528382966, guid: 44dfb74904c22844194c55a0d6f4ae4c,
         type: 2}
       propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 82094584473469376, guid: 44dfb74904c22844194c55a0d6f4ae4c,
-        type: 2}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -54582,11 +54627,6 @@ Prefab:
     - target: {fileID: 137421252351707408, guid: db05a388b162301489afdc66e354abb8,
         type: 2}
       propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 82093984691440730, guid: db05a388b162301489afdc66e354abb8,
-        type: 2}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

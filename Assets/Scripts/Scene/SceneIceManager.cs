@@ -7,12 +7,19 @@ public class SceneIceManager : MonoBehaviour {
 
     public GameObject canvas;
     public Image fade;
+    Data data;
+    public Toggle toggle;
+    bool startChange = true;
 
 	// Use this for initialization
 	void Start () {
         canvas.SetActive(true);
       //  fade = GameObject.Find("Fade").GetComponent<Image>();
         StartCoroutine(Fade());
+        data = GameObject.Find("Data").GetComponent<Data>();
+        startChange = data.spanish;
+        if(toggle)
+            toggle.isOn = data.spanish;
     }
 
     private IEnumerator Fade()
@@ -24,5 +31,13 @@ public class SceneIceManager : MonoBehaviour {
             fade.color = temp;
             yield return 0;
         }
+    }
+
+    public void ToggleDialogues()
+    {
+        if (startChange)
+            startChange = false;
+        else
+            data.ToggleDialogues();
     }
 }
