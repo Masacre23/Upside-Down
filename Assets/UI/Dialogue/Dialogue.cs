@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityStandardAssets.CrossPlatformInput;
 
 [RequireComponent(typeof(Text))]
 public class Dialogue : MonoBehaviour
@@ -49,8 +50,14 @@ public class Dialogue : MonoBehaviour
 
 	public bool spanish = false;
 
+    public bool canSkip = false;
+
+    Coroutine coroutineDialogue;
+    Coroutine coroutuneDisplayString;
+    int currentDialogueIndex;
+
     // Use this for initialization
-	public void Start()
+    public void Start()
 	{
 		_textComponent = GetComponent<Text>();
 		_textComponent.text = "";
@@ -93,7 +100,7 @@ public class Dialogue : MonoBehaviour
             }
         }
 
-        StartCoroutine(StartDialogue());
+        coroutineDialogue = StartCoroutine(StartDialogue());
 
 		if (DialogueCamera.Length != 0)
 			activeCameras = true;
@@ -105,7 +112,7 @@ public class Dialogue : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		/*if (Input.GetButtonDown(m_inputNameButton))
+        /*if (Input.GetButtonDown(m_inputNameButton))
 	    {
 	        if (!_isDialoguePlaying)
 	        {
@@ -114,12 +121,106 @@ public class Dialogue : MonoBehaviour
             }
 	        
 	    }*/
-	}
+        if (CrossPlatformInputManager.GetButtonDown("PickObjects"))
+        {
+            StopCoroutine(coroutineDialogue);
+            StopCoroutine(coroutuneDisplayString);
+
+            //if (activeCameras)
+            //    DialogueCamera[indexCameras[currentDialogueIndex - 1]].gameObject.SetActive(false);
+
+            while (currentDialogueIndex < DialogueStrings.Length)
+            {
+                for (int i = 0; i < dialogueEvent.Length; i++)
+                {
+                    if (dialogueEvent[i].index[dialogueEvent[i].counter] == currentDialogueIndex)
+                    {
+                        switch (dialogueEvent[i].etype)
+                        {
+                            case eventType.BOSS:
+                                GameObject.Find("Boss").GetComponent<BossScene>().enabled = true;
+                                break;
+
+                            case eventType.SNOWMAN:
+                                Animator anim = GameObject.Find(dialogueEvent[i].name).GetComponent<Animator>();
+                                anim.SetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter], !anim.GetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter]));
+                                break;
+
+                            case eventType.ENABLEDISABLE:
+                                dialogueEvent[i].GOtoEnable.SetActive(!dialogueEvent[i].GOtoEnable.activeInHierarchy);
+                                break;
+
+                            default:
+                                break;
+                        }
+                        if (dialogueEvent[i].counter != dialogueEvent[i].index.Length - 1)
+                            dialogueEvent[i].counter++;
+                    }
+                }
+                currentDialogueIndex++;
+            }
+            if (activeCameras)
+                DialogueCamera[indexCameras[currentDialogueIndex - 1]].gameObject.SetActive(false);
+
+            playerManager.m_negatePlayerInput = false;
+
+            if (dialogueEvent.Length > 0)
+            {
+                for (int i = 0; i < dialogueEvent.Length; i++)
+                {
+                    //if(dialogueEvent[i].counter == 0 && dialogueEvent[i].etype != eventType.BOSS)
+                    if (dialogueEvent[i].counter == 0 && dialogueEvent[i].index.Length != 1)
+                        dialogueEvent[i].counter++;
+                    if (dialogueEvent[i].index[dialogueEvent[i].counter] == currentDialogueIndex)
+                    {
+                        switch (dialogueEvent[i].etype)
+                        {
+                            case eventType.BOSS:
+                                GameObject.Find("Boss").GetComponent<BossScene>().enabled = true;
+                                break;
+
+                            case eventType.SNOWMAN:
+                                Animator anim = GameObject.Find(dialogueEvent[i].name).GetComponent<Animator>();
+                                anim.SetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter], !anim.GetBool(dialogueEvent[i].animationVariable[dialogueEvent[i].counter]));
+                                break;
+
+                            case eventType.ENABLEDISABLE:
+                                dialogueEvent[i].GOtoEnable.SetActive(!dialogueEvent[i].GOtoEnable.activeInHierarchy);
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            for (int i = 0; i < dialogueEvent.Length; ++i)
+            {
+                //if (bossEvent != -1)
+                if (dialogueEvent[i].etype == eventType.BOSS)
+                {
+                    GameObject.Find("Boss").GetComponent<BossScene>().dialogueFinished = true;
+                    playerManager.m_negatePlayerInput = true;
+                }
+                //SceneManager.LoadScene (2);
+            }
+
+            HideIcons();
+            _isEndOfDialogue = false;
+            _isDialoguePlaying = false;
+            _isStringBeingRevealed = false;
+
+            this.gameObject.transform.parent.gameObject.SetActive(false);
+            if (endEvent)
+                endEvent.SetActive(true);
+        }
+    }
 
     private IEnumerator StartDialogue()
     {
         int dialogueLength = DialogueStrings.Length;
-        int currentDialogueIndex = 0;
+        currentDialogueIndex = 0;
 		_isDialoguePlaying = true;
         while (currentDialogueIndex < dialogueLength || !_isStringBeingRevealed)
         {
@@ -163,9 +264,9 @@ public class Dialogue : MonoBehaviour
 
 
                 if (!spanish)
-                	StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
+                	coroutuneDisplayString = StartCoroutine(DisplayString(DialogueStrings[currentDialogueIndex++]));
 				else
-					StartCoroutine(DisplayString(DialogueStringsES[currentDialogueIndex++]));
+					coroutuneDisplayString = StartCoroutine(DisplayString(DialogueStringsES[currentDialogueIndex++]));
 
                 if (currentDialogueIndex >= dialogueLength)
                 {
