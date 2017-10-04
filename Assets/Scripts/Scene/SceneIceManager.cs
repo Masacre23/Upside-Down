@@ -17,6 +17,7 @@ public class SceneIceManager : MonoBehaviour {
       //  fade = GameObject.Find("Fade").GetComponent<Image>();
         StartCoroutine(Fade());
         data = GameObject.Find("Data").GetComponent<Data>();
+        startChange = data.spanish;
         if(toggle)
             toggle.isOn = data.spanish;
     }
