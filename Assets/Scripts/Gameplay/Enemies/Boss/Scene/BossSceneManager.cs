@@ -129,6 +129,7 @@ public class BossSceneManager : MonoBehaviour {
                 Instantiate(smokePrefab, boss.transform.position, Quaternion.EulerAngles(new Vector3(-90, 0, 0)));
                 player.GetComponent<Player>().m_paused = true;
                 GameFinished = true;
+                boss.GetComponent<AudioSource>().enabled = false;
                 StartCoroutine(Fade());
                 credits.SetActive(true);
             }
