@@ -41,7 +41,8 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        this.transform.position = Camera.main.transform.position;
+        if(Camera.main != null)
+            this.transform.position = Camera.main.transform.position;
         if(m_changeAudioSource)
         {
             AudioSource audioSource1 = m_audioSource1IsPlaying ? musicAudioSource1 : musicAudioSource2;

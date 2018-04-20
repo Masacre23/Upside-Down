@@ -15,7 +15,7 @@ public class MainMenuManager : MonoBehaviour {
 
     private UISoundEffects m_sound;
     private GameObject m_selected;
-    private bool showLogo = true;
+    private bool showLogo = false;
     private bool waitAnyKey = false;
     private float time = 0.0f;
 
@@ -27,7 +27,7 @@ public class MainMenuManager : MonoBehaviour {
         m_sound = GetComponent<UISoundEffects>();
         m_selected = m_eventSysterm.firstSelectedGameObject;
         showLogo = firstTime;
-        m_canvasLogo.SetActive(showLogo);
+        m_canvasLogo.SetActive(false);
         m_canvasMenu.SetActive(!showLogo);
         m_panelButtons.SetActive(!showLogo);
         if (!firstTime)
@@ -47,7 +47,12 @@ public class MainMenuManager : MonoBehaviour {
         if (showLogo)
         {
             time += Time.deltaTime;
-			if (time >= 5.0f)
+            if (time >= 1.5f)
+            {
+                m_canvasLogo.SetActive(true);
+            }
+
+            if (time >= 7.0f)
 			{
 				m_canvasLogo.SetActive (false);
 			}
