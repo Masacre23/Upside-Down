@@ -1,4 +1,6 @@
-﻿Shader "Water" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Water" {
 	Properties{
 
 		_BaseColor("Base color", COLOR) = (.54, .95, .99, 0.5)
@@ -86,7 +88,7 @@
 		o.bumpCoords.xyzw = (tileableUv.xyxy + _Time.xxxx * _BumpDirection.xyzw) * _BumpTiling.xyzw;
 
 		o.viewInterpolator.xyz = worldSpaceVertex - _WorldSpaceCameraPos;
-		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.pos = UnityObjectToClipPos(v.vertex);
 		o.screenPos = ComputeScreenPos(o.pos);
 		o.normalInterpolator.xyz = nrml;
 		o.viewInterpolator.w = saturate(offsets.y);

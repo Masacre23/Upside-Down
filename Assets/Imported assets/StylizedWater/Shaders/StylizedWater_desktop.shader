@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 
 // Shader created with Shader Forge v1.30 
@@ -125,7 +127,7 @@ Shader "StylizedWater/Desktop" {
                 v.vertex.xyz += node_933;
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 o.projPos = ComputeScreenPos (o.pos);
                 COMPUTE_EYEDEPTH(o.projPos.z);
@@ -340,7 +342,7 @@ Shader "StylizedWater/Desktop" {
                 v.vertex.xyz += node_933;
                 o.posWorld = mul(unity_ObjectToWorld, v.vertex);
                 float3 lightColor = _LightColor0.rgb;
-                o.pos = mul(UNITY_MATRIX_MVP, v.vertex );
+                o.pos = UnityObjectToClipPos(v.vertex );
                 UNITY_TRANSFER_FOG(o,o.pos);
                 o.projPos = ComputeScreenPos (o.pos);
                 COMPUTE_EYEDEPTH(o.projPos.z);

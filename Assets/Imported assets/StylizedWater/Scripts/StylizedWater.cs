@@ -60,7 +60,7 @@ public class StylizedWater : MonoBehaviour
     [Header("Substance")]
 
 #if UNITY_EDITOR
-    public ProceduralMaterial substance;
+    //public ProceduralMaterial substance;
 #endif
 
     public float seed;
@@ -106,19 +106,19 @@ public class StylizedWater : MonoBehaviour
         shaderName = material.shader.name;
 
 #if UNITY_EDITOR
-        if (!substance)
+      /*  if (!substance)
         {
             getSubstance(material);
 
         }
 
-        getSubstanceProperties();
+        getSubstanceProperties();*/
 #endif
         getShaderProperties();
     }
 
 #if UNITY_EDITOR
-    private void getSubstanceProperties()
+    /*private void getSubstanceProperties()
     {
         if (!substance)
         {
@@ -149,7 +149,7 @@ public class StylizedWater : MonoBehaviour
 
         hasSubstanceParams = true;
 
-    }
+    }*/
 #endif
 
     private void getShaderProperties()
@@ -213,7 +213,7 @@ public class StylizedWater : MonoBehaviour
     }
 
 #if UNITY_EDITOR
-    private void getSubstance(Material mat)
+    /*private void getSubstance(Material mat)
     {
         if (mat == null)
         {
@@ -250,7 +250,7 @@ public class StylizedWater : MonoBehaviour
             return;
         }
 
-    }
+    }*/
 #endif
 }//class end
 //Easter egg, good job :)

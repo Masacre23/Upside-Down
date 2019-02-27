@@ -1,4 +1,6 @@
-﻿Shader "Custom/LowPoly2"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/LowPoly2"
 {
 	Properties
 	{
@@ -55,15 +57,15 @@
 				fixed4 diff = nl * _LightColor0;
 
 				g2f o;
-				o.pos = mul(UNITY_MATRIX_MVP, i[0].pos);
+				o.pos = UnityObjectToClipPos(i[0].pos);
 				o.diffColor = diff;
 				triStream.Append(o);
 
-				o.pos = mul(UNITY_MATRIX_MVP, i[1].pos);
+				o.pos = UnityObjectToClipPos(i[1].pos);
 				o.diffColor = diff;
 				triStream.Append(o);
 
-				o.pos = mul(UNITY_MATRIX_MVP, i[2].pos);
+				o.pos = UnityObjectToClipPos(i[2].pos);
 				o.diffColor = diff;
 				triStream.Append(o);
 			}

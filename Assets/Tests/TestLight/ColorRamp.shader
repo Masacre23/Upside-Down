@@ -1,4 +1,6 @@
-﻿Shader "Custom/ColorRamp" {
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/ColorRamp" {
 	Properties{
 		_MainTex("Greyscale (R) Alpha (A)", 2D) = "white" {}
 	_ColorRamp("Colour Palette", 2D) = "gray" {}
@@ -23,7 +25,7 @@
 	v2f vert(appdata_tan v)
 	{
 		v2f o;
-		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.pos = UnityObjectToClipPos(v.vertex);
 		o.uv = v.texcoord.xy;
 		return o;
 	}

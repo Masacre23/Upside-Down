@@ -27,7 +27,7 @@ public class CFX3_Demo : MonoBehaviour
 	void Awake()
 	{
 		List<GameObject> particleExampleList = new List<GameObject>();
-		int nbChild = this.transform.GetChildCount();
+		int nbChild = this.transform.childCount;
 		for(int i = 0; i < nbChild; i++)
 		{
 			GameObject child = this.transform.GetChild(i).gameObject;

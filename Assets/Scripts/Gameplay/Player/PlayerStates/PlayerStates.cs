@@ -22,7 +22,7 @@ public class PlayerStates : MonoBehaviour
     {
         m_player = GetComponent<Player>();
         m_rigidBody = GetComponent<Rigidbody>();
-        m_modelTransform = transform.FindChild("Model");
+        m_modelTransform = transform.Find("Model");
     }
 
     //Main player update. Returns true if a change in state ocurred (in order to call OnExit() and OnEnter())

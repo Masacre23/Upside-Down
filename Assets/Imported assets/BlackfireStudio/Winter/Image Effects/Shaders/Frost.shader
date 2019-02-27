@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 // Blackfire Studio
 // Matthieu Ostertag
 
@@ -59,7 +61,7 @@ Shader "Blackfire Studio/Image Effects/Frost"
 			v2f vert(appdata v)
 			{
 				v2f o;
-				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.pos = UnityObjectToClipPos(v.vertex);
 				half2 uv = MultiplyUV(UNITY_MATRIX_TEXTURE0, v.texcoord);
 				o.uv[0] = uv;
 				#if UNITY_UV_STARTS_AT_TOP

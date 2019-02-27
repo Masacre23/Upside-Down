@@ -1,4 +1,6 @@
-﻿Shader "Custom/ToonShader"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Custom/ToonShader"
 {
 	Properties
 	{
@@ -76,7 +78,7 @@
 			);
 
 		// fragmentInput output;
-		OUT.pos = mul(UNITY_MATRIX_MVP, IN.vertex);
+		OUT.pos = UnityObjectToClipPos(IN.vertex);
 
 		// UV-Map
 		OUT.uv = IN.texcoord;

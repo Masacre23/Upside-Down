@@ -15,7 +15,7 @@ public class TomaPantalla : MonoBehaviour
             string subString = screenshotIMGName.Replace('/', '_');
             string gypsy = subString.Replace(':', '_');
             Debug.Log("Screen shot captured: " + gypsy + ".png");
-            Application.CaptureScreenshot(gypsy + ".png");
+            ScreenCapture.CaptureScreenshot(gypsy + ".png");
         }
     }
 }

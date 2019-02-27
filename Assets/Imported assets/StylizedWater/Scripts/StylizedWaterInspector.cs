@@ -14,7 +14,7 @@ public class StylizedWaterInspector : Editor
     //Non serialized, local
     StylizedWater stylizedWater;
     Material material;
-    ProceduralMaterial substance;
+    //ProceduralMaterial substance;
 
     //Shader variables
     #region Shader parameters
@@ -116,7 +116,7 @@ public class StylizedWaterInspector : Editor
 
         Undo.RecordObject(this, "Component");
         if (selected) Undo.RecordObject(selected, "Water");
-        if (substance) Undo.RecordObject(substance, "Substance");
+        //if (substance) Undo.RecordObject(substance, "Substance");
         if (material) Undo.RecordObject(material, "Material");
 
         /*-----------------*/
@@ -153,7 +153,7 @@ public class StylizedWaterInspector : Editor
         stylizedWater.getProperties();
 
         material = stylizedWater.material;
-        substance = stylizedWater.substance;
+       // substance = stylizedWater.substance;
 
         //Meta
         showColors = stylizedWater.showColors;
@@ -248,7 +248,7 @@ public class StylizedWaterInspector : Editor
         }
 
         #region Substance
-        ProceduralMaterial mSubstance = substance;
+       /* ProceduralMaterial mSubstance = substance;
         substance = (ProceduralMaterial)EditorGUILayout.ObjectField("Substance", substance, typeof(ProceduralMaterial), true);
 
         if (mSubstance != substance) {
@@ -263,7 +263,7 @@ public class StylizedWaterInspector : Editor
 
         //If conditions aren't met, don't display fields
         if (!substance || material && !shaderName.Contains("StylizedWater")) return;
-
+        */
         EditorGUILayout.BeginHorizontal();
 
         seed = EditorGUILayout.FloatField("Seed", seed);
@@ -618,7 +618,7 @@ public class StylizedWaterInspector : Editor
     //Apply values to Substance material
     private void setSubstanceParameters()
     {
-        if (!substance || !hasSubstanceParams) return; //Prevent from setting null values
+        /*if (!substance || !hasSubstanceParams) return; //Prevent from setting null values
         //Debug.Log("Setting value " + intersectionStyleList[intersectionStyle] + " to " + substance.name);
 
         substance.SetProceduralFloat("$randomseed", seed);
@@ -673,7 +673,7 @@ public class StylizedWaterInspector : Editor
         }
         else { Debug.LogError("Shadermap & normal are null"); }
 
-        if (!substance.isProcessing) substance.RebuildTexturesImmediately();
+        if (!substance.isProcessing) substance.RebuildTexturesImmediately();*/
     }
 
     //Saving meta data
@@ -688,7 +688,7 @@ public class StylizedWaterInspector : Editor
         sws.showDepth = showDepth;
         sws.showWaves = showWaves;
 
-        sws.substance = substance;
+        //sws.substance = substance;
         sws.hasSubstanceParams = hasSubstanceParams; //If Substance changed, is set to false
     }
 

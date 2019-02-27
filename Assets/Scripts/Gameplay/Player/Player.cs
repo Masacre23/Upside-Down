@@ -155,7 +155,7 @@ public class Player : Character
     // Use this for initialization
     public override void Start ()
     { 
-        m_modelTransform = transform.FindChild("Model");
+        m_modelTransform = transform.Find("Model");
         m_freezeMovement = false;
         m_negatePlayerInput = false;
         base.Start();

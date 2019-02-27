@@ -11,7 +11,7 @@ public class DisableModel : MonoBehaviour
     {
         GameObject player = GameObject.Find("Player");
         if (player)
-            m_playerModel = player.transform.FindChild("Model").gameObject;
+            m_playerModel = player.transform.Find("Model").gameObject;
 	}
 	
 	void OnTriggerEnter(Collider other)
